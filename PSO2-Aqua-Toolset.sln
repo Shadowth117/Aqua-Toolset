@@ -18,6 +18,9 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AquaModelLibrary", "PSO2-Aqua-Library\AquaModelLibrary\AquaModelLibrary.csproj", "{AC648CF6-3E5C-4C7A-8A6E-083AE962FA1C}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "AquaModelLibrary.Native", "PSO2-Aqua-Library\AquaModelLibrary.Native\AquaModelLibrary.Native.vcxproj", "{2C3B66BB-F1A9-4513-AB63-570D7687C6A7}"
+	ProjectSection(ProjectDependencies) = postProject
+		{AC648CF6-3E5C-4C7A-8A6E-083AE962FA1C} = {AC648CF6-3E5C-4C7A-8A6E-083AE962FA1C}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SonicAudioLib", "SonicAudioTools\Source\SonicAudioLib\SonicAudioLib.csproj", "{63138773-1F47-474C-9345-15EB6183ECC6}"
 EndProject
