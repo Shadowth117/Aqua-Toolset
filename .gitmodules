@@ -4,3 +4,6 @@
 [submodule "VGAudio"]
 	path = VGAudio
 	url = https://github.com/Shadowth117/VGAudio
+[submodule "PSO2-Aqua-Library"]
+	path = PSO2-Aqua-Library
+	url = https://github.com/Shadowth117/PSO2-Aqua-Library.git
