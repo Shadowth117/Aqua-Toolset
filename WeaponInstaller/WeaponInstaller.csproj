@@ -37,7 +37,7 @@
   </ItemGroup>
 
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-    <Exec Command="copy /Y &quot;$(TargetDir)$(ProjectName).dll&quot; &quot;$(SolutionDir)AquaModelTool\bin\$(ConfigurationName)\$(ProjectName).dll&quot;&#xD;&#xA;copy /Y &quot;$(TargetDir)$(ProjectName).exe&quot; &quot;$(SolutionDir)AquaModelTool\bin\$(ConfigurationName)\$(ProjectName).exe&quot;" />
+    <Exec Command="copy /Y &quot;$(TargetDir)$(ProjectName).dll&quot; &quot;$(SolutionDir)AquaModelTool\bin\$(ConfigurationName)\$(ProjectName).dll&quot;&#xD;&#xA;copy /Y &quot;$(TargetDir)$(ProjectName).exe&quot; &quot;$(SolutionDir)AquaModelTool\bin\$(ConfigurationName)\$(ProjectName).exe&quot;&#xD;&#xA;copy /Y &quot;$(TargetDir)$(ProjectName).runtimeconfig.json&quot; &quot;$(SolutionDir)AquaModelTool\bin\$(ConfigurationName)\$(ProjectName).runtimeconfig.json&quot;" />
   </Target>
 
 </Project>

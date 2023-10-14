@@ -10,16 +10,16 @@
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <PlatformTarget>x64</PlatformTarget>
-    <NoWarn>1701;1702;NU1702;NU1701;CS8618</NoWarn>
+    <NoWarn>1701;1702;NU1702;NU1701</NoWarn>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <PlatformTarget>x64</PlatformTarget>
-    <NoWarn>1701;1702;NU1702;NU1701;CS8618</NoWarn>
+	<PlatformTarget>x64</PlatformTarget>
+	<NoWarn>1701;1702;NU1702;NU1701</NoWarn>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='x86|AnyCPU'">
-    <NoWarn>1701;1702;NU1702;NU1701;CS8618</NoWarn>
+	<NoWarn>1701;1702;NU1702;NU1701</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>
@@ -38,7 +38,7 @@
   </ItemGroup>
 
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-    <Exec Command="copy /Y &quot;$(TargetDir)$(ProjectName).dll&quot; &quot;$(SolutionDir)AquaModelTool\bin\$(ConfigurationName)\$(ProjectName).dll&quot;&#xD;&#xA;copy /Y &quot;$(TargetDir)$(ProjectName).exe&quot; &quot;$(SolutionDir)AquaModelTool\bin\$(ConfigurationName)\$(ProjectName).exe&quot;" />
+    <Exec Command="copy /Y &quot;$(TargetDir)$(ProjectName).dll&quot; &quot;$(SolutionDir)AquaModelTool\bin\$(ConfigurationName)\$(ProjectName).dll&quot;&#xD;&#xA;copy /Y &quot;$(TargetDir)$(ProjectName).exe&quot; &quot;$(SolutionDir)AquaModelTool\bin\$(ConfigurationName)\$(ProjectName).exe&quot;&#xD;&#xA;copy /Y &quot;$(TargetDir)$(ProjectName).runtimeconfig.json&quot; &quot;$(SolutionDir)AquaModelTool\bin\$(ConfigurationName)\$(ProjectName).runtimeconfig.json&quot;" />
   </Target>
 
 </Project>
