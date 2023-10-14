@@ -1,6 +1,3 @@
-[submodule "PSO2-Aqua-Library"]
-	path = PSO2-Aqua-Library
-	url = https://github.com/Shadowth117/PSO2-Aqua-Library
 [submodule "SonicAudioTools"]
 	path = SonicAudioTools
 	url = https://github.com/Shadowth117/SonicAudioTools
