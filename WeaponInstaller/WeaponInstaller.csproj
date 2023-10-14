@@ -26,8 +26,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\AquaModelLibrary\AquaModelLibrary.csproj" />
-    <ProjectReference Include="..\ZamboniLib\ZamboniLib\ZamboniLib.csproj" />
+    <ProjectReference Include="..\PSO2-Aqua-Library\AquaModelLibrary\AquaModelLibrary.csproj" />
+    <ProjectReference Include="..\PSO2-Aqua-Library\ZamboniLib\ZamboniLib\ZamboniLib.csproj" />
   </ItemGroup>
 
   <ItemGroup>

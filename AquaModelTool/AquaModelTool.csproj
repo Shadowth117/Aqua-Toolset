@@ -321,12 +321,12 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\AquaModelLibrary\AquaModelLibrary.csproj">
+    <ProjectReference Include="..\PSO2-Aqua-Library\AquaModelLibrary\AquaModelLibrary.csproj">
       <Project>{ac648cf6-3e5c-4c7a-8a6e-083ae962fa1c}</Project>
       <Name>AquaModelLibrary</Name>
     </ProjectReference>
-    <ProjectReference Include="..\ZamboniLib\ZamboniLib\ZamboniLib.csproj">
-      <Project>{f0c5b71b-5956-42fe-8dac-10759cf6bee0}</Project>
+    <ProjectReference Include="..\PSO2-Aqua-Library\ZamboniLib\ZamboniLib\ZamboniLib.csproj">
+      <Project>{84d63988-81de-4639-8e44-fe5a25eddc97}</Project>
       <Name>ZamboniLib</Name>
     </ProjectReference>
   </ItemGroup>
