@@ -1,0 +1,61 @@
+﻿<Window x:Class="WeaponInstaller.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WeaponInstaller"
+        mc:Ignorable="d"
+        Title="Weapon Installer" Height="450" Width="830">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="79*"/>
+            <ColumnDefinition Width="721*"/>
+        </Grid.ColumnDefinitions>
+        <DataGrid x:Name="dataGrid" HorizontalAlignment="Stretch" Margin="11,108,0,0" VerticalAlignment="Stretch" Grid.ColumnSpan="2">
+            <DataGrid.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="Set Current Row As Selected Item" Click="SetRowAsSelectedClick"/>
+                </ContextMenu>
+            </DataGrid.ContextMenu>
+        </DataGrid>
+        <Label x:Name="currentFileLabel" Content="Select a file" HorizontalAlignment="Left" Margin="10,25,0,0" VerticalAlignment="Top" Width="223" Grid.ColumnSpan="2"/>
+        <Button x:Name="selectButton" Content="Select" HorizontalAlignment="Left" Margin="15,49,0,0" VerticalAlignment="Top" Click="selectButtonClick"/>
+        <Button x:Name="replaceButton" Content="Replace Checked Files With Selected" HorizontalAlignment="Left" Margin="15,78,0,0" VerticalAlignment="Top" Width="201" Click="replaceButtonClick" Grid.ColumnSpan="2"/>
+        <CheckBox x:Name="swordCheck" Content="Show Swords" Grid.Column="1" HorizontalAlignment="Left" Margin="159,20,0,0" VerticalAlignment="Top" IsChecked="True" Checked="check_Checked" Unchecked="check_Checked"/>
+        <CheckBox x:Name="wiredLanceCheck" Content="Show WiredLances" Grid.Column="1" HorizontalAlignment="Left" Margin="159,35,0,0" VerticalAlignment="Top" Checked="check_Checked" Unchecked="check_Checked"/>
+        <CheckBox x:Name="partizanCheck" Content="Show Partizans" Grid.Column="1" HorizontalAlignment="Left" Margin="159,50,0,0" VerticalAlignment="Top" Checked="check_Checked" Unchecked="check_Checked"/>
+        <CheckBox x:Name="twinDaggerCheck" Content="Show Twin Daggers" Grid.Column="1" HorizontalAlignment="Left" Margin="159,65,0,0" VerticalAlignment="Top" Checked="check_Checked" Unchecked="check_Checked"/>
+        <CheckBox x:Name="doubleSaberCheck" Content="Show Double Sabers" Grid.Column="1" HorizontalAlignment="Left" Margin="159,80,0,0" VerticalAlignment="Top" Checked="check_Checked" Unchecked="check_Checked"/>
+        <CheckBox x:Name="knucklesCheck" Content="Show Knuckles" Grid.Column="1" HorizontalAlignment="Left" Margin="293,20,0,0" VerticalAlignment="Top" Checked="check_Checked" Unchecked="check_Checked"/>
+        <CheckBox x:Name="assaultRifleCheck" Content="Show Assault Rifles" Grid.Column="1" HorizontalAlignment="Left" Margin="293,80,0,0" VerticalAlignment="Top" Checked="check_Checked" Unchecked="check_Checked"/>
+        <CheckBox x:Name="launcherCheck" Content="Show Launchers" Grid.Column="1" HorizontalAlignment="Left" Margin="450,20,0,0" VerticalAlignment="Top" Checked="check_Checked" Unchecked="check_Checked"/>
+        <CheckBox x:Name="tmgCheck" Content="Show Twin Machine Guns" Grid.Column="1" HorizontalAlignment="Left" Margin="450,35,0,0" VerticalAlignment="Top" Checked="check_Checked" Unchecked="check_Checked"/>
+        <CheckBox x:Name="rodCheck" Content="Show Rods" Grid.Column="1" HorizontalAlignment="Left" Margin="450,65,0,0" VerticalAlignment="Top" Checked="check_Checked" Unchecked="check_Checked"/>
+        <CheckBox x:Name="talisCheck" Content="Show Talises" Grid.Column="1" HorizontalAlignment="Left" Margin="450,80,0,0" VerticalAlignment="Top" Checked="check_Checked" Unchecked="check_Checked"/>
+        <CheckBox x:Name="wandCheck" Content="Show Wands" Grid.Column="1" HorizontalAlignment="Left" Margin="609,20,0,0" VerticalAlignment="Top" Checked="check_Checked" Unchecked="check_Checked"/>
+        <CheckBox x:Name="gunslashCheck" Content="Show Gunslashes" Grid.Column="1" HorizontalAlignment="Left" Margin="293,65,0,0" VerticalAlignment="Top" Checked="check_Checked" Unchecked="check_Checked"/>
+        <CheckBox x:Name="bowCheck" Content="Show Bows" Grid.Column="1" HorizontalAlignment="Left" Margin="450,50,0,0" VerticalAlignment="Top" Checked="check_Checked" Unchecked="check_Checked"/>
+        <CheckBox x:Name="jetbootsCheck" Content="Show Jet Boots" Grid.Column="1" HorizontalAlignment="Left" Margin="609,35,0,0" VerticalAlignment="Top" Checked="check_Checked" Unchecked="check_Checked"/>
+        <CheckBox x:Name="dualBladeCheck" Content="Show Dual Blades" Grid.Column="1" HorizontalAlignment="Left" Margin="293,50,0,0" VerticalAlignment="Top" Checked="check_Checked" Unchecked="check_Checked"/>
+        <CheckBox x:Name="tactCheck" Content="Show Takts" Grid.Column="1" HorizontalAlignment="Left" Margin="609,50,0,0" VerticalAlignment="Top" Checked="check_Checked" Unchecked="check_Checked"/>
+        <CheckBox x:Name="katanaCheck" Content="Show Katanas" Grid.Column="1" HorizontalAlignment="Left" Margin="293,35,0,0" VerticalAlignment="Top" Checked="check_Checked" Unchecked="check_Checked"/>
+        <ComboBox x:Name="gameSetCB" Grid.Column="1" HorizontalAlignment="Left" Margin="598,84,0,0" VerticalAlignment="Top" Width="113" SelectedIndex="0" SelectionChanged="gameSetCB_SelectionChanged">
+            <ComboBoxItem Content="NGS and PSO2"/>
+            <ComboBoxItem Content="PSO2 Only"/>
+            <ComboBoxItem Content="NGS Only"/>
+        </ComboBox>
+        <Menu x:Name="menu" Height="18" VerticalAlignment="Top" AutomationProperties.Name="Radio" Grid.ColumnSpan="2">
+            <MenuItem Header="File">
+                <MenuItem Header="Set pso2_bin directory" Click="SetPSO2Bin"/>
+            </MenuItem>
+            <MenuItem Header="Install From Config" Click="InstallFromConfigClick"/>
+            <MenuItem Header="Export Config" Click="ExportConfigClick"/>
+            <MenuItem Name="replaceSelectedFromChecked" Header="Replace Selected from Checked" Click="ReplaceSelectedFromCheckedClick" Visibility="Hidden"/>
+        </Menu>
+        <Label x:Name="listFromLabel" Content="List from:" Grid.Column="1" HorizontalAlignment="Left" Margin="593,62,0,0" VerticalAlignment="Top"/>
+        <Button x:Name="showAllLabel" Content="Show All" Grid.Column="1" HorizontalAlignment="Left" Margin="23,49,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.581,0.286" Click="showAllClick"/>
+        <Button x:Name="showNoneLabel" Content="Show None" Grid.Column="1" HorizontalAlignment="Left" Margin="78,49,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.581,0.286" Click="showNoneClick"/>
+        <CheckBox x:Name="allCheck" Content="" HorizontalAlignment="Left" Margin="8,113,0,0" VerticalAlignment="Top" Height="18" Width="19" Checked="allCheck_Checked" Unchecked="allCheck_Checked"/>
+
+    </Grid>
+</Window>

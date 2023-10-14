@@ -1,0 +1,22 @@
+﻿<Window x:Class="FalseIdola.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:FalseIdola"
+        mc:Ignorable="d"
+        Title="False Idola" Height="450" Width="800">
+    <Grid>
+        <Menu x:Name="menu" Height="18" Margin="0,0,0,0" VerticalAlignment="Top">
+            <MenuItem Header="File">
+                <MenuItem Header="Open" Click="ClickOpen"/>
+            </MenuItem>
+        </Menu>
+        <Label x:Name="compositionsLabel" Content="Composition" Margin="6,25,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+        <ComboBox x:Name="compositionsCB" HorizontalAlignment="Left" Margin="10,47,0,0" VerticalAlignment="Top" Width="171" SelectionChanged="compositionsCB_SelectionChanged"/>
+        <Label x:Name="partsLabel" Content="Part" Margin="6,69,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+        <ComboBox x:Name="partsCB" HorizontalAlignment="Left" Margin="10,91,0,0" VerticalAlignment="Top" Width="171" SelectionChanged="partsCB_SelectionChanged"/>
+        <Label x:Name="movementsLabel" Content="Movement" Margin="6,114,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+        <ComboBox x:Name="movementsCB" HorizontalAlignment="Left" Margin="10,136,0,0" VerticalAlignment="Top" Width="171" SelectionChanged="movementsCB_SelectionChanged"/>
+    </Grid>
+</Window>
