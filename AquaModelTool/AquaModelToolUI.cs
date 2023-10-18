@@ -6,6 +6,7 @@ using AquaModelLibrary.BluePoint.CMDL;
 using AquaModelLibrary.Extra;
 using AquaModelLibrary.Extra.AM2;
 using AquaModelLibrary.Extra.FromSoft;
+using AquaModelLibrary.Extra.FromSoft.MetalWolfChaos;
 using AquaModelLibrary.Native.Fbx;
 using AquaModelLibrary.NNStructs;
 using AquaModelLibrary.Nova;
@@ -4943,6 +4944,101 @@ namespace AquaModelTool
                         set.models[0].CreateTrueVertWeights();
 
                         FbxExporter.ExportToFile(aquaUI.aqua.aquaModels[0].models[0], aqn, new List<AquaMotion>(), Path.ChangeExtension(file, ".fbx"), new List<string>(), new List<Matrix4x4>(), false);
+                    }
+                }
+            }
+        }
+
+        private void mWCBNDExtractToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var openFileDialog = new OpenFileDialog()
+            {
+                Title = "Select Metal Wolf Chaos bnd File",
+                Filter = "Metal Wolf Chaos *.bnd files|*.bnd",
+                FileName = "",
+                Multiselect = true
+            };
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                foreach (var file in openFileDialog.FileNames)
+                {
+                    BNDHandler.BNDExtract(file);
+                }
+            }
+        }
+
+        private void mWCBNDPackToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var openFileDialog = new CommonOpenFileDialog()
+            {
+                Title = "Select Metal Wolf Chaos bnd Folder",
+                IsFolderPicker = true,
+                Multiselect = true
+            };
+            if (openFileDialog.ShowDialog() == CommonFileDialogResult.Ok)
+            {
+                foreach (var file in openFileDialog.FileNames)
+                {
+                    BNDHandler.BNDPack(file);
+                }
+            }
+        }
+
+        private void readOTRToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var openFileDialog = new OpenFileDialog()
+            {
+                Title = "Select Metal Wolf Chaos otr File",
+                Filter = "Metal Wolf Chaos Collision *.otr files|*.otr",
+                FileName = "",
+                Multiselect = true
+            };
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                foreach (var file in openFileDialog.FileNames)
+                {
+                    var aqp = AquaModelLibrary.Extra.FromSoft.MetalWolfChaos.OTRConvert.ConvertOTR(File.ReadAllBytes(file), out var aqn);
+                    aquaUI.aqua.aquaModels.Clear();
+                    ModelSet set = new ModelSet();
+                    set.models.Add(aqp);
+                    if (set.models[0] != null && set.models[0].vtxlList.Count > 0 || set.models[0].tempTris[0].faceVerts.Count > 0)
+                    {
+                        aquaUI.aqua.aquaModels.Add(set);
+                        aquaUI.aqua.ConvertToNGSPSO2Mesh(false, false, false, true, false, false, false, true);
+                        set.models[0].ConvertToLegacyTypes();
+                        set.models[0].CreateTrueVertWeights();
+
+                        FbxExporter.ExportToFile(aquaUI.aqua.aquaModels[0].models[0], aqn, new List<AquaMotion>(), Path.ChangeExtension(file, ".fbx"), new List<string>(), new List<Matrix4x4>(), false);
+                    }
+                }
+            }
+        }
+
+        private void readToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var openFileDialog = new OpenFileDialog()
+            {
+                Title = "Select Metal Wolf Chaos Archive File",
+                Filter = "Metal Wolf Chaos DEV, DIV, m.dat, t.dat, BND files|*.dev;*.000;*.001;*.002;*.003;*_m.dat;*_t.dat;*.bnd;*.tex",
+                FileName = "",
+                Multiselect = true
+            };
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                foreach (var file in openFileDialog.FileNames)
+                {
+                    switch(Path.GetExtension(file))
+                    {
+                        case ".dat":
+                            MTDATExtract.ExtractDAT(file);
+                            break;
+                        case ".tex":
+                        case ".bnd":
+                            BNDHandler.BNDExtract(file);
+                            break;
+                        default:
+                            DEVDIVUtil.DEVDIVExtract(file);
+                            break;
                     }
                 }
             }

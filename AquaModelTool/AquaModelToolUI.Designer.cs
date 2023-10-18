@@ -79,6 +79,9 @@
             this.mSBExtractionSeparateExtractionByModelToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator15 = new System.Windows.Forms.ToolStripSeparator();
             this.dumpAllFromSoulsbndToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator16 = new System.Windows.Forms.ToolStripSeparator();
+            this.mWCBNDExtractToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.mWCBNDPackToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator12 = new System.Windows.Forms.ToolStripSeparator();
             this.generateMCGMCPToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.convertModelToDemonsSoulsflverToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -168,9 +171,11 @@
             this.readNSAToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.readNMBToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.readCMDLToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.readMMDToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.filePanel = new System.Windows.Forms.Panel();
             this.splitter1 = new System.Windows.Forms.Splitter();
-            this.readMMDToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.readOTRToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.readToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -431,6 +436,9 @@
             this.mSBExtractionSeparateExtractionByModelToolStripMenuItem,
             this.toolStripSeparator15,
             this.dumpAllFromSoulsbndToolStripMenuItem,
+            this.toolStripSeparator16,
+            this.mWCBNDExtractToolStripMenuItem,
+            this.mWCBNDPackToolStripMenuItem,
             this.toolStripSeparator12,
             this.generateMCGMCPToolStripMenuItem,
             this.convertModelToDemonsSoulsflverToolStripMenuItem,
@@ -617,6 +625,25 @@
             this.dumpAllFromSoulsbndToolStripMenuItem.Size = new System.Drawing.Size(620, 22);
             this.dumpAllFromSoulsbndToolStripMenuItem.Text = "Dump all from Souls .*bnd";
             this.dumpAllFromSoulsbndToolStripMenuItem.Click += new System.EventHandler(this.dumpAllFromSoulsbndToolStripMenuItem_Click);
+            // 
+            // toolStripSeparator16
+            // 
+            this.toolStripSeparator16.Name = "toolStripSeparator16";
+            this.toolStripSeparator16.Size = new System.Drawing.Size(617, 6);
+            // 
+            // mWCBNDExtractToolStripMenuItem
+            // 
+            this.mWCBNDExtractToolStripMenuItem.Name = "mWCBNDExtractToolStripMenuItem";
+            this.mWCBNDExtractToolStripMenuItem.Size = new System.Drawing.Size(620, 22);
+            this.mWCBNDExtractToolStripMenuItem.Text = "MWC BND Extract";
+            this.mWCBNDExtractToolStripMenuItem.Click += new System.EventHandler(this.mWCBNDExtractToolStripMenuItem_Click);
+            // 
+            // mWCBNDPackToolStripMenuItem
+            // 
+            this.mWCBNDPackToolStripMenuItem.Name = "mWCBNDPackToolStripMenuItem";
+            this.mWCBNDPackToolStripMenuItem.Size = new System.Drawing.Size(620, 22);
+            this.mWCBNDPackToolStripMenuItem.Text = "MWC BND Pack";
+            this.mWCBNDPackToolStripMenuItem.Click += new System.EventHandler(this.mWCBNDPackToolStripMenuItem_Click);
             // 
             // toolStripSeparator12
             // 
@@ -1085,7 +1112,9 @@
             this.readNSAToolStripMenuItem,
             this.readNMBToolStripMenuItem,
             this.readCMDLToolStripMenuItem,
-            this.readMMDToolStripMenuItem});
+            this.readMMDToolStripMenuItem,
+            this.readOTRToolStripMenuItem,
+            this.readToolStripMenuItem});
             this.debug2ToolStripMenuItem.Name = "debug2ToolStripMenuItem";
             this.debug2ToolStripMenuItem.Size = new System.Drawing.Size(60, 23);
             this.debug2ToolStripMenuItem.Text = "Debug2";
@@ -1293,6 +1322,13 @@
             this.readCMDLToolStripMenuItem.Text = "ReadCMDL";
             this.readCMDLToolStripMenuItem.Click += new System.EventHandler(this.readCMDLToolStripMenuItem_Click);
             // 
+            // readMMDToolStripMenuItem
+            // 
+            this.readMMDToolStripMenuItem.Name = "readMMDToolStripMenuItem";
+            this.readMMDToolStripMenuItem.Size = new System.Drawing.Size(231, 22);
+            this.readMMDToolStripMenuItem.Text = "ReadMMD";
+            this.readMMDToolStripMenuItem.Click += new System.EventHandler(this.readMMDToolStripMenuItem_Click);
+            // 
             // filePanel
             // 
             this.filePanel.AutoSize = true;
@@ -1311,12 +1347,19 @@
             this.splitter1.TabIndex = 2;
             this.splitter1.TabStop = false;
             // 
-            // readMMDToolStripMenuItem
+            // readOTRToolStripMenuItem
             // 
-            this.readMMDToolStripMenuItem.Name = "readMMDToolStripMenuItem";
-            this.readMMDToolStripMenuItem.Size = new System.Drawing.Size(231, 22);
-            this.readMMDToolStripMenuItem.Text = "ReadMMD";
-            this.readMMDToolStripMenuItem.Click += new System.EventHandler(this.readMMDToolStripMenuItem_Click);
+            this.readOTRToolStripMenuItem.Name = "readOTRToolStripMenuItem";
+            this.readOTRToolStripMenuItem.Size = new System.Drawing.Size(231, 22);
+            this.readOTRToolStripMenuItem.Text = "ReadOTR";
+            this.readOTRToolStripMenuItem.Click += new System.EventHandler(this.readOTRToolStripMenuItem_Click);
+            // 
+            // readToolStripMenuItem
+            // 
+            this.readToolStripMenuItem.Name = "readToolStripMenuItem";
+            this.readToolStripMenuItem.Size = new System.Drawing.Size(231, 22);
+            this.readToolStripMenuItem.Text = "Read DEV/DIV";
+            this.readToolStripMenuItem.Click += new System.EventHandler(this.readToolStripMenuItem_Click);
             // 
             // AquaModelTool
             // 
@@ -1482,6 +1525,11 @@
         private System.Windows.Forms.ToolStripMenuItem readNMBToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem readCMDLToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem readMMDToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator16;
+        private System.Windows.Forms.ToolStripMenuItem mWCBNDPackToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem mWCBNDExtractToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem readOTRToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem readToolStripMenuItem;
     }
 }
 
