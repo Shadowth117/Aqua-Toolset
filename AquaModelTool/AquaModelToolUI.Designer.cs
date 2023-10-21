@@ -172,10 +172,12 @@
             this.readNMBToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.readCMDLToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.readMMDToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.filePanel = new System.Windows.Forms.Panel();
-            this.splitter1 = new System.Windows.Forms.Splitter();
             this.readOTRToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.readToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.filePanel = new System.Windows.Forms.Panel();
+            this.splitter1 = new System.Windows.Forms.Splitter();
+            this.debug3ToolStripItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.mdlToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -188,7 +190,8 @@
             this.toolsToolStripMenuItem,
             this.filenameButton,
             this.debugToolStripMenuItem,
-            this.debug2ToolStripMenuItem});
+            this.debug2ToolStripMenuItem,
+            this.debug3ToolStripItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(384, 27);
@@ -1329,6 +1332,20 @@
             this.readMMDToolStripMenuItem.Text = "ReadMMD";
             this.readMMDToolStripMenuItem.Click += new System.EventHandler(this.readMMDToolStripMenuItem_Click);
             // 
+            // readOTRToolStripMenuItem
+            // 
+            this.readOTRToolStripMenuItem.Name = "readOTRToolStripMenuItem";
+            this.readOTRToolStripMenuItem.Size = new System.Drawing.Size(231, 22);
+            this.readOTRToolStripMenuItem.Text = "ReadOTR";
+            this.readOTRToolStripMenuItem.Click += new System.EventHandler(this.readOTRToolStripMenuItem_Click);
+            // 
+            // readToolStripMenuItem
+            // 
+            this.readToolStripMenuItem.Name = "readToolStripMenuItem";
+            this.readToolStripMenuItem.Size = new System.Drawing.Size(231, 22);
+            this.readToolStripMenuItem.Text = "Read DEV/DIV";
+            this.readToolStripMenuItem.Click += new System.EventHandler(this.readToolStripMenuItem_Click);
+            // 
             // filePanel
             // 
             this.filePanel.AutoSize = true;
@@ -1347,19 +1364,20 @@
             this.splitter1.TabIndex = 2;
             this.splitter1.TabStop = false;
             // 
-            // readOTRToolStripMenuItem
+            // debug3ToolStripItem
             // 
-            this.readOTRToolStripMenuItem.Name = "readOTRToolStripMenuItem";
-            this.readOTRToolStripMenuItem.Size = new System.Drawing.Size(231, 22);
-            this.readOTRToolStripMenuItem.Text = "ReadOTR";
-            this.readOTRToolStripMenuItem.Click += new System.EventHandler(this.readOTRToolStripMenuItem_Click);
+            this.debug3ToolStripItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.mdlToolStripMenuItem});
+            this.debug3ToolStripItem.Name = "debug3ToolStripItem";
+            this.debug3ToolStripItem.Size = new System.Drawing.Size(60, 23);
+            this.debug3ToolStripItem.Text = "Debug3";
             // 
-            // readToolStripMenuItem
+            // mdlToolStripMenuItem
             // 
-            this.readToolStripMenuItem.Name = "readToolStripMenuItem";
-            this.readToolStripMenuItem.Size = new System.Drawing.Size(231, 22);
-            this.readToolStripMenuItem.Text = "Read DEV/DIV";
-            this.readToolStripMenuItem.Click += new System.EventHandler(this.readToolStripMenuItem_Click);
+            this.mdlToolStripMenuItem.Name = "mdlToolStripMenuItem";
+            this.mdlToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.mdlToolStripMenuItem.Text = "ReadMDL";
+            this.mdlToolStripMenuItem.Click += new System.EventHandler(this.mdlToolStripMenuItem_Click);
             // 
             // AquaModelTool
             // 
@@ -1530,6 +1548,8 @@
         private System.Windows.Forms.ToolStripMenuItem mWCBNDExtractToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem readOTRToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem readToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem debug3ToolStripItem;
+        private System.Windows.Forms.ToolStripMenuItem mdlToolStripMenuItem;
     }
 }
 
