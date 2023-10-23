@@ -4483,7 +4483,8 @@ namespace AquaModelTool
                     {
                         var objBinRaw = File.ReadAllBytes(archiveFile);
                         ConvertAM2BBPS4Model(archiveFile, objBinRaw);
-                    } else if (Path.GetFileName(archiveFile).StartsWith("fld_"))
+                    }
+                    else if (Path.GetFileName(archiveFile).StartsWith("fld_"))
                     {
                         var fldBinRaw = File.ReadAllBytes(archiveFile);
                         ConvertAM2BBPS4FLD(archiveFile, fldBinRaw);
@@ -4651,7 +4652,7 @@ namespace AquaModelTool
             };
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
-                foreach(var file in openFileDialog.FileNames)
+                foreach (var file in openFileDialog.FileNames)
                 {
                     using (Stream stream = new MemoryStream(File.ReadAllBytes(file)))
                     using (var streamReader = new BufferedStreamReader(stream, 8192))
@@ -4909,7 +4910,7 @@ namespace AquaModelTool
             };
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
-                foreach(var file in openFileDialog.FileNames)
+                foreach (var file in openFileDialog.FileNames)
                 {
                     using (Stream stream = new MemoryStream(File.ReadAllBytes(file)))
                     using (var streamReader = new BufferedStreamReader(stream, 8192))
@@ -5028,7 +5029,7 @@ namespace AquaModelTool
             {
                 foreach (var file in openFileDialog.FileNames)
                 {
-                    switch(Path.GetExtension(file))
+                    switch (Path.GetExtension(file))
                     {
                         case ".dat":
                             MTDATExtract.ExtractDAT(file);
@@ -5075,12 +5076,12 @@ namespace AquaModelTool
             }
         }
 
-        private void readMC2ToolStripMenuItem_Click(object sender, EventArgs e)
+        private void readBillyHatchermc2TofbxToolStripMenuItem_Click(object sender, EventArgs e)
         {
             var openFileDialog = new OpenFileDialog()
             {
                 Title = "Select Billy Hatcher mc2 File",
-                Filter = "Billy Hatcher Map model *.mc2 files|*.mc2",
+                Filter = "Billy Hatcher Map Collision Model *.mc2 files|*.mc2",
                 FileName = "",
                 Multiselect = true
             };
@@ -5100,6 +5101,37 @@ namespace AquaModelTool
                         set.models[0].CreateTrueVertWeights();
 
                         FbxExporter.ExportToFile(aquaUI.aqua.aquaModels[0].models[0], aqn, new List<AquaMotion>(), Path.ChangeExtension(file, ".fbx"), new List<string>(), new List<Matrix4x4>(), false);
+                    }
+                }
+            }
+        }
+
+        private void billyHatcherprdArchiveExtractToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var openFileDialog = new OpenFileDialog()
+            {
+                Title = "Select Billy Hatcher prd File",
+                Filter = "Billy Hatcher PRD archive *.prd files|*.prd",
+                FileName = "",
+                Multiselect = true
+            };
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                foreach (var file in openFileDialog.FileNames)
+                {
+                    using (Stream stream = new MemoryStream(File.ReadAllBytes(file)))
+                    using (var streamReader = new BufferedStreamReader(stream, 8192))
+                    {
+                        var prd = new PRD(streamReader);
+                        var outDir = file + "_out";
+                        Directory.CreateDirectory(outDir);
+                        for (int i = 0; i < prd.files.Count; i++)
+                        {
+                            var prdFile = prd.files[i];
+                            var prdFileName = prd.fileNames[i];
+
+                            File.WriteAllBytes(Path.Combine(outDir, prdFileName), prdFile);
+                        }
                     }
                 }
             }

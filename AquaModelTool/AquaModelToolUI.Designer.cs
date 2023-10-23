@@ -178,7 +178,9 @@
             this.mdlToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.filePanel = new System.Windows.Forms.Panel();
             this.splitter1 = new System.Windows.Forms.Splitter();
-            this.readMC2ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator17 = new System.Windows.Forms.ToolStripSeparator();
+            this.readBillyHatchermc2TofbxToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.billyHatcherprdArchiveExtractToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -450,7 +452,10 @@
             this.convertDemonsSoulsPS5CmdlToFbxToolStripMenuItem,
             this.toolStripSeparator13,
             this.extractBorderBreakPS4FARCToolStripMenuItem,
-            this.setMOTBONEbinPathToolStripMenuItem});
+            this.setMOTBONEbinPathToolStripMenuItem,
+            this.toolStripSeparator17,
+            this.readBillyHatchermc2TofbxToolStripMenuItem,
+            this.billyHatcherprdArchiveExtractToolStripMenuItem});
             this.otherGamesToolStripMenuItem.Name = "otherGamesToolStripMenuItem";
             this.otherGamesToolStripMenuItem.Size = new System.Drawing.Size(344, 22);
             this.otherGamesToolStripMenuItem.Text = "Other Games";
@@ -1350,8 +1355,7 @@
             // debug3ToolStripItem
             // 
             this.debug3ToolStripItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.mdlToolStripMenuItem,
-            this.readMC2ToolStripMenuItem});
+            this.mdlToolStripMenuItem});
             this.debug3ToolStripItem.Name = "debug3ToolStripItem";
             this.debug3ToolStripItem.Size = new System.Drawing.Size(60, 23);
             this.debug3ToolStripItem.Text = "Debug3";
@@ -1359,7 +1363,7 @@
             // mdlToolStripMenuItem
             // 
             this.mdlToolStripMenuItem.Name = "mdlToolStripMenuItem";
-            this.mdlToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.mdlToolStripMenuItem.Size = new System.Drawing.Size(125, 22);
             this.mdlToolStripMenuItem.Text = "ReadMDL";
             this.mdlToolStripMenuItem.Click += new System.EventHandler(this.mdlToolStripMenuItem_Click);
             // 
@@ -1381,12 +1385,24 @@
             this.splitter1.TabIndex = 2;
             this.splitter1.TabStop = false;
             // 
-            // readMC2ToolStripMenuItem
+            // toolStripSeparator17
             // 
-            this.readMC2ToolStripMenuItem.Name = "readMC2ToolStripMenuItem";
-            this.readMC2ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.readMC2ToolStripMenuItem.Text = "ReadMC2";
-            this.readMC2ToolStripMenuItem.Click += new System.EventHandler(this.readMC2ToolStripMenuItem_Click);
+            this.toolStripSeparator17.Name = "toolStripSeparator17";
+            this.toolStripSeparator17.Size = new System.Drawing.Size(617, 6);
+            // 
+            // readBillyHatchermc2TofbxToolStripMenuItem
+            // 
+            this.readBillyHatchermc2TofbxToolStripMenuItem.Name = "readBillyHatchermc2TofbxToolStripMenuItem";
+            this.readBillyHatchermc2TofbxToolStripMenuItem.Size = new System.Drawing.Size(620, 22);
+            this.readBillyHatchermc2TofbxToolStripMenuItem.Text = "Billy Hatcher .mc2 to .fbx";
+            this.readBillyHatchermc2TofbxToolStripMenuItem.Click += new System.EventHandler(this.readBillyHatchermc2TofbxToolStripMenuItem_Click);
+            // 
+            // billyHatcherprdArchiveExtractToolStripMenuItem
+            // 
+            this.billyHatcherprdArchiveExtractToolStripMenuItem.Name = "billyHatcherprdArchiveExtractToolStripMenuItem";
+            this.billyHatcherprdArchiveExtractToolStripMenuItem.Size = new System.Drawing.Size(620, 22);
+            this.billyHatcherprdArchiveExtractToolStripMenuItem.Text = "Extract Billy Hatcher .prd archive";
+            this.billyHatcherprdArchiveExtractToolStripMenuItem.Click += new System.EventHandler(this.billyHatcherprdArchiveExtractToolStripMenuItem_Click);
             // 
             // AquaModelTool
             // 
@@ -1559,7 +1575,9 @@
         private System.Windows.Forms.ToolStripMenuItem readToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem debug3ToolStripItem;
         private System.Windows.Forms.ToolStripMenuItem mdlToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem readMC2ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator17;
+        private System.Windows.Forms.ToolStripMenuItem readBillyHatchermc2TofbxToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem billyHatcherprdArchiveExtractToolStripMenuItem;
     }
 }
 
