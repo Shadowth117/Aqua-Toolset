@@ -81,7 +81,8 @@ namespace AquaModelTool
             this.DragDrop += new DragEventHandler(AquaUI_DragDrop);
 #if !DEBUG
             debugToolStripMenuItem.Visible = false;        
-            debug2ToolStripMenuItem.Visible = false;        
+            debug2ToolStripMenuItem.Visible = false;
+            debug3ToolStripMenuItem.Visible = false;        
 #endif
             filenameButton.Enabled = false;
             this.Text = GetTitleString();
@@ -5132,6 +5133,52 @@ namespace AquaModelTool
 
                             File.WriteAllBytes(Path.Combine(outDir, prdFileName), prdFile);
                         }
+                    }
+                }
+            }
+        }
+
+        private void readLNDToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var openFileDialog = new OpenFileDialog()
+            {
+                Title = "Select Billy Hatcher LND File",
+                Filter = "Billy Hatcher LND archive *.lnd files|*.lnd",
+                FileName = "",
+                Multiselect = true
+            };
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                foreach (var file in openFileDialog.FileNames)
+                {
+                    using (Stream stream = new MemoryStream(File.ReadAllBytes(file)))
+                    using (var streamReader = new BufferedStreamReader(stream, 8192))
+                    {
+                        var lnd = new LND(streamReader);
+                        var outGvm = file + ".gvm";
+                        File.WriteAllBytes(outGvm, lnd.gvmBytes.ToArray());
+                    }
+                }
+            }
+        }
+
+        private void readPATHToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var openFileDialog = new OpenFileDialog()
+            {
+                Title = "Select Billy Hatcher PATH File",
+                Filter = "Billy Hatcher PATH *.pth files|*.pth",
+                FileName = "",
+                Multiselect = true
+            };
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                foreach (var file in openFileDialog.FileNames)
+                {
+                    using (Stream stream = new MemoryStream(File.ReadAllBytes(file)))
+                    using (var streamReader = new BufferedStreamReader(stream, 8192))
+                    {
+                        var path = new AquaModelLibrary.Extra.Ninja.BillyHatcher.PATH(streamReader);
                     }
                 }
             }

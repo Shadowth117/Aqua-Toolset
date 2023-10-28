@@ -90,6 +90,9 @@
             this.toolStripSeparator13 = new System.Windows.Forms.ToolStripSeparator();
             this.extractBorderBreakPS4FARCToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.setMOTBONEbinPathToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator17 = new System.Windows.Forms.ToolStripSeparator();
+            this.readBillyHatchermc2TofbxToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.billyHatcherprdArchiveExtractToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
             this.batchPSO2ToFBXToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.batchParsePSO2SetToTextToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -174,13 +177,12 @@
             this.readMMDToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.readOTRToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.readToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.debug3ToolStripItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.debug3ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mdlToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.readLNDToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.filePanel = new System.Windows.Forms.Panel();
             this.splitter1 = new System.Windows.Forms.Splitter();
-            this.toolStripSeparator17 = new System.Windows.Forms.ToolStripSeparator();
-            this.readBillyHatchermc2TofbxToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.billyHatcherprdArchiveExtractToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.readPATHToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -194,7 +196,7 @@
             this.filenameButton,
             this.debugToolStripMenuItem,
             this.debug2ToolStripMenuItem,
-            this.debug3ToolStripItem});
+            this.debug3ToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(384, 27);
@@ -704,6 +706,25 @@
             this.setMOTBONEbinPathToolStripMenuItem.Size = new System.Drawing.Size(620, 22);
             this.setMOTBONEbinPathToolStripMenuItem.Text = "Set Border Break PS4 bones (mot_bone.bin) path";
             this.setMOTBONEbinPathToolStripMenuItem.Click += new System.EventHandler(this.setMOTBONEbinPathToolStripMenuItem_Click);
+            // 
+            // toolStripSeparator17
+            // 
+            this.toolStripSeparator17.Name = "toolStripSeparator17";
+            this.toolStripSeparator17.Size = new System.Drawing.Size(617, 6);
+            // 
+            // readBillyHatchermc2TofbxToolStripMenuItem
+            // 
+            this.readBillyHatchermc2TofbxToolStripMenuItem.Name = "readBillyHatchermc2TofbxToolStripMenuItem";
+            this.readBillyHatchermc2TofbxToolStripMenuItem.Size = new System.Drawing.Size(620, 22);
+            this.readBillyHatchermc2TofbxToolStripMenuItem.Text = "Billy Hatcher .mc2 to .fbx";
+            this.readBillyHatchermc2TofbxToolStripMenuItem.Click += new System.EventHandler(this.readBillyHatchermc2TofbxToolStripMenuItem_Click);
+            // 
+            // billyHatcherprdArchiveExtractToolStripMenuItem
+            // 
+            this.billyHatcherprdArchiveExtractToolStripMenuItem.Name = "billyHatcherprdArchiveExtractToolStripMenuItem";
+            this.billyHatcherprdArchiveExtractToolStripMenuItem.Size = new System.Drawing.Size(620, 22);
+            this.billyHatcherprdArchiveExtractToolStripMenuItem.Text = "Extract Billy Hatcher .prd archive";
+            this.billyHatcherprdArchiveExtractToolStripMenuItem.Click += new System.EventHandler(this.billyHatcherprdArchiveExtractToolStripMenuItem_Click);
             // 
             // toolStripSeparator5
             // 
@@ -1352,20 +1373,29 @@
             this.readToolStripMenuItem.Text = "Read DEV/DIV";
             this.readToolStripMenuItem.Click += new System.EventHandler(this.readToolStripMenuItem_Click);
             // 
-            // debug3ToolStripItem
+            // debug3ToolStripMenuItem
             // 
-            this.debug3ToolStripItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.mdlToolStripMenuItem});
-            this.debug3ToolStripItem.Name = "debug3ToolStripItem";
-            this.debug3ToolStripItem.Size = new System.Drawing.Size(60, 23);
-            this.debug3ToolStripItem.Text = "Debug3";
+            this.debug3ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.mdlToolStripMenuItem,
+            this.readLNDToolStripMenuItem,
+            this.readPATHToolStripMenuItem});
+            this.debug3ToolStripMenuItem.Name = "debug3ToolStripMenuItem";
+            this.debug3ToolStripMenuItem.Size = new System.Drawing.Size(60, 23);
+            this.debug3ToolStripMenuItem.Text = "Debug3";
             // 
             // mdlToolStripMenuItem
             // 
             this.mdlToolStripMenuItem.Name = "mdlToolStripMenuItem";
-            this.mdlToolStripMenuItem.Size = new System.Drawing.Size(125, 22);
+            this.mdlToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.mdlToolStripMenuItem.Text = "ReadMDL";
             this.mdlToolStripMenuItem.Click += new System.EventHandler(this.mdlToolStripMenuItem_Click);
+            // 
+            // readLNDToolStripMenuItem
+            // 
+            this.readLNDToolStripMenuItem.Name = "readLNDToolStripMenuItem";
+            this.readLNDToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.readLNDToolStripMenuItem.Text = "ReadLND";
+            this.readLNDToolStripMenuItem.Click += new System.EventHandler(this.readLNDToolStripMenuItem_Click);
             // 
             // filePanel
             // 
@@ -1385,24 +1415,12 @@
             this.splitter1.TabIndex = 2;
             this.splitter1.TabStop = false;
             // 
-            // toolStripSeparator17
+            // readPATHToolStripMenuItem
             // 
-            this.toolStripSeparator17.Name = "toolStripSeparator17";
-            this.toolStripSeparator17.Size = new System.Drawing.Size(617, 6);
-            // 
-            // readBillyHatchermc2TofbxToolStripMenuItem
-            // 
-            this.readBillyHatchermc2TofbxToolStripMenuItem.Name = "readBillyHatchermc2TofbxToolStripMenuItem";
-            this.readBillyHatchermc2TofbxToolStripMenuItem.Size = new System.Drawing.Size(620, 22);
-            this.readBillyHatchermc2TofbxToolStripMenuItem.Text = "Billy Hatcher .mc2 to .fbx";
-            this.readBillyHatchermc2TofbxToolStripMenuItem.Click += new System.EventHandler(this.readBillyHatchermc2TofbxToolStripMenuItem_Click);
-            // 
-            // billyHatcherprdArchiveExtractToolStripMenuItem
-            // 
-            this.billyHatcherprdArchiveExtractToolStripMenuItem.Name = "billyHatcherprdArchiveExtractToolStripMenuItem";
-            this.billyHatcherprdArchiveExtractToolStripMenuItem.Size = new System.Drawing.Size(620, 22);
-            this.billyHatcherprdArchiveExtractToolStripMenuItem.Text = "Extract Billy Hatcher .prd archive";
-            this.billyHatcherprdArchiveExtractToolStripMenuItem.Click += new System.EventHandler(this.billyHatcherprdArchiveExtractToolStripMenuItem_Click);
+            this.readPATHToolStripMenuItem.Name = "readPATHToolStripMenuItem";
+            this.readPATHToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.readPATHToolStripMenuItem.Text = "ReadPATH";
+            this.readPATHToolStripMenuItem.Click += new System.EventHandler(this.readPATHToolStripMenuItem_Click);
             // 
             // AquaModelTool
             // 
@@ -1573,11 +1591,13 @@
         private System.Windows.Forms.ToolStripMenuItem mWCBNDExtractToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem readOTRToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem readToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem debug3ToolStripItem;
+        private System.Windows.Forms.ToolStripMenuItem debug3ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem mdlToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator17;
         private System.Windows.Forms.ToolStripMenuItem readBillyHatchermc2TofbxToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem billyHatcherprdArchiveExtractToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem readLNDToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem readPATHToolStripMenuItem;
     }
 }
 
