@@ -5111,8 +5111,8 @@ namespace AquaModelTool
         {
             var openFileDialog = new OpenFileDialog()
             {
-                Title = "Select Billy Hatcher prd File",
-                Filter = "Billy Hatcher PRD archive *.prd files|*.prd",
+                Title = "Select Billy Hatcher prd, glk File",
+                Filter = "Billy Hatcher PRD, GLK archive *.prd, .glk files|*.prd;*.glk",
                 FileName = "",
                 Multiselect = true
             };
@@ -5123,15 +5123,30 @@ namespace AquaModelTool
                     using (Stream stream = new MemoryStream(File.ReadAllBytes(file)))
                     using (var streamReader = new BufferedStreamReader(stream, 8192))
                     {
-                        var prd = new PRD(streamReader);
-                        var outDir = file + "_out";
-                        Directory.CreateDirectory(outDir);
-                        for (int i = 0; i < prd.files.Count; i++)
+                        if(Path.GetExtension(file) == ".prd")
                         {
-                            var prdFile = prd.files[i];
-                            var prdFileName = prd.fileNames[i];
+                            var prd = new PRD(streamReader);
+                            var outDir = file + "_out";
+                            Directory.CreateDirectory(outDir);
+                            for (int i = 0; i < prd.files.Count; i++)
+                            {
+                                var prdFile = prd.files[i];
+                                var prdFileName = prd.fileNames[i];
 
-                            File.WriteAllBytes(Path.Combine(outDir, prdFileName), prdFile);
+                                File.WriteAllBytes(Path.Combine(outDir, prdFileName), prdFile);
+                            }
+                        } else
+                        {
+                            var glk = new AquaModelLibrary.Extra.Ninja.BillyHatcher.GLK(streamReader);
+                            var outDir = file + "_out";
+                            Directory.CreateDirectory(outDir);
+                            for (int i = 0; i < glk.files.Count; i++)
+                            {
+                                var glkFile = glk.files[i];
+                                var glkFileName = glk.entries[i].fileName;
+
+                                File.WriteAllBytes(Path.Combine(outDir, glkFileName), glkFile);
+                            }
                         }
                     }
                 }

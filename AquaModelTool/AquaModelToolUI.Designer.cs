@@ -723,7 +723,7 @@
             // 
             this.billyHatcherprdArchiveExtractToolStripMenuItem.Name = "billyHatcherprdArchiveExtractToolStripMenuItem";
             this.billyHatcherprdArchiveExtractToolStripMenuItem.Size = new System.Drawing.Size(620, 22);
-            this.billyHatcherprdArchiveExtractToolStripMenuItem.Text = "Extract Billy Hatcher .prd archive";
+            this.billyHatcherprdArchiveExtractToolStripMenuItem.Text = "Extract Billy Hatcher .prd, .glk archive";
             this.billyHatcherprdArchiveExtractToolStripMenuItem.Click += new System.EventHandler(this.billyHatcherprdArchiveExtractToolStripMenuItem_Click);
             // 
             // toolStripSeparator5
