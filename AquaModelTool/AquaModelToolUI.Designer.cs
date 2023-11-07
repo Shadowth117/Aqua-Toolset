@@ -180,9 +180,9 @@
             this.debug3ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mdlToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.readLNDToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.readPATHToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.filePanel = new System.Windows.Forms.Panel();
             this.splitter1 = new System.Windows.Forms.Splitter();
-            this.readPATHToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -716,7 +716,7 @@
             // 
             this.readBillyHatchermc2TofbxToolStripMenuItem.Name = "readBillyHatchermc2TofbxToolStripMenuItem";
             this.readBillyHatchermc2TofbxToolStripMenuItem.Size = new System.Drawing.Size(620, 22);
-            this.readBillyHatchermc2TofbxToolStripMenuItem.Text = "Billy Hatcher .mc2 to .fbx";
+            this.readBillyHatchermc2TofbxToolStripMenuItem.Text = "Billy Hatcher .lnd, .mc2 to .fbx";
             this.readBillyHatchermc2TofbxToolStripMenuItem.Click += new System.EventHandler(this.readBillyHatchermc2TofbxToolStripMenuItem_Click);
             // 
             // billyHatcherprdArchiveExtractToolStripMenuItem
@@ -1397,6 +1397,13 @@
             this.readLNDToolStripMenuItem.Text = "ReadLND";
             this.readLNDToolStripMenuItem.Click += new System.EventHandler(this.readLNDToolStripMenuItem_Click);
             // 
+            // readPATHToolStripMenuItem
+            // 
+            this.readPATHToolStripMenuItem.Name = "readPATHToolStripMenuItem";
+            this.readPATHToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.readPATHToolStripMenuItem.Text = "ReadPATH";
+            this.readPATHToolStripMenuItem.Click += new System.EventHandler(this.readPATHToolStripMenuItem_Click);
+            // 
             // filePanel
             // 
             this.filePanel.AutoSize = true;
@@ -1414,13 +1421,6 @@
             this.splitter1.Size = new System.Drawing.Size(3, 253);
             this.splitter1.TabIndex = 2;
             this.splitter1.TabStop = false;
-            // 
-            // readPATHToolStripMenuItem
-            // 
-            this.readPATHToolStripMenuItem.Name = "readPATHToolStripMenuItem";
-            this.readPATHToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.readPATHToolStripMenuItem.Text = "ReadPATH";
-            this.readPATHToolStripMenuItem.Click += new System.EventHandler(this.readPATHToolStripMenuItem_Click);
             // 
             // AquaModelTool
             // 
