@@ -5092,6 +5092,7 @@ namespace AquaModelTool
                 foreach (var file in openFileDialog.FileNames)
                 {
                     NGSAquaObject aqp = null;
+                    NGSAquaObject aqpNight = null;
                     AquaNode aqn = null;
                     if (file.EndsWith(".mc2"))
                     {
@@ -5109,6 +5110,13 @@ namespace AquaModelTool
                                 File.WriteAllBytes(outGvm, lnd.gvmBytes.ToArray());
                             }
                             aqp = LNDConvert.LNDToAqua(lnd, out aqn);
+
+                            //Retail should only have 1 of these at most
+                            if(lnd.arcAltVertColorList.Count > 0)
+                            {
+                                lnd.arcVertDataSetList[0].VertColorData = lnd.arcAltVertColorList[0].vertColors;
+                                aqpNight = LNDConvert.LNDToAqua(lnd, out aqn);
+                            }
                         }
                     }
 
@@ -5123,6 +5131,20 @@ namespace AquaModelTool
                         set.models[0].CreateTrueVertWeights();
 
                         FbxExporter.ExportToFile(aquaUI.aqua.aquaModels[0].models[0], aqn, new List<AquaMotion>(), file + ".fbx", new List<string>(), new List<Matrix4x4>(), false);
+                    }
+                    if(aqpNight != null)
+                    {
+                        set.models.Clear();
+                        set.models.Add(aqpNight);
+                        if (set.models[0] != null && set.models[0].vtxlList.Count > 0 || set.models[0].tempTris[0].faceVerts.Count > 0)
+                        {
+                            aquaUI.aqua.aquaModels.Add(set);
+                            aquaUI.aqua.ConvertToNGSPSO2Mesh(false, false, false, true, false, false, false, true);
+                            set.models[0].ConvertToLegacyTypes();
+                            set.models[0].CreateTrueVertWeights();
+
+                            FbxExporter.ExportToFile(aquaUI.aqua.aquaModels[0].models[0], aqn, new List<AquaMotion>(), file + "_night.fbx", new List<string>(), new List<Matrix4x4>(), false);
+                        }
                     }
                 }
             }
@@ -5168,47 +5190,6 @@ namespace AquaModelTool
 
                                 File.WriteAllBytes(Path.Combine(outDir, glkFileName), glkFile);
                             }
-                        }
-                    }
-                }
-            }
-        }
-
-        private void readLNDToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            var openFileDialog = new OpenFileDialog()
-            {
-                Title = "Select Billy Hatcher LND File",
-                Filter = "Billy Hatcher LND archive *.lnd files|*.lnd",
-                FileName = "",
-                Multiselect = true
-            };
-            if (openFileDialog.ShowDialog() == DialogResult.OK)
-            {
-                foreach (var file in openFileDialog.FileNames)
-                {
-                    using (Stream stream = new MemoryStream(File.ReadAllBytes(file)))
-                    using (var streamReader = new BufferedStreamReader(stream, 8192))
-                    {
-                        var lnd = new LND(streamReader);
-                        var outGvm = file + ".gvm";
-                        if(lnd.gvmBytes != null)
-                        {
-                            File.WriteAllBytes(outGvm, lnd.gvmBytes.ToArray());
-                        }
-                        
-                        var aqp = LNDConvert.LNDToAqua(lnd, out var aqn);
-                        aquaUI.aqua.aquaModels.Clear();
-                        ModelSet set = new ModelSet();
-                        set.models.Add(aqp);
-                        if (set.models[0] != null && set.models[0].vtxlList.Count > 0 || set.models[0].tempTris[0].faceVerts.Count > 0)
-                        {
-                            aquaUI.aqua.aquaModels.Add(set);
-                            aquaUI.aqua.ConvertToNGSPSO2Mesh( false, false, false, true, false, false, true, true);
-                            set.models[0].ConvertToLegacyTypes();
-                            set.models[0].CreateTrueVertWeights();
-
-                            FbxExporter.ExportToFile(aquaUI.aqua.aquaModels[0].models[0], aqn, new List<AquaMotion>(), file + ".fbx", new List<string>(), new List<Matrix4x4>(), false);
                         }
                     }
                 }

@@ -179,7 +179,6 @@
             this.readToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.debug3ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mdlToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.readLNDToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.readPATHToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.filePanel = new System.Windows.Forms.Panel();
             this.splitter1 = new System.Windows.Forms.Splitter();
@@ -1377,7 +1376,6 @@
             // 
             this.debug3ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.mdlToolStripMenuItem,
-            this.readLNDToolStripMenuItem,
             this.readPATHToolStripMenuItem});
             this.debug3ToolStripMenuItem.Name = "debug3ToolStripMenuItem";
             this.debug3ToolStripMenuItem.Size = new System.Drawing.Size(60, 23);
@@ -1389,13 +1387,6 @@
             this.mdlToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.mdlToolStripMenuItem.Text = "ReadMDL";
             this.mdlToolStripMenuItem.Click += new System.EventHandler(this.mdlToolStripMenuItem_Click);
-            // 
-            // readLNDToolStripMenuItem
-            // 
-            this.readLNDToolStripMenuItem.Name = "readLNDToolStripMenuItem";
-            this.readLNDToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.readLNDToolStripMenuItem.Text = "ReadLND";
-            this.readLNDToolStripMenuItem.Click += new System.EventHandler(this.readLNDToolStripMenuItem_Click);
             // 
             // readPATHToolStripMenuItem
             // 
@@ -1596,7 +1587,6 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator17;
         private System.Windows.Forms.ToolStripMenuItem readBillyHatchermc2TofbxToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem billyHatcherprdArchiveExtractToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem readLNDToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem readPATHToolStripMenuItem;
     }
 }
