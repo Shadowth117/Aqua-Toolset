@@ -141,7 +141,6 @@
             this.aqnHighestXYZValuesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aqnDumpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.readFLTDToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.readTXLToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.readMRPToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.readLPSToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.debug2ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -155,9 +154,7 @@
             this.assimpExportToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.readNNMotionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.parseCAWSToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.readMCGMCPToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.readMSBToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.nullMCGUnksToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.parseCANIToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.parseDRBToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.sortCMSHToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -174,14 +171,12 @@
             this.readNSAToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.readNMBToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.readCMDLToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.readMMDToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.readOTRToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.readToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.debug3ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mdlToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.readPATHToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.filePanel = new System.Windows.Forms.Panel();
             this.splitter1 = new System.Windows.Forms.Splitter();
+            this.packBillyHatcherprdToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -456,7 +451,8 @@
             this.setMOTBONEbinPathToolStripMenuItem,
             this.toolStripSeparator17,
             this.readBillyHatchermc2TofbxToolStripMenuItem,
-            this.billyHatcherprdArchiveExtractToolStripMenuItem});
+            this.billyHatcherprdArchiveExtractToolStripMenuItem,
+            this.packBillyHatcherprdToolStripMenuItem});
             this.otherGamesToolStripMenuItem.Name = "otherGamesToolStripMenuItem";
             this.otherGamesToolStripMenuItem.Size = new System.Drawing.Size(344, 22);
             this.otherGamesToolStripMenuItem.Text = "Other Games";
@@ -906,7 +902,6 @@
             this.aqnHighestXYZValuesToolStripMenuItem,
             this.aqnDumpToolStripMenuItem,
             this.readFLTDToolStripMenuItem,
-            this.readTXLToolStripMenuItem,
             this.readMRPToolStripMenuItem,
             this.readLPSToolStripMenuItem});
             this.debugToolStripMenuItem.Name = "debugToolStripMenuItem";
@@ -1088,13 +1083,6 @@
             this.readFLTDToolStripMenuItem.Text = "ReadFLTD";
             this.readFLTDToolStripMenuItem.Click += new System.EventHandler(this.readFLTDToolStripMenuItem_Click);
             // 
-            // readTXLToolStripMenuItem
-            // 
-            this.readTXLToolStripMenuItem.Name = "readTXLToolStripMenuItem";
-            this.readTXLToolStripMenuItem.Size = new System.Drawing.Size(231, 22);
-            this.readTXLToolStripMenuItem.Text = "ReadTXL";
-            this.readTXLToolStripMenuItem.Click += new System.EventHandler(this.readTXLToolStripMenuItem_Click);
-            // 
             // readMRPToolStripMenuItem
             // 
             this.readMRPToolStripMenuItem.Name = "readMRPToolStripMenuItem";
@@ -1122,9 +1110,7 @@
             this.assimpExportToolStripMenuItem,
             this.readNNMotionToolStripMenuItem,
             this.parseCAWSToolStripMenuItem,
-            this.readMCGMCPToolStripMenuItem,
             this.readMSBToolStripMenuItem,
-            this.nullMCGUnksToolStripMenuItem,
             this.parseCANIToolStripMenuItem,
             this.parseDRBToolStripMenuItem,
             this.sortCMSHToolStripMenuItem,
@@ -1140,10 +1126,7 @@
             this.sTGExportBustedToolStripMenuItem,
             this.readNSAToolStripMenuItem,
             this.readNMBToolStripMenuItem,
-            this.readCMDLToolStripMenuItem,
-            this.readMMDToolStripMenuItem,
-            this.readOTRToolStripMenuItem,
-            this.readToolStripMenuItem});
+            this.readCMDLToolStripMenuItem});
             this.debug2ToolStripMenuItem.Name = "debug2ToolStripMenuItem";
             this.debug2ToolStripMenuItem.Size = new System.Drawing.Size(60, 23);
             this.debug2ToolStripMenuItem.Text = "Debug2";
@@ -1218,26 +1201,12 @@
             this.parseCAWSToolStripMenuItem.Text = "Parse CAWS";
             this.parseCAWSToolStripMenuItem.Click += new System.EventHandler(this.parseCAWSToolStripMenuItem_Click);
             // 
-            // readMCGMCPToolStripMenuItem
-            // 
-            this.readMCGMCPToolStripMenuItem.Name = "readMCGMCPToolStripMenuItem";
-            this.readMCGMCPToolStripMenuItem.Size = new System.Drawing.Size(231, 22);
-            this.readMCGMCPToolStripMenuItem.Text = "Read MCG, MCP";
-            this.readMCGMCPToolStripMenuItem.Click += new System.EventHandler(this.readMCGMCPToolStripMenuItem_Click);
-            // 
             // readMSBToolStripMenuItem
             // 
             this.readMSBToolStripMenuItem.Name = "readMSBToolStripMenuItem";
             this.readMSBToolStripMenuItem.Size = new System.Drawing.Size(231, 22);
             this.readMSBToolStripMenuItem.Text = "Read MSB";
             this.readMSBToolStripMenuItem.Click += new System.EventHandler(this.readMSBToolStripMenuItem_Click);
-            // 
-            // nullMCGUnksToolStripMenuItem
-            // 
-            this.nullMCGUnksToolStripMenuItem.Name = "nullMCGUnksToolStripMenuItem";
-            this.nullMCGUnksToolStripMenuItem.Size = new System.Drawing.Size(231, 22);
-            this.nullMCGUnksToolStripMenuItem.Text = "Null MCG Unks";
-            this.nullMCGUnksToolStripMenuItem.Click += new System.EventHandler(this.nullMCGUnksToolStripMenuItem_Click);
             // 
             // parseCANIToolStripMenuItem
             // 
@@ -1351,27 +1320,6 @@
             this.readCMDLToolStripMenuItem.Text = "ReadCMDL";
             this.readCMDLToolStripMenuItem.Click += new System.EventHandler(this.readCMDLToolStripMenuItem_Click);
             // 
-            // readMMDToolStripMenuItem
-            // 
-            this.readMMDToolStripMenuItem.Name = "readMMDToolStripMenuItem";
-            this.readMMDToolStripMenuItem.Size = new System.Drawing.Size(231, 22);
-            this.readMMDToolStripMenuItem.Text = "ReadMMD";
-            this.readMMDToolStripMenuItem.Click += new System.EventHandler(this.readMMDToolStripMenuItem_Click);
-            // 
-            // readOTRToolStripMenuItem
-            // 
-            this.readOTRToolStripMenuItem.Name = "readOTRToolStripMenuItem";
-            this.readOTRToolStripMenuItem.Size = new System.Drawing.Size(231, 22);
-            this.readOTRToolStripMenuItem.Text = "ReadOTR";
-            this.readOTRToolStripMenuItem.Click += new System.EventHandler(this.readOTRToolStripMenuItem_Click);
-            // 
-            // readToolStripMenuItem
-            // 
-            this.readToolStripMenuItem.Name = "readToolStripMenuItem";
-            this.readToolStripMenuItem.Size = new System.Drawing.Size(231, 22);
-            this.readToolStripMenuItem.Text = "Read DEV/DIV";
-            this.readToolStripMenuItem.Click += new System.EventHandler(this.readToolStripMenuItem_Click);
-            // 
             // debug3ToolStripMenuItem
             // 
             this.debug3ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -1384,14 +1332,14 @@
             // mdlToolStripMenuItem
             // 
             this.mdlToolStripMenuItem.Name = "mdlToolStripMenuItem";
-            this.mdlToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.mdlToolStripMenuItem.Size = new System.Drawing.Size(128, 22);
             this.mdlToolStripMenuItem.Text = "ReadMDL";
             this.mdlToolStripMenuItem.Click += new System.EventHandler(this.mdlToolStripMenuItem_Click);
             // 
             // readPATHToolStripMenuItem
             // 
             this.readPATHToolStripMenuItem.Name = "readPATHToolStripMenuItem";
-            this.readPATHToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.readPATHToolStripMenuItem.Size = new System.Drawing.Size(128, 22);
             this.readPATHToolStripMenuItem.Text = "ReadPATH";
             this.readPATHToolStripMenuItem.Click += new System.EventHandler(this.readPATHToolStripMenuItem_Click);
             // 
@@ -1412,6 +1360,13 @@
             this.splitter1.Size = new System.Drawing.Size(3, 253);
             this.splitter1.TabIndex = 2;
             this.splitter1.TabStop = false;
+            // 
+            // packBillyHatcherprdToolStripMenuItem
+            // 
+            this.packBillyHatcherprdToolStripMenuItem.Name = "packBillyHatcherprdToolStripMenuItem";
+            this.packBillyHatcherprdToolStripMenuItem.Size = new System.Drawing.Size(620, 22);
+            this.packBillyHatcherprdToolStripMenuItem.Text = "Pack Billy Hatcher .prd";
+            this.packBillyHatcherprdToolStripMenuItem.Click += new System.EventHandler(this.packBillyHatcherprdToolStripMenuItem_Click);
             // 
             // AquaModelTool
             // 
@@ -1496,7 +1451,6 @@
         private System.Windows.Forms.ToolStripMenuItem aqnDumpToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem readFLTDToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem testCMXBuild;
-        private System.Windows.Forms.ToolStripMenuItem readTXLToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem assembleNGSMapToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem readMRPToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem readLPSToolStripMenuItem;
@@ -1538,11 +1492,9 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator10;
         private System.Windows.Forms.ToolStripMenuItem convertPSO2FileTojsonToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem convertPSO2FilejsonToPSO2FileToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem readMCGMCPToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem readMSBToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem generateMCGMCPToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator11;
-        private System.Windows.Forms.ToolStripMenuItem nullMCGUnksToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem parseCANIToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem parseDRBToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem applyMaterialNamesToMeshToolStripMenuItem;
@@ -1576,18 +1528,16 @@
         private System.Windows.Forms.ToolStripMenuItem readNSAToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem readNMBToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem readCMDLToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem readMMDToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator16;
         private System.Windows.Forms.ToolStripMenuItem mWCBNDPackToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem mWCBNDExtractToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem readOTRToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem readToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem debug3ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem mdlToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator17;
         private System.Windows.Forms.ToolStripMenuItem readBillyHatchermc2TofbxToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem billyHatcherprdArchiveExtractToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem readPATHToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem packBillyHatcherprdToolStripMenuItem;
     }
 }
 

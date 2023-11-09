@@ -15,6 +15,7 @@ using AquaModelLibrary.Nova;
 using AquaModelLibrary.ToolUX;
 using AquaModelLibrary.ToolUX.CommonForms;
 using AquaModelLibrary.Zero;
+using Microsoft.Win32;
 using Microsoft.WindowsAPICodePack.Dialogs;
 using Newtonsoft.Json;
 using Reloaded.Memory.Streams;
@@ -5171,13 +5172,15 @@ namespace AquaModelTool
                             var prd = new PRD(streamReader);
                             var outDir = file + "_out";
                             Directory.CreateDirectory(outDir);
+                            StringBuilder sb = new StringBuilder();
                             for (int i = 0; i < prd.files.Count; i++)
                             {
                                 var prdFile = prd.files[i];
                                 var prdFileName = prd.fileNames[i];
-
+                                sb.AppendLine(prdFileName);
                                 File.WriteAllBytes(Path.Combine(outDir, prdFileName), prdFile);
                             }
+                            
                         } else
                         {
                             var glk = new AquaModelLibrary.Extra.Ninja.BillyHatcher.GLK(streamReader);
@@ -5214,6 +5217,39 @@ namespace AquaModelTool
                     {
                         var path = new AquaModelLibrary.Extra.Ninja.BillyHatcher.PATH(streamReader);
                     }
+                }
+            }
+        }
+
+        private void packBillyHatcherprdToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var commonOpenFileDialog = new CommonOpenFileDialog()
+            {
+                Title = "Select Billy Hatcher folder to pack",
+                Multiselect = true,
+                IsFolderPicker = true
+            };
+            if (commonOpenFileDialog.ShowDialog() == CommonFileDialogResult.Ok)
+            {
+                foreach (var folder in commonOpenFileDialog.FileNames)
+                {
+                    PRD prd = new PRD();
+                    var files = Directory.GetFiles(folder);
+                    foreach (var fileName in files)
+                    {
+                        prd.fileNames.Add(Path.GetFileName(fileName));
+                        prd.files.Add(File.ReadAllBytes(fileName));
+                    }
+
+                    var outName = folder;
+                    if(outName.EndsWith("_out"))
+                    {
+                        outName = outName.Substring(0, outName.Length - 4);
+                    } else
+                    {
+                        outName += ".prd";
+                    }
+                    File.WriteAllBytes(outName, prd.GetBytes());
                 }
             }
         }
