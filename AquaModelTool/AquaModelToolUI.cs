@@ -5092,12 +5092,16 @@ namespace AquaModelTool
             {
                 foreach (var file in openFileDialog.FileNames)
                 {
-                    NGSAquaObject aqp = null;
-                    NGSAquaObject aqpNight = null;
-                    AquaNode aqn = null;
+                    var outDir = file + "_out";
+                    Directory.CreateDirectory(outDir);
+                    List<LNDConvert.ModelData> aqpList = new List<LNDConvert.ModelData>();
                     if (file.EndsWith(".mc2"))
                     {
-                        aqp = MC2Convert.ConvertMC2(File.ReadAllBytes(file), out aqn);
+                        LNDConvert.ModelData modelData = new LNDConvert.ModelData();
+
+                        modelData.aqp = MC2Convert.ConvertMC2(File.ReadAllBytes(file), out modelData.aqn);
+                        modelData.aqn = AquaNode.GenerateBasicAQN();
+                        aqpList.Add(modelData);
                     }
                     else
                     {
@@ -5105,38 +5109,28 @@ namespace AquaModelTool
                         using (var streamReader = new BufferedStreamReader(stream, 8192))
                         {
                             var lnd = new LND(streamReader);
-                            var outGvm = file + ".gvm";
                             if (lnd.gvmBytes != null)
                             {
-                                File.WriteAllBytes(outGvm, lnd.gvmBytes.ToArray());
+                                File.WriteAllBytes(Path.Combine(outDir, $"{Path.GetFileNameWithoutExtension(file)}.gvm"), lnd.gvmBytes.ToArray());
                             }
-                            aqp = LNDConvert.LNDToAqua(lnd, out aqn);
-
-                            //Retail should only have 1 of these at most
-                            if(lnd.arcAltVertColorList.Count > 0)
-                            {
-                                lnd.arcVertDataSetList[0].VertColorData = lnd.arcAltVertColorList[0].vertColors;
-                                aqpNight = LNDConvert.LNDToAqua(lnd, out aqn);
-                            }
+                            aqpList = LNDConvert.LNDToAqua(lnd);
                         }
                     }
 
-                    aquaUI.aqua.aquaModels.Clear();
-                    ModelSet set = new ModelSet();
-                    set.models.Add(aqp);
-                    if (set.models[0] != null && set.models[0].vtxlList.Count > 0 || set.models[0].tempTris[0].faceVerts.Count > 0)
+                    foreach(var modelData in aqpList)
                     {
-                        aquaUI.aqua.aquaModels.Add(set);
-                        aquaUI.aqua.ConvertToNGSPSO2Mesh(false, false, false, true, false, false, false, true);
-                        set.models[0].ConvertToLegacyTypes();
-                        set.models[0].CreateTrueVertWeights();
+                        var motionList = new List<AquaMotion>();
+                        var motionStrings = new List<string>();
+                        if(modelData.aqm != null)
+                        {
+                            motionStrings.Add("LNDMotion");
+                            motionList.Add(modelData.aqm);
+                        }
 
-                        FbxExporter.ExportToFile(aquaUI.aqua.aquaModels[0].models[0], aqn, new List<AquaMotion>(), file + ".fbx", new List<string>(), new List<Matrix4x4>(), false);
-                    }
-                    if(aqpNight != null)
-                    {
-                        set.models.Clear();
-                        set.models.Add(aqpNight);
+                        //Model
+                        aquaUI.aqua.aquaModels.Clear();
+                        ModelSet set = new ModelSet();
+                        set.models.Add(modelData.aqp);
                         if (set.models[0] != null && set.models[0].vtxlList.Count > 0 || set.models[0].tempTris[0].faceVerts.Count > 0)
                         {
                             aquaUI.aqua.aquaModels.Add(set);
@@ -5144,7 +5138,23 @@ namespace AquaModelTool
                             set.models[0].ConvertToLegacyTypes();
                             set.models[0].CreateTrueVertWeights();
 
-                            FbxExporter.ExportToFile(aquaUI.aqua.aquaModels[0].models[0], aqn, new List<AquaMotion>(), file + "_night.fbx", new List<string>(), new List<Matrix4x4>(), false);
+                            FbxExporter.ExportToFile(aquaUI.aqua.aquaModels[0].models[0], modelData.aqn, motionList, Path.Combine(outDir,Path.GetFileNameWithoutExtension(file) + $"_{modelData.name}.fbx"), motionStrings, new List<Matrix4x4>(), false);
+                        }
+                        if(modelData.nightAqp != null)
+                        {
+                            //Night model
+                            aquaUI.aqua.aquaModels.Clear();
+                            set = new ModelSet();
+                            set.models.Add(modelData.nightAqp);
+                            if (set.models[0] != null && set.models[0].vtxlList.Count > 0 || set.models[0].tempTris[0].faceVerts.Count > 0)
+                            {
+                                aquaUI.aqua.aquaModels.Add(set);
+                                aquaUI.aqua.ConvertToNGSPSO2Mesh(false, false, false, true, false, false, false, true);
+                                set.models[0].ConvertToLegacyTypes();
+                                set.models[0].CreateTrueVertWeights();
+
+                                FbxExporter.ExportToFile(aquaUI.aqua.aquaModels[0].models[0], modelData.aqn, motionList, Path.Combine(outDir, Path.GetFileNameWithoutExtension(file) + $"_{modelData.name}_night.fbx"), motionStrings, new List<Matrix4x4>(), false);
+                            }
                         }
                     }
                 }
@@ -5250,6 +5260,49 @@ namespace AquaModelTool
                         outName += ".prd";
                     }
                     File.WriteAllBytes(outName, prd.GetBytes());
+                }
+            }
+        }
+
+        private void billyHatcherbinTextTotxtToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var openFileDialog = new OpenFileDialog()
+            {
+                Title = "Select Billy Hatcher text File",
+                Filter = "Billy Hatcher  *.bin files|*.bin",
+                FileName = "",
+                Multiselect = true
+            };
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                foreach (var file in openFileDialog.FileNames)
+                {
+                    using (Stream stream = new MemoryStream(File.ReadAllBytes(file)))
+                    using (var streamReader = new BufferedStreamReader(stream, 8192))
+                    {
+                        var msg = new MesBin(file, streamReader);
+                        File.WriteAllLines(file + "_out.txt", msg.strings);
+                    }
+                }
+            }
+        }
+
+        private void billyHatcherbintxtBackTobinToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var openFileDialog = new OpenFileDialog()
+            {
+                Title = "Select Billy Hatcher bin txt File",
+                Filter = "Billy Hatcher  *.txt files|*.txt",
+                FileName = "",
+                Multiselect = true
+            };
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                foreach (var file in openFileDialog.FileNames)
+                {
+                    var msg = new MesBin();
+                    msg.strings = File.ReadAllLines(file).ToList();
+                    File.WriteAllBytes(file + ".bin", msg.GetBytes());
                 }
             }
         }

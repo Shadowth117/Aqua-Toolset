@@ -380,3 +380,5 @@ WeaponInstaller/obj/
 WeaponInstaller/obj/Debug/net5.0-windows/
 x64/
 enc_temp_folder/
+
+NvTriStrip.Net
