@@ -5098,10 +5098,18 @@ namespace AquaModelTool
                     if (file.EndsWith(".mc2"))
                     {
                         LNDConvert.ModelData modelData = new LNDConvert.ModelData();
-
-                        modelData.aqp = MC2Convert.ConvertMC2(File.ReadAllBytes(file), out modelData.aqn);
-                        modelData.aqn = AquaNode.GenerateBasicAQN();
-                        aqpList.Add(modelData);
+                        MC2 mc2;
+                        using (Stream stream = new MemoryStream(File.ReadAllBytes(file)))
+                        using (var streamReader = new BufferedStreamReader(stream, 8192))
+                        {
+                            mc2 = new MC2(streamReader);
+                        }
+                        var scene = MC2Convert.AssimpMC2Export(file, mc2);
+                       
+                        var ctx = new Assimp.AssimpContext();
+                        var path = Path.Combine(outDir, Path.GetFileName(file) + ".fbx");
+                        ctx.ExportFile(scene, path, "fbx", Assimp.PostProcessSteps.FlipUVs);
+                        continue;
                     }
                     else
                     {
@@ -5303,6 +5311,25 @@ namespace AquaModelTool
                     var msg = new MesBin();
                     msg.strings = File.ReadAllLines(file).ToList();
                     File.WriteAllBytes(file + ".bin", msg.GetBytes());
+                }
+            }
+        }
+
+        private void fbxToBillyHatchermc2ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var openFileDialog = new OpenFileDialog()
+            {
+                Title = "Select FBX File",
+                Filter = "Filmbox *.fbx files|*.fbx",
+                FileName = "",
+                Multiselect = true
+            };
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                foreach (var file in openFileDialog.FileNames)
+                {
+                    var mc2 = MC2Convert.ConvertToMC2(file);
+                    File.WriteAllBytes(Path.ChangeExtension(file, ".mc2"), mc2.GetBytes());
                 }
             }
         }
