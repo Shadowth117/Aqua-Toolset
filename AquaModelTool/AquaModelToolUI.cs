@@ -5090,6 +5090,17 @@ namespace AquaModelTool
             };
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
+                int depthMax0 = 0;
+                int depthMax1 = 0;
+                int depthMax2 = 0;
+                int depthMax3 = 0;
+                int depthMax4 = 0;
+                int depthMax5 = 0;
+                int depthMax6 = 0;
+                int depthMax7 = 0;
+                List<int> BAMS1Values = new List<int>();
+                List<int> BAMS2Values = new List<int>();
+                List<int> BAMS3Values = new List<int>();
                 foreach (var file in openFileDialog.FileNames)
                 {
                     var outDir = file + "_out";
@@ -5105,7 +5116,53 @@ namespace AquaModelTool
                             mc2 = new MC2(streamReader);
                         }
                         var scene = MC2Convert.AssimpMC2Export(file, mc2);
-                       
+                        List<ushort> faceIndices = new List<ushort>();
+                        for (int i = 0; i < mc2.faceData.Count; i++)
+                        {
+                            faceIndices.Add((ushort)i);
+                        }
+                        
+                        for (int i = 0; i < mc2.sectors.Count; i++)
+                        {
+                            var sector = mc2.sectors[i];
+                            bool hasChild = sector.childId0 != 0 || sector.childId1 != 0 || sector.childId2 != 0 || sector.childId3 != 0;
+                            bool hasNullChild = sector.childId0 == 0 || sector.childId1 == 0 || sector.childId2 == 0 || sector.childId3 == 0;
+                            switch(sector.depth)
+                            {
+                                case 0:
+                                    depthMax0 = Math.Max(depthMax0, sector.stripData.Count);
+                                    break;
+                                case 1:
+                                    depthMax1 = Math.Max(depthMax1, sector.stripData.Count);
+                                    break;
+                                case 2:
+                                    depthMax2 = Math.Max(depthMax2, sector.stripData.Count);
+                                    break;
+                                case 3:
+                                    depthMax3 = Math.Max(depthMax3, sector.stripData.Count);
+                                    break;
+                                case 4:
+                                    depthMax4 = Math.Max(depthMax4, sector.stripData.Count);
+                                    break;
+                                case 5:
+                                    depthMax5 = Math.Max(depthMax5, sector.stripData.Count);
+                                    break;
+                                case 6:
+                                    depthMax6 = Math.Max(depthMax6, sector.stripData.Count);
+                                    break;
+                            }
+                        }
+                        var ogSectors = mc2.sectors;
+                        var ogRootSector = mc2.rootSector;
+                        mc2.rootSector = null;
+                        mc2.sectors = new List<MC2.MC2Sector>();
+
+                        /*
+                        mc2.GetSectorMaxRanges(out var xRange, out var zRange);
+                        mc2.PopulateFaceBounds();
+                        mc2.rootSector = mc2.SubdivideSector(xRange, zRange, faceIndices, 0);
+                        File.WriteAllBytes(file + "edit.mc2", mc2.GetBytes());
+                        */
                         var ctx = new Assimp.AssimpContext();
                         var path = Path.Combine(outDir, Path.GetFileName(file) + ".fbx");
                         ctx.ExportFile(scene, path, "fbx", Assimp.PostProcessSteps.FlipUVs);
@@ -5120,6 +5177,42 @@ namespace AquaModelTool
                             if (lnd.gvmBytes != null)
                             {
                                 File.WriteAllBytes(Path.Combine(outDir, $"{Path.GetFileNameWithoutExtension(file)}.gvm"), lnd.gvmBytes.ToArray());
+                            }
+                            foreach (var set in lnd.arcLndModels)
+                            {
+                                foreach (var bnd in set.model.arcBoundingList)
+                                {
+                                    if (!BAMS1Values.Contains(bnd.BAMSX))
+                                    {
+                                        BAMS1Values.Add(bnd.BAMSX);
+                                    }
+                                    if (!BAMS2Values.Contains(bnd.BAMSY))
+                                    {
+                                        BAMS2Values.Add(bnd.BAMSY);
+                                    }
+                                    if (!BAMS3Values.Contains(bnd.BAMSZ))
+                                    {
+                                        BAMS3Values.Add(bnd.BAMSZ);
+                                    }
+                                }
+                            }
+                            foreach (var set in lnd.arcLndAnimatedMeshDataList)
+                            {
+                                foreach (var bnd in set.model.arcBoundingList)
+                                {
+                                    if (!BAMS1Values.Contains(bnd.BAMSX))
+                                    {
+                                        BAMS1Values.Add(bnd.BAMSX);
+                                    }
+                                    if (!BAMS2Values.Contains(bnd.BAMSY))
+                                    {
+                                        BAMS2Values.Add(bnd.BAMSY);
+                                    }
+                                    if (!BAMS3Values.Contains(bnd.BAMSZ))
+                                    {
+                                        BAMS3Values.Add(bnd.BAMSZ);
+                                    }
+                                }
                             }
                             aqpList = LNDConvert.LNDToAqua(lnd);
                         }
@@ -5162,6 +5255,22 @@ namespace AquaModelTool
                                 set.models[0].CreateTrueVertWeights();
 
                                 FbxExporter.ExportToFile(aquaUI.aqua.aquaModels[0].models[0], modelData.aqn, motionList, Path.Combine(outDir, Path.GetFileNameWithoutExtension(file) + $"_{modelData.name}_night.fbx"), motionStrings, new List<Matrix4x4>(), false);
+                            }
+                        }
+                        if (modelData.placementAqp != null)
+                        {
+                            //Placement model
+                            aquaUI.aqua.aquaModels.Clear();
+                            set = new ModelSet();
+                            set.models.Add(modelData.placementAqp);
+                            if (set.models[0] != null && set.models[0].vtxlList.Count > 0 || set.models[0].tempTris[0].faceVerts.Count > 0)
+                            {
+                                aquaUI.aqua.aquaModels.Add(set);
+                                aquaUI.aqua.ConvertToNGSPSO2Mesh(false, false, false, true, false, false, false, true);
+                                set.models[0].ConvertToLegacyTypes();
+                                set.models[0].CreateTrueVertWeights();
+
+                                FbxExporter.ExportToFile(aquaUI.aqua.aquaModels[0].models[0], modelData.placementAqn, new List<AquaMotion>(), Path.Combine(outDir, Path.GetFileNameWithoutExtension(file) + $"_{modelData.name}_transform.fbx"), new List<string>(), new List<Matrix4x4>(), false);
                             }
                         }
                     }
@@ -5330,6 +5439,88 @@ namespace AquaModelTool
                 {
                     var mc2 = MC2Convert.ConvertToMC2(file);
                     File.WriteAllBytes(Path.ChangeExtension(file, ".mc2"), mc2.GetBytes());
+                }
+            }
+        }
+
+        private void oldBillyMC2ConvertToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var openFileDialog = new OpenFileDialog()
+            {
+                Title = "Select Billy Hatcher lnd, mc2 File",
+                Filter = "Billy Hatcher Map Render Model *.lnd, Collision Model *.mc2 files|*.lnd;*.mc2|Billy Hatcher Map Render Model *.lnd|*.lnd|Billy Hatcher Map Collision Model *.mc2|*.mc2",
+                FileName = "",
+                Multiselect = true
+            };
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                foreach (var file in openFileDialog.FileNames)
+                {
+                    var outDir = file + "_out";
+                    Directory.CreateDirectory(outDir);
+                    List<LNDConvert.ModelData> aqpList = new List<LNDConvert.ModelData>();
+                    if (file.EndsWith(".mc2"))
+                    {
+                        LNDConvert.ModelData modelData = new LNDConvert.ModelData();
+
+                        modelData.aqp = MC2Convert.ConvertMC2(File.ReadAllBytes(file), out modelData.aqn);
+                        modelData.aqn = AquaNode.GenerateBasicAQN();
+                        aqpList.Add(modelData);
+                    }
+                    else
+                    {
+                        using (Stream stream = new MemoryStream(File.ReadAllBytes(file)))
+                        using (var streamReader = new BufferedStreamReader(stream, 8192))
+                        {
+                            var lnd = new LND(streamReader);
+                            if (lnd.gvmBytes != null)
+                            {
+                                File.WriteAllBytes(Path.Combine(outDir, $"{Path.GetFileNameWithoutExtension(file)}.gvm"), lnd.gvmBytes.ToArray());
+                            }
+                            aqpList = LNDConvert.LNDToAqua(lnd);
+                        }
+                    }
+
+                    foreach (var modelData in aqpList)
+                    {
+                        var motionList = new List<AquaMotion>();
+                        var motionStrings = new List<string>();
+                        if (modelData.aqm != null)
+                        {
+                            motionStrings.Add("LNDMotion");
+                            motionList.Add(modelData.aqm);
+                        }
+
+                        //Model
+                        aquaUI.aqua.aquaModels.Clear();
+                        ModelSet set = new ModelSet();
+                        set.models.Add(modelData.aqp);
+                        if (set.models[0] != null && set.models[0].vtxlList.Count > 0 || set.models[0].tempTris[0].faceVerts.Count > 0)
+                        {
+                            aquaUI.aqua.aquaModels.Add(set);
+                            aquaUI.aqua.ConvertToNGSPSO2Mesh(false, false, false, true, false, false, false, true);
+                            set.models[0].ConvertToLegacyTypes();
+                            set.models[0].CreateTrueVertWeights();
+
+                            FbxExporter.ExportToFile(aquaUI.aqua.aquaModels[0].models[0], modelData.aqn, motionList, Path.Combine(outDir, Path.GetFileNameWithoutExtension(file) + $"_{modelData.name}.fbx"), motionStrings, new List<Matrix4x4>(), false);
+                        }
+                        if (modelData.nightAqp != null)
+                        {
+                            //Night model
+                            aquaUI.aqua.aquaModels.Clear();
+                            set = new ModelSet();
+                            set.models.Add(modelData.nightAqp);
+                            if (set.models[0] != null && set.models[0].vtxlList.Count > 0 || set.models[0].tempTris[0].faceVerts.Count > 0)
+                            {
+                                aquaUI.aqua.aquaModels.Add(set);
+                                aquaUI.aqua.ConvertToNGSPSO2Mesh(false, false, false, true, false, false, false, true);
+                                set.models[0].ConvertToLegacyTypes();
+                                set.models[0].CreateTrueVertWeights();
+
+                                FbxExporter.ExportToFile(aquaUI.aqua.aquaModels[0].models[0], modelData.aqn, motionList, Path.Combine(outDir, Path.GetFileNameWithoutExtension(file) + $"_{modelData.name}_night.fbx"), motionStrings, new List<Matrix4x4>(), false);
+                            }
+                        }
+                    }
                 }
             }
         }

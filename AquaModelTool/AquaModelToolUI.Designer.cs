@@ -179,6 +179,7 @@
             this.filePanel = new System.Windows.Forms.Panel();
             this.splitter1 = new System.Windows.Forms.Splitter();
             this.fbxToBillyHatchermc2ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.oldBillyMC2ConvertToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -681,11 +682,11 @@
             this.setMOTBONEbinPathToolStripMenuItem,
             this.toolStripSeparator7,
             this.readBillyHatchermc2TofbxToolStripMenuItem,
+            this.fbxToBillyHatchermc2ToolStripMenuItem,
             this.billyHatcherprdArchiveExtractToolStripMenuItem,
             this.packBillyHatcherprdToolStripMenuItem,
             this.billyHatcherbinTextTotxtToolStripMenuItem,
-            this.billyHatcherbintxtBackTobinToolStripMenuItem,
-            this.fbxToBillyHatchermc2ToolStripMenuItem});
+            this.billyHatcherbintxtBackTobinToolStripMenuItem});
             this.otherGamesToolStripMenuItem2.Name = "otherGamesToolStripMenuItem2";
             this.otherGamesToolStripMenuItem2.Size = new System.Drawing.Size(344, 22);
             this.otherGamesToolStripMenuItem2.Text = "Other Sega Games";
@@ -1347,7 +1348,8 @@
             // 
             this.debug3ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.mdlToolStripMenuItem,
-            this.readPATHToolStripMenuItem});
+            this.readPATHToolStripMenuItem,
+            this.oldBillyMC2ConvertToolStripMenuItem});
             this.debug3ToolStripMenuItem.Name = "debug3ToolStripMenuItem";
             this.debug3ToolStripMenuItem.Size = new System.Drawing.Size(60, 23);
             this.debug3ToolStripMenuItem.Text = "Debug3";
@@ -1390,6 +1392,13 @@
             this.fbxToBillyHatchermc2ToolStripMenuItem.Size = new System.Drawing.Size(427, 22);
             this.fbxToBillyHatchermc2ToolStripMenuItem.Text = ".fbx to Billy Hatcher .mc2";
             this.fbxToBillyHatchermc2ToolStripMenuItem.Click += new System.EventHandler(this.fbxToBillyHatchermc2ToolStripMenuItem_Click);
+            // 
+            // oldBillyMC2ConvertToolStripMenuItem
+            // 
+            this.oldBillyMC2ConvertToolStripMenuItem.Name = "oldBillyMC2ConvertToolStripMenuItem";
+            this.oldBillyMC2ConvertToolStripMenuItem.Size = new System.Drawing.Size(189, 22);
+            this.oldBillyMC2ConvertToolStripMenuItem.Text = "Old Billy MC2 convert";
+            this.oldBillyMC2ConvertToolStripMenuItem.Click += new System.EventHandler(this.oldBillyMC2ConvertToolStripMenuItem_Click);
             // 
             // AquaModelTool
             // 
@@ -1563,6 +1572,7 @@
         private System.Windows.Forms.ToolStripMenuItem billyHatcherbinTextTotxtToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem billyHatcherbintxtBackTobinToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem fbxToBillyHatchermc2ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem oldBillyMC2ConvertToolStripMenuItem;
     }
 }
 
