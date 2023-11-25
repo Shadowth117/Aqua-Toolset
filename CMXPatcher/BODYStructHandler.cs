@@ -26,7 +26,7 @@ namespace CMXPatcher
             outText.AppendLine("int_2C = " + body.body2.int_2C.ToString(new CultureInfo("en-US")));
 
             outText.AppendLine("costumeSoundId = " + body.body2.costumeSoundId.ToString(new CultureInfo("en-US")));
-            outText.AppendLine("reference_id = " + body.body2.reference_id.ToString(new CultureInfo("en-US")));
+            outText.AppendLine("headId = " + body.body2.headId.ToString(new CultureInfo("en-US")));
             outText.AppendLine("int_38 = " + body.body2.int_38.ToString(new CultureInfo("en-US")));
             outText.AppendLine("int_3C = " + body.body2.int_3C.ToString(new CultureInfo("en-US")));
 
@@ -99,7 +99,8 @@ namespace CMXPatcher
                         body.body2.costumeSoundId = Int32.Parse(contents[1], new CultureInfo("en-US"));
                         break;
                     case "reference_id":
-                        body.body2.reference_id = Int32.Parse(contents[1], new CultureInfo("en-US"));
+                    case "headId":
+                        body.body2.headId = Int32.Parse(contents[1], new CultureInfo("en-US"));
                         break;
                     case "int_38":
                         body.body2.int_38 = Int32.Parse(contents[1], new CultureInfo("en-US"));

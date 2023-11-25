@@ -5097,10 +5097,6 @@ namespace AquaModelTool
                 int depthMax4 = 0;
                 int depthMax5 = 0;
                 int depthMax6 = 0;
-                int depthMax7 = 0;
-                List<int> BAMS1Values = new List<int>();
-                List<int> BAMS2Values = new List<int>();
-                List<int> BAMS3Values = new List<int>();
                 foreach (var file in openFileDialog.FileNames)
                 {
                     var outDir = file + "_out";
@@ -5178,42 +5174,6 @@ namespace AquaModelTool
                             {
                                 File.WriteAllBytes(Path.Combine(outDir, $"{Path.GetFileNameWithoutExtension(file)}.gvm"), lnd.gvmBytes.ToArray());
                             }
-                            foreach (var set in lnd.arcLndModels)
-                            {
-                                foreach (var bnd in set.model.arcBoundingList)
-                                {
-                                    if (!BAMS1Values.Contains(bnd.BAMSX))
-                                    {
-                                        BAMS1Values.Add(bnd.BAMSX);
-                                    }
-                                    if (!BAMS2Values.Contains(bnd.BAMSY))
-                                    {
-                                        BAMS2Values.Add(bnd.BAMSY);
-                                    }
-                                    if (!BAMS3Values.Contains(bnd.BAMSZ))
-                                    {
-                                        BAMS3Values.Add(bnd.BAMSZ);
-                                    }
-                                }
-                            }
-                            foreach (var set in lnd.arcLndAnimatedMeshDataList)
-                            {
-                                foreach (var bnd in set.model.arcBoundingList)
-                                {
-                                    if (!BAMS1Values.Contains(bnd.BAMSX))
-                                    {
-                                        BAMS1Values.Add(bnd.BAMSX);
-                                    }
-                                    if (!BAMS2Values.Contains(bnd.BAMSY))
-                                    {
-                                        BAMS2Values.Add(bnd.BAMSY);
-                                    }
-                                    if (!BAMS3Values.Contains(bnd.BAMSZ))
-                                    {
-                                        BAMS3Values.Add(bnd.BAMSZ);
-                                    }
-                                }
-                            }
                             aqpList = LNDConvert.LNDToAqua(lnd);
                         }
                     }
@@ -5239,7 +5199,8 @@ namespace AquaModelTool
                             set.models[0].ConvertToLegacyTypes();
                             set.models[0].CreateTrueVertWeights();
 
-                            FbxExporter.ExportToFile(aquaUI.aqua.aquaModels[0].models[0], modelData.aqn, motionList, Path.Combine(outDir,Path.GetFileNameWithoutExtension(file) + $"_{modelData.name}.fbx"), motionStrings, new List<Matrix4x4>(), false);
+                            var name = motionList.Count > 0 ? Path.Combine(outDir, Path.GetFileNameWithoutExtension(file) + $"_{modelData.name}_animation.fbx") : Path.Combine(outDir, Path.GetFileNameWithoutExtension(file) + $"_{modelData.name}.fbx");
+                            FbxExporter.ExportToFile(aquaUI.aqua.aquaModels[0].models[0], modelData.aqn, motionList, name, motionStrings, new List<Matrix4x4>(), false);
                         }
                         if(modelData.nightAqp != null)
                         {
