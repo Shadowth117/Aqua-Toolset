@@ -5104,11 +5104,7 @@ namespace AquaModelTool
                         {
                             mc2 = new MC2(streamReader);
                         }
-                        var scene = MC2Convert.AssimpMC2Export(file, mc2);
-                        var ctx = new Assimp.AssimpContext();
-                        var path = Path.Combine(outDir, Path.GetFileName(file) + ".fbx");
-                        ctx.ExportFile(scene, path, "fbx", Assimp.PostProcessSteps.FlipUVs);
-                        continue;
+                        aqpList.Add(new LNDConvert.ModelData() { aqp = MC2Convert.MC2ToAqua(mc2, out AquaNode mc2Aqn), aqn = mc2Aqn, name = Path.GetFileNameWithoutExtension(file)});
                     }
                     else
                     {
@@ -5120,14 +5116,6 @@ namespace AquaModelTool
                             {
                                 File.WriteAllBytes(Path.Combine(outDir, $"{Path.GetFileNameWithoutExtension(file)}.gvm"), lnd.gvmBytes.ToArray());
                             }
-                            /*
-                            LND lnd2;
-                            using (Stream str = new MemoryStream(File.ReadAllBytes(@"C:\Users\Shadi\Documents\c2000\0100 lnd\stg_yellow.lnd_out.lnd")))
-                            using (var sr = new BufferedStreamReader(str, 8192))
-                            {
-                                lnd2 = new LND(sr);
-                            }*/
-                            //File.WriteAllBytes(file + "test", lnd2.GetBytes());
                             aqpList = LNDConvert.LNDToAqua(lnd);
                         }
                     }
