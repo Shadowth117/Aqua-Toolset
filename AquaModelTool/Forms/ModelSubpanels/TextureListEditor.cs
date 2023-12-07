@@ -73,7 +73,7 @@ namespace AquaModelTool.Forms.ModelSubpanels
 
         private void UpdateTSTAEditor()
         {
-            ((TextureReferenceEditor)panel1.Controls[0]).UpdateTsta(_aqp.texfList, _aqp.tstaList, texSlotCB.SelectedIndex >= 0 ? _aqp.tsetList[texListCB.SelectedIndex].tstaTexIDs[texSlotCB.SelectedIndex] : -1, texSlotCB.SelectedIndex);
+            ((TextureReferenceEditor)panel1.Controls[0]).UpdateTsta(_aqp.texFUnicodeNames, _aqp.texfList, _aqp.tstaList, texSlotCB.SelectedIndex >= 0 ? _aqp.tsetList[texListCB.SelectedIndex].tstaTexIDs[texSlotCB.SelectedIndex] : -1, texSlotCB.SelectedIndex);
             panel1.Visible = true;
             panel1.Enabled = true;
         }
@@ -96,6 +96,7 @@ namespace AquaModelTool.Forms.ModelSubpanels
             {
                 var texf = new AquaObject.TEXF();
                 texf.texName.SetString("sampleTex_d.dds");
+                _aqp.texFUnicodeNames.Add("sampleTex_d.dds");
                 _aqp.texfList.Add(texf);
                 _aqp.objc.texfCount++;
                 var tsta = TSTATypePresets.defaultPreset;
@@ -119,6 +120,10 @@ namespace AquaModelTool.Forms.ModelSubpanels
             {
                 var texf = new AquaObject.TEXF();
                 texf.texName.SetString("sampleTex_d.dds");
+                if(_aqp.texFUnicodeNames.Count > 0)
+                {
+                    _aqp.texFUnicodeNames.Add("sampleTex_d.dds");
+                }
                 _aqp.texfList.Add(texf);
                 _aqp.objc.texfCount++;
                 var tsta = TSTATypePresets.defaultPreset;
@@ -196,6 +201,10 @@ namespace AquaModelTool.Forms.ModelSubpanels
                         if(_aqp.texfList[i].texName == texName)
                         {
                             _aqp.texfList.RemoveAt(i);
+                            if (_aqp.texFUnicodeNames.Count > 0)
+                            {
+                                _aqp.texFUnicodeNames.RemoveAt(i);
+                            }
                             _aqp.objc.texfCount--;
                         }
                     }
@@ -303,6 +312,11 @@ namespace AquaModelTool.Forms.ModelSubpanels
                 if(orphanedTexCheck.ContainsKey(_aqp.texfList[i].texName.curString) && orphanedTexCheck[_aqp.texfList[i].texName.curString] == 1)
                 {
                     _aqp.texfList.RemoveAt(i);
+                    if (_aqp.texFUnicodeNames.Count > 0)
+                    {
+                        _aqp.texFUnicodeNames.RemoveAt(i);
+                    }
+                    _aqp.objc.texfCount--;
                 }
             }
 

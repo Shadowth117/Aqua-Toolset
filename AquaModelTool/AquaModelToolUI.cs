@@ -5186,7 +5186,7 @@ namespace AquaModelTool
             var openFileDialog = new OpenFileDialog()
             {
                 Title = "Select Billy Hatcher prd, glk File",
-                Filter = "Billy Hatcher PRD, GLK archive *.prd, .glk files|*.prd;*.glk",
+                Filter = "Billy Hatcher PRD, GLK archive *.prd, *.nrc, *.gpl, *.glk files|*.prd;*.nrc;*.gpl;*.glk",
                 FileName = "",
                 Multiselect = true
             };
@@ -5202,25 +5202,48 @@ namespace AquaModelTool
                             var prd = new PRD(streamReader);
                             var outDir = file + "_out";
                             Directory.CreateDirectory(outDir);
-                            StringBuilder sb = new StringBuilder();
                             for (int i = 0; i < prd.files.Count; i++)
                             {
                                 var prdFile = prd.files[i];
                                 var prdFileName = prd.fileNames[i];
-                                sb.AppendLine(prdFileName);
                                 File.WriteAllBytes(Path.Combine(outDir, prdFileName), prdFile);
                             }
-                            
-                        } else
+                        }
+                        else if (Path.GetExtension(file) == ".nrc")
                         {
-                            var glk = new AquaModelLibrary.Extra.Ninja.BillyHatcher.GLK(streamReader);
+                            var prd = new PRD();
+                            prd.ReadNRC(streamReader);
+                            var outDir = file + "_out";
+                            Directory.CreateDirectory(outDir);
+                            for (int i = 0; i < prd.files.Count; i++)
+                            {
+                                var prdFile = prd.files[i];
+                                var prdFileName = prd.fileNames[i];
+                                File.WriteAllBytes(Path.Combine(outDir, prdFileName), prdFile);
+                            }
+                        }
+                        else if (Path.GetExtension(file) == ".gpl")
+                        {
+                            var gpl = new GPL(streamReader);
+                            var outDir = file + "_out";
+                            Directory.CreateDirectory(outDir);
+                            var gvrs = gpl.GetGVRs();
+                            for (int i = 0; i < gvrs.Count; i++)
+                            {
+                                var prdFile = gvrs[i];
+                                var prdFileName = $"{i}.gvr";
+                                File.WriteAllBytes(Path.Combine(outDir, prdFileName), prdFile);
+                            }
+                        }
+                        else if(Path.GetExtension(file) == ".prd")
+                        {
+                            var glk = new GLK(streamReader);
                             var outDir = file + "_out";
                             Directory.CreateDirectory(outDir);
                             for (int i = 0; i < glk.files.Count; i++)
                             {
                                 var glkFile = glk.files[i];
                                 var glkFileName = glk.entries[i].fileName;
-
                                 File.WriteAllBytes(Path.Combine(outDir, glkFileName), glkFile);
                             }
                         }
@@ -5263,6 +5286,7 @@ namespace AquaModelTool
             {
                 foreach (var folder in commonOpenFileDialog.FileNames)
                 {
+                    ByteListExtension.Reset();
                     PRD prd = new PRD();
                     var files = Directory.GetFiles(folder);
                     foreach (var fileName in files)
@@ -5439,6 +5463,112 @@ namespace AquaModelTool
             {
                 var lnd = LNDConvert.ConvertToLND(openFileDialog.FileName);
                 File.WriteAllBytes(openFileDialog.FileName + ".lnd", lnd.GetBytes());
+            }
+        }
+
+        public void packBillyHatchernrcToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var commonOpenFileDialog = new CommonOpenFileDialog()
+            {
+                Title = "Select Billy Hatcher folder to pack",
+                Multiselect = true,
+                IsFolderPicker = true
+            };
+            if (commonOpenFileDialog.ShowDialog() == CommonFileDialogResult.Ok)
+            {
+                foreach (var folder in commonOpenFileDialog.FileNames)
+                {
+                    ByteListExtension.Reset();
+                    PRD prd = new PRD();
+                    var files = Directory.GetFiles(folder);
+                    foreach (var fileName in files)
+                    {
+                        prd.fileNames.Add(Path.GetFileName(fileName));
+                        prd.files.Add(File.ReadAllBytes(fileName));
+                    }
+
+                    var outName = folder;
+                    if (outName.EndsWith("_out"))
+                    {
+                        outName = outName.Substring(0, outName.Length - 4);
+                    }
+                    else
+                    {
+                        outName += ".nrc";
+                    }
+                    File.WriteAllBytes(outName, prd.NRCGetBytes().ToArray());
+                }
+            }
+        }
+
+        private void packBillyHatchergplToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var commonOpenFileDialog = new CommonOpenFileDialog()
+            {
+                Title = "Select Billy Hatcher folder to pack",
+                Multiselect = true,
+                IsFolderPicker = true
+            };
+            if (commonOpenFileDialog.ShowDialog() == CommonFileDialogResult.Ok)
+            {
+                foreach (var folder in commonOpenFileDialog.FileNames)
+                {
+                    ByteListExtension.Reset();
+                    GPL gpl = new GPL();
+                    var files = Directory.GetFiles(folder).ToList();
+
+                    List<byte[]> gvrs = new List<byte[]>();
+                    for (int i = 0; i < files.Count; i++)
+                    {
+                        gvrs.Add(File.ReadAllBytes(Path.Combine(folder,$"{i}.gvr")));
+                    }
+                    gpl.LoadGVRs(gvrs);
+
+                    var outName = folder;
+                    if (outName.EndsWith("_out"))
+                    {
+                        outName = outName.Substring(0, outName.Length - 4);
+                    }
+                    else
+                    {
+                        outName += ".gpl";
+                    }
+                    File.WriteAllBytes(outName, gpl.GetBytes());
+                }
+            }
+        }
+
+        private void readPOF0ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void readStageDefToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var openFileDialog = new OpenFileDialog()
+            {
+                Title = "Select ge_stagedef.bin",
+                Filter = "ge_stagedef.bin files|ge_stagedef.bin",
+                FileName = "",
+            };
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                using (Stream stream = new MemoryStream(File.ReadAllBytes(openFileDialog.FileName)))
+                using (var streamReader = new BufferedStreamReader(stream, 8192))
+                {
+                    var stgDef = new StageDef(streamReader);
+                    
+                    /*
+                    foreach(var def in stgDef.defs)
+                    {
+                        Debug.WriteLine("Mission Name: " + def.missionName);
+                        Debug.WriteLine($"Time threshold (Minutes:Seconds): {(def.rankTimeThreshold / 60)}:{(def.rankTimeThreshold % 60):D2}");
+                        Debug.WriteLine($"Score Threshold1: {def.scoreThreshold1}");
+                        Debug.WriteLine($"Score Threshold2: {def.scoreThreshold2}");
+                        Debug.WriteLine($"Score Threshold3: {def.scoreThreshold3}");
+                        Debug.WriteLine($"Score Threshold4: {def.scoreThreshold4}");
+                    }*/
+                }
             }
         }
     }

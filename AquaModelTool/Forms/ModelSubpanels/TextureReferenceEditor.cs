@@ -7,6 +7,7 @@ namespace AquaModelTool.Forms.ModelSubpanels
 {
     public partial class TextureReferenceEditor : UserControl
     {
+        private List<string> _texFListUnicode;
         private List<AquaObject.TEXF> _texfList;
         private List<AquaObject.TSTA> _tstaList;
         private TextureListEditor _texListEditor;
@@ -20,8 +21,9 @@ namespace AquaModelTool.Forms.ModelSubpanels
             InitializeComponent();
         }
 
-        public void UpdateTsta(List<AquaObject.TEXF> texfList, List<AquaObject.TSTA> tstaList, int id, int selectionId)
+        public void UpdateTsta(List<string> texFListUnicode, List<AquaObject.TEXF> texfList, List<AquaObject.TSTA> tstaList, int id, int selectionId)
         {
+            _texFListUnicode = texFListUnicode;
             _texfList = texfList;
             _tstaList = tstaList;
             curId = id;
@@ -120,6 +122,7 @@ namespace AquaModelTool.Forms.ModelSubpanels
                 int texfID = GetTEXFID();
                 var texf = _texfList[texfID];
                 var tsta = _tstaList[curId];
+                _texFListUnicode[texfID] = texNameTB.Text;
                 texf.texName.SetString(texNameTB.Text);
                 tsta.texName.SetString(texNameTB.Text);
                 _texfList[texfID] = texf;
@@ -145,6 +148,7 @@ namespace AquaModelTool.Forms.ModelSubpanels
                 //Make a new TEXF so we're not replacing one that's used
                 TEXF texf = new TEXF();
                 texf.texName = texName;
+                _texFListUnicode.Add(texName.GetString());
                 _texfList.Add(texf);
                 _texListEditor._aqp.objc.texfCount++;
 
