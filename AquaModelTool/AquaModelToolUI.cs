@@ -5557,17 +5557,33 @@ namespace AquaModelTool
                 using (var streamReader = new BufferedStreamReader(stream, 8192))
                 {
                     var stgDef = new StageDef(streamReader);
-                    
-                    /*
+
+                    List<string> missionTypes = new List<string>();
                     foreach(var def in stgDef.defs)
                     {
-                        Debug.WriteLine("Mission Name: " + def.missionName);
-                        Debug.WriteLine($"Time threshold (Minutes:Seconds): {(def.rankTimeThreshold / 60)}:{(def.rankTimeThreshold % 60):D2}");
-                        Debug.WriteLine($"Score Threshold1: {def.scoreThreshold1}");
-                        Debug.WriteLine($"Score Threshold2: {def.scoreThreshold2}");
-                        Debug.WriteLine($"Score Threshold3: {def.scoreThreshold3}");
-                        Debug.WriteLine($"Score Threshold4: {def.scoreThreshold4}");
-                    }*/
+                        if(!missionTypes.Contains(def.missionType))
+                        {
+                            missionTypes.Add(def.missionType);
+                        }
+                    }
+                }
+            }
+        }
+
+        private void readGrassToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var openFileDialog = new OpenFileDialog()
+            {
+                Title = "Select grass File",
+                Filter = "GRASS files|*.grass",
+                FileName = "",
+                Multiselect = true
+            };
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                foreach (var file in openFileDialog.FileNames)
+                {
+                    SoulsConvert.ReadSoulsFile(file);
                 }
             }
         }

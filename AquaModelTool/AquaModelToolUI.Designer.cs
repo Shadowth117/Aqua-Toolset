@@ -95,6 +95,8 @@
             this.fbxToBillyHatchermc2ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.billyHatcherprdArchiveExtractToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.packBillyHatcherprdToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.packBillyHatchernrcToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.packBillyHatchergplToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.billyHatcherbinTextTotxtToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.billyHatcherbintxtBackTobinToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
@@ -179,12 +181,11 @@
             this.mdlToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.readPATHToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.oldBillyMC2ConvertToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.filePanel = new System.Windows.Forms.Panel();
-            this.splitter1 = new System.Windows.Forms.Splitter();
-            this.packBillyHatchernrcToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.packBillyHatchergplToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.readPOF0ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.readStageDefToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.filePanel = new System.Windows.Forms.Panel();
+            this.splitter1 = new System.Windows.Forms.Splitter();
+            this.readGrassToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -752,6 +753,20 @@
             this.packBillyHatcherprdToolStripMenuItem.Size = new System.Drawing.Size(427, 22);
             this.packBillyHatcherprdToolStripMenuItem.Text = "Pack Billy Hatcher .prd";
             this.packBillyHatcherprdToolStripMenuItem.Click += new System.EventHandler(this.packBillyHatcherprdToolStripMenuItem_Click);
+            // 
+            // packBillyHatchernrcToolStripMenuItem
+            // 
+            this.packBillyHatchernrcToolStripMenuItem.Name = "packBillyHatchernrcToolStripMenuItem";
+            this.packBillyHatchernrcToolStripMenuItem.Size = new System.Drawing.Size(427, 22);
+            this.packBillyHatchernrcToolStripMenuItem.Text = "Pack Billy Hatcher .nrc";
+            this.packBillyHatchernrcToolStripMenuItem.Click += new System.EventHandler(this.packBillyHatchernrcToolStripMenuItem_Click);
+            // 
+            // packBillyHatchergplToolStripMenuItem
+            // 
+            this.packBillyHatchergplToolStripMenuItem.Name = "packBillyHatchergplToolStripMenuItem";
+            this.packBillyHatchergplToolStripMenuItem.Size = new System.Drawing.Size(427, 22);
+            this.packBillyHatchergplToolStripMenuItem.Text = "Pack Billy Hatcher .gpl";
+            this.packBillyHatchergplToolStripMenuItem.Click += new System.EventHandler(this.packBillyHatchergplToolStripMenuItem_Click);
             // 
             // billyHatcherbinTextTotxtToolStripMenuItem
             // 
@@ -1373,7 +1388,8 @@
             this.readPATHToolStripMenuItem,
             this.oldBillyMC2ConvertToolStripMenuItem,
             this.readPOF0ToolStripMenuItem,
-            this.readStageDefToolStripMenuItem});
+            this.readStageDefToolStripMenuItem,
+            this.readGrassToolStripMenuItem});
             this.debug3ToolStripMenuItem.Name = "debug3ToolStripMenuItem";
             this.debug3ToolStripMenuItem.Size = new System.Drawing.Size(60, 23);
             this.debug3ToolStripMenuItem.Text = "Debug3";
@@ -1399,6 +1415,20 @@
             this.oldBillyMC2ConvertToolStripMenuItem.Text = "Old Billy MC2 convert";
             this.oldBillyMC2ConvertToolStripMenuItem.Click += new System.EventHandler(this.oldBillyMC2ConvertToolStripMenuItem_Click);
             // 
+            // readPOF0ToolStripMenuItem
+            // 
+            this.readPOF0ToolStripMenuItem.Name = "readPOF0ToolStripMenuItem";
+            this.readPOF0ToolStripMenuItem.Size = new System.Drawing.Size(189, 22);
+            this.readPOF0ToolStripMenuItem.Text = "ReadPOF0";
+            this.readPOF0ToolStripMenuItem.Click += new System.EventHandler(this.readPOF0ToolStripMenuItem_Click);
+            // 
+            // readStageDefToolStripMenuItem
+            // 
+            this.readStageDefToolStripMenuItem.Name = "readStageDefToolStripMenuItem";
+            this.readStageDefToolStripMenuItem.Size = new System.Drawing.Size(189, 22);
+            this.readStageDefToolStripMenuItem.Text = "ReadStageDef";
+            this.readStageDefToolStripMenuItem.Click += new System.EventHandler(this.readStageDefToolStripMenuItem_Click);
+            // 
             // filePanel
             // 
             this.filePanel.AutoSize = true;
@@ -1417,33 +1447,12 @@
             this.splitter1.TabIndex = 2;
             this.splitter1.TabStop = false;
             // 
-            // packBillyHatchernrcToolStripMenuItem
+            // readGrassToolStripMenuItem
             // 
-            this.packBillyHatchernrcToolStripMenuItem.Name = "packBillyHatchernrcToolStripMenuItem";
-            this.packBillyHatchernrcToolStripMenuItem.Size = new System.Drawing.Size(427, 22);
-            this.packBillyHatchernrcToolStripMenuItem.Text = "Pack Billy Hatcher .nrc";
-            this.packBillyHatchernrcToolStripMenuItem.Click += new System.EventHandler(this.packBillyHatchernrcToolStripMenuItem_Click);
-            // 
-            // packBillyHatchergplToolStripMenuItem
-            // 
-            this.packBillyHatchergplToolStripMenuItem.Name = "packBillyHatchergplToolStripMenuItem";
-            this.packBillyHatchergplToolStripMenuItem.Size = new System.Drawing.Size(427, 22);
-            this.packBillyHatchergplToolStripMenuItem.Text = "Pack Billy Hatcher .gpl";
-            this.packBillyHatchergplToolStripMenuItem.Click += new System.EventHandler(this.packBillyHatchergplToolStripMenuItem_Click);
-            // 
-            // readPOF0ToolStripMenuItem
-            // 
-            this.readPOF0ToolStripMenuItem.Name = "readPOF0ToolStripMenuItem";
-            this.readPOF0ToolStripMenuItem.Size = new System.Drawing.Size(189, 22);
-            this.readPOF0ToolStripMenuItem.Text = "ReadPOF0";
-            this.readPOF0ToolStripMenuItem.Click += new System.EventHandler(this.readPOF0ToolStripMenuItem_Click);
-            // 
-            // readStageDefToolStripMenuItem
-            // 
-            this.readStageDefToolStripMenuItem.Name = "readStageDefToolStripMenuItem";
-            this.readStageDefToolStripMenuItem.Size = new System.Drawing.Size(189, 22);
-            this.readStageDefToolStripMenuItem.Text = "ReadStageDef";
-            this.readStageDefToolStripMenuItem.Click += new System.EventHandler(this.readStageDefToolStripMenuItem_Click);
+            this.readGrassToolStripMenuItem.Name = "readGrassToolStripMenuItem";
+            this.readGrassToolStripMenuItem.Size = new System.Drawing.Size(189, 22);
+            this.readGrassToolStripMenuItem.Text = "ReadGrass";
+            this.readGrassToolStripMenuItem.Click += new System.EventHandler(this.readGrassToolStripMenuItem_Click);
             // 
             // AquaModelTool
             // 
@@ -1623,6 +1632,7 @@
         private System.Windows.Forms.ToolStripMenuItem packBillyHatchergplToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem readPOF0ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem readStageDefToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem readGrassToolStripMenuItem;
     }
 }
 
