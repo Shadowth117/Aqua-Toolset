@@ -1,16 +1,17 @@
-﻿using AquaModelLibrary.Extra;
-using AquaModelLibrary;
-using System.Collections.Generic;
-using System.Linq;
-using System.Windows;
+﻿using AquaModelLibrary;
+using AquaModelLibrary.Extra;
+using AquaModelLibrary.Extra.FromSoft;
+using AquaModelLibrary.ToolUX;
 using Microsoft.Win32;
 using Microsoft.WindowsAPICodePack.Dialogs;
-using System.Reflection;
-using System.IO;
-using Path = System.IO.Path;
 using Newtonsoft.Json;
-using AquaModelLibrary.ToolUX;
-using AquaModelLibrary.Extra.FromSoft;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Reflection;
+using System.Windows;
+using Path = System.IO.Path;
 
 namespace SoulsModelTool
 {
@@ -21,12 +22,15 @@ namespace SoulsModelTool
     {
         public string settingsPath = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location) + "\\";
         public string settingsFile = "SoulsSettings.json";
+        public string mainSettingsFile = "Settings.json";
         public SMTSetting smtSetting = new SMTSetting();
+        public MainSetting mainSetting = new MainSetting();
         public AquaUtil aqua = new AquaUtil();
         JsonSerializerSettings jss = new JsonSerializerSettings() { Formatting = Formatting.Indented };
-        public SoulsModelToolWindow(List<string> paths, SMTSetting _smtSetting)
+        public SoulsModelToolWindow(List<string> paths, SMTSetting _smtSetting, MainSetting _mainSetting)
         {
             smtSetting = _smtSetting;
+            mainSetting = _mainSetting;
             InitializeComponent();
             useMetaDataCB.IsChecked = smtSetting.useMetaData;
             mirrorCB.IsChecked = smtSetting.mirrorMesh;
@@ -35,11 +39,40 @@ namespace SoulsModelTool
             extractUnreferencedFilesCB.IsChecked = smtSetting.extractUnreferencedMapData;
             separateModelsCB.IsChecked = smtSetting.separateMSBDumpByModel;
             FileHandler.SetSMTSettings(smtSetting);
+            FileHandler.ApplyModelImporterSettings(mainSetting);
             SetGameLabel();
+
+            //Main settings
+            scaleHandlingCB.Items.Add("No Import Scale");
+            scaleHandlingCB.Items.Add("Use File Scale");
+            scaleHandlingCB.Items.Add("Use Custom Scale");
+            if (Int32.TryParse(mainSetting.customScaleSelection, out int selection))
+            {
+                switch (selection)
+                {
+                    case 2:
+                    case 1:
+                    case 0:
+                        scaleHandlingCB.SelectedIndex = selection;
+                        break;
+                    default:
+                        scaleHandlingCB.SelectedIndex = 0;
+                        break;
+                }
+            }
+            if (Double.TryParse(mainSetting.customScaleValue, out double result))
+            {
+                 scaleUD.Value = result;
+            }
+            else
+            {
+                 scaleUD.Value = 1;
+            }
         }
 
         private void ConvertModelToFBX(object sender, RoutedEventArgs e)
         {
+            FileHandler.ApplyModelImporterSettings(mainSetting);
             FileHandler.SetSMTSettings(smtSetting);
 
             OpenFileDialog openFileDialog = new OpenFileDialog()
@@ -70,6 +103,7 @@ namespace SoulsModelTool
 
         private void ConvertFBXToDeSModel(object sender, RoutedEventArgs e)
         {
+            FileHandler.ApplyModelImporterSettings(mainSetting);
             FileHandler.SetSMTSettings(smtSetting);
 
             using (var ctx = new Assimp.AssimpContext())
@@ -181,6 +215,18 @@ namespace SoulsModelTool
         private void SetGameLabel()
         {
             SetGameOption.Header = $"Set Game (For MSB Extraction) | Current Game: {SoulsConvert.game}";
+        }
+
+        private void comboBox_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        {
+            if (scaleHandlingCB.SelectedIndex == 2)
+            {
+                scaleUD.IsEnabled = true;
+            }
+            else
+            {
+                scaleUD.IsEnabled = false;
+            }
         }
     }
 }

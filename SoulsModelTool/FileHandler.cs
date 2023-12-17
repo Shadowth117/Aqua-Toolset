@@ -49,5 +49,31 @@ namespace SoulsModelTool
             SoulsConvert.game = smtSetting.soulsGame;
             SoulsConvert.separateMSBDumpByModel = smtSetting.separateMSBDumpByModel;
         }
+
+        public static void ApplyModelImporterSettings(MainSetting mainSetting)
+        {
+            if(Int32.TryParse(mainSetting.customScaleSelection, out int selection))
+            {
+                switch(selection)
+                {
+                    case 2:
+                    case 1:
+                    case 0:
+                        ModelImporter.scaleHandling = (ModelImporter.ScaleHandling)selection;
+                        break;
+                    default:
+                        ModelImporter.scaleHandling = ModelImporter.ScaleHandling.NoScaling;
+                        break;
+                }
+            }
+            if (Double.TryParse(mainSetting.customScaleValue, out double result))
+            {
+                ModelImporter.customScale = result;
+            }
+            else
+            {
+                ModelImporter.customScale = 1;
+            }
+        }
     }
 }

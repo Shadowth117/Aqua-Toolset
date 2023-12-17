@@ -22,6 +22,7 @@ namespace SoulsModelTool
     {
         public string settingsPath = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location) + "\\";
         public string settingsFile = "SoulsSettings.json";
+        public string mainSettingsFile = "Settings.json";
         public enum SoulsModelAction
         {
             none = 0,
@@ -38,14 +39,24 @@ namespace SoulsModelTool
             //CRITICAL, without this, shift jis handling in SoulsFormats will break and kill the application
             Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
 
+            MainSetting mainSetting = new MainSetting();
+            var finalMainSettingsPath = Path.Combine(settingsPath, mainSettingsFile);
+            var mainSettingText = File.Exists(finalMainSettingsPath) ? File.ReadAllText(finalMainSettingsPath) : null;
+            if (mainSettingText != null)
+            {
+                mainSetting = JsonConvert.DeserializeObject<MainSetting>(mainSettingText);
+            }
+            FileHandler.ApplyModelImporterSettings(mainSetting);
+
             SMTSetting smtSetting = new SMTSetting();
             var finalSettingsPath = Path.Combine(settingsPath, settingsFile);
             var settingText = File.Exists(finalSettingsPath) ? File.ReadAllText(finalSettingsPath) : null;
             if (settingText != null)
             {
                 smtSetting = JsonConvert.DeserializeObject<SMTSetting>(settingText);
-                FileHandler.SetSMTSettings(smtSetting);
             }
+            FileHandler.SetSMTSettings(smtSetting);
+
             InitializeComponent();
             bool launchUi = true;
             List<string> filePaths = new List<string>();
@@ -130,7 +141,7 @@ namespace SoulsModelTool
 
             if (launchUi)
             {
-                SoulsModelToolWindow wnd = new SoulsModelToolWindow(filePaths, smtSetting);
+                SoulsModelToolWindow wnd = new SoulsModelToolWindow(filePaths, smtSetting, mainSetting);
                 wnd.Show();
             } else
             {

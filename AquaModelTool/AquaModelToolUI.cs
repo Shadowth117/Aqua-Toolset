@@ -7,9 +7,7 @@ using AquaModelLibrary.Extra;
 using AquaModelLibrary.Extra.AM2;
 using AquaModelLibrary.Extra.FromSoft;
 using AquaModelLibrary.Extra.FromSoft.MetalWolfChaos;
-using AquaModelLibrary.Extra.Ninja;
 using AquaModelLibrary.Extra.Ninja.BillyHatcher;
-using AquaModelLibrary.Extra.Ninja.BillyHatcher.LNDH;
 using AquaModelLibrary.Native.Fbx;
 using AquaModelLibrary.NNStructs;
 using AquaModelLibrary.Nova;
@@ -79,6 +77,40 @@ namespace AquaModelTool
             }
 
             InitializeComponent();
+
+            //Main settings
+            importScaleTypeCB.Items.Add("No Import Scale");
+            importScaleTypeCB.Items.Add("Use File Scale");
+            importScaleTypeCB.Items.Add("Use Custom Scale");
+            if (mainSetting.customScaleSelection == "" || mainSetting.customScaleSelection == null)
+            {
+                importScaleTypeCB.SelectedIndex = 0;
+            } else
+            {
+                if(Int32.TryParse(mainSetting.customScaleSelection, out int selection))
+                {
+                    switch (selection)
+                    {
+                        case 2:
+                        case 1:
+                        case 0:
+                            importScaleTypeCB.SelectedIndex = selection;
+                            break;
+                        default:
+                            importScaleTypeCB.SelectedIndex = 0;
+                            break;
+                    }
+                }
+            }
+            customScaleBox.Text = mainSetting.customScaleValue;
+            if(importScaleTypeCB.SelectedIndex != 2)
+            {
+                customScaleBox.Enabled = false;
+            }
+
+            //Border Break PS4 Settings
+            borderBreakPS4BonePath = mainSetting.BBPS4BonePath;
+
             this.DragEnter += new DragEventHandler(AquaUI_DragEnter);
             this.DragDrop += new DragEventHandler(AquaUI_DragDrop);
 #if !DEBUG
@@ -89,9 +121,6 @@ namespace AquaModelTool
             filenameButton.Enabled = false;
             this.Text = GetTitleString();
 
-            //Border Break PS4 Settings
-            borderBreakPS4BonePath = mainSetting.BBPS4BonePath;
-
             //Souls Settings
             exportWithMetadataToolStripMenuItem.Checked = smtSetting.useMetaData;
             fixFromSoftMeshMirroringToolStripMenuItem.Checked = smtSetting.mirrorMesh;
@@ -101,6 +130,18 @@ namespace AquaModelTool
             mSBExtractionSeparateExtractionByModelToolStripMenuItem.Checked = smtSetting.separateMSBDumpByModel;
             SoulsConvert.game = smtSetting.soulsGame;
             SetSoulsGameToolStripText();
+        }
+
+        public void ApplyModelImporterSettings()
+        {
+            ModelImporter.scaleHandling = (ModelImporter.ScaleHandling)importScaleTypeCB.SelectedIndex;
+            if (Double.TryParse(customScaleBox.Text, out double result))
+            {
+                ModelImporter.customScale = result;
+            } else
+            {
+                ModelImporter.customScale = 1;
+            }
         }
 
         private void quitToolStripMenuItem_Click(object sender, EventArgs e)
@@ -1208,6 +1249,7 @@ namespace AquaModelTool
 
         private void legacyAqp2objObjImportToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            SaveMainSettings();
             //Import obj geometry to current file. Make sure to remove LOD models.
             if (aquaUI.aqua.aquaModels.Count > 0)
             {
@@ -1456,6 +1498,7 @@ namespace AquaModelTool
 
         private void prmEffectFromModelToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            SaveMainSettings();
             OpenFileDialog openFileDialog = new OpenFileDialog()
             {
                 Title = "Select Model file",
@@ -1499,6 +1542,7 @@ namespace AquaModelTool
 
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
+                ApplyModelImporterSettings();
                 ModelImporter.AssimpPRMConvert(openFileDialog.FileName, Path.ChangeExtension(openFileDialog.FileName, ".prm"));
             }
         }
@@ -2847,6 +2891,7 @@ namespace AquaModelTool
 
         private void importModelToolStripMenuItem_Click_1(object sender, EventArgs e)
         {
+            SaveMainSettings();
             using (var ctx = new Assimp.AssimpContext())
             {
                 var formats = ctx.GetSupportedImportFormats().ToList();
@@ -2871,6 +2916,7 @@ namespace AquaModelTool
                 {
                     AquaUtil aqua = new AquaUtil();
                     ModelSet modelSet = new ModelSet();
+                    ApplyModelImporterSettings();
                     modelSet.models.Add(ModelImporter.AssimpAquaConvertFull(openFileDialog.FileName, 1, false, true, out AquaNode aqn));
                     aqua.aquaModels.Add(modelSet);
                     var ext = Path.GetExtension(openFileDialog.FileName);
@@ -3091,6 +3137,7 @@ namespace AquaModelTool
 
         private void convertAnimToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            SaveMainSettings();
             using (var ctx = new Assimp.AssimpContext())
             {
                 var formats = ctx.GetSupportedImportFormats().ToList();
@@ -3114,7 +3161,8 @@ namespace AquaModelTool
 
                     foreach (var file in openFileDialog.FileNames)
                     {
-                        ModelImporter.AssimpAQMConvertAndWrite(file, forceNoCharacterMetadataCheckBox.Checked, true, scaleFactor);
+                        ApplyModelImporterSettings();
+                        ModelImporter.AssimpAQMConvertAndWrite(file, forceNoCharacterMetadataCheckBox.Checked, true);
                     }
                 }
             }
@@ -3457,6 +3505,7 @@ namespace AquaModelTool
 
         private void convertSoulsflverTofbxToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            SaveMainSettings();
             OpenFileDialog openFileDialog = new OpenFileDialog()
             {
                 Title = "Select From Software flver, MDL4, TPF, or BND file(s)",
@@ -3637,6 +3686,7 @@ namespace AquaModelTool
 
                 if (openFileDialog.ShowDialog() == DialogResult.OK)
                 {
+                    ApplyModelImporterSettings();
                     if (!File.Exists(Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "DeSMtdLayoutData.bin")))
                     {
                         MessageBox.Show("No DeSMtdLayoutData.bin detected! Please select a PS3 Demon's Souls game folder!");
@@ -3759,6 +3809,7 @@ namespace AquaModelTool
 
         private void convertAnimsTonomToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            SaveMainSettings();
             using (var ctx = new Assimp.AssimpContext())
             {
                 var formats = ctx.GetSupportedImportFormats().ToList();
@@ -3782,7 +3833,8 @@ namespace AquaModelTool
 
                     foreach (var file in openFileDialog.FileNames)
                     {
-                        var animData = ModelImporter.AssimpAQMConvert(file, forceNoCharacterMetadataCheckBox.Checked, true, scaleFactor);
+                        ApplyModelImporterSettings();
+                        var animData = ModelImporter.AssimpAQMConvert(file, forceNoCharacterMetadataCheckBox.Checked, true);
                         foreach (var anim in animData)
                         {
                             var nom = new AquaModelLibrary.PSU.NOM();
@@ -3797,6 +3849,7 @@ namespace AquaModelTool
 
         private void convertPSO2PlayeraqmToPSUnomToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            SaveMainSettings();
             var openFileDialog = new OpenFileDialog()
             {
                 Title = "Select PSO2 Player Animation(s)",
@@ -4529,6 +4582,8 @@ namespace AquaModelTool
         {
             MainSetting mainSetting = new MainSetting();
             mainSetting.BBPS4BonePath = borderBreakPS4BonePath;
+            mainSetting.customScaleValue = customScaleBox.Text;
+            mainSetting.customScaleSelection = $"{importScaleTypeCB.SelectedIndex}";
 
             string mainSettingText = JsonConvert.SerializeObject(mainSetting, jss);
             File.WriteAllText(mainSettingsPath + mainSettingsFile, mainSettingText);
@@ -5104,7 +5159,7 @@ namespace AquaModelTool
                         {
                             mc2 = new MC2(streamReader);
                         }
-                        aqpList.Add(new LNDConvert.ModelData() { aqp = MC2Convert.MC2ToAqua(mc2, out AquaNode mc2Aqn), aqn = mc2Aqn, name = Path.GetFileNameWithoutExtension(file)});
+                        aqpList.Add(new LNDConvert.ModelData() { aqp = MC2Convert.MC2ToAqua(mc2, out AquaNode mc2Aqn), aqn = mc2Aqn, name = Path.GetFileNameWithoutExtension(file) });
                     }
                     else
                     {
@@ -5120,11 +5175,11 @@ namespace AquaModelTool
                         }
                     }
 
-                    foreach(var modelData in aqpList)
+                    foreach (var modelData in aqpList)
                     {
                         var motionList = new List<AquaMotion>();
                         var motionStrings = new List<string>();
-                        if(modelData.aqm != null)
+                        if (modelData.aqm != null)
                         {
                             motionStrings.Add("LNDMotion");
                             motionList.Add(modelData.aqm);
@@ -5144,7 +5199,7 @@ namespace AquaModelTool
                             var name = motionList.Count > 0 ? Path.Combine(outDir, $"{modelData.name}+animation.fbx") : Path.Combine(outDir, $"{modelData.name}.fbx");
                             FbxExporter.ExportToFile(aquaUI.aqua.aquaModels[0].models[0], modelData.aqn, motionList, name, motionStrings, new List<Matrix4x4>(), false);
                         }
-                        if(modelData.nightAqp != null)
+                        if (modelData.nightAqp != null)
                         {
                             //Night model
                             aquaUI.aqua.aquaModels.Clear();
@@ -5197,7 +5252,7 @@ namespace AquaModelTool
                     using (Stream stream = new MemoryStream(File.ReadAllBytes(file)))
                     using (var streamReader = new BufferedStreamReader(stream, 8192))
                     {
-                        if(Path.GetExtension(file) == ".prd")
+                        if (Path.GetExtension(file) == ".prd")
                         {
                             var prd = new PRD(streamReader);
                             var outDir = file + "_out";
@@ -5235,7 +5290,7 @@ namespace AquaModelTool
                                 File.WriteAllBytes(Path.Combine(outDir, prdFileName), prdFile);
                             }
                         }
-                        else if(Path.GetExtension(file) == ".prd")
+                        else if (Path.GetExtension(file) == ".prd")
                         {
                             var glk = new GLK(streamReader);
                             var outDir = file + "_out";
@@ -5296,10 +5351,11 @@ namespace AquaModelTool
                     }
 
                     var outName = folder;
-                    if(outName.EndsWith("_out"))
+                    if (outName.EndsWith("_out"))
                     {
                         outName = outName.Substring(0, outName.Length - 4);
-                    } else
+                    }
+                    else
                     {
                         outName += ".prd";
                     }
@@ -5353,6 +5409,7 @@ namespace AquaModelTool
 
         private void fbxToBillyHatchermc2ToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            SaveMainSettings();
             var openFileDialog = new OpenFileDialog()
             {
                 Title = "Select FBX File",
@@ -5362,6 +5419,7 @@ namespace AquaModelTool
             };
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
+                ApplyModelImporterSettings();
                 foreach (var file in openFileDialog.FileNames)
                 {
                     var mc2 = MC2Convert.ConvertToMC2(file);
@@ -5454,6 +5512,7 @@ namespace AquaModelTool
 
         private void fbxSetToBillyHatcherlndToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            SaveMainSettings();
             var openFileDialog = new CommonOpenFileDialog()
             {
                 Title = "Select folder(s) containing FBXes and GVM (One .lnd will be made per folder selected)",
@@ -5461,6 +5520,7 @@ namespace AquaModelTool
             };
             if (openFileDialog.ShowDialog() == CommonFileDialogResult.Ok)
             {
+                ApplyModelImporterSettings();
                 var lnd = LNDConvert.ConvertToLND(openFileDialog.FileName);
                 File.WriteAllBytes(openFileDialog.FileName + ".lnd", lnd.GetBytes());
             }
@@ -5520,7 +5580,7 @@ namespace AquaModelTool
                     List<byte[]> gvrs = new List<byte[]>();
                     for (int i = 0; i < files.Count; i++)
                     {
-                        gvrs.Add(File.ReadAllBytes(Path.Combine(folder,$"{i}.gvr")));
+                        gvrs.Add(File.ReadAllBytes(Path.Combine(folder, $"{i}.gvr")));
                     }
                     gpl.LoadGVRs(gvrs);
 
@@ -5559,9 +5619,9 @@ namespace AquaModelTool
                     var stgDef = new StageDef(streamReader);
 
                     List<string> missionTypes = new List<string>();
-                    foreach(var def in stgDef.defs)
+                    foreach (var def in stgDef.defs)
                     {
-                        if(!missionTypes.Contains(def.missionType))
+                        if (!missionTypes.Contains(def.missionType))
                         {
                             missionTypes.Add(def.missionType);
                         }
@@ -5585,6 +5645,17 @@ namespace AquaModelTool
                 {
                     SoulsConvert.ReadSoulsFile(file);
                 }
+            }
+        }
+
+        private void ImportScaleCBSelectionChanged(object sender, EventArgs e)
+        {
+            if(importScaleTypeCB.SelectedIndex == 2)
+            {
+                customScaleBox.Enabled = true;
+            } else
+            {
+                customScaleBox.Enabled = false;
             }
         }
     }

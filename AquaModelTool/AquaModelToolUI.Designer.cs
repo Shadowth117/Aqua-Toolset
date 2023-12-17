@@ -183,9 +183,14 @@
             this.oldBillyMC2ConvertToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.readPOF0ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.readStageDefToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.readGrassToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.filePanel = new System.Windows.Forms.Panel();
             this.splitter1 = new System.Windows.Forms.Splitter();
-            this.readGrassToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripSeparator13 = new System.Windows.Forms.ToolStripSeparator();
+            this.importScaleTypeCB = new System.Windows.Forms.ToolStripComboBox();
+            this.importScaleTypeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.customScaleBox = new System.Windows.Forms.ToolStripTextBox();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -216,6 +221,10 @@
             this.saveToolStripMenuItem,
             this.saveAsToolStripMenuItem,
             this.quitToolStripMenuItem,
+            this.toolStripSeparator13,
+            this.importScaleTypeToolStripMenuItem,
+            this.importScaleTypeCB,
+            this.customScaleBox,
             this.toolStripSeparator10,
             this.convertPSO2FileTojsonToolStripMenuItem,
             this.convertPSO2FilejsonToPSO2FileToolStripMenuItem});
@@ -341,7 +350,8 @@
             this.averageNormalsOnSharedPositionVerticesToolStripMenuItem,
             this.toolStripSeparator1,
             this.importNGSShaderDetailsAndExtrasToolStripMenuItem,
-            this.spirefierToolStripMenuItem});
+            this.spirefierToolStripMenuItem,
+            this.toolStripSeparator8});
             this.extraToolStripMenuItem.Name = "extraToolStripMenuItem";
             this.extraToolStripMenuItem.Size = new System.Drawing.Size(45, 23);
             this.extraToolStripMenuItem.Text = "Extra";
@@ -1429,6 +1439,13 @@
             this.readStageDefToolStripMenuItem.Text = "ReadStageDef";
             this.readStageDefToolStripMenuItem.Click += new System.EventHandler(this.readStageDefToolStripMenuItem_Click);
             // 
+            // readGrassToolStripMenuItem
+            // 
+            this.readGrassToolStripMenuItem.Name = "readGrassToolStripMenuItem";
+            this.readGrassToolStripMenuItem.Size = new System.Drawing.Size(189, 22);
+            this.readGrassToolStripMenuItem.Text = "ReadGrass";
+            this.readGrassToolStripMenuItem.Click += new System.EventHandler(this.readGrassToolStripMenuItem_Click);
+            // 
             // filePanel
             // 
             this.filePanel.AutoSize = true;
@@ -1447,12 +1464,36 @@
             this.splitter1.TabIndex = 2;
             this.splitter1.TabStop = false;
             // 
-            // readGrassToolStripMenuItem
+            // toolStripSeparator8
             // 
-            this.readGrassToolStripMenuItem.Name = "readGrassToolStripMenuItem";
-            this.readGrassToolStripMenuItem.Size = new System.Drawing.Size(189, 22);
-            this.readGrassToolStripMenuItem.Text = "ReadGrass";
-            this.readGrassToolStripMenuItem.Click += new System.EventHandler(this.readGrassToolStripMenuItem_Click);
+            this.toolStripSeparator8.Name = "toolStripSeparator8";
+            this.toolStripSeparator8.Size = new System.Drawing.Size(377, 6);
+            // 
+            // toolStripSeparator13
+            // 
+            this.toolStripSeparator13.Name = "toolStripSeparator13";
+            this.toolStripSeparator13.Size = new System.Drawing.Size(257, 6);
+            // 
+            // importScaleTypeCB
+            // 
+            this.importScaleTypeCB.Name = "importScaleTypeCB";
+            this.importScaleTypeCB.Size = new System.Drawing.Size(121, 23);
+            this.importScaleTypeCB.SelectedIndexChanged += new System.EventHandler(this.ImportScaleCBSelectionChanged);
+            // 
+            // importScaleTypeToolStripMenuItem
+            // 
+            this.importScaleTypeToolStripMenuItem.Enabled = false;
+            this.importScaleTypeToolStripMenuItem.Name = "importScaleTypeToolStripMenuItem";
+            this.importScaleTypeToolStripMenuItem.Size = new System.Drawing.Size(260, 22);
+            this.importScaleTypeToolStripMenuItem.Text = "Import Scale Type";
+            // 
+            // customScaleBox
+            // 
+            this.customScaleBox.Enabled = false;
+            this.customScaleBox.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.customScaleBox.Name = "customScaleBox";
+            this.customScaleBox.Size = new System.Drawing.Size(100, 23);
+            this.customScaleBox.Text = "Custom Scale";
             // 
             // AquaModelTool
             // 
@@ -1633,6 +1674,11 @@
         private System.Windows.Forms.ToolStripMenuItem readPOF0ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem readStageDefToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem readGrassToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator8;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator13;
+        private System.Windows.Forms.ToolStripMenuItem importScaleTypeToolStripMenuItem;
+        private System.Windows.Forms.ToolStripComboBox importScaleTypeCB;
+        private System.Windows.Forms.ToolStripTextBox customScaleBox;
     }
 }
 

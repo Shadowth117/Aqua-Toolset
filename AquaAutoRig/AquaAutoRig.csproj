@@ -57,7 +57,6 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>copy /Y "$(TargetDir)$(ProjectName).dll" "$(SolutionDir)AquaModelTool\bin\$(ConfigurationName)\$(ProjectName).dll"
-copy /Y "$(TargetDir)$(ProjectName).exe" "$(SolutionDir)AquaModelTool\bin\$(ConfigurationName)\$(ProjectName).exe"</PostBuildEvent>
+    <PostBuildEvent>xcopy "$(TargetDir)" "$(SolutionDir)AquaModelTool\bin\$(ConfigurationName)" /e /y /i /r</PostBuildEvent>
   </PropertyGroup>
 </Project>
