@@ -1,23 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
+﻿using AquaModelLibrary.Data.PSO2.Aqua.AquaEffectData;
 using System.Numerics;
-using System.Windows.Forms;
 
 namespace AquaModelTool
 {
     public unsafe partial class PtclEditor : UserControl
     {
-        AquaModelLibrary.AquaEffect.PTCLObject ptcl;
+        PTCLObject ptcl;
         private ColorDialog colorDialog = new ColorDialog();
         TreeNode node;
-        public PtclEditor(AquaModelLibrary.AquaEffect.PTCLObject ptclObj, TreeNode thisNode)
+        public PtclEditor(PTCLObject ptclObj, TreeNode thisNode)
         {
             InitializeComponent();
             node = thisNode;
             ptcl = ptclObj;
             animButton.Text += $" ({ptclObj.curvs.Count})";
-            if(ptclObj.curvs.Count == 0)
+            if (ptclObj.curvs.Count == 0)
             {
                 animButton.Enabled = false;
             }
@@ -174,7 +171,7 @@ namespace AquaModelTool
 
         public void setVector3Element(ref Vector3 vec3, NumericUpDown UD, string axis)
         {
-            switch(axis)
+            switch (axis)
             {
                 case "x":
                 case "X":

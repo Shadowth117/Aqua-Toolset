@@ -1,17 +1,14 @@
-﻿using AquaModelLibrary;
-using System;
-using System.Collections.Generic;
-using System.Windows.Forms;
+﻿using AquaModelLibrary.Data.PSO2.Aqua;
+using AquaModelLibrary.Data.PSO2.Aqua.AquaObjectData;
 
 namespace AquaModelTool
 {
     public partial class MeshStructEditor : UserControl
     {
-        AquaObject model;
-        List<AquaObject.MESH> meshList;
+        List<MESH> meshList;
         ToolTip partsToolTip = new ToolTip();
 
-        public MeshStructEditor(AquaObject newModel, List<AquaObject.MESH> newMeshList, bool isList2 = false)
+        public MeshStructEditor(AquaObject newModel, List<MESH> newMeshList, bool isList2 = false)
         {
             InitializeComponent();
 
@@ -19,8 +16,7 @@ namespace AquaModelTool
             {
                 meshLabel.Text = meshLabel.Text.Replace("Mesh", "Mesh2");
             }
-            //test
-            model = newModel;
+            
             meshList = newMeshList;
 
             //Populate comboboxes. Check if id is within combobox's range and if not, add to the combobox

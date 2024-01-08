@@ -1,13 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using AquaModelLibrary;
+﻿using AquaModelLibrary.Data.PSO2.Aqua;
+using AquaModelLibrary.Data.PSO2.Aqua.AquaEffectData;
 
 namespace AquaModelTool
 {
@@ -27,11 +19,11 @@ namespace AquaModelTool
             aqeTreeView.Nodes.Clear();
             var root = aqeTreeView.Nodes.Add("Root EFCT node");
             root.Tag = 0;
-            for(int i = 0; i < effect.efct.emits.Count; i++)
+            for (int i = 0; i < effect.efct.emits.Count; i++)
             {
                 var emit = root.Nodes.Add("Emitter " + i);
                 emit.Tag = 1;
-                for(int p = 0; p < effect.efct.emits[i].ptcls.Count; p++)
+                for (int p = 0; p < effect.efct.emits[i].ptcls.Count; p++)
                 {
                     var ptcl = emit.Nodes.Add("Particle " + p);
                     ptcl.Tag = 2;
@@ -97,7 +89,7 @@ namespace AquaModelTool
             mainPanel.Controls[mainPanel.Controls.Count - 1].BringToFront();
         }
 
-        public void loadAnimEditor(AquaEffect.AnimObject animObj, TreeNode node)
+        public void loadAnimEditor(AnimObject animObj, TreeNode node)
         {
             for (int ctrl = 0; ctrl < mainPanel.Controls.Count; ctrl++)
             {

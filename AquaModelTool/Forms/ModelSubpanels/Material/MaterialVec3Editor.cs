@@ -1,22 +1,19 @@
-﻿using AquaModelLibrary.Utility;
-using System;
-using System.Collections.Generic;
+﻿using AquaModelLibrary.Data.PSO2.Aqua.AquaObjectData;
+using AquaModelLibrary.Data.Utility;
 using System.Numerics;
-using System.Windows.Forms;
-using static AquaModelLibrary.Utility.ColorUtility;
 
 namespace AquaModelTool.Forms.ModelSubpanels.Material
 {
     public partial class MaterialVec3Editor : Form
     {
         private ColorDialog colorDialog = new ColorDialog();
-        private List<AquaModelLibrary.AquaObject.MATE> _matList;
+        private List<MATE> _matList;
         private int _matIndex;
         private int _vec3Index;
         private Button _matButton;
         private bool isActive = false;
 
-        public MaterialVec3Editor(List<AquaModelLibrary.AquaObject.MATE> matList, int matIndex, int vec3Index, Button matButton)
+        public MaterialVec3Editor(List<MATE> matList, int matIndex, int vec3Index, Button matButton)
         {
             _matList = matList;
             _matIndex = matIndex;
@@ -31,22 +28,22 @@ namespace AquaModelTool.Forms.ModelSubpanels.Material
             {
                 case 0:
                     this.Text = $"{name} Diffuse RGBA Editor";
-                    rGBButton.BackColor = ARGBFromRGBAVector4(mat.diffuseRGBA);
+                    rGBButton.BackColor = ColorUtility.ARGBFromRGBAVector4(mat.diffuseRGBA);
                     vec4 = mat.diffuseRGBA;
                     break;
                 case 1:
                     this.Text = $"{name} Tex 2 RGBA Editor";
-                    rGBButton.BackColor = ARGBFromRGBAVector4(mat.unkRGBA0);
+                    rGBButton.BackColor = ColorUtility.ARGBFromRGBAVector4(mat.unkRGBA0);
                     vec4 = mat.unkRGBA0;
                     break;
                 case 2:
                     this.Text = $"{name} Tex 3 RGBA Editor";
-                    rGBButton.BackColor = ARGBFromRGBAVector4(mat._sRGBA);
+                    rGBButton.BackColor = ColorUtility.ARGBFromRGBAVector4(mat._sRGBA);
                     vec4 = mat._sRGBA;
                     break;
                 case 3:
                     this.Text = $"{name} Tex 4 RGBA Editor";
-                    rGBButton.BackColor = ARGBFromRGBAVector4(mat.unkRGBA1);
+                    rGBButton.BackColor = ColorUtility.ARGBFromRGBAVector4(mat.unkRGBA1);
                     vec4 = mat.unkRGBA1;
                     break;
             }
@@ -58,12 +55,12 @@ namespace AquaModelTool.Forms.ModelSubpanels.Material
 
         private void Vec3UD_Click(object sender, EventArgs e)
         {
-            if(!isActive)
+            if (!isActive)
             {
                 return;
             }
             Vector4 vec4;
-            AquaModelLibrary.AquaObject.MATE mate = _matList[_matIndex];
+            MATE mate = _matList[_matIndex];
             switch (_vec3Index)
             {
                 case 0:
@@ -102,7 +99,7 @@ namespace AquaModelTool.Forms.ModelSubpanels.Material
 
         private void rGBButton_Click(object sender, EventArgs e)
         {
-            AquaModelLibrary.AquaObject.MATE mate = _matList[_matIndex];
+            MATE mate = _matList[_matIndex];
 
             if (colorDialog.ShowDialog() == DialogResult.OK)
             {

@@ -1,14 +1,12 @@
-﻿using AquaModelTool.Forms.ModelSubpanels;
-using System;
-using System.Windows.Forms;
-using static AquaModelLibrary.Utility.AquaUtilData;
+﻿using AquaModelLibrary.Data.PSO2.Aqua;
+using AquaModelTool.Forms.ModelSubpanels;
 
 namespace AquaModelTool
 {
     public partial class ModelEditor : UserControl
     {
-        public ModelSet modelset;
-        public ModelEditor(ModelSet aquaModelset)
+        public AquaPackage modelset;
+        public ModelEditor(AquaPackage aquaModelset)
         {
             modelset = aquaModelset;
 
@@ -119,11 +117,11 @@ namespace AquaModelTool
 
         public void CloseControlWindows()
         {
-            foreach(var control in modelPanel.Controls)
+            foreach (var control in modelPanel.Controls)
             {
-                if(control is MaterialEditor)
+                if (control is MaterialEditor)
                 {
-                    foreach(var window in ((MaterialEditor)control).windows)
+                    foreach (var window in ((MaterialEditor)control).windows)
                     {
                         window.Close();
                     }

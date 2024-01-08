@@ -1,12 +1,9 @@
-﻿using AquaModelLibrary;
-using AquaModelLibrary.AquaMethods;
+﻿using AquaModelLibrary.Data.PSO2.Aqua.CharacterMakingIndexData;
+using AquaModelLibrary.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
-using static AquaModelLibrary.CharacterMakingIndex;
 namespace CMXPatcher
 {
     public static class BODYStructHandler
@@ -47,7 +44,7 @@ namespace CMXPatcher
             outText.AppendLine("Blue Mask Mapping = " + ((int)body.bodyMaskColorMapping.blueIndex).ToString(new CultureInfo("en-US")));
             outText.AppendLine("Alpha Mask Mapping = " + ((int)body.bodyMaskColorMapping.alphaIndex).ToString(new CultureInfo("en-US")));
 
-            if(includeComments)
+            if (includeComments)
             {
                 outText.AppendLine("\n//Mask Mapping options. The _m texture for outfits maps character data color slots to its red, green, blue and alpha color channels. Alpha may be unusable and not all outfits may support this.\r\n" +
                                     "//PrimaryOuterWear = 1\r\n" +
@@ -71,16 +68,16 @@ namespace CMXPatcher
 
             return outText;
         }
-        
+
         //Takes an existing bodyObject class and applies the data from the user text into it
         //Expects data to be pruned a little beforehand
         public static void PatchBody(BODYObject body, List<string> bodyData)
         {
-            foreach(var line in bodyData)
+            foreach (var line in bodyData)
             {
                 var contents = line.Replace(" = ", "=").Split("=");
 
-                switch(contents[0])
+                switch (contents[0])
                 {
                     case "int_20":
                         body.body.int_20 = Int32.Parse(contents[1], new CultureInfo("en-US"));
@@ -163,12 +160,12 @@ namespace CMXPatcher
         public static byte[] GetBODYAsBytes(BODYObject body, bool postRetem = true)
         {
             List<byte> bodyBytes = new List<byte>();
-            bodyBytes.AddRange(AquaGeneralMethods.ConvertStruct(body.body));
-            if(postRetem)
+            bodyBytes.AddRange(DataHelpers.ConvertStruct(body.body));
+            if (postRetem)
             {
-                bodyBytes.AddRange(AquaGeneralMethods.ConvertStruct(body.bodyMaskColorMapping));
+                bodyBytes.AddRange(DataHelpers.ConvertStruct(body.bodyMaskColorMapping));
             }
-            bodyBytes.AddRange(AquaGeneralMethods.ConvertStruct(body.body2));
+            bodyBytes.AddRange(DataHelpers.ConvertStruct(body.body2));
 
             return bodyBytes.ToArray();
         }

@@ -1,16 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Numerics;
-using System.Windows.Forms;
+﻿using AquaModelLibrary.Data.PSO2.Aqua.AquaEffectData;
 
 namespace AquaModelTool
 {
     public unsafe partial class EmitEditor : UserControl
     {
-        AquaModelLibrary.AquaEffect.EMITObject emit;
+        EMITObject emit;
         TreeNode node;
-        public EmitEditor(AquaModelLibrary.AquaEffect.EMITObject emitObj, TreeNode thisNode)
+        public EmitEditor(EMITObject emitObj, TreeNode thisNode)
         {
             InitializeComponent();
             node = thisNode;
@@ -125,7 +121,7 @@ namespace AquaModelTool
             var vec3 = emit.emit.unkVec3_00;
             vec3.X = (float)posXUD.Value;
             emit.emit.unkVec3_00 = vec3;
-            
+
             //Set from the casted number so it's clear to the user what the new value will be. Decimals don't match to floats well
             posXUD.Value = (decimal)emit.emit.unkVec3_00.X;
         }

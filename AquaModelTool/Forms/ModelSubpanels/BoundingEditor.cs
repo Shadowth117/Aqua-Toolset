@@ -1,13 +1,12 @@
-﻿using System;
-using System.Windows.Forms;
+﻿using AquaModelLibrary.Data.PSO2.Aqua;
 
 namespace AquaModelTool.Forms.ModelSubpanels
 {
     public partial class BoundingEditor : UserControl
     {
-        private AquaModelLibrary.AquaObject model;
+        private AquaObject model;
 
-        public BoundingEditor(AquaModelLibrary.AquaObject aquaModel)
+        public BoundingEditor(AquaObject aquaModel)
         {
             model = aquaModel;
             InitializeComponent();

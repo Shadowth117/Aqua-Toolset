@@ -1,7 +1,6 @@
-﻿using AquaModelLibrary;
-using AquaModelLibrary.Extra;
-using AquaModelLibrary.Extra.FromSoft;
-using AquaModelLibrary.ToolUX;
+﻿using AquaModelLibrary.Core.FromSoft;
+using AquaModelLibrary.Core.ToolUX;
+using AquaModelLibrary.Data.FromSoft;
 using Microsoft.Win32;
 using Microsoft.WindowsAPICodePack.Dialogs;
 using Newtonsoft.Json;
@@ -25,7 +24,7 @@ namespace SoulsModelTool
         public string mainSettingsFile = "Settings.json";
         public SMTSetting smtSetting = new SMTSetting();
         public MainSetting mainSetting = new MainSetting();
-        public AquaUtil aqua = new AquaUtil();
+
         JsonSerializerSettings jss = new JsonSerializerSettings() { Formatting = Formatting.Indented };
         public SoulsModelToolWindow(List<string> paths, SMTSetting _smtSetting, MainSetting _mainSetting)
         {
@@ -62,11 +61,11 @@ namespace SoulsModelTool
             }
             if (Double.TryParse(mainSetting.customScaleValue, out double result))
             {
-                 scaleUD.Value = result;
+                scaleUD.Value = result;
             }
             else
             {
-                 scaleUD.Value = 1;
+                scaleUD.Value = 1;
             }
         }
 
@@ -97,7 +96,7 @@ namespace SoulsModelTool
             };
             if (goodFolderDialog.ShowDialog() == CommonFileDialogResult.Ok)
             {
-                AquaModelLibrary.Extra.FromSoft.SoulsMapMetadataGenerator.Generate(goodFolderDialog.FileNames.ToList(), out var mcCombo);
+                SoulsMapMetadataGenerator.Generate(goodFolderDialog.FileNames.ToList(), out var mcCombo);
             }
         }
 
@@ -142,10 +141,9 @@ namespace SoulsModelTool
                         }
                     }
 
-                    AquaUtil aqua = new AquaUtil();
                     var ext = Path.GetExtension(openFileDialog.FileName);
                     var outStr = openFileDialog.FileName.Replace(ext, "_out.flver");
-                    SoulsConvert.ConvertModelToFlverAndWrite(openFileDialog.FileName, outStr, 1, true, true, SoulsConvert.SoulsGame.DemonsSouls);
+                    SoulsConvert.ConvertModelToFlverAndWrite(openFileDialog.FileName, outStr, 1, true, true, SoulsGame.DemonsSouls);
                 }
             }
         }
@@ -173,10 +171,10 @@ namespace SoulsModelTool
             };
             if (openFileDialog.ShowDialog() == true)
             {
-                if (SoulsConvert.game == SoulsConvert.SoulsGame.None)
+                if (SoulsConvert.game == SoulsGame.None)
                 {
                     SetGame();
-                    if (SoulsConvert.game == SoulsConvert.SoulsGame.None)
+                    if (SoulsConvert.game == SoulsGame.None)
                     {
                         //User already warned when setting game.
                         return;
@@ -200,7 +198,7 @@ namespace SoulsModelTool
             if (openFileDialog.ShowDialog() == true)
             {
                 var tempGame = SoulsConvert.GetGameEnum(openFileDialog.FileName);
-                if (tempGame != SoulsConvert.SoulsGame.None)
+                if (tempGame != SoulsGame.None)
                 {
                     SoulsConvert.game = tempGame;
                 }

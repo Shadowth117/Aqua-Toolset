@@ -1,21 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
+﻿using AquaModelLibrary.Data.PSO2.Aqua;
 
 namespace AquaModelTool
 {
     public class AquaUICommon
     {
-        public AquaModelLibrary.AquaUtil aqua = new AquaModelLibrary.AquaUtil();
+        public AquaPackage packageModel = null;
+        public AquaPackage packageMotion = null;
+        public AquaEffect aqEffect = null;
+        public BTI_MotionConfig btiMotionConfig = null;
 
-        public AquaUICommon()
+        public AquaUICommon() { }
+
+        public void ClearData()
         {
+            packageModel = null;
+            packageMotion = null;
+            aqEffect = null;
+            btiMotionConfig = null;
         }
-
 
         public string confirmFile(string str = null)
         {
@@ -28,7 +30,7 @@ namespace AquaModelTool
                          "|PSO2 Motion Config BTI Files (*.bti)|*.bti" +
                          "|PSO2 Effect/Particle Files (*.aqe)|*.aqe"
             };
-            if(str == null)
+            if (str == null)
             {
                 if (openFileDialog.ShowDialog() == DialogResult.OK)
                 {
@@ -42,25 +44,22 @@ namespace AquaModelTool
         {
             if (setToModels)
             {
-                for (int i = 0; i < aqua.aquaModels.Count; i++)
+                for (int i = 0; i < packageModel.models.Count; i++)
                 {
-                    for (int j = 0; j < aqua.aquaModels[i].models.Count; j++)
+                    for (int r = 0; r < packageModel.models[i].rendList.Count; r++)
                     {
-                        for (int r = 0; r < aqua.aquaModels[i].models[j].rendList.Count; r++)
-                        {
-                            var rend = aqua.aquaModels[i].models[j].rendList[r];
-                            
-                            rend.int_0C = 1;
-                            rend.unk8 = 1;
-                            rend.alphaCutoff = 0;
-                            aqua.aquaModels[i].models[j].rendList[r] = rend;
-                        }
-                        for (int m = 0; m < aqua.aquaModels[i].models[j].mateList.Count; m++)
-                        {
-                            var mate = aqua.aquaModels[i].models[j].mateList[m];
-                            mate.alphaType.SetString("blendalpha");
-                            aqua.aquaModels[i].models[j].mateList[m] = mate;
-                        }
+                        var rend = packageModel.models[i].rendList[r];
+
+                        rend.int_0C = 1;
+                        rend.unk8 = 1;
+                        rend.alphaCutoff = 0;
+                        packageModel.models[i].rendList[r] = rend;
+                    }
+                    for (int m = 0; m < packageModel.models[i].mateList.Count; m++)
+                    {
+                        var mate = packageModel.models[i].mateList[m];
+                        mate.alphaType.SetString("blendalpha");
+                        packageModel.models[i].mateList[m] = mate;
                     }
                 }
             }
@@ -68,37 +67,19 @@ namespace AquaModelTool
 
         public void averageNormals()
         {
-            for (int i = 0; i < aqua.aquaModels.Count; i++)
+            for (int i = 0; i < packageModel.models.Count; i++)
             {
-                for(int j = 0; j < aqua.aquaModels[i].models.Count; j++)
-                {
-                    AquaModelLibrary.AquaObjectMethods.CalcUNRMs(aqua.aquaModels[i].models[j], true, false);
-                }
+                packageModel.models[i].CalcUNRMs(true, false);
             }
         }
 
-        public void toNIFLModel(string str)
-        {
-            //These will be output as .**p regardless and if the user really wants the o version, they can do it in 2 seconds in a hex editor.
-            str = str.Replace(".aqo", ".aqp");
-            str = str.Replace(".tro", ".trp");
-            
-            if(aqua.aquaModels[0].models[0].objc.type > 0xC2A)
-            {
-                aqua.WriteNGSNIFLModel(str, str);
-            } else
-            {
-                aqua.WriteClassicNIFLModel(str, str);
-            }
-        }
-
-        public void toVTBFModel(string str)
+        public void WriteModel(string str, bool writeVtbf)
         {
             //These will be output as .**p regardless and if the user really wants the o version, they can do it in 2 seconds in a hex editor.
             str = str.Replace(".aqo", ".aqp");
             str = str.Replace(".tro", ".trp");
 
-            aqua.WriteVTBFModel(str, str);
+            packageModel.WritePackage(str, writeVtbf);
         }
 
         public static DialogResult ShowInputDialog(ref decimal input)

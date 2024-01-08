@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AquaModelLibrary.Data.PSO2.Aqua;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Numerics;
@@ -8,13 +9,13 @@ namespace AquaModelTool
 {
     public partial class KeyEditor : UserControl
     {
-        AquaModelLibrary.AquaMotion motion;
+        AquaMotion motion;
         int keyNodeId;
         int keyDataId;
         int keyId;
         int nodeIndex;
         TreeNode node;
-        public KeyEditor(AquaModelLibrary.AquaMotion aquaMotion, TreeNode thisNode, int nodeId, int dataId, int id)
+        public KeyEditor(AquaMotion aquaMotion, TreeNode thisNode, int nodeId, int dataId, int id)
         {
             InitializeComponent();
             node = thisNode;

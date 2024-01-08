@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AquaModelLibrary.Data.PSO2.Aqua.AquaEffectData;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Numerics;
@@ -8,12 +9,12 @@ namespace AquaModelTool
 {
     public unsafe partial class AqeAnimEditor : UserControl
     {
-        AquaModelLibrary.AquaEffect.AnimObject anim;
+        AnimObject anim;
         private int currentCurv = 0;
         private int currentKey = 0;
         private ColorDialog colorDialog = new ColorDialog();
         TreeNode node;
-        public AqeAnimEditor(AquaModelLibrary.AquaEffect.AnimObject animObj, TreeNode thisNode)
+        public AqeAnimEditor(AnimObject animObj, TreeNode thisNode)
         {
             InitializeComponent();
             node = thisNode;

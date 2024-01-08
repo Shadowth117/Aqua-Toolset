@@ -1,23 +1,14 @@
-﻿using AquaModelLibrary;
-using AquaModelLibrary.Extra;
-using AquaModelLibrary.Native.Fbx;
-using AquaModelLibrary.ToolUX;
-using Microsoft.VisualBasic;
-using Microsoft.Win32;
+﻿using AquaModelLibrary.Core.BluePoint;
+using AquaModelLibrary.Core.FromSoft;
+using AquaModelLibrary.Core.General;
+using AquaModelLibrary.Core.ToolUX;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using static AquaModelLibrary.Utility.AquaUtilData;
 
 namespace SoulsModelTool
 {
     public static class FileHandler
     {
-        public static AquaUtil aqua = new AquaUtil();
-
         public static void ConvertBluepointModel(string file)
         {
             BluePointConvert.ReadCMDL(file);
@@ -52,27 +43,27 @@ namespace SoulsModelTool
 
         public static void ApplyModelImporterSettings(MainSetting mainSetting)
         {
-            if(Int32.TryParse(mainSetting.customScaleSelection, out int selection))
+            if (Int32.TryParse(mainSetting.customScaleSelection, out int selection))
             {
-                switch(selection)
+                switch (selection)
                 {
                     case 2:
                     case 1:
                     case 0:
-                        ModelImporter.scaleHandling = (ModelImporter.ScaleHandling)selection;
+                        AssimpModelImporter.scaleHandling = (AssimpModelImporter.ScaleHandling)selection;
                         break;
                     default:
-                        ModelImporter.scaleHandling = ModelImporter.ScaleHandling.NoScaling;
+                        AssimpModelImporter.scaleHandling = AssimpModelImporter.ScaleHandling.NoScaling;
                         break;
                 }
             }
             if (Double.TryParse(mainSetting.customScaleValue, out double result))
             {
-                ModelImporter.customScale = result;
+                AssimpModelImporter.customScale = result;
             }
             else
             {
-                ModelImporter.customScale = 1;
+                AssimpModelImporter.customScale = 1;
             }
         }
     }

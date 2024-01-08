@@ -1,9 +1,7 @@
-﻿using AquaModelTool.Forms.ModelSubpanels.Material;
-using System;
-using System.Collections.Generic;
+﻿using AquaModelLibrary.Data.PSO2.Aqua;
+using AquaModelLibrary.Data.Utility;
+using AquaModelTool.Forms.ModelSubpanels.Material;
 using System.Numerics;
-using System.Windows.Forms;
-using static AquaModelLibrary.Utility.ColorUtility;
 
 namespace AquaModelTool
 {
@@ -12,9 +10,9 @@ namespace AquaModelTool
         private BlendTypePresetPicker blendDialog = new BlendTypePresetPicker();
         public MaterialVec3Editor colorEditor = null;
         public List<Form> windows = new List<Form>();
-        AquaModelLibrary.AquaObject model;
+        AquaObject model;
         bool loaded = false;
-        public MaterialEditor(AquaModelLibrary.AquaObject aquaModel)
+        public MaterialEditor(AquaObject aquaModel)
         {
             InitializeComponent();
             model = aquaModel;
@@ -41,10 +39,10 @@ namespace AquaModelTool
             loaded = false;
             alphaTextBox.Text = mat.alphaType.GetString();
             matNameTextBox.Text = mat.matName.GetString();
-            diffuseRGBButton.BackColor = ARGBFromRGBAVector4(mat.diffuseRGBA);
-            tex2RGBAButton.BackColor = ARGBFromRGBAVector4(mat.unkRGBA0);
-            tex3RGBAButton.BackColor = ARGBFromRGBAVector4(mat._sRGBA);
-            tex4RGBAButton.BackColor = ARGBFromRGBAVector4(mat.unkRGBA1);
+            diffuseRGBButton.BackColor = ColorUtility.ARGBFromRGBAVector4(mat.diffuseRGBA);
+            tex2RGBAButton.BackColor = ColorUtility.ARGBFromRGBAVector4(mat.unkRGBA0);
+            tex3RGBAButton.BackColor = ColorUtility.ARGBFromRGBAVector4(mat._sRGBA);
+            tex4RGBAButton.BackColor = ColorUtility.ARGBFromRGBAVector4(mat.unkRGBA1);
             diffuseUD.Value = (decimal)mat.diffuseRGBA.W;
             tex2UD.Value = (decimal)mat.unkRGBA0.W;
             tex3SpecUD.Value = (decimal)mat._sRGBA.W;

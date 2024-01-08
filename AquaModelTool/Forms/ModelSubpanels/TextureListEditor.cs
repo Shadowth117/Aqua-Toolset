@@ -1,7 +1,6 @@
-﻿using AquaModelLibrary;
-using AquaModelLibrary.AquaStructs.AquaObjectExtras;
-using System.Collections.Generic;
-using System.Windows.Forms;
+﻿using AquaModelLibrary.Data.PSO2.Aqua;
+using AquaModelLibrary.Data.PSO2.Aqua.AquaObjectData;
+using AquaModelLibrary.Data.PSO2.Aqua.Presets;
 
 namespace AquaModelTool.Forms.ModelSubpanels
 {
@@ -20,7 +19,7 @@ namespace AquaModelTool.Forms.ModelSubpanels
             if (_aqp.tsetList.Count > 0)
             {
                 SetTsetTexLimit(aqp);
-                for(int i = 0; i < aqp.tsetList.Count; i++)
+                for (int i = 0; i < aqp.tsetList.Count; i++)
                 {
                     texListCB.Items.Add(i);
                 }
@@ -53,7 +52,7 @@ namespace AquaModelTool.Forms.ModelSubpanels
                 }
             }
 
-            if(doUpdateTstaEditor)
+            if (doUpdateTstaEditor)
             {
                 UpdateTSTAEditor();
             }
@@ -64,7 +63,8 @@ namespace AquaModelTool.Forms.ModelSubpanels
                 {
                     texSlotCB.SelectedIndex = 0;
                 }
-            } else
+            }
+            else
             {
                 texSlotCB.SelectedIndex = goToSlot;
             }
@@ -92,9 +92,9 @@ namespace AquaModelTool.Forms.ModelSubpanels
 
         private void addButton_Click(object sender, System.EventArgs e)
         {
-            if(_aqp.tsetList[texListCB.SelectedIndex].tstaTexIDs.Count < texLimit)
+            if (_aqp.tsetList[texListCB.SelectedIndex].tstaTexIDs.Count < texLimit)
             {
-                var texf = new AquaObject.TEXF();
+                var texf = new TEXF();
                 texf.texName.SetString("sampleTex_d.dds");
                 _aqp.texFUnicodeNames.Add("sampleTex_d.dds");
                 _aqp.texfList.Add(texf);
@@ -108,7 +108,8 @@ namespace AquaModelTool.Forms.ModelSubpanels
                 _aqp.tsetList[texListCB.SelectedIndex].texCount = _aqp.tsetList[texListCB.SelectedIndex].tstaTexIDs.Count;
 
                 UpdateTSTAList(texSlotCB.Items.Count);
-            } else
+            }
+            else
             {
                 MessageBox.Show("Cannot add beyond texture set limit!");
             }
@@ -118,9 +119,9 @@ namespace AquaModelTool.Forms.ModelSubpanels
         {
             if (_aqp.tsetList[texListCB.SelectedIndex].tstaTexIDs.Count < texLimit)
             {
-                var texf = new AquaObject.TEXF();
+                var texf = new TEXF();
                 texf.texName.SetString("sampleTex_d.dds");
-                if(_aqp.texFUnicodeNames.Count > 0)
+                if (_aqp.texFUnicodeNames.Count > 0)
                 {
                     _aqp.texFUnicodeNames.Add("sampleTex_d.dds");
                 }
@@ -144,7 +145,7 @@ namespace AquaModelTool.Forms.ModelSubpanels
 
         private void removeButton_Click(object sender, System.EventArgs e)
         {
-            if(_aqp.tsetList[texListCB.SelectedIndex].tstaTexIDs.Count > 0 && _aqp.texfList.Count > 0)
+            if (_aqp.tsetList[texListCB.SelectedIndex].tstaTexIDs.Count > 0 && _aqp.texfList.Count > 0)
             {
                 var tstaId = _aqp.tsetList[texListCB.SelectedIndex].tstaTexIDs[texSlotCB.SelectedIndex];
                 var texName = _aqp.tstaList[tstaId].texName;
@@ -153,25 +154,25 @@ namespace AquaModelTool.Forms.ModelSubpanels
                 //Remove tsta if unused elsewhere
                 for (int i = 0; i < _aqp.tsetList.Count; i++)
                 {
-                    if(i == texListCB.SelectedIndex)
+                    if (i == texListCB.SelectedIndex)
                     {
                         continue;
                     }
-                    if(_aqp.tsetList[i].tstaTexIDs.Contains(tstaId))
+                    if (_aqp.tsetList[i].tstaTexIDs.Contains(tstaId))
                     {
                         count++;
                     }
                 }
-                if(count == 0)
+                if (count == 0)
                 {
                     int id = texSlotCB.SelectedIndex;
                     _aqp.tstaList.RemoveAt(texSlotCB.SelectedIndex);
                     _aqp.objc.tstaCount--;
                     for (int i = 0; i < _aqp.tsetList.Count; i++)
                     {
-                        for(int t = 0; t < _aqp.tsetList[i].tstaTexIDs.Count; t++)
+                        for (int t = 0; t < _aqp.tsetList[i].tstaTexIDs.Count; t++)
                         {
-                            if(_aqp.tsetList[i].tstaTexIDs[t] > id)
+                            if (_aqp.tsetList[i].tstaTexIDs[t] > id)
                             {
                                 _aqp.tsetList[i].tstaTexIDs[t] = _aqp.tsetList[i].tstaTexIDs[t] - 1;
                             }
@@ -181,24 +182,24 @@ namespace AquaModelTool.Forms.ModelSubpanels
 
                 //Remove texf if unused elsewhere
                 count = 0;
-                for(int i = 0; i < _aqp.tstaList.Count; i++)
+                for (int i = 0; i < _aqp.tstaList.Count; i++)
                 {
                     var tstaName = _aqp.tstaList[i].texName;
-                    if(tstaName == texName)
+                    if (tstaName == texName)
                     {
                         count++;
-                        if(count > 1)
+                        if (count > 1)
                         {
                             break;
                         }
                     }
                 }
 
-                if(count < 2)
+                if (count < 2)
                 {
-                    for(int i = 0; i < _aqp.texfList.Count; i++)
+                    for (int i = 0; i < _aqp.texfList.Count; i++)
                     {
-                        if(_aqp.texfList[i].texName == texName)
+                        if (_aqp.texfList[i].texName == texName)
                         {
                             _aqp.texfList.RemoveAt(i);
                             if (_aqp.texFUnicodeNames.Count > 0)
@@ -219,15 +220,15 @@ namespace AquaModelTool.Forms.ModelSubpanels
 
         private void addListButton_Click(object sender, System.EventArgs e)
         {
-            var newSet = new AquaObject.TSET();
+            var newSet = new TSET();
             _aqp.tsetList.Add(newSet);
             _aqp.objc.tsetCount++;
             texListCB.Items.Add(texListCB.Items.Count);
         }
 
-        private void insertListButton_Click(object sender, System.EventArgs e)
+        private void insertListButton_Click(object sender, EventArgs e)
         {
-            var newSet = new AquaObject.TSET();
+            var newSet = new TSET();
             _aqp.tsetList.Insert(texListCB.SelectedIndex, newSet);
             _aqp.objc.tsetCount++;
             var index = texListCB.SelectedIndex;
@@ -240,7 +241,7 @@ namespace AquaModelTool.Forms.ModelSubpanels
             UpdateTSTAList();
         }
 
-        private void removeListButton_Click(object sender, System.EventArgs e)
+        private void removeListButton_Click(object sender, EventArgs e)
         {
             int index = texListCB.SelectedIndex;
             var tset = _aqp.tsetList[index];
@@ -251,10 +252,11 @@ namespace AquaModelTool.Forms.ModelSubpanels
             {
                 texListCB.Items.Add(i);
             }
-            if(index >= texListCB.Items.Count)
+            if (index >= texListCB.Items.Count)
             {
                 texListCB.SelectedIndex = index - 1;
-            } else if(texListCB.Items.Count > 0)
+            }
+            else if (texListCB.Items.Count > 0)
             {
                 texListCB.SelectedIndex = index;
             }
@@ -264,7 +266,7 @@ namespace AquaModelTool.Forms.ModelSubpanels
             UpdateTSTAList();
         }
 
-        private void RemoveOrphanedTextures(int index, AquaObject.TSET tset)
+        private void RemoveOrphanedTextures(int index, TSET tset)
         {
             //Get orphaned tex list
             List<int> orphanedTexIds = new List<int>(tset.tstaTexIDs);
@@ -295,7 +297,8 @@ namespace AquaModelTool.Forms.ModelSubpanels
                     if (orphanedTexCheck.ContainsKey(tstaName))
                     {
                         orphanedTexCheck[tstaName]++;
-                    } else
+                    }
+                    else
                     {
                         orphanedTexCheck.Add(tstaName, 1);
                     }
@@ -307,9 +310,9 @@ namespace AquaModelTool.Forms.ModelSubpanels
             }
 
             //Texfs are typically only referenced once, so we remove them only if we don't need them.
-            for(int i = 0; i < _aqp.texfList.Count; i++)
+            for (int i = 0; i < _aqp.texfList.Count; i++)
             {
-                if(orphanedTexCheck.ContainsKey(_aqp.texfList[i].texName.curString) && orphanedTexCheck[_aqp.texfList[i].texName.curString] == 1)
+                if (orphanedTexCheck.ContainsKey(_aqp.texfList[i].texName.curString) && orphanedTexCheck[_aqp.texfList[i].texName.curString] == 1)
                 {
                     _aqp.texfList.RemoveAt(i);
                     if (_aqp.texFUnicodeNames.Count > 0)
@@ -354,12 +357,12 @@ namespace AquaModelTool.Forms.ModelSubpanels
             }
         }
 
-        private void texListCB_SelectedIndexChanged(object sender, System.EventArgs e)
+        private void texListCB_SelectedIndexChanged(object sender, EventArgs e)
         {
             UpdateTSTAList();
         }
 
-        private void texSlotCB_SelectedIndexChanged(object sender, System.EventArgs e)
+        private void texSlotCB_SelectedIndexChanged(object sender, EventArgs e)
         {
             UpdateTSTAEditor();
         }

@@ -1,10 +1,10 @@
-﻿using Microsoft.WindowsAPICodePack.Dialogs;
+﻿using AquaModelLibrary.Data.PSO2.Aqua.CharacterMakingIndexData;
+using AquaModelLibrary.ToolUX.CommonForms;
+using Microsoft.WindowsAPICodePack.Dialogs;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Windows;
-using AquaModelLibrary.ToolUX.CommonForms;
-using System;
-using System.Diagnostics;
 
 namespace CMXPatcher
 {
@@ -42,7 +42,7 @@ namespace CMXPatcher
                 {
                     patcher.InitializeCMX();
                 }
-                catch(Exception exc)
+                catch (Exception exc)
                 {
                     patcher.pso2_binDir = null;
                     File.Delete(settingsPath + "settings.txt");
@@ -73,7 +73,7 @@ namespace CMXPatcher
 
         private void ExtractEditableEntries(object sender, RoutedEventArgs e)
         {
-            foreach(var id in patcher.cmx.costumeDict.Keys)
+            foreach (var id in patcher.cmx.costumeDict.Keys)
             {
                 ExtractBodyEntryNoPrompt("costume", patcher.cmx.costumeDict, id, true);
             }
@@ -123,18 +123,18 @@ namespace CMXPatcher
         {
             ExtractHairEntry("hair", patcher.cmx.hairDict);
         }
-        private void ExtractHairEntry(string type, Dictionary<int, AquaModelLibrary.CharacterMakingIndex.HAIRObject> dict)
+        private void ExtractHairEntry(string type, Dictionary<int, HAIRObject> dict)
         {
             var id = NumberPrompt.ShowDialog(type);
             ExtractHairEntryNoPrompt(type, dict, id);
         }
 
-        private void ExtractBodyEntry(string type, Dictionary<int, AquaModelLibrary.CharacterMakingIndex.BODYObject> dict)
+        private void ExtractBodyEntry(string type, Dictionary<int, BODYObject> dict)
         {
             var id = NumberPrompt.ShowDialog(type);
             ExtractBodyEntryNoPrompt(type, dict, id);
         }
-        private bool ExtractHairEntryNoPrompt(string type, Dictionary<int, AquaModelLibrary.CharacterMakingIndex.HAIRObject> dict, int id, bool silent = false)
+        private bool ExtractHairEntryNoPrompt(string type, Dictionary<int, HAIRObject> dict, int id, bool silent = false)
         {
             bool success = false;
             if (id != -1)
@@ -142,19 +142,19 @@ namespace CMXPatcher
                 if (dict.ContainsKey(id))
                 {
                     Directory.CreateDirectory(settingsPath + "CMXEntryDumps\\");
-                    string path = settingsPath + $"CMXEntryDumps\\{ type}_{id}_cmxConfig.txt";
+                    string path = settingsPath + $"CMXEntryDumps\\{type}_{id}_cmxConfig.txt";
                     try
                     {
                         File.WriteAllText(path, HAIRStructHandler.ConvertToString(dict[id], type).ToString());
                         success = true;
-                        if(!silent)
+                        if (!silent)
                         {
                             MessageBox.Show($"Wrote successfully to {path}.");
                         }
                     }
                     catch
                     {
-                        if(!silent)
+                        if (!silent)
                         {
                             MessageBox.Show($"Unable to write {path}. Ensure you have all permissions to said directory.");
                         }
@@ -162,7 +162,7 @@ namespace CMXPatcher
                 }
                 else
                 {
-                    if(!silent)
+                    if (!silent)
                     {
                         MessageBox.Show("Please Input a valid id to extract.");
                     }
@@ -170,7 +170,7 @@ namespace CMXPatcher
             }
             else
             {
-                if(!silent)
+                if (!silent)
                 {
                     MessageBox.Show("Please Input a valid id to extract.");
                 }
@@ -179,7 +179,7 @@ namespace CMXPatcher
             return success;
         }
 
-        private bool ExtractBodyEntryNoPrompt(string type, Dictionary<int, AquaModelLibrary.CharacterMakingIndex.BODYObject> dict, int id, bool silent = false)
+        private bool ExtractBodyEntryNoPrompt(string type, Dictionary<int, BODYObject> dict, int id, bool silent = false)
         {
             bool success = false;
             if (id != -1)
@@ -187,7 +187,7 @@ namespace CMXPatcher
                 if (dict.ContainsKey(id))
                 {
                     Directory.CreateDirectory(settingsPath + "CMXEntryDumps\\");
-                    string path = settingsPath + $"CMXEntryDumps\\{ type}_{id}_cmxConfig.txt";
+                    string path = settingsPath + $"CMXEntryDumps\\{type}_{id}_cmxConfig.txt";
                     try
                     {
                         File.WriteAllText(path, BODYStructHandler.ConvertToString(dict[id], type, !silent).ToString());
@@ -226,10 +226,11 @@ namespace CMXPatcher
 
         private void cmxPatchClick(object sender, RoutedEventArgs e)
         {
-            if(patcher.InjectCMXMods())
+            if (patcher.InjectCMXMods())
             {
                 MessageBox.Show("CMX successfully patched.");
-            } else
+            }
+            else
             {
                 MessageBox.Show("Problem patching CMX.");
             }
@@ -249,10 +250,11 @@ namespace CMXPatcher
 
         private void cmxDowngradeClick(object sender, RoutedEventArgs e)
         {
-            if(patcher.DowngradeCmx())
+            if (patcher.DowngradeCmx())
             {
                 MessageBox.Show("CMX successfully downgraded. Output ice written CMXPatcher BenchmarkCMX subfolder.");
-            } else
+            }
+            else
             {
                 MessageBox.Show("CMX downgrade failed.");
             }
@@ -260,7 +262,7 @@ namespace CMXPatcher
 
         private void benchmarkJailbreakClick(object sender, RoutedEventArgs e)
         {
-            if(benchmarkPso2BinSelect.ShowDialog() == CommonFileDialogResult.Ok && Directory.Exists(benchmarkPso2BinSelect.FileName + "\\data\\win32\\") && !File.Exists(benchmarkPso2BinSelect.FileName + "\\GameGuard.des"))
+            if (benchmarkPso2BinSelect.ShowDialog() == CommonFileDialogResult.Ok && Directory.Exists(benchmarkPso2BinSelect.FileName + "\\data\\win32\\") && !File.Exists(benchmarkPso2BinSelect.FileName + "\\GameGuard.des"))
             {
                 Character_Making_File_Tool.WIPBox box = new("Please wait while part files are copied. \nThis may take a moment");
                 box.Show();
@@ -272,7 +274,8 @@ namespace CMXPatcher
                         box.Hide();
                         box.Close();
                         MessageBox.Show("Benchmark Jailbreak successful!");
-                    } else
+                    }
+                    else
                     {
                         box.Hide();
                         box.Close();
@@ -280,14 +283,15 @@ namespace CMXPatcher
                     }
 
                 }
-                catch(Exception exc)
+                catch (Exception exc)
                 {
                     box.Hide();
                     box.Close();
                     File.WriteAllText(settingsPath + "log.txt", exc.ToString());
                     MessageBox.Show("Exception occured trying to jailbreak benchmark. See log.txt for details.");
                 }
-            } else
+            }
+            else
             {
                 MessageBox.Show("Please select a valid character creator benchmark pso2_bin path!");
             }

@@ -6,7 +6,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Shapes;
-using AquaModelLibrary.AquaStructs;
+using AquaModelLibrary.Data.PSO2.Aqua;
+using AquaModelLibrary.Helpers.Readers;
 using FalseIdola.Audio;
 using NAudio.Wave;
 using NAudio.Wave.SampleProviders;
@@ -46,7 +47,7 @@ namespace FalseIdola
                 if (name.EndsWith(".mus"))
                 {
                     using (var stream = new MemoryStream(ffile))
-                    using (var sr = new BufferedStreamReader(stream, 8192))
+                    using (var sr = new BufferedStreamReaderBE<MemoryStream>(stream))
                     {
                         mus = new MusicFileReboot(sr);
                     }

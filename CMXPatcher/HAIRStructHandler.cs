@@ -1,12 +1,9 @@
-﻿using AquaModelLibrary;
-using AquaModelLibrary.AquaMethods;
+﻿using AquaModelLibrary.Data.PSO2.Aqua.CharacterMakingIndexData;
+using AquaModelLibrary.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
-using static AquaModelLibrary.CharacterMakingIndex;
 namespace CMXPatcher
 {
     public static class HAIRStructHandler
@@ -66,17 +63,17 @@ namespace CMXPatcher
 
             return outText;
         }
-        
+
         //Takes an existing HAIRObject class and applies the data from the user text into it
         //Expects data to be pruned a little beforehand
         public static void PatchBody(HAIRObject hair, List<string> hairData)
         {
-            
-            foreach(var line in hairData)
+
+            foreach (var line in hairData)
             {
                 var contents = line.Replace(" = ", "=").Split("=");
 
-                switch(contents[0])
+                switch (contents[0])
                 {
                     case "unkIntB1":
                         hair.hair.unkIntB1 = Int32.Parse(contents[1], new CultureInfo("en-US"));
@@ -202,7 +199,7 @@ namespace CMXPatcher
         public static byte[] GetHAIRAsBytes(HAIRObject hair)
         {
             List<byte> hairBytes = new List<byte>();
-            hairBytes.AddRange(AquaGeneralMethods.ConvertStruct(hair.hair));
+            hairBytes.AddRange(DataHelpers.ConvertStruct(hair.hair));
 
             return hairBytes.ToArray();
         }

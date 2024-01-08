@@ -7,10 +7,10 @@ using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Forms;
-using static AquaExtras.FilenameConstants;
-using static AquaModelLibrary.AquaMethods.AquaGeneralMethods;
+using static AquaModelLibrary.Data.PSO2.Constants.WeaponNames;
 using MessageBox = System.Windows.MessageBox;
 using Path = System.IO.Path;
+using AquaModelLibrary.Helpers;
 
 namespace WeaponInstaller
 {
@@ -332,201 +332,75 @@ namespace WeaponInstaller
             {
                 case "Sword":
                     typeInt = 1;
-                    if (isOldType)
-                    {
-                        names = swordNames;
-                    }
-                    else
-                    {
-                        names = swordNGSNames;
-                    }
+                    names = swordNames;
                     break;
                 case "WiredLance":
                     typeInt = 2;
-                    if (isOldType)
-                    {
-                        names = wiredLanceNames;
-                    }
-                    else
-                    {
-                        names = wiredLanceNGSNames;
-                    }
+                    names = wiredLanceNames;
                     break;
                 case "Partizan":
                     typeInt = 3;
-                    if (isOldType)
-                    {
-                        names = partizanNames;
-                    }
-                    else
-                    {
-                        names = partizanNGSNames;
-                    }
+                    names = partizanNames;
                     break;
                 case "TwinDagger":
                     typeInt = 4;
-                    if (isOldType)
-                    {
-                        names = twinDaggerNames;
-                    }
-                    else
-                    {
-                        names = twinDaggerNGSNames;
-                    }
+                    names = twinDaggerNames;
                     break;
                 case "DoubleSaber":
                     typeInt = 5;
-                    if (isOldType)
-                    {
-                        names = doubleSaberNames;
-                    }
-                    else
-                    {
-                        names = doubleSaberNGSNames;
-                    }
+                    names = doubleSaberNames;
                     break;
                 case "Knuckles":
                     typeInt = 6;
-                    if (isOldType)
-                    {
-                        names = knucklesNames;
-                    }
-                    else
-                    {
-                        names = knucklesNGSNames;
-                    }
+                    names = knucklesNames;
                     break;
                 case "Gunslash":
                     typeInt = 7;
-                    if (isOldType)
-                    {
-                        names = gunslashNames;
-                    }
-                    else
-                    {
-                        names = gunslashNGSNames;
-                    }
+                    names = gunslashNames;
                     break;
                 case "Rifle":
                     typeInt = 8;
-                    if (isOldType)
-                    {
-                        names = rifleNames;
-                    }
-                    else
-                    {
-                        names = rifleNGSNames;
-                    }
+                    names = rifleNames;
                     break;
                 case "Launcher":
                     typeInt = 9;
-                    if (isOldType)
-                    {
-                        names = launcherNames;
-                    }
-                    else
-                    {
-                        names = launcherNGSNames;
-                    }
+                    names = launcherNames;
                     break;
                 case "TwinMachineGun":
                     typeInt = 10;
-                    if (isOldType)
-                    {
-                        names = tmgNames;
-                    }
-                    else
-                    {
-                        names = tmgNGSNames;
-                    }
+                    names = tmgNames;
                     break;
                 case "Rod":
                     typeInt = 11;
-                    if (isOldType)
-                    {
-                        names = rodNames;
-                    }
-                    else
-                    {
-                        names = rodNGSNames;
-                    }
+                    names = rodNames;
                     break;
                 case "Talis":
                     typeInt = 12;
-                    if (isOldType)
-                    {
-                        names = talysNames;
-                    }
-                    else
-                    {
-                        names = talysNGSNames;
-                    }
+                    names = talysNames;
                     break;
                 case "Wand":
                     typeInt = 13;
-                    if (isOldType)
-                    {
-                        names = wandNames;
-                    }
-                    else
-                    {
-                        names = wandNGSNames;
-                    }
+                    names = wandNames;
                     break;
                 case "Katana":
                     typeInt = 14;
-                    if (isOldType)
-                    {
-                        names = katanaNames;
-                    }
-                    else
-                    {
-                        names = katanaNGSNames;
-                    }
+                    names = katanaNames;
                     break;
                 case "Bow":
                     typeInt = 15;
-                    if (isOldType)
-                    {
-                        names = bowNames;
-                    }
-                    else
-                    {
-                        names = bowNGSNames;
-                    }
+                    names = bowNames;
                     break;
                 case "JetBoots":
                     typeInt = 16;
-                    if (isOldType)
-                    {
-                        names = jetBootsNames;
-                    }
-                    else
-                    {
-                        names = jetBootsNGSNames;
-                    }
+                    names = jetBootsNames;
                     break;
                 case "DualBlades":
                     typeInt = 17;
-                    if (isOldType)
-                    {
-                        names = dualBladesNames;
-                    }
-                    else
-                    {
-                        names = dualBladesNGSNames;
-                    }
+                    names = dualBladesNames;
                     break;
                 case "Takt":
                     typeInt = 18;
-                    if (isOldType)
-                    {
-                        names = tactNames;
-                    }
-                    else
-                    {
-                        names = tactNGSNames;
-                    }
+                    names = tactNames;
                     break;
             }
 
@@ -537,11 +411,11 @@ namespace WeaponInstaller
             {
                 var idStr = $"{i:D3}";
                 var weaponPreHash = $"item/weapon/it_wp_{typeInt:D2}_{idStr}.ice";
-                var weapon = GetFileHash(weaponPreHash);
+                var weapon = HashHelpers.GetFileHash(weaponPreHash);
 
                 if (!isOldType)
                 {
-                    weapon = GetRebootHash(weapon);
+                    weapon = HashHelpers.GetRebootHash(weapon);
                 }
 
                 if (File.Exists(pso2Path + weapon))

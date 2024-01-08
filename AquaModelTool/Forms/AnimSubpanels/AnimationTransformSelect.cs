@@ -1,13 +1,5 @@
-﻿using AquaModelLibrary;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
+﻿using AquaModelLibrary.Data.PSO2.Aqua;
+using AquaModelLibrary.Data.PSO2.Aqua.AquaMotionData;
 
 namespace AquaModelTool
 {
@@ -34,18 +26,18 @@ namespace AquaModelTool
             //Set the types to activate for form based on motion type
             switch (type)
             {
-                case AquaMotion.stdAnim:
-                case AquaMotion.stdPlayerAnim:
+                case MotionConstants.stdAnim:
+                case MotionConstants.stdPlayerAnim:
                     currentChoice = 0x1;
-                    activeCheck = motion.standardTypes;
+                    activeCheck = MotionConstants.standardTypes;
                     break;
-                case AquaMotion.cameraAnim:
+                case MotionConstants.cameraAnim:
                     currentChoice = 0x1;
-                    activeCheck = motion.cameraTypes;
+                    activeCheck = MotionConstants.cameraTypes;
                     break;
-                case AquaMotion.materialAnim:
+                case MotionConstants.materialAnim:
                     currentChoice = 0x8;
-                    activeCheck = motion.materialTypes;
+                    activeCheck = MotionConstants.materialTypes;
                     break;
                 default:
                     MessageBox.Show("Unknown animation type. Please report!");
@@ -53,10 +45,10 @@ namespace AquaModelTool
             }
 
             //Go through keys in order until the biggest key in the list
-            for (int i = 0; i < motion.keyTypeNames.Keys.Max(); i++)
+            for (int i = 0; i < MotionConstants.keyTypeNames.Keys.Max(); i++)
             {
                 //Move to the next column if the row is full
-                if(buttonTracker >= maxRow)
+                if (buttonTracker >= maxRow)
                 {
                     buttonTracker = 0;
                     yAddition = 0;
@@ -64,23 +56,24 @@ namespace AquaModelTool
                 }
 
                 //Check if the key is valid
-                if(motion.keyTypeNames.ContainsKey(i))
+                if (MotionConstants.keyTypeNames.ContainsKey(i))
                 {
                     RadioButton rButton = new RadioButton();
                     rButton.AutoSize = true;
-                    rButton.Text = motion.keyTypeNames[i];
+                    rButton.Text = MotionConstants.keyTypeNames[i];
                     rButton.Tag = i;
                     rButton.Location = new Point(radioXStart + xAddition, radioYStart + yAddition);
                     rButton.CheckedChanged += changeChoice;
 
-                    if(activeCheck.Contains(i))
+                    if (activeCheck.Contains(i))
                     {
                         rButton.Enabled = true;
-                    } else
+                    }
+                    else
                     {
                         rButton.Enabled = false;
                     }
-                    
+
                     yAddition += 16;
                     buttonTracker++;
                     this.Controls.Add(rButton);

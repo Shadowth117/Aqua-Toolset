@@ -1,12 +1,11 @@
-﻿using System;
-using System.Windows.Forms;
+﻿using AquaModelLibrary.Data.PSO2.Aqua;
 
 namespace AquaModelTool
 {
     public partial class BTIEditor : UserControl
     {
-        public AquaModelLibrary.AquaBTI_MotionConfig bti;
-        public BTIEditor(AquaModelLibrary.AquaBTI_MotionConfig newBti)
+        public BTI_MotionConfig bti;
+        public BTIEditor(BTI_MotionConfig newBti)
         {
             bti = newBti;
 
@@ -83,16 +82,16 @@ namespace AquaModelTool
 
         private void addBtn_Click(object sender, EventArgs e)
         {
-            bti.btiEntries.Add(new AquaModelLibrary.AquaBTI_MotionConfig.BTIEntryObject());
+            bti.btiEntries.Add(new BTI_MotionConfig.BTIEntryObject());
             PopulateModelDropdown();
         }
 
         private void duplicateBtn_Click(object sender, EventArgs e)
         {
-            if(bti.btiEntries.Count > 0 && btiIEntryCB.SelectedIndex > -1)
+            if (bti.btiEntries.Count > 0 && btiIEntryCB.SelectedIndex > -1)
             {
                 var curEntry = bti.btiEntries[btiIEntryCB.SelectedIndex];
-                bti.btiEntries.Insert(btiIEntryCB.SelectedIndex, new AquaModelLibrary.AquaBTI_MotionConfig.BTIEntryObject() { entry = curEntry.entry, addition = curEntry.addition, node = curEntry.node});
+                bti.btiEntries.Insert(btiIEntryCB.SelectedIndex, new BTI_MotionConfig.BTIEntryObject() { entry = curEntry.entry, addition = curEntry.addition, node = curEntry.node });
                 PopulateModelDropdown();
             }
         }

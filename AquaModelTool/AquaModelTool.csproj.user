@@ -3,4 +3,72 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
     <EnableUnmanagedDebugging>true</EnableUnmanagedDebugging>
   </PropertyGroup>
+  <ItemGroup>
+    <Compile Update="AquaModelToolUI.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Forms\AnimationEditor.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Update="Forms\AnimSubpanels\AnimationTransformSelect.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Forms\AnimSubpanels\BtiEntryEditor.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Update="Forms\AnimSubpanels\KeyEditor.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Update="Forms\BTIEditor.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Update="Forms\EffectEditor.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Update="Forms\EffectSubpanels\AqeAnimEditor.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Update="Forms\EffectSubpanels\EfctEditor.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Update="Forms\EffectSubpanels\EmitEditor.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Update="Forms\EffectSubpanels\PtclEditor.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Update="Forms\General\TextBoxPopUp.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Forms\ModelEditor.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Update="Forms\ModelSubpanels\BoundingEditor.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Update="Forms\ModelSubpanels\MaterialEditor.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Update="Forms\ModelSubpanels\Material\BlendTypePresetPicker.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Forms\ModelSubpanels\Material\MaterialVec3Editor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Forms\ModelSubpanels\MeshStructEditor.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Update="Forms\ModelSubpanels\RenderEditor.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Update="Forms\ModelSubpanels\ShaderEditor.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Update="Forms\ModelSubpanels\TextureListEditor.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Update="Forms\ModelSubpanels\TextureReferenceEditor.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+  </ItemGroup>
 </Project>

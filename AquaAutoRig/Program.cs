@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using AquaModelLibrary;
+﻿using AquaModelLibrary.Core.LegacyObjPort;
+using AquaModelLibrary.Data.PSO2.Aqua;
 
 namespace AquaAutoRig
 {
@@ -12,15 +7,14 @@ namespace AquaAutoRig
     {
         public static void Main(string[] args)
         {
-            if(args.Length < 1)
+            if (args.Length < 1)
             {
                 DisplayUsage();
             }
             else
             {
-                foreach(var arg in args)
+                foreach (var arg in args)
                 {
-                    var aqua = new AquaUtil();
                     switch (Path.GetExtension(arg))
                     {
                         case ".aqp":
@@ -34,23 +28,14 @@ namespace AquaAutoRig
                             }
                             File.Copy(arg, backup);
                             var aqpName = arg;
-                            aqua.ReadModel(aqpName);
-                            LegacyObj.LegacyObjIO.ExportObj(Path.ChangeExtension(aqpName, ".obj"), aqua.aquaModels[0].models[0]);
+                            var aqp = new AquaPackage(File.ReadAllBytes(aqpName));
+                            LegacyObjIO.ExportObj(Path.ChangeExtension(aqpName, ".obj"), aqp.models[0]);
                             break;
                         case ".obj":
-                            aqua.ReadModel(Path.ChangeExtension(arg, ".org.aqp"));
-                            var model = LegacyObj.LegacyObjIO.ImportObj(arg, aqua.aquaModels[0].models[0]);
-                            aqua.aquaModels[0].models.Clear();
-                            aqua.aquaModels[0].models.Add(model);
+                            var outAqp = new AquaPackage(File.ReadAllBytes(Path.ChangeExtension(arg, ".org.aqp")));
+                            var model = LegacyObjIO.ImportObj(arg, outAqp.models[0]);
                             string outName = Path.ChangeExtension(arg, ".aqp");
-                            if (aqua.aquaModels[0].models[0].objc.type >= 0xC31)
-                            {
-                                aqua.WriteNGSNIFLModel(outName, outName);
-                            }
-                            else
-                            {
-                                aqua.WriteClassicNIFLModel(outName, outName);
-                            }
+                            File.WriteAllBytes(outName, new AquaPackage(model).GetPackageBytes(outName));
                             break;
                         default:
                             DisplayUsage();

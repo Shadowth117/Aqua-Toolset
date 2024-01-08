@@ -1,7 +1,6 @@
-﻿using AquaModelLibrary;
-using System;
-using System.Windows.Forms;
-using static AquaModelLibrary.Utility.ColorUtility;
+﻿using AquaModelLibrary.Data.PSO2.Aqua;
+using AquaModelLibrary.Data.PSO2.Aqua.AquaObjectData;
+using AquaModelLibrary.Data.Utility;
 
 namespace AquaModelTool
 {
@@ -10,7 +9,7 @@ namespace AquaModelTool
         private AquaObject model;
         private int currentShaderId = 0;
         private int currentExtraId = 0;
-        private AquaObject.SHAD ngsShad = null;
+        private SHAD ngsShad = null;
         bool canUpdate = false;
         private ColorDialog colorDialog = new ColorDialog();
         public ShaderEditor(AquaObject aquaModel)
@@ -103,7 +102,7 @@ namespace AquaModelTool
                 valueZUD.Value = (decimal)ngsShad.shadExtra[currentExtraId].entryFloats.Z;
                 valueWUD.Value = (decimal)ngsShad.shadExtra[currentExtraId].entryFloats.W;
 
-                var color = ARGBFromRGBAVector3(ngsShad.shadExtra[currentExtraId].entryFloats.X, ngsShad.shadExtra[currentExtraId].entryFloats.Y, ngsShad.shadExtra[currentExtraId].entryFloats.Z);
+                var color = ColorUtility.ARGBFromRGBAVector3(ngsShad.shadExtra[currentExtraId].entryFloats.X, ngsShad.shadExtra[currentExtraId].entryFloats.Y, ngsShad.shadExtra[currentExtraId].entryFloats.Z);
                 diffuseRGBButton.BackColor = color;
                 canUpdate = true;
             }
@@ -199,7 +198,7 @@ namespace AquaModelTool
                 var extra = ngsShad.shadExtra[currentExtraId];
                 var vec4 = extra.entryFloats;
                 vec4.Y = (float)valueYUD.Value;
-                var color = System.Drawing.Color.FromArgb(1, diffuseRGBButton.BackColor.R, (byte)(vec4.Y * 255f), diffuseRGBButton.BackColor.B );
+                var color = System.Drawing.Color.FromArgb(1, diffuseRGBButton.BackColor.R, (byte)(vec4.Y * 255f), diffuseRGBButton.BackColor.B);
                 diffuseRGBButton.BackColor = color;
                 extra.entryFloats = vec4;
                 ngsShad.shadExtra[currentExtraId] = extra;
@@ -250,7 +249,7 @@ namespace AquaModelTool
                 var extra = ngsShad.shadExtra[currentExtraId];
                 var vec4 = extra.entryFloats;
 
-                colorDialog.Color = ARGBFromRGBAVector3((float)valueXUD.Value, (float)valueYUD.Value, (float)valueZUD.Value);
+                colorDialog.Color = ColorUtility.ARGBFromRGBAVector3((float)valueXUD.Value, (float)valueYUD.Value, (float)valueZUD.Value);
                 if (colorDialog.ShowDialog() == DialogResult.OK)
                 {
                     vec4.X = (float)colorDialog.Color.R / 255;

@@ -1,27 +1,25 @@
-﻿using AquaModelLibrary;
-using System.Collections.Generic;
-using System.Windows.Forms;
-using static AquaModelLibrary.AquaObject;
+﻿using AquaModelLibrary.Data.DataTypes.SetLengthStrings;
+using AquaModelLibrary.Data.PSO2.Aqua.AquaObjectData;
 
 namespace AquaModelTool.Forms.ModelSubpanels
 {
     public partial class TextureReferenceEditor : UserControl
     {
         private List<string> _texFListUnicode;
-        private List<AquaObject.TEXF> _texfList;
-        private List<AquaObject.TSTA> _tstaList;
+        private List<TEXF> _texfList;
+        private List<TSTA> _tstaList;
         private TextureListEditor _texListEditor;
         private int curId;
         private int curSelectionId;
         private bool canUpdate = false;
-        private AquaCommon.PSO2String texName = new AquaCommon.PSO2String();
+        private PSO2String texName = new PSO2String();
         public TextureReferenceEditor(TextureListEditor texListEditor)
         {
             _texListEditor = texListEditor;
             InitializeComponent();
         }
 
-        public void UpdateTsta(List<string> texFListUnicode, List<AquaObject.TEXF> texfList, List<AquaObject.TSTA> tstaList, int id, int selectionId)
+        public void UpdateTsta(List<string> texFListUnicode, List<TEXF> texfList, List<TSTA> tstaList, int id, int selectionId)
         {
             _texFListUnicode = texFListUnicode;
             _texfList = texfList;
@@ -30,7 +28,7 @@ namespace AquaModelTool.Forms.ModelSubpanels
             curSelectionId = selectionId;
             canUpdate = false;
 
-            if(id == -1 || tstaList.Count == 0 )
+            if (id == -1 || tstaList.Count == 0)
             {
                 tagUD.Enabled = false;
                 texNameTB.Enabled = false;
@@ -50,7 +48,7 @@ namespace AquaModelTool.Forms.ModelSubpanels
                 unkInt4UD.Enabled = false;
                 unkInt5UD.Enabled = false;
 
-                var tsta = new AquaObject.TSTA();
+                var tsta = new TSTA();
                 tagUD.Value = tsta.tag;
                 texNameTB.Text = tsta.texName.GetString();
                 orderUD.Value = tsta.texUsageOrder;
@@ -70,7 +68,8 @@ namespace AquaModelTool.Forms.ModelSubpanels
                 unkInt5UD.Value = tsta.unkInt5;
 
                 texName = tsta.texName;
-            } else
+            }
+            else
             {
                 tagUD.Enabled = true;
                 texNameTB.Enabled = true;
@@ -115,9 +114,9 @@ namespace AquaModelTool.Forms.ModelSubpanels
 
         }
 
-        private void texNameTB_TextChanged(object sender, System.EventArgs e)
+        private void texNameTB_TextChanged(object sender, EventArgs e)
         {
-            if(canUpdate)
+            if (canUpdate)
             {
                 int texfID = GetTEXFID();
                 var texf = _texfList[texfID];
@@ -137,8 +136,8 @@ namespace AquaModelTool.Forms.ModelSubpanels
             int matches = 0;
             foreach (var tsta in _tstaList)
             {
-                if(tsta.texName == texName)
-                { 
+                if (tsta.texName == texName)
+                {
                     matches++;
                 }
             }
@@ -153,12 +152,13 @@ namespace AquaModelTool.Forms.ModelSubpanels
                 _texListEditor._aqp.objc.texfCount++;
 
                 return _texfList.Count - 1;
-            } else
+            }
+            else
             {
                 for (int i = 0; i < _texfList.Count; i++)
                 {
                     var texf = _texfList[i].texName;
-                    if(texf == texName)
+                    if (texf == texName)
                     {
                         return i;
                     }
@@ -169,7 +169,7 @@ namespace AquaModelTool.Forms.ModelSubpanels
             return -1;
         }
 
-        private void tagUD_ValueChanged(object sender, System.EventArgs e)
+        private void tagUD_ValueChanged(object sender, EventArgs e)
         {
             if (canUpdate)
             {
@@ -179,17 +179,17 @@ namespace AquaModelTool.Forms.ModelSubpanels
             }
         }
 
-        private void orderUD_ValueChanged(object sender, System.EventArgs e)
+        private void orderUD_ValueChanged(object sender, EventArgs e)
+        {
+            if (canUpdate)
             {
-                if (canUpdate)
-                {
-                    var tsta = _tstaList[curId];
-                    tsta.texUsageOrder = (int)orderUD.Value;
-                    _tstaList[curId] = tsta;
-                }
+                var tsta = _tstaList[curId];
+                tsta.texUsageOrder = (int)orderUD.Value;
+                _tstaList[curId] = tsta;
+            }
         }
 
-        private void uvSetUD_ValueChanged(object sender, System.EventArgs e)
+        private void uvSetUD_ValueChanged(object sender, EventArgs e)
         {
             if (canUpdate)
             {
@@ -199,7 +199,7 @@ namespace AquaModelTool.Forms.ModelSubpanels
             }
         }
 
-        private void unkFloat0UD_ValueChanged(object sender, System.EventArgs e)
+        private void unkFloat0UD_ValueChanged(object sender, EventArgs e)
         {
             if (canUpdate)
             {
@@ -209,7 +209,7 @@ namespace AquaModelTool.Forms.ModelSubpanels
             }
         }
 
-        private void unkFloat1UD_ValueChanged(object sender, System.EventArgs e)
+        private void unkFloat1UD_ValueChanged(object sender, EventArgs e)
         {
             if (canUpdate)
             {
@@ -219,7 +219,7 @@ namespace AquaModelTool.Forms.ModelSubpanels
             }
         }
 
-        private void unkVec3XUD_ValueChanged(object sender, System.EventArgs e)
+        private void unkVec3XUD_ValueChanged(object sender, EventArgs e)
         {
             if (canUpdate)
             {
@@ -229,7 +229,7 @@ namespace AquaModelTool.Forms.ModelSubpanels
             }
         }
 
-        private void unkVec3YUD_ValueChanged(object sender, System.EventArgs e)
+        private void unkVec3YUD_ValueChanged(object sender, EventArgs e)
         {
             if (canUpdate)
             {
@@ -239,7 +239,7 @@ namespace AquaModelTool.Forms.ModelSubpanels
             }
         }
 
-        private void unkVec3ZUD_ValueChanged(object sender, System.EventArgs e)
+        private void unkVec3ZUD_ValueChanged(object sender, EventArgs e)
         {
             if (canUpdate)
             {
@@ -249,7 +249,7 @@ namespace AquaModelTool.Forms.ModelSubpanels
             }
         }
 
-        private void unkFloat2UD_ValueChanged(object sender, System.EventArgs e)
+        private void unkFloat2UD_ValueChanged(object sender, EventArgs e)
         {
             if (canUpdate)
             {
@@ -259,7 +259,7 @@ namespace AquaModelTool.Forms.ModelSubpanels
             }
         }
 
-        private void unkFloat3UD_ValueChanged(object sender, System.EventArgs e)
+        private void unkFloat3UD_ValueChanged(object sender, EventArgs e)
         {
             if (canUpdate)
             {
@@ -269,7 +269,7 @@ namespace AquaModelTool.Forms.ModelSubpanels
             }
         }
 
-        private void unkInt3UD_ValueChanged(object sender, System.EventArgs e)
+        private void unkInt3UD_ValueChanged(object sender, EventArgs e)
         {
             if (canUpdate)
             {
@@ -279,7 +279,7 @@ namespace AquaModelTool.Forms.ModelSubpanels
             }
         }
 
-        private void unkInt4UD_ValueChanged(object sender, System.EventArgs e)
+        private void unkInt4UD_ValueChanged(object sender, EventArgs e)
         {
             if (canUpdate)
             {
@@ -289,7 +289,7 @@ namespace AquaModelTool.Forms.ModelSubpanels
             }
         }
 
-        private void unkInt5UD_ValueChanged(object sender, System.EventArgs e)
+        private void unkInt5UD_ValueChanged(object sender, EventArgs e)
         {
             if (canUpdate)
             {
@@ -299,7 +299,7 @@ namespace AquaModelTool.Forms.ModelSubpanels
             }
         }
 
-        private void unkFloat4UD_ValueChanged(object sender, System.EventArgs e)
+        private void unkFloat4UD_ValueChanged(object sender, EventArgs e)
         {
             if (canUpdate)
             {

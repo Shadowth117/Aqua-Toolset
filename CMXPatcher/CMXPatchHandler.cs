@@ -1,22 +1,15 @@
-﻿using System;
+﻿using AquaModelLibrary.Data.PSO2.Aqua;
+using AquaModelLibrary.Data.PSO2.Constants;
+using AquaModelLibrary.Data.Utility;
+using AquaModelLibrary.Helpers;
+using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using AquaModelLibrary;
-using AquaModelLibrary.AquaMethods;
 using Zamboni;
-using static AquaModelLibrary.CharacterMakingIndex;
-using static AquaModelLibrary.AquaMethods.AquaGeneralMethods;
-using AquaModelLibrary.AquaStructs;
-using AquaModelLibrary.Extra;
-using AquaExtras;
-using System.ComponentModel;
-using System.Windows.Threading;
 using Zamboni.IceFileFormats;
-using System.Diagnostics;
 
 namespace CMXPatcher
 {
@@ -50,7 +43,7 @@ namespace CMXPatcher
                 BackupCMX();
                 if (File.Exists(backupPath + "\\pl_data_info.cmx"))
                 {
-                    cmx = CharacterMakingIndexMethods.ReadCMX(backupPath + "\\pl_data_info.cmx");
+                    cmx = new CharacterMakingIndex(File.ReadAllBytes(backupPath + "\\pl_data_info.cmx"));
                     cmxRaw = File.ReadAllBytes(backupPath + "\\pl_data_info.cmx");
                 }
                 //InjectCMXMods();
@@ -63,7 +56,7 @@ namespace CMXPatcher
 
         public bool InjectCMXMods(bool restoreMode = false)
         {
-            if(readyToMod == false)
+            if (readyToMod == false)
             {
                 MessageBox.Show("Please set all paths properly and attempt this again.");
                 return false;
@@ -72,12 +65,12 @@ namespace CMXPatcher
             //Reload backup cmx
             if (File.Exists(backupPath + "\\pl_data_info.cmx"))
             {
-                cmx = CharacterMakingIndexMethods.ReadCMX(backupPath + "\\pl_data_info.cmx");
+                cmx = new CharacterMakingIndex(File.ReadAllBytes(backupPath + "\\pl_data_info.cmx"));
                 cmxRaw = File.ReadAllBytes(backupPath + "\\pl_data_info.cmx");
             }
 
             //Write cmx to ice
-            string cmxPath = Path.Combine(pso2_binDir, dataDir, GetFileHash(classicCMX));
+            string cmxPath = Path.Combine(pso2_binDir, CharacterMakingIndex.dataDir, HashHelpers.GetFileHash(CharacterMakingIce.classicCMX));
             if (File.Exists(cmxPath))
             {
                 var strm = new MemoryStream(File.ReadAllBytes(cmxPath));
@@ -89,7 +82,7 @@ namespace CMXPatcher
             }
 
             //Gather and write mods to cmx
-            if(restoreMode == false)
+            if (restoreMode == false)
             {
                 GatherCMXModText();
             }
@@ -98,7 +91,7 @@ namespace CMXPatcher
 #endif
             //Write ice - We recreate the file in case for some strange reason it was something other than a v4 ice
             byte[] rawData = new IceV4File((new IceHeaderStructures.IceArchiveHeader()).GetBytes(), cmxIce.groupOneFiles, cmxIce.groupTwoFiles).getRawData(false, false);
-            
+
             try
             {
                 File.WriteAllBytes(cmxPath, rawData);
@@ -111,7 +104,7 @@ namespace CMXPatcher
                 try
                 {
                     Directory.CreateDirectory(moddedCMXPath);
-                    File.WriteAllBytes(moddedCMXPath + GetFileHash(classicCMX), rawData);
+                    File.WriteAllBytes(moddedCMXPath + HashHelpers.GetFileHash(CharacterMakingIce.classicCMX), rawData);
                     return false;
                 }
                 catch
@@ -173,10 +166,10 @@ namespace CMXPatcher
             //Reload backup cmx
             if (File.Exists(backupPath + "\\pl_data_info.cmx"))
             {
-                cmx = CharacterMakingIndexMethods.ReadCMX(backupPath + "\\pl_data_info.cmx");
+                cmx = new CharacterMakingIndex(File.ReadAllBytes(backupPath + "\\pl_data_info.cmx"));
                 cmxRaw = File.ReadAllBytes(backupPath + "\\pl_data_info.cmx");
             }
-            string cmxPath = Path.Combine(pso2_binDir, dataDir, GetFileHash(classicCMX));
+            string cmxPath = Path.Combine(pso2_binDir, CharacterMakingIndex.dataDir, HashHelpers.GetFileHash(CharacterMakingIce.classicCMX));
             if (File.Exists(cmxPath))
             {
                 var strm = new MemoryStream(File.ReadAllBytes(cmxPath));
@@ -196,7 +189,7 @@ namespace CMXPatcher
             try
             {
                 Directory.CreateDirectory(downgradeCMXPath);
-                File.WriteAllBytes(downgradeCMXPath + GetFileHash(classicCMX), rawData);
+                File.WriteAllBytes(downgradeCMXPath + HashHelpers.GetFileHash(CharacterMakingIce.classicCMX), rawData);
                 return true;
             }
             catch
@@ -209,10 +202,10 @@ namespace CMXPatcher
         public byte[] PatchACCE(CharacterMakingIndex cmx, byte[] cmxRaw)
         {
             List<byte> acceBytes = new List<byte>();
-            foreach(var acceKey in cmx.accessoryDict.Keys)
+            foreach (var acceKey in cmx.accessoryDict.Keys)
             {
-                acceBytes.AddRange(AquaGeneralMethods.ConvertStruct(cmx.accessoryDict[acceKey].acce));
-                acceBytes.AddRange(AquaGeneralMethods.ConvertStruct(cmx.accessoryDict[acceKey].acce2a));
+                acceBytes.AddRange(DataHelpers.ConvertStruct(cmx.accessoryDict[acceKey].acce));
+                acceBytes.AddRange(DataHelpers.ConvertStruct(cmx.accessoryDict[acceKey].acce2a));
             }
             Array.Copy(acceBytes.ToArray(), 0, cmxRaw, cmx.cmxTable.accessoryAddress, acceBytes.Count);
 
@@ -223,7 +216,7 @@ namespace CMXPatcher
         {
             bool isOldCmx = false;
             //Check original CMX to see if we need to do a new backup.
-            string cmxPath = Path.Combine(pso2_binDir, dataDir, GetFileHash(classicCMX));
+            string cmxPath = Path.Combine(pso2_binDir, CharacterMakingIndex.dataDir, HashHelpers.GetFileHash(CharacterMakingIce.classicCMX));
             if (File.Exists(cmxPath))
             {
                 //bool foundCmx = false;
@@ -240,11 +233,11 @@ namespace CMXPatcher
                     if (IceFile.getFileName(file).ToLower().Contains(".cmx"))
                     {
                         //If the filesize is actually different, since it should be the same between modded ones and the originals, we want to back it up
-                        if(cmxRaw == null || file.Length != cmxRaw.Length)
+                        if (cmxRaw == null || file.Length != cmxRaw.Length)
                         {
                             isOldCmx = true;
                             cmxRaw = file;
-                            cmx = CharacterMakingIndexMethods.ReadCMX(file);
+                            cmx = new CharacterMakingIndex(file);
                         }
                         //foundCmx = true;
 
@@ -272,25 +265,25 @@ namespace CMXPatcher
         public void GatherCMXModText()
         {
             var files = Directory.EnumerateFiles(modPath, "*_cmxConfig.txt", SearchOption.AllDirectories).ToArray();
-            foreach(var file in files)
+            foreach (var file in files)
             {
                 var cmxText = File.ReadAllLines(file);
                 var cmxEntry = new List<string>();
                 string cmxType = "";
                 int cmxId = -1;
-                foreach(var line in cmxText)
+                foreach (var line in cmxText)
                 {
                     //Ignore empty lines
-                    if(line == "")
+                    if (line == "")
                     {
                         continue;
                     }
 
                     //Check if this line defines a new entry
                     var value = line.Split(':');
-                    if(value.Length == 2)
+                    if (value.Length == 2)
                     {
-                        if(cmxType != null)
+                        if (cmxType != null)
                         {
                             ProcessEntry(ref cmxType, ref cmxId, cmxEntry);
                         }
@@ -368,19 +361,20 @@ namespace CMXPatcher
 
         public bool JailBreakBenchmark(string benchmarkPSO2Bin)
         {
-            string classicColorPath = Path.Combine(pso2_binDir, dataDir, GetFileHash(classicColor));
-            string cmxPath = Path.Combine(pso2_binDir, dataDir, GetFileHash(classicCMX));
-            string collectPath = Path.Combine(pso2_binDir, dataDir, GetFileHash(classicCollect));
+            string classicColorPath = Path.Combine(pso2_binDir, CharacterMakingIndex.dataDir, HashHelpers.GetFileHash(CharacterMakingIce.classicColor));
+            string cmxPath = Path.Combine(pso2_binDir, CharacterMakingIndex.dataDir, HashHelpers.GetFileHash(CharacterMakingIce.classicCMX));
+            string collectPath = Path.Combine(pso2_binDir, CharacterMakingIndex.dataDir, HashHelpers.GetFileHash(CharacterMakingIce.classicCollect));
             string partsTextPath;
             string acceTextpath;
-            if(Directory.Exists(Path.Combine(pso2_binDir, dataNADir)) && Directory.Exists(Path.Combine(benchmarkPSO2Bin + "\\", dataNADir)))
+            if (Directory.Exists(Path.Combine(pso2_binDir, CharacterMakingIndex.dataNADir)) && Directory.Exists(Path.Combine(benchmarkPSO2Bin + "\\", CharacterMakingIndex.dataNADir)))
             {
-                partsTextPath = Path.Combine(pso2_binDir, dataNADir, GetFileHash(classicPartText));
-                acceTextpath = Path.Combine(pso2_binDir, dataNADir, GetFileHash(classicAcceText));
-            } else
+                partsTextPath = Path.Combine(pso2_binDir, CharacterMakingIndex.dataNADir, HashHelpers.GetFileHash(CharacterMakingIce.classicPartText));
+                acceTextpath = Path.Combine(pso2_binDir, CharacterMakingIndex.dataNADir, HashHelpers.GetFileHash(CharacterMakingIce.classicAcceText));
+            }
+            else
             {
-                partsTextPath = Path.Combine(pso2_binDir, dataDir, GetFileHash(classicPartText));
-                acceTextpath = Path.Combine(pso2_binDir, dataDir, GetFileHash(classicAcceText));
+                partsTextPath = Path.Combine(pso2_binDir, CharacterMakingIndex.dataDir, HashHelpers.GetFileHash(CharacterMakingIce.classicPartText));
+                acceTextpath = Path.Combine(pso2_binDir, CharacterMakingIndex.dataDir, HashHelpers.GetFileHash(CharacterMakingIce.classicAcceText));
             }
             IceFile cmxIce;
             IceFile collectIce;
@@ -412,23 +406,23 @@ namespace CMXPatcher
                 switch (ext)
                 {
                     case ".cmt":
-                        cmt = CharacterMakingTemplateMethods.ReadCMT(file);
-                        CharacterMakingTemplateMethods.ConvertToNGSBenchmark1(cmt);
-                        CharacterMakingTemplateMethods.SetNGSBenchmarkEnableFlag(cmt);
+                        cmt = new CharacterMakingTemplate(file);
+                        cmt.ConvertToNGSBenchmark1();
+                        cmt.SetNGSBenchmarkEnableFlag();
                         break;
                     case ".cmx":
-                        cmx = CharacterMakingIndexMethods.ReadCMX(file, cmx);
+                        cmx.Read(file);
                         break;
                 }
             }
 
             //Generate a new CCO. They're so simple it's not worth keeping what's in the old one, especially since we're gutting the old values
-            ccoOut.AddRange(CharacterMakingIndexMethods.GenerateAccessoryCCO(cmx));
-            ccoOut.InsertRange(0, (new IceHeaderStructures.IceFileHeader(accessoryCostName, (uint)ccoOut.Count)).GetBytes());
-            cmtOut.AddRange(CharacterMakingTemplateMethods.CMTToBytes(cmt));
-            cmtOut.InsertRange(0, (new IceHeaderStructures.IceFileHeader(cmtName, (uint)cmtOut.Count)).GetBytes());
-            cmxOut.AddRange(CharacterMakingIndexMethods.CMXToBytes(cmx));
-            cmxOut.InsertRange(0, (new IceHeaderStructures.IceFileHeader(cmxName, (uint)cmxOut.Count)).GetBytes());
+            ccoOut.AddRange(CCO.GenerateAccessoryCCO(cmx));
+            ccoOut.InsertRange(0, (new IceHeaderStructures.IceFileHeader(CharacterMakingStatic.accessoryCostName, (uint)ccoOut.Count)).GetBytes());
+            cmtOut.AddRange(cmt.GetBytesNIFL());
+            cmtOut.InsertRange(0, (new IceHeaderStructures.IceFileHeader(CharacterMakingStatic.cmtName, (uint)cmtOut.Count)).GetBytes());
+            cmxOut.AddRange(cmx.GetBytesNIFL());
+            cmxOut.InsertRange(0, (new IceHeaderStructures.IceFileHeader(CharacterMakingStatic.cmxName, (uint)cmxOut.Count)).GetBytes());
 
             if (File.Exists(collectPath))
             {
@@ -442,10 +436,10 @@ namespace CMXPatcher
 
             //Write system collect ice
             var ccoRaw = ccoOut.ToArray();
-            InjectNamedFileToIceGroup(collectIce.groupOneFiles, ccoRaw, accessoryCostName);
-            InjectNamedFileToIceGroup(collectIce.groupTwoFiles, ccoRaw, accessoryCostName);
+            InjectNamedFileToIceGroup(collectIce.groupOneFiles, ccoRaw, CharacterMakingStatic.accessoryCostName);
+            InjectNamedFileToIceGroup(collectIce.groupTwoFiles, ccoRaw, CharacterMakingStatic.accessoryCostName);
             byte[] rawDataSystemCollect = new IceV4File((new IceHeaderStructures.IceArchiveHeader()).GetBytes(), collectIce.groupOneFiles, collectIce.groupTwoFiles).getRawData(false, false);
-            File.WriteAllBytes(Path.Combine(benchmarkPSO2Bin, dataDir, GetFileHash(classicCollect)), rawDataSystemCollect);
+            File.WriteAllBytes(Path.Combine(benchmarkPSO2Bin, CharacterMakingIndex.dataDir, HashHelpers.GetFileHash(CharacterMakingIce.classicCollect)), rawDataSystemCollect);
 
             //Write system ice
             var cmxRaw = cmxOut.ToArray();
@@ -455,7 +449,7 @@ namespace CMXPatcher
             InjectCmtToIceGroup(cmxIce.groupOneFiles, cmtRaw);
             InjectCmtToIceGroup(cmxIce.groupTwoFiles, cmtRaw);
             byte[] rawDataSystem = new IceV4File((new IceHeaderStructures.IceArchiveHeader()).GetBytes(), cmxIce.groupOneFiles, cmxIce.groupTwoFiles).getRawData(false, false);
-            File.WriteAllBytes(Path.Combine(benchmarkPSO2Bin, dataDir, GetFileHash(classicCMX)), rawDataSystem);
+            File.WriteAllBytes(Path.Combine(benchmarkPSO2Bin, CharacterMakingIndex.dataDir, HashHelpers.GetFileHash(CharacterMakingIce.classicCMX)), rawDataSystem);
 
             TryCopy(benchmarkPSO2Bin, pso2_binDir, classicColorPath);
             TryCopy(benchmarkPSO2Bin, pso2_binDir, partsTextPath);

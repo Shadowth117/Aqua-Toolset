@@ -1,16 +1,11 @@
-﻿using AquaModelLibrary;
-using AquaModelLibrary.Extra;
-using AquaModelLibrary.ToolUX;
+﻿using AquaModelLibrary.Core.FromSoft;
+using AquaModelLibrary.Core.ToolUX;
+using AquaModelLibrary.Data.FromSoft;
 using Newtonsoft.Json;
-using System;
 using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
 using System.Diagnostics;
 using System.IO;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 
 namespace SoulsModelTool
@@ -68,7 +63,7 @@ namespace SoulsModelTool
                 foreach (var arg in e.Args)
                 {
                     var argProcessed = arg.ToLower();
-                    switch(argProcessed)
+                    switch (argProcessed)
                     {
                         case "-tofbx":
                             action = SoulsModelAction.toFBX;
@@ -122,14 +117,13 @@ namespace SoulsModelTool
                     case SoulsModelAction.toFlverDes:
                         foreach (var file in filePaths)
                         {
-                            AquaUtil aqua = new AquaUtil();
                             var ext = Path.GetExtension(file);
                             var outStr = file.Replace(ext, "_out.flver");
-                            SoulsConvert.ConvertModelToFlverAndWrite(file, outStr, 1, true, true, SoulsConvert.SoulsGame.DemonsSouls);
+                            SoulsConvert.ConvertModelToFlverAndWrite(file, outStr, 1, true, true, SoulsGame.DemonsSouls);
                         }
                         break;
                     case SoulsModelAction.mcgMCP:
-                        AquaModelLibrary.Extra.FromSoft.SoulsMapMetadataGenerator.Generate(filePaths, out var mcCombo);
+                        SoulsMapMetadataGenerator.Generate(filePaths, out var mcCombo);
                         break;
                     case SoulsModelAction.toFlver:
                     case SoulsModelAction.toCMDL:
@@ -143,7 +137,8 @@ namespace SoulsModelTool
             {
                 SoulsModelToolWindow wnd = new SoulsModelToolWindow(filePaths, smtSetting, mainSetting);
                 wnd.Show();
-            } else
+            }
+            else
             {
                 Current.Shutdown();
             }
