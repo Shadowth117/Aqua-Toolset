@@ -35,7 +35,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VrSharp", "PSO2-Aqua-Librar
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AquaModelTool", "AquaModelTool\AquaModelTool.csproj", "{728DC4B7-40EA-471C-8A3B-9DFC141925F0}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AquaModelLibrary.Helpers", "PSO2-Aqua-Library\AquaModelLibrary.Extensions\AquaModelLibrary.Helpers.csproj", "{4561B5CC-E3FA-4754-B502-AABFCE0CE4E5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AquaModelLibrary.Helpers", "PSO2-Aqua-Library\AquaModelLibrary.Helpers\AquaModelLibrary.Helpers.csproj", "{4561B5CC-E3FA-4754-B502-AABFCE0CE4E5}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AquaModelLibrary.Data", "PSO2-Aqua-Library\AquaModelLibrary.Data\AquaModelLibrary.Data.csproj", "{53E191B3-9BAE-4A34-B877-551D2DCB08F9}"
 EndProject
