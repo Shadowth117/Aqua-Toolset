@@ -1,4 +1,6 @@
-﻿namespace AquaModelTool
+﻿using System.Text;
+
+namespace AquaModelTool
 {
     static class Program
     {
@@ -8,6 +10,8 @@
         [STAThread]
         static void Main(string[] args)
         {
+            //CRITICAL, without this, shift jis handling will break and kill the application
+            Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             AquaModelTool aquaModelTool = new AquaModelTool();
