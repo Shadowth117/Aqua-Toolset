@@ -320,7 +320,7 @@ namespace AquaModelTool
                 if (modelExtensions.Contains(ext))
                 {
                     aquaUI.setAllTransparent(((ModelEditor)filePanel.Controls[0]).GetAllTransparentChecked());
-                    aquaUI.WriteModel(currentFile, isNIFL);
+                    aquaUI.WriteModel(currentFile, !isNIFL);
                     AquaUIOpenFile(currentFile);
                     this.Text = GetTitleString();
                 }
