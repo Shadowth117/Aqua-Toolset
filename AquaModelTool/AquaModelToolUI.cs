@@ -25,6 +25,7 @@ using AquaModelLibrary.Data.Utility;
 using AquaModelLibrary.Data.Zero;
 using AquaModelLibrary.Helpers;
 using AquaModelLibrary.Helpers.Extensions;
+using AquaModelLibrary.Helpers.Ice;
 using AquaModelLibrary.Helpers.MathHelpers;
 using AquaModelLibrary.Helpers.PSO2;
 using AquaModelLibrary.Helpers.Readers;
@@ -2025,7 +2026,7 @@ namespace AquaModelTool
             OpenFileDialog openFileDialog = new OpenFileDialog()
             {
                 Title = "Select a PSO2 file",
-                Filter = "All Supported Files|*.aqp;*.aqo;*.trp;*.tro;*.axs;*.prm;*.prx",
+                Filter = $"All Supported Files|*.aqp;*.aqo;*.trp;*.tro;*.axs;*.prm;*.prx;*.ice;|All Files|*" ,
                 Multiselect = true,
             };
             if (openFileDialog.ShowDialog() == DialogResult.OK)
@@ -2036,12 +2037,116 @@ namespace AquaModelTool
                     AquaNode aqn = null;
                     bool isPrm = false;
                     var ext = Path.GetExtension(filename);
-                    if (simpleModelExtensions.Contains(ext))
+                    if (ext == "" || ext == ".ice")
+                    {
+                        try
+                        {
+                            using (var strm = new MemoryStream(File.ReadAllBytes(filename)))
+                            {
+                                var sets = new Dictionary<string, (AquaPackage aqp, AquaNode aqn)>();
+                                var ddsList = new Dictionary<string, byte[]>();
+                                var ice = IceFile.LoadIceFile(strm);
+                                var files = new List<byte[]>();
+                                files.AddRange(ice.groupOneFiles);
+                                files.AddRange(ice.groupTwoFiles);
+                                foreach(var file in files)
+                                {
+                                    var iceFileName = IceFile.getFileName(file);
+                                    var iceFileExt = Path.GetExtension(iceFileName);
+                                    switch(iceFileExt)
+                                    {
+                                        case ".prm":
+                                        case ".prx":
+                                            var prm = new PRMModel(file);
+                                            sets.Add( iceFileName, (new AquaPackage(prm.ConvertToAquaObject()), AquaNode.GenerateBasicAQN()));
+                                            break;
+                                        case ".trp":
+                                        case ".aqp":
+                                            var aqp = new AquaPackage(file);
+                                            if(sets.ContainsKey(iceFileName))
+                                            {
+                                                var set = sets[iceFileName];
+                                                set.aqp = aqp;
+                                                sets[iceFileName] = set;
+                                            } else
+                                            {
+                                                sets.Add(iceFileName, (aqp, AquaNode.GenerateBasicAQN()));
+                                            }
+                                            break;
+                                        case ".aqn":
+                                            var aqpFileName = Path.ChangeExtension(iceFileName, ".aqp");
+                                            var iceAqn = new AquaNode(file);
+                                            if (sets.ContainsKey(aqpFileName))
+                                            {
+                                                var set = sets[aqpFileName];
+                                                set.aqn = iceAqn;
+                                                sets[aqpFileName] = set;
+                                            }
+                                            else
+                                            {
+                                                sets.Add(aqpFileName, (new AquaPackage(), iceAqn));
+                                            }
+                                            break;
+                                        case ".trn":
+                                            var trpFileName = Path.ChangeExtension(iceFileName, ".trp");
+                                            var trnAqn = new AquaNode(file);
+                                            if (sets.ContainsKey(trpFileName))
+                                            {
+                                                var set = sets[trpFileName];
+                                                set.aqn = trnAqn;
+                                                sets[trpFileName] = set;
+                                            }
+                                            else
+                                            {
+                                                sets.Add(trpFileName, (new AquaPackage(), trnAqn));
+                                            }
+                                            break;
+                                        case ".dds":
+                                            ddsList.Add(iceFileName, IceMethods.RemoveIceEnvelope(file));
+                                            break;
+                                    }
+                                }
+
+                                if(sets.Count > 0 || ddsList.Count > 0)
+                                {
+                                    var dir = filename + "_ext";
+                                    Directory.CreateDirectory(dir);
+                                    foreach (var dds in ddsList)
+                                    {
+                                        File.WriteAllBytes(Path.Combine(dir, dds.Key), dds.Value);
+                                    }
+                                    foreach (var set in sets)
+                                    {
+                                        var setModelCount = !isPrm && exportLODModelsIfInSameaqpToolStripMenuItem.Checked ? set.Value.aqp.models.Count : 1;
+                                        for (int i = 0; i < set.Value.aqp.models.Count && i < setModelCount; i++)
+                                        {
+                                            var model = set.Value.aqp.models[i];
+                                            model.splitVSETPerMesh();
+                                            model.FixHollowMatNaming();
+
+                                            var name = Path.Combine(dir, set.Key + ".fbx");
+                                            if (setModelCount > 1)
+                                            {
+                                                name = Path.Combine(dir, set.Key + $"_{i}.fbx");
+                                            }
+                                            FbxExporterNative.ExportToFile(model, set.Value.aqn, new List<AquaMotion>(), name, new List<string>(), new List<System.Numerics.Matrix4x4>(), includeMetadataToolStripMenuItem.Checked);
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        catch{}
+                        continue;
+                    } else if (simpleModelExtensions.Contains(ext))
                     {
                         var prm = new PRMModel(File.ReadAllBytes(filename));
                         modelPackage.models.Add(prm.ConvertToAquaObject());
                         aqn = AquaNode.GenerateBasicAQN();
                         isPrm = true;
+                    } else if (ext == ".axs")
+                    {
+                        modelPackage = new AquaPackage();
+                        modelPackage.models.Add(AXSMethods.ReadAXS(filename, true, out aqn));
                     }
                     else
                     {
@@ -2089,10 +2194,7 @@ namespace AquaModelTool
                     for (int i = 0; i < modelPackage.models.Count && i < modelCount; i++)
                     {
                         var model = modelPackage.models[i];
-                        if (!isPrm && model.objc.type > 0xC32)
-                        {
-                            model.splitVSETPerMesh();
-                        }
+                        model.splitVSETPerMesh();
                         model.FixHollowMatNaming();
 
                         var name = Path.ChangeExtension(filename, ".fbx");
