@@ -32,6 +32,7 @@ using AquaModelLibrary.ToolUX.CommonForms;
 using Microsoft.WindowsAPICodePack.Dialogs;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Globalization;
 using System.Numerics;
 using System.Reflection;
 using System.Text;
@@ -57,7 +58,7 @@ namespace AquaModelTool
         public List<string> motionExtensions = new List<string>() { ".aqm", ".aqv", ".aqc", ".aqw", ".trm", ".trv", ".trw" };
         public List<string> motionExtensionsBase = new List<string>() { ".aqm", ".aqv", ".aqc", ".trm", ".trv" };
         public List<string> motionExtensionsPackage = new List<string>() { ".aqw", ".trw" };
-        public DateTime buildDate = GetLinkerTime(System.Reflection.Assembly.GetExecutingAssembly(), TimeZoneInfo.FindSystemTimeZoneById("Eastern Standard Time"));
+        public DateTime buildDate = GetBuildDate();
         public string mainSettingsPath = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location) + "\\";
         public string mainSettingsFile = "Settings.json";
         public string soulsSettingsFile = "SoulsSettings.json";
@@ -3562,6 +3563,28 @@ namespace AquaModelTool
             filenameButton.Text = Path.GetFileName(currentFile);
             return $"Aqua Model Tool {buildDate.ToString("yyyy-MM-dd h:mm tt")}";
         }
+        private static DateTime GetBuildDate()
+        {
+            Assembly assembly = System.Reflection.Assembly.GetExecutingAssembly();
+            const string BuildVersionMetadataPrefix = "+build";
+
+            var attribute = assembly.GetCustomAttribute<AssemblyInformationalVersionAttribute>();
+            if (attribute?.InformationalVersion != null)
+            {
+                var value = attribute.InformationalVersion;
+                var index = value.IndexOf(BuildVersionMetadataPrefix);
+                if (index > 0)
+                {
+                    value = value.Substring(index + BuildVersionMetadataPrefix.Length);
+                    if (DateTime.TryParseExact(value, "yyyyMMddHHmmss", CultureInfo.InvariantCulture, DateTimeStyles.None, out var result))
+                    {
+                        return result;
+                    }
+                }
+            }
+
+            return default;
+        }
 
         private void convertModelToDemonsSoulsflverToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -5501,6 +5524,24 @@ namespace AquaModelTool
             else
             {
                 customScaleBox.Enabled = false;
+            }
+        }
+
+        private void readMRPRoomGoodsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var openFileDialog = new OpenFileDialog()
+            {
+                Title = "Select mrp File",
+                Filter = "Room files|*.mrp",
+                FileName = "",
+                Multiselect = true
+            };
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                foreach (var file in openFileDialog.FileNames)
+                {
+                    var mrp = new MyRoomParameters(File.ReadAllBytes(file), 0);
+                }
             }
         }
     }
