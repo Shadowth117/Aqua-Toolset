@@ -2026,7 +2026,7 @@ namespace AquaModelTool
             OpenFileDialog openFileDialog = new OpenFileDialog()
             {
                 Title = "Select a PSO2 file",
-                Filter = $"All Supported Files|*.aqp;*.aqo;*.trp;*.tro;*.axs;*.prm;*.prx;*.ice;|All Files|*" ,
+                Filter = $"All Supported Files|*.aqp;*.aqo;*.trp;*.tro;*.axs;*.prm;*.prx;*.ice;|All Files|*",
                 Multiselect = true,
             };
             if (openFileDialog.ShowDialog() == DialogResult.OK)
@@ -2049,26 +2049,27 @@ namespace AquaModelTool
                                 var files = new List<byte[]>();
                                 files.AddRange(ice.groupOneFiles);
                                 files.AddRange(ice.groupTwoFiles);
-                                foreach(var file in files)
+                                foreach (var file in files)
                                 {
                                     var iceFileName = IceFile.getFileName(file);
                                     var iceFileExt = Path.GetExtension(iceFileName);
-                                    switch(iceFileExt)
+                                    switch (iceFileExt)
                                     {
                                         case ".prm":
                                         case ".prx":
                                             var prm = new PRMModel(file);
-                                            sets.Add( iceFileName, (new AquaPackage(prm.ConvertToAquaObject()), AquaNode.GenerateBasicAQN()));
+                                            sets.Add(iceFileName, (new AquaPackage(prm.ConvertToAquaObject()), AquaNode.GenerateBasicAQN()));
                                             break;
                                         case ".trp":
                                         case ".aqp":
                                             var aqp = new AquaPackage(file);
-                                            if(sets.ContainsKey(iceFileName))
+                                            if (sets.ContainsKey(iceFileName))
                                             {
                                                 var set = sets[iceFileName];
                                                 set.aqp = aqp;
                                                 sets[iceFileName] = set;
-                                            } else
+                                            }
+                                            else
                                             {
                                                 sets.Add(iceFileName, (aqp, AquaNode.GenerateBasicAQN()));
                                             }
@@ -2107,7 +2108,7 @@ namespace AquaModelTool
                                     }
                                 }
 
-                                if(sets.Count > 0 || ddsList.Count > 0)
+                                if (sets.Count > 0 || ddsList.Count > 0)
                                 {
                                     var dir = filename + "_ext";
                                     Directory.CreateDirectory(dir);
@@ -2135,15 +2136,17 @@ namespace AquaModelTool
                                 }
                             }
                         }
-                        catch{}
+                        catch { }
                         continue;
-                    } else if (simpleModelExtensions.Contains(ext))
+                    }
+                    else if (simpleModelExtensions.Contains(ext))
                     {
                         var prm = new PRMModel(File.ReadAllBytes(filename));
                         modelPackage.models.Add(prm.ConvertToAquaObject());
                         aqn = AquaNode.GenerateBasicAQN();
                         isPrm = true;
-                    } else if (ext == ".axs")
+                    }
+                    else if (ext == ".axs")
                     {
                         modelPackage = new AquaPackage();
                         modelPackage.models.Add(AXSMethods.ReadAXS(filename, true, out aqn));
@@ -3774,9 +3777,13 @@ namespace AquaModelTool
                         aqp.models[0].ConvertToLegacyTypes();
                         aqp.models[0].CreateTrueVertWeights();
 
+                        var outName = Path.ChangeExtension(file, ".fbx");
+                        FbxExporterNative.ExportToFile(aqp.models[0], aqn, new List<AquaMotion>(), outName, new List<string>(), new List<Matrix4x4>(), true);
+                        /*
                         var outName = Path.ChangeExtension(file, ".aqp");
                         File.WriteAllBytes(outName, aqp.GetPackageBytes(outName));
                         File.WriteAllBytes(Path.ChangeExtension(outName, ".aqn"), aqn.GetBytesNIFL());
+                        */
                     }
                 }
             }
@@ -5643,6 +5650,25 @@ namespace AquaModelTool
                 foreach (var file in openFileDialog.FileNames)
                 {
                     var mrp = new MyRoomParameters(File.ReadAllBytes(file), 0);
+                }
+            }
+        }
+
+        private void decryptINCToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var openFileDialog = new OpenFileDialog()
+            {
+                Title = "Select dat File",
+                Filter = "Dat files|*.dat",
+                FileName = "",
+                Multiselect = true
+            };
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                foreach (var file in openFileDialog.FileNames)
+                {
+                    var dat = ItemNameCacheIndex.ParseDat(File.ReadAllBytes(file));
+                    File.WriteAllBytes(file + ".udat", dat);
                 }
             }
         }
