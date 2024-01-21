@@ -190,9 +190,12 @@
             readStageDefToolStripMenuItem = new ToolStripMenuItem();
             readGrassToolStripMenuItem = new ToolStripMenuItem();
             readMRPRoomGoodsToolStripMenuItem = new ToolStripMenuItem();
+            decryptINCToolStripMenuItem = new ToolStripMenuItem();
             filePanel = new Panel();
             splitter1 = new Splitter();
-            decryptINCToolStripMenuItem = new ToolStripMenuItem();
+            toolStripSeparator17 = new ToolStripSeparator();
+            billyHatcherCyrillicbinTextTotxtToolStripMenuItem = new ToolStripMenuItem();
+            billyHatcherCyrillictxtTobinToolStripMenuItem = new ToolStripMenuItem();
             menuStrip1.SuspendLayout();
             SuspendLayout();
             // 
@@ -636,7 +639,7 @@
             // 
             // otherGamesToolStripMenuItem2
             // 
-            otherGamesToolStripMenuItem2.DropDownItems.AddRange(new ToolStripItem[] { extractBorderBreakPS4FARCToolStripMenuItem, setMOTBONEbinPathToolStripMenuItem, toolStripSeparator7, readBillyHatchermc2TofbxToolStripMenuItem, fbxSetToBillyHatcherlndToolStripMenuItem, fbxToBillyHatchermc2ToolStripMenuItem, billyHatcherprdArchiveExtractToolStripMenuItem, packBillyHatcherprdToolStripMenuItem, packBillyHatchernrcToolStripMenuItem, packBillyHatchergplToolStripMenuItem, billyHatcherbinTextTotxtToolStripMenuItem, billyHatcherbintxtBackTobinToolStripMenuItem });
+            otherGamesToolStripMenuItem2.DropDownItems.AddRange(new ToolStripItem[] { extractBorderBreakPS4FARCToolStripMenuItem, setMOTBONEbinPathToolStripMenuItem, toolStripSeparator7, readBillyHatchermc2TofbxToolStripMenuItem, fbxSetToBillyHatcherlndToolStripMenuItem, fbxToBillyHatchermc2ToolStripMenuItem, billyHatcherprdArchiveExtractToolStripMenuItem, packBillyHatcherprdToolStripMenuItem, packBillyHatchernrcToolStripMenuItem, packBillyHatchergplToolStripMenuItem, billyHatcherbinTextTotxtToolStripMenuItem, billyHatcherbintxtBackTobinToolStripMenuItem, billyHatcherCyrillicbinTextTotxtToolStripMenuItem, billyHatcherCyrillictxtTobinToolStripMenuItem, toolStripSeparator17 });
             otherGamesToolStripMenuItem2.Name = "otherGamesToolStripMenuItem2";
             otherGamesToolStripMenuItem2.Size = new Size(344, 22);
             otherGamesToolStripMenuItem2.Text = "Other Sega Games";
@@ -1324,6 +1327,13 @@
             readMRPRoomGoodsToolStripMenuItem.Text = "ReadMRPRoomGoods";
             readMRPRoomGoodsToolStripMenuItem.Click += readMRPRoomGoodsToolStripMenuItem_Click;
             // 
+            // decryptINCToolStripMenuItem
+            // 
+            decryptINCToolStripMenuItem.Name = "decryptINCToolStripMenuItem";
+            decryptINCToolStripMenuItem.Size = new Size(191, 22);
+            decryptINCToolStripMenuItem.Text = "DecryptINC";
+            decryptINCToolStripMenuItem.Click += decryptINCToolStripMenuItem_Click;
+            // 
             // filePanel
             // 
             filePanel.AutoSize = true;
@@ -1344,12 +1354,24 @@
             splitter1.TabIndex = 2;
             splitter1.TabStop = false;
             // 
-            // decryptINCToolStripMenuItem
+            // toolStripSeparator17
             // 
-            decryptINCToolStripMenuItem.Name = "decryptINCToolStripMenuItem";
-            decryptINCToolStripMenuItem.Size = new Size(191, 22);
-            decryptINCToolStripMenuItem.Text = "DecryptINC";
-            decryptINCToolStripMenuItem.Click += decryptINCToolStripMenuItem_Click;
+            toolStripSeparator17.Name = "toolStripSeparator17";
+            toolStripSeparator17.Size = new Size(424, 6);
+            // 
+            // billyHatcherCyrillicbinTextTotxtToolStripMenuItem
+            // 
+            billyHatcherCyrillicbinTextTotxtToolStripMenuItem.Name = "billyHatcherCyrillicbinTextTotxtToolStripMenuItem";
+            billyHatcherCyrillicbinTextTotxtToolStripMenuItem.Size = new Size(427, 22);
+            billyHatcherCyrillicbinTextTotxtToolStripMenuItem.Text = "Billy Hatcher Cyrillic .bin text to .txt";
+            billyHatcherCyrillicbinTextTotxtToolStripMenuItem.Click += billyHatcherCyrillicbinTextTotxtToolStripMenuItem_Click;
+            // 
+            // billyHatcherCyrillictxtTobinToolStripMenuItem
+            // 
+            billyHatcherCyrillictxtTobinToolStripMenuItem.Name = "billyHatcherCyrillictxtTobinToolStripMenuItem";
+            billyHatcherCyrillictxtTobinToolStripMenuItem.Size = new Size(427, 22);
+            billyHatcherCyrillictxtTobinToolStripMenuItem.Text = "Billy Hatcher Cyrillic .txt to .bin";
+            billyHatcherCyrillictxtTobinToolStripMenuItem.Click += billyHatcherCyrillictxtTobinToolStripMenuItem_Click;
             // 
             // AquaModelTool
             // 
@@ -1537,6 +1559,9 @@
         private System.Windows.Forms.ToolStripTextBox customScaleBox;
         private ToolStripMenuItem readMRPRoomGoodsToolStripMenuItem;
         private ToolStripMenuItem decryptINCToolStripMenuItem;
+        private ToolStripMenuItem billyHatcherCyrillicbinTextTotxtToolStripMenuItem;
+        private ToolStripMenuItem billyHatcherCyrillictxtTobinToolStripMenuItem;
+        private ToolStripSeparator toolStripSeparator17;
     }
 }
 

@@ -5672,6 +5672,49 @@ namespace AquaModelTool
                 }
             }
         }
+
+        private void billyHatcherCyrillicbinTextTotxtToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var openFileDialog = new OpenFileDialog()
+            {
+                Title = "Select Billy Hatcher text File",
+                Filter = "Billy Hatcher  *.bin files|*.bin",
+                FileName = "",
+                Multiselect = true
+            };
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                foreach (var file in openFileDialog.FileNames)
+                {
+                    using (MemoryStream stream = new MemoryStream(File.ReadAllBytes(file)))
+                    using (var streamReader = new BufferedStreamReaderBE<MemoryStream>(stream))
+                    {
+                        var msg = new MesBin(file, streamReader, true);
+                        File.WriteAllLines(file + "_out.txt", msg.strings);
+                    }
+                }
+            }
+        }
+
+        private void billyHatcherCyrillictxtTobinToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var openFileDialog = new OpenFileDialog()
+            {
+                Title = "Select Billy Hatcher bin txt File",
+                Filter = "Billy Hatcher  *.txt files|*.txt",
+                FileName = "",
+                Multiselect = true
+            };
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                foreach (var file in openFileDialog.FileNames)
+                {
+                    var msg = new MesBin();
+                    msg.strings = File.ReadAllLines(file).ToList();
+                    File.WriteAllBytes(file + ".bin", msg.GetBytesCyrillic(true));
+                }
+            }
+        }
     }
 }
 
