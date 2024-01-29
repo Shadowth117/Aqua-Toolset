@@ -183,6 +183,9 @@ namespace CMXPatcher
             //ACCE replacement
             PatchACCE(cmx, cmxRaw);
 
+            cmx.WriteMode = 0;
+            cmxRaw = cmx.GetBytesNIFL();
+
             //Write ice - We recreate the file in case for some strange reason it was something other than a v4 ice
             byte[] rawData = new IceV4File((new IceHeaderStructures.IceArchiveHeader()).GetBytes(), cmxIce.groupOneFiles, cmxIce.groupTwoFiles).getRawData(false, false);
 
@@ -421,6 +424,7 @@ namespace CMXPatcher
             ccoOut.InsertRange(0, (new IceHeaderStructures.IceFileHeader(CharacterMakingStatic.accessoryCostName, (uint)ccoOut.Count)).GetBytes());
             cmtOut.AddRange(cmt.GetBytesNIFL());
             cmtOut.InsertRange(0, (new IceHeaderStructures.IceFileHeader(CharacterMakingStatic.cmtName, (uint)cmtOut.Count)).GetBytes());
+            cmx.WriteMode = 0;
             cmxOut.AddRange(cmx.GetBytesNIFL());
             cmxOut.InsertRange(0, (new IceHeaderStructures.IceFileHeader(CharacterMakingStatic.cmxName, (uint)cmxOut.Count)).GetBytes());
 
