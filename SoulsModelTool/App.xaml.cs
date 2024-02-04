@@ -86,17 +86,31 @@ namespace SoulsModelTool
                         case "-toobj":
                             action = SoulsModelAction.toObj;
                             break;
+                        //Removes from soft mirroring, ie we want to mirror the mesh
                         case "-nomirror":
                             smtSetting.mirrorMesh = true;
                             break;
+                        //Leave from soft mirroring, ie don't touch mirroring
+                        case "-mirror":
+                            smtSetting.mirrorMesh = false;
+                            break;
                         case "-dontdumpmetadata":
+                            smtSetting.useMetaData = false;
+                            break;
+                        case "-dumpmetadata":
                             smtSetting.useMetaData = true;
                             break;
                         case "-meshnameismatname":
                             smtSetting.applyMaterialNamesToMesh = true;
                             break;
+                        case "-meshnameisdefault":
+                            smtSetting.applyMaterialNamesToMesh = false;
+                            break;
                         case "-transformMesh":
                             smtSetting.transformMesh = true;
+                            break;
+                        case "-donttransformMesh":
+                            smtSetting.transformMesh = false;
                             break;
                         case "-launch":
                             launchUi = true;
@@ -106,6 +120,7 @@ namespace SoulsModelTool
                             break;
                     }
                 }
+                FileHandler.SetSMTSettings(smtSetting);
 
                 switch (action)
                 {

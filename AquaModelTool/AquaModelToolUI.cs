@@ -12,6 +12,7 @@ using AquaModelLibrary.Data.BillyHatcher;
 using AquaModelLibrary.Data.BluePoint.CAWS;
 using AquaModelLibrary.Data.BluePoint.CMDL;
 using AquaModelLibrary.Data.FromSoft;
+using AquaModelLibrary.Data.Ninja;
 using AquaModelLibrary.Data.NNStructs;
 using AquaModelLibrary.Data.Nova;
 using AquaModelLibrary.Data.PSO;
@@ -661,10 +662,10 @@ namespace AquaModelTool
                 }
 
                 //Go through sets we gathered
-                List<SetLayout> sets = new List<SetLayout>();
+                List<Set> sets = new List<Set>();
                 foreach (string file in files)
                 {
-                    sets.Add(new SetLayout(File.ReadAllBytes(file)));
+                    sets.Add(new Set(File.ReadAllBytes(file)));
                 }
 
                 //Gather from .set files. This is subject to change because I'm really just checking things for now.
@@ -1385,10 +1386,10 @@ namespace AquaModelTool
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
                 //Read prms
-                List<PRMModel> prms = new List<PRMModel>();
+                List<PRM> prms = new List<PRM>();
                 foreach (var file in openFileDialog.FileNames)
                 {
-                    prms.Add(new PRMModel(File.ReadAllBytes(file)));
+                    prms.Add(new PRM(File.ReadAllBytes(file)));
                 }
 
                 //Set up export
@@ -2057,7 +2058,7 @@ namespace AquaModelTool
                                     {
                                         case ".prm":
                                         case ".prx":
-                                            var prm = new PRMModel(file);
+                                            var prm = new PRM(file);
                                             sets.Add(iceFileName, (new AquaPackage(prm.ConvertToAquaObject()), AquaNode.GenerateBasicAQN()));
                                             break;
                                         case ".trp":
@@ -2141,7 +2142,7 @@ namespace AquaModelTool
                     }
                     else if (simpleModelExtensions.Contains(ext))
                     {
-                        var prm = new PRMModel(File.ReadAllBytes(filename));
+                        var prm = new PRM(File.ReadAllBytes(filename));
                         modelPackage.models.Add(prm.ConvertToAquaObject());
                         aqn = AquaNode.GenerateBasicAQN();
                         isPrm = true;
@@ -5576,7 +5577,15 @@ namespace AquaModelTool
 
         private void readPOF0ToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            var openFileDialog = new OpenFileDialog()
+            {
+                Title = "Select a raw POF0 chunk",
+                FileName = "",
+            };
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                var pof0Data = POF0.GetPof0Offsets(File.ReadAllBytes(openFileDialog.FileName));
+            }
         }
 
         private void readStageDefToolStripMenuItem_Click(object sender, EventArgs e)
@@ -5712,6 +5721,45 @@ namespace AquaModelTool
                     var msg = new MesBin();
                     msg.strings = File.ReadAllLines(file).ToList();
                     File.WriteAllBytes(file + ".bin", msg.GetBytesCyrillic(true));
+                }
+            }
+        }
+
+        private void readARCToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var openFileDialog = new OpenFileDialog()
+            {
+                Title = "Select Billy Hatcher arc File",
+                Filter = "Billy Hatcher  *.arc files|*.arc",
+                FileName = "",
+                Multiselect = true
+            };
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                foreach (var file in openFileDialog.FileNames)
+                {
+                    var arc = new ARC(File.ReadAllBytes(file));
+                }
+            }
+        }
+
+        private void dumpBillyArcPof0ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var openFileDialog = new OpenFileDialog()
+            {
+                Title = "Select a POF0 chunk",
+                FileName = "",
+            };
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                var openFileDialog2 = new OpenFileDialog()
+                {
+                    Title = "Select the POF0's file",
+                    FileName = "",
+                };
+                if (openFileDialog2.ShowDialog() == DialogResult.OK)
+                {
+                    POF0.DumpPOF0(File.ReadAllBytes(openFileDialog2.FileName), File.ReadAllBytes(openFileDialog.FileName), openFileDialog2.FileName, 0x20, true);
                 }
             }
         }
