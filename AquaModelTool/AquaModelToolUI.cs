@@ -13,6 +13,7 @@ using AquaModelLibrary.Data.BluePoint.CAWS;
 using AquaModelLibrary.Data.BluePoint.CMDL;
 using AquaModelLibrary.Data.FromSoft;
 using AquaModelLibrary.Data.Ninja;
+using AquaModelLibrary.Data.Ninja.Model;
 using AquaModelLibrary.Data.NNStructs;
 using AquaModelLibrary.Data.Nova;
 using AquaModelLibrary.Data.PSO;
@@ -4475,28 +4476,6 @@ namespace AquaModelTool
             }
         }
 
-        private void exportLuaToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            var openFileDialog = new OpenFileDialog()
-            {
-                Title = "Select lua File",
-                Filter = "lua files|*.lua;*.evt;*.skit",
-                FileName = "",
-                Multiselect = true
-            };
-            if (openFileDialog.ShowDialog() == DialogResult.OK)
-            {
-                PSO2CompressedScripts scriptHandler = new PSO2CompressedScripts();
-
-                foreach (var file in openFileDialog.FileNames)
-                {
-                    scriptHandler.ParseLooseScript(file);
-                    var ext = Path.GetExtension(file);
-                    scriptHandler.WriteText(file.Replace(ext, $".out{ext}"), Path.GetFileName(file));
-                }
-            }
-        }
-
         private void readFCLToolStripMenuItem_Click(object sender, EventArgs e)
         {
             var openFileDialog = new OpenFileDialog()
@@ -5760,6 +5739,119 @@ namespace AquaModelTool
                 if (openFileDialog2.ShowDialog() == DialogResult.OK)
                 {
                     POF0.DumpPOF0(File.ReadAllBytes(openFileDialog2.FileName), File.ReadAllBytes(openFileDialog.FileName), openFileDialog2.FileName, 0x20, true);
+                }
+            }
+        }
+
+        private void billyHatcherGinjaTofbxToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var openFileDialog = new OpenFileDialog()
+            {
+                Title = "Select Gamecube Ninja File",
+                Filter = "Gamecube Ninja *.gj files|*.gj",
+                FileName = "",
+                Multiselect = true
+            };
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                foreach (var file in openFileDialog.FileNames)
+                {
+                    var aqp = NinjaModelConvert.GinjaConvert(file, out var aqn);
+                    if (aqp != null && aqp.vtxlList.Count > 0 || aqp.tempTris[0].faceVerts.Count > 0)
+                    {
+                        aqp.ConvertToPSO2Model(true, false, false, true, false, false, false, true);
+                        aqp.ConvertToLegacyTypes();
+                        aqp.CreateTrueVertWeights();
+
+                        FbxExporterNative.ExportToFile(aqp, aqn, new List<AquaMotion>(), Path.ChangeExtension(file, ".fbx"), new List<string>(), new List<Matrix4x4>(), false);
+                    }
+                }
+            }
+        }
+
+        private void dumpExtremeAnimsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var openFileDialog = new OpenFileDialog()
+            {
+                Title = "Select Sonic Extreme .wad",
+                Filter = "*.wad files|*.wad",
+                FileName = "",
+                Multiselect = true
+            };
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                foreach (var file in openFileDialog.FileNames)
+                {
+                    using (MemoryStream ms = new MemoryStream(File.ReadAllBytes(file)))
+                    using (BufferedStreamReaderBE<MemoryStream> sr = new BufferedStreamReaderBE<MemoryStream>(ms))
+                    {
+                        var subDir = Path.Combine(Path.GetDirectoryName(file), Path.GetFileNameWithoutExtension(file));
+
+                        //Get anim filename start bytes
+                        var file4 = Path.GetFileName(file).Substring(0, 4).ToUpper();
+                        var file4Bytes = Encoding.ASCII.GetBytes(file4);
+                        file4Bytes.Reverse();
+                        List<byte> fileBytes = new List<byte>() { 02, 00, 00, 00 };
+                        fileBytes.AddRange(file4Bytes);
+                        var fileNameStartInt = BitConverter.ToInt64(fileBytes.ToArray());
+
+                        int fileCount = 0;
+                        string fileName = "";
+                        List<string> potentialFileNames = new List<string>();
+                        while (!sr.IsEndOfStream)
+                        {
+                            //Motion 
+                            if (sr.Peek<long>() == 1099780390911)
+                            {
+                                sr.Read<long>();
+                                if (sr.Peek<byte>() == 0x1)
+                                {
+                                    sr.Seek(-0xC, SeekOrigin.Current);
+                                    var fileSize = sr.Read<int>() + 0xC;
+                                    sr.Seek(-0x8, SeekOrigin.Current);
+                                    var animBytes = sr.ReadBytes(sr.Position, fileSize);
+                                    sr.Seek(fileSize, SeekOrigin.Current);
+
+                                    Directory.CreateDirectory(subDir);
+                                    var animPath = Path.Combine(subDir, $"{fileCount}_{fileName}.anm");
+                                    File.WriteAllBytes(animPath, animBytes);
+                                    fileCount++;
+                                }
+                            }
+                            else if (sr.Peek<long>() == fileNameStartInt)
+                            {
+                                sr.Read<int>();
+                                fileName = sr.ReadCStringSeek();
+                                potentialFileNames.Add(fileName);
+                            }
+                            else
+                            {
+                                sr.Seek(1, SeekOrigin.Current);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        private void evtSkitLuaDecompilerToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var openFileDialog = new OpenFileDialog()
+            {
+                Title = "Select lua File",
+                Filter = "lua files|*.lua;*.evt;*.skit",
+                FileName = "",
+                Multiselect = true
+            };
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                PSO2CompressedScripts scriptHandler = new PSO2CompressedScripts();
+
+                foreach (var file in openFileDialog.FileNames)
+                {
+                    scriptHandler.ParseLooseScript(file);
+                    var ext = Path.GetExtension(file);
+                    scriptHandler.WriteText(file.Replace(ext, $".out{ext}"), Path.GetFileName(file));
                 }
             }
         }

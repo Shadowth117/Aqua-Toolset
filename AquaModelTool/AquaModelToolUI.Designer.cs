@@ -95,6 +95,7 @@
             extractBorderBreakPS4FARCToolStripMenuItem = new ToolStripMenuItem();
             setMOTBONEbinPathToolStripMenuItem = new ToolStripMenuItem();
             toolStripSeparator7 = new ToolStripSeparator();
+            billyHatcherGinjaTofbxToolStripMenuItem = new ToolStripMenuItem();
             readBillyHatchermc2TofbxToolStripMenuItem = new ToolStripMenuItem();
             fbxSetToBillyHatcherlndToolStripMenuItem = new ToolStripMenuItem();
             fbxToBillyHatchermc2ToolStripMenuItem = new ToolStripMenuItem();
@@ -116,6 +117,7 @@
             prmEffectModelExportToolStripMenuItem = new ToolStripMenuItem();
             prmEffectFromModelToolStripMenuItem = new ToolStripMenuItem();
             toolStripSeparator3 = new ToolStripSeparator();
+            evtSkitLuaDecompilerToolStripMenuItem = new ToolStripMenuItem();
             convertTxtToPSO2TextToolStripMenuItem = new ToolStripMenuItem();
             convertTxtToPSO2TextFolderSelectToolStripMenuItem = new ToolStripMenuItem();
             parsePSO2TextToolStripMenuItem = new ToolStripMenuItem();
@@ -174,7 +176,6 @@
             sortCMSHToolStripMenuItem = new ToolStripMenuItem();
             scanPOS0GapToolStripMenuItem = new ToolStripMenuItem();
             gatherMatchingCMSHNamesToolStripMenuItem = new ToolStripMenuItem();
-            exportLuaToolStripMenuItem = new ToolStripMenuItem();
             readFCLToolStripMenuItem = new ToolStripMenuItem();
             readMotAnimToolStripMenuItem = new ToolStripMenuItem();
             readCGPRToolStripMenuItem = new ToolStripMenuItem();
@@ -195,9 +196,10 @@
             readMRPRoomGoodsToolStripMenuItem = new ToolStripMenuItem();
             decryptINCToolStripMenuItem = new ToolStripMenuItem();
             readARCToolStripMenuItem = new ToolStripMenuItem();
+            dumpBillyArcPof0ToolStripMenuItem = new ToolStripMenuItem();
+            dumpExtremeAnimsToolStripMenuItem = new ToolStripMenuItem();
             filePanel = new Panel();
             splitter1 = new Splitter();
-            dumpBillyArcPof0ToolStripMenuItem = new ToolStripMenuItem();
             menuStrip1.SuspendLayout();
             SuspendLayout();
             // 
@@ -394,7 +396,7 @@
             // 
             // toolsToolStripMenuItem
             // 
-            toolsToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { updateClassicPlayerAnimToNGSAnimToolStripMenuItem, toolStripSeparator4, otherGamesToolStripMenuItem, otherGamesToolStripMenuItem1, otherGamesToolStripMenuItem2, toolStripSeparator5, batchPSO2ToFBXToolStripMenuItem, batchParsePSO2SetToTextToolStripMenuItem, legacyAqp2objObjExportToolStripMenuItem, legacyAqp2objBatchExportToolStripMenuItem, legacyAqp2objObjImportToolStripMenuItem, prmEffectModelExportToolStripMenuItem, prmEffectFromModelToolStripMenuItem, toolStripSeparator3, convertTxtToPSO2TextToolStripMenuItem, convertTxtToPSO2TextFolderSelectToolStripMenuItem, parsePSO2TextToolStripMenuItem, parsePSO2TextFolderSelectToolStripMenuItem, toolStripSeparator6, checkAllShaderExtrasToolStripMenuItem, convertNATextToEnPatchToolStripMenuItem, generateCharacterFileSheetToolStripMenuItem, parseVTBFToTextToolStripMenuItem, assembleNGSMapToolStripMenuItem, convertMapTexturesTopngToolStripMenuItem, usePCDirectoriesToolStripMenuItem });
+            toolsToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { updateClassicPlayerAnimToNGSAnimToolStripMenuItem, toolStripSeparator4, otherGamesToolStripMenuItem, otherGamesToolStripMenuItem1, otherGamesToolStripMenuItem2, toolStripSeparator5, batchPSO2ToFBXToolStripMenuItem, batchParsePSO2SetToTextToolStripMenuItem, legacyAqp2objObjExportToolStripMenuItem, legacyAqp2objBatchExportToolStripMenuItem, legacyAqp2objObjImportToolStripMenuItem, prmEffectModelExportToolStripMenuItem, prmEffectFromModelToolStripMenuItem, toolStripSeparator3, evtSkitLuaDecompilerToolStripMenuItem, convertTxtToPSO2TextToolStripMenuItem, convertTxtToPSO2TextFolderSelectToolStripMenuItem, parsePSO2TextToolStripMenuItem, parsePSO2TextFolderSelectToolStripMenuItem, toolStripSeparator6, checkAllShaderExtrasToolStripMenuItem, convertNATextToEnPatchToolStripMenuItem, generateCharacterFileSheetToolStripMenuItem, parseVTBFToTextToolStripMenuItem, assembleNGSMapToolStripMenuItem, convertMapTexturesTopngToolStripMenuItem, usePCDirectoriesToolStripMenuItem });
             toolsToolStripMenuItem.Name = "toolsToolStripMenuItem";
             toolsToolStripMenuItem.Size = new Size(46, 23);
             toolsToolStripMenuItem.Text = "Tools";
@@ -641,7 +643,7 @@
             // 
             // otherGamesToolStripMenuItem2
             // 
-            otherGamesToolStripMenuItem2.DropDownItems.AddRange(new ToolStripItem[] { extractBorderBreakPS4FARCToolStripMenuItem, setMOTBONEbinPathToolStripMenuItem, toolStripSeparator7, readBillyHatchermc2TofbxToolStripMenuItem, fbxSetToBillyHatcherlndToolStripMenuItem, fbxToBillyHatchermc2ToolStripMenuItem, billyHatcherprdArchiveExtractToolStripMenuItem, packBillyHatcherprdToolStripMenuItem, packBillyHatchernrcToolStripMenuItem, packBillyHatchergplToolStripMenuItem, billyHatcherbinTextTotxtToolStripMenuItem, billyHatcherbintxtBackTobinToolStripMenuItem, billyHatcherCyrillicbinTextTotxtToolStripMenuItem, billyHatcherCyrillictxtTobinToolStripMenuItem, toolStripSeparator17 });
+            otherGamesToolStripMenuItem2.DropDownItems.AddRange(new ToolStripItem[] { extractBorderBreakPS4FARCToolStripMenuItem, setMOTBONEbinPathToolStripMenuItem, toolStripSeparator7, billyHatcherGinjaTofbxToolStripMenuItem, readBillyHatchermc2TofbxToolStripMenuItem, fbxSetToBillyHatcherlndToolStripMenuItem, fbxToBillyHatchermc2ToolStripMenuItem, billyHatcherprdArchiveExtractToolStripMenuItem, packBillyHatcherprdToolStripMenuItem, packBillyHatchernrcToolStripMenuItem, packBillyHatchergplToolStripMenuItem, billyHatcherbinTextTotxtToolStripMenuItem, billyHatcherbintxtBackTobinToolStripMenuItem, billyHatcherCyrillicbinTextTotxtToolStripMenuItem, billyHatcherCyrillictxtTobinToolStripMenuItem, toolStripSeparator17 });
             otherGamesToolStripMenuItem2.Name = "otherGamesToolStripMenuItem2";
             otherGamesToolStripMenuItem2.Size = new Size(344, 22);
             otherGamesToolStripMenuItem2.Text = "Other Sega Games";
@@ -664,6 +666,13 @@
             // 
             toolStripSeparator7.Name = "toolStripSeparator7";
             toolStripSeparator7.Size = new Size(424, 6);
+            // 
+            // billyHatcherGinjaTofbxToolStripMenuItem
+            // 
+            billyHatcherGinjaTofbxToolStripMenuItem.Name = "billyHatcherGinjaTofbxToolStripMenuItem";
+            billyHatcherGinjaTofbxToolStripMenuItem.Size = new Size(427, 22);
+            billyHatcherGinjaTofbxToolStripMenuItem.Text = "Billy Hatcher Ginja to .fbx";
+            billyHatcherGinjaTofbxToolStripMenuItem.Click += billyHatcherGinjaTofbxToolStripMenuItem_Click;
             // 
             // readBillyHatchermc2TofbxToolStripMenuItem
             // 
@@ -805,6 +814,13 @@
             // 
             toolStripSeparator3.Name = "toolStripSeparator3";
             toolStripSeparator3.Size = new Size(341, 6);
+            // 
+            // evtSkitLuaDecompilerToolStripMenuItem
+            // 
+            evtSkitLuaDecompilerToolStripMenuItem.Name = "evtSkitLuaDecompilerToolStripMenuItem";
+            evtSkitLuaDecompilerToolStripMenuItem.Size = new Size(344, 22);
+            evtSkitLuaDecompilerToolStripMenuItem.Text = "Evt, Skit, Lua Decompiler";
+            evtSkitLuaDecompilerToolStripMenuItem.Click += evtSkitLuaDecompilerToolStripMenuItem_Click;
             // 
             // convertTxtToPSO2TextToolStripMenuItem
             // 
@@ -1098,7 +1114,7 @@
             // 
             // debug2ToolStripMenuItem
             // 
-            debug2ToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { boneFlagTestToolStripMenuItem, cMTTestToolStripMenuItem, pSZTextToolStripMenuItem, pSZEnemyZoneToolStripMenuItem, pSZObjZoneToolStripMenuItem, pSZEnemyDataToolStripMenuItem, dumpAllTextToolStripMenuItem, assimpExportToolStripMenuItem, readNNMotionToolStripMenuItem, parseCAWSToolStripMenuItem, readMSBToolStripMenuItem, parseCANIToolStripMenuItem, parseDRBToolStripMenuItem, sortCMSHToolStripMenuItem, scanPOS0GapToolStripMenuItem, gatherMatchingCMSHNamesToolStripMenuItem, exportLuaToolStripMenuItem, readFCLToolStripMenuItem, readMotAnimToolStripMenuItem, readCGPRToolStripMenuItem, readMusToolStripMenuItem, readSTGToolStripMenuItem, readLATToolStripMenuItem, sTGExportBustedToolStripMenuItem, readNSAToolStripMenuItem, readNMBToolStripMenuItem, readCMDLToolStripMenuItem });
+            debug2ToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { boneFlagTestToolStripMenuItem, cMTTestToolStripMenuItem, pSZTextToolStripMenuItem, pSZEnemyZoneToolStripMenuItem, pSZObjZoneToolStripMenuItem, pSZEnemyDataToolStripMenuItem, dumpAllTextToolStripMenuItem, assimpExportToolStripMenuItem, readNNMotionToolStripMenuItem, parseCAWSToolStripMenuItem, readMSBToolStripMenuItem, parseCANIToolStripMenuItem, parseDRBToolStripMenuItem, sortCMSHToolStripMenuItem, scanPOS0GapToolStripMenuItem, gatherMatchingCMSHNamesToolStripMenuItem, readFCLToolStripMenuItem, readMotAnimToolStripMenuItem, readCGPRToolStripMenuItem, readMusToolStripMenuItem, readSTGToolStripMenuItem, readLATToolStripMenuItem, sTGExportBustedToolStripMenuItem, readNSAToolStripMenuItem, readNMBToolStripMenuItem, readCMDLToolStripMenuItem });
             debug2ToolStripMenuItem.Name = "debug2ToolStripMenuItem";
             debug2ToolStripMenuItem.Size = new Size(60, 23);
             debug2ToolStripMenuItem.Text = "Debug2";
@@ -1215,13 +1231,6 @@
             gatherMatchingCMSHNamesToolStripMenuItem.Text = "GatherMatchingCMSHNames";
             gatherMatchingCMSHNamesToolStripMenuItem.Click += gatherMatchingCMSHNamesToolStripMenuItem_Click;
             // 
-            // exportLuaToolStripMenuItem
-            // 
-            exportLuaToolStripMenuItem.Name = "exportLuaToolStripMenuItem";
-            exportLuaToolStripMenuItem.Size = new Size(231, 22);
-            exportLuaToolStripMenuItem.Text = "ExportLua";
-            exportLuaToolStripMenuItem.Click += exportLuaToolStripMenuItem_Click;
-            // 
             // readFCLToolStripMenuItem
             // 
             readFCLToolStripMenuItem.Name = "readFCLToolStripMenuItem";
@@ -1294,7 +1303,7 @@
             // 
             // debug3ToolStripMenuItem
             // 
-            debug3ToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { mdlToolStripMenuItem, readPATHToolStripMenuItem, oldBillyMC2ConvertToolStripMenuItem, readPOF0ToolStripMenuItem, readStageDefToolStripMenuItem, readGrassToolStripMenuItem, readMRPRoomGoodsToolStripMenuItem, decryptINCToolStripMenuItem, readARCToolStripMenuItem, dumpBillyArcPof0ToolStripMenuItem });
+            debug3ToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { mdlToolStripMenuItem, readPATHToolStripMenuItem, oldBillyMC2ConvertToolStripMenuItem, readPOF0ToolStripMenuItem, readStageDefToolStripMenuItem, readGrassToolStripMenuItem, readMRPRoomGoodsToolStripMenuItem, decryptINCToolStripMenuItem, readARCToolStripMenuItem, dumpBillyArcPof0ToolStripMenuItem, dumpExtremeAnimsToolStripMenuItem });
             debug3ToolStripMenuItem.Name = "debug3ToolStripMenuItem";
             debug3ToolStripMenuItem.Size = new Size(60, 23);
             debug3ToolStripMenuItem.Text = "Debug3";
@@ -1362,6 +1371,20 @@
             readARCToolStripMenuItem.Text = "ReadARC";
             readARCToolStripMenuItem.Click += readARCToolStripMenuItem_Click;
             // 
+            // dumpBillyArcPof0ToolStripMenuItem
+            // 
+            dumpBillyArcPof0ToolStripMenuItem.Name = "dumpBillyArcPof0ToolStripMenuItem";
+            dumpBillyArcPof0ToolStripMenuItem.Size = new Size(191, 22);
+            dumpBillyArcPof0ToolStripMenuItem.Text = "DumpBillyArcPof0";
+            dumpBillyArcPof0ToolStripMenuItem.Click += dumpBillyArcPof0ToolStripMenuItem_Click;
+            // 
+            // dumpExtremeAnimsToolStripMenuItem
+            // 
+            dumpExtremeAnimsToolStripMenuItem.Name = "dumpExtremeAnimsToolStripMenuItem";
+            dumpExtremeAnimsToolStripMenuItem.Size = new Size(191, 22);
+            dumpExtremeAnimsToolStripMenuItem.Text = "DumpExtremeAnims";
+            dumpExtremeAnimsToolStripMenuItem.Click += dumpExtremeAnimsToolStripMenuItem_Click;
+            // 
             // filePanel
             // 
             filePanel.AutoSize = true;
@@ -1381,13 +1404,6 @@
             splitter1.Size = new Size(4, 296);
             splitter1.TabIndex = 2;
             splitter1.TabStop = false;
-            // 
-            // dumpBillyArcPof0ToolStripMenuItem
-            // 
-            dumpBillyArcPof0ToolStripMenuItem.Name = "dumpBillyArcPof0ToolStripMenuItem";
-            dumpBillyArcPof0ToolStripMenuItem.Size = new Size(191, 22);
-            dumpBillyArcPof0ToolStripMenuItem.Text = "DumpBillyArcPof0";
-            dumpBillyArcPof0ToolStripMenuItem.Click += dumpBillyArcPof0ToolStripMenuItem_Click;
             // 
             // AquaModelTool
             // 
@@ -1516,7 +1532,6 @@
         private System.Windows.Forms.ToolStripMenuItem sortCMSHToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem scanPOS0GapToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem gatherMatchingCMSHNamesToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem exportLuaToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem readFCLToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem readMotAnimToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem readCGPRToolStripMenuItem;
@@ -1580,6 +1595,9 @@
         private ToolStripSeparator toolStripSeparator17;
         private ToolStripMenuItem readARCToolStripMenuItem;
         private ToolStripMenuItem dumpBillyArcPof0ToolStripMenuItem;
+        private ToolStripMenuItem billyHatcherGinjaTofbxToolStripMenuItem;
+        private ToolStripMenuItem dumpExtremeAnimsToolStripMenuItem;
+        private ToolStripMenuItem evtSkitLuaDecompilerToolStripMenuItem;
     }
 }
 
