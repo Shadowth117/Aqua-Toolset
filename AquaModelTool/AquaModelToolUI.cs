@@ -5084,32 +5084,6 @@ namespace AquaModelTool
             }
         }
 
-        private void mdlToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            var openFileDialog = new OpenFileDialog()
-            {
-                Title = "Select Metal Wolf Chaos mdl File",
-                Filter = "Metal Wolf Chaos Model *.mdl files|*.mdl",
-                FileName = "",
-                Multiselect = true
-            };
-            if (openFileDialog.ShowDialog() == DialogResult.OK)
-            {
-                foreach (var file in openFileDialog.FileNames)
-                {
-                    var aqp = MDLConvert.ConvertMDL(File.ReadAllBytes(file), out var aqn);
-                    if (aqp != null && aqp.vtxlList.Count > 0 || aqp.tempTris[0].faceVerts.Count > 0)
-                    {
-                        aqp.ConvertToPSO2Model(true, false, false, true, false, false, false, true);
-                        aqp.ConvertToLegacyTypes();
-                        aqp.CreateTrueVertWeights();
-
-                        FbxExporterNative.ExportToFile(aqp, aqn, new List<AquaMotion>(), Path.ChangeExtension(file, ".fbx"), new List<string>(), new List<Matrix4x4>(), false);
-                    }
-                }
-            }
-        }
-
         private void readBillyHatchermc2TofbxToolStripMenuItem_Click(object sender, EventArgs e)
         {
             var openFileDialog = new OpenFileDialog()
@@ -5852,6 +5826,32 @@ namespace AquaModelTool
                     scriptHandler.ParseLooseScript(file);
                     var ext = Path.GetExtension(file);
                     scriptHandler.WriteText(file.Replace(ext, $".out{ext}"), Path.GetFileName(file));
+                }
+            }
+        }
+
+        private void metalWolfChaosMDLConvertUnfinishedMostlyWorksToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var openFileDialog = new OpenFileDialog()
+            {
+                Title = "Select Metal Wolf Chaos mdl File",
+                Filter = "Metal Wolf Chaos Model *.mdl files|*.mdl",
+                FileName = "",
+                Multiselect = true
+            };
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                foreach (var file in openFileDialog.FileNames)
+                {
+                    var aqp = MDLConvert.ConvertMDL(File.ReadAllBytes(file), out var aqn);
+                    if (aqp != null && aqp.vtxlList.Count > 0 || aqp.tempTris[0].faceVerts.Count > 0)
+                    {
+                        aqp.ConvertToPSO2Model(true, false, false, true, false, false, false, true);
+                        aqp.ConvertToLegacyTypes();
+                        aqp.CreateTrueVertWeights();
+
+                        FbxExporterNative.ExportToFile(aqp, aqn, new List<AquaMotion>(), Path.ChangeExtension(file, ".fbx"), new List<string>(), new List<Matrix4x4>(), false);
+                    }
                 }
             }
         }

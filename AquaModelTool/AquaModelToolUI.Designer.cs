@@ -75,6 +75,7 @@
             toolStripSeparator16 = new ToolStripSeparator();
             mWCBNDExtractToolStripMenuItem = new ToolStripMenuItem();
             mWCBNDPackToolStripMenuItem = new ToolStripMenuItem();
+            metalWolfChaosMDLConvertUnfinishedMostlyWorksToolStripMenuItem = new ToolStripMenuItem();
             toolStripSeparator12 = new ToolStripSeparator();
             generateMCGMCPToolStripMenuItem = new ToolStripMenuItem();
             convertModelToDemonsSoulsflverToolStripMenuItem = new ToolStripMenuItem();
@@ -187,7 +188,6 @@
             readNMBToolStripMenuItem = new ToolStripMenuItem();
             readCMDLToolStripMenuItem = new ToolStripMenuItem();
             debug3ToolStripMenuItem = new ToolStripMenuItem();
-            mdlToolStripMenuItem = new ToolStripMenuItem();
             readPATHToolStripMenuItem = new ToolStripMenuItem();
             oldBillyMC2ConvertToolStripMenuItem = new ToolStripMenuItem();
             readPOF0ToolStripMenuItem = new ToolStripMenuItem();
@@ -415,7 +415,7 @@
             // 
             // otherGamesToolStripMenuItem
             // 
-            otherGamesToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { convertSoulsflverTofbxToolStripMenuItem, exportWithMetadataToolStripMenuItem, fixFromSoftMeshMirroringToolStripMenuItem, applyMaterialNamesToMeshToolStripMenuItem, transformMeshToolStripMenuItem, toolStripSeparator14, setSoulsGameToolStripMenuItem, extractSoulsMapObjectLayoutFrommsbToolStripMenuItem, mSBExtractionExtractUnreferencedModelsAndTexturesToolStripMenuItem, mSBExtractionSeparateExtractionByModelToolStripMenuItem, toolStripSeparator15, dumpAllFromSoulsbndToolStripMenuItem, toolStripSeparator16, mWCBNDExtractToolStripMenuItem, mWCBNDPackToolStripMenuItem, toolStripSeparator12, generateMCGMCPToolStripMenuItem, convertModelToDemonsSoulsflverToolStripMenuItem, toolStripSeparator11, convertDemonsSoulsPS5CmdlToFbxToolStripMenuItem });
+            otherGamesToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { convertSoulsflverTofbxToolStripMenuItem, exportWithMetadataToolStripMenuItem, fixFromSoftMeshMirroringToolStripMenuItem, applyMaterialNamesToMeshToolStripMenuItem, transformMeshToolStripMenuItem, toolStripSeparator14, setSoulsGameToolStripMenuItem, extractSoulsMapObjectLayoutFrommsbToolStripMenuItem, mSBExtractionExtractUnreferencedModelsAndTexturesToolStripMenuItem, mSBExtractionSeparateExtractionByModelToolStripMenuItem, toolStripSeparator15, dumpAllFromSoulsbndToolStripMenuItem, toolStripSeparator16, mWCBNDExtractToolStripMenuItem, mWCBNDPackToolStripMenuItem, metalWolfChaosMDLConvertUnfinishedMostlyWorksToolStripMenuItem, toolStripSeparator12, generateMCGMCPToolStripMenuItem, convertModelToDemonsSoulsflverToolStripMenuItem, toolStripSeparator11, convertDemonsSoulsPS5CmdlToFbxToolStripMenuItem });
             otherGamesToolStripMenuItem.Name = "otherGamesToolStripMenuItem";
             otherGamesToolStripMenuItem.Size = new Size(344, 22);
             otherGamesToolStripMenuItem.Text = "Souls And FromSoft Games";
@@ -534,6 +534,13 @@
             mWCBNDPackToolStripMenuItem.Size = new Size(620, 22);
             mWCBNDPackToolStripMenuItem.Text = "Metal Wolf Chaos BND Pack";
             mWCBNDPackToolStripMenuItem.Click += mWCBNDPackToolStripMenuItem_Click;
+            // 
+            // metalWolfChaosMDLConvertUnfinishedMostlyWorksToolStripMenuItem
+            // 
+            metalWolfChaosMDLConvertUnfinishedMostlyWorksToolStripMenuItem.Name = "metalWolfChaosMDLConvertUnfinishedMostlyWorksToolStripMenuItem";
+            metalWolfChaosMDLConvertUnfinishedMostlyWorksToolStripMenuItem.Size = new Size(620, 22);
+            metalWolfChaosMDLConvertUnfinishedMostlyWorksToolStripMenuItem.Text = "Metal Wolf Chaos MDL convert (Unfinished, mostly works)";
+            metalWolfChaosMDLConvertUnfinishedMostlyWorksToolStripMenuItem.Click += metalWolfChaosMDLConvertUnfinishedMostlyWorksToolStripMenuItem_Click;
             // 
             // toolStripSeparator12
             // 
@@ -1303,17 +1310,10 @@
             // 
             // debug3ToolStripMenuItem
             // 
-            debug3ToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { mdlToolStripMenuItem, readPATHToolStripMenuItem, oldBillyMC2ConvertToolStripMenuItem, readPOF0ToolStripMenuItem, readStageDefToolStripMenuItem, readGrassToolStripMenuItem, readMRPRoomGoodsToolStripMenuItem, decryptINCToolStripMenuItem, readARCToolStripMenuItem, dumpBillyArcPof0ToolStripMenuItem, dumpExtremeAnimsToolStripMenuItem });
+            debug3ToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { readPATHToolStripMenuItem, oldBillyMC2ConvertToolStripMenuItem, readPOF0ToolStripMenuItem, readStageDefToolStripMenuItem, readGrassToolStripMenuItem, readMRPRoomGoodsToolStripMenuItem, decryptINCToolStripMenuItem, readARCToolStripMenuItem, dumpBillyArcPof0ToolStripMenuItem, dumpExtremeAnimsToolStripMenuItem });
             debug3ToolStripMenuItem.Name = "debug3ToolStripMenuItem";
             debug3ToolStripMenuItem.Size = new Size(60, 23);
             debug3ToolStripMenuItem.Text = "Debug3";
-            // 
-            // mdlToolStripMenuItem
-            // 
-            mdlToolStripMenuItem.Name = "mdlToolStripMenuItem";
-            mdlToolStripMenuItem.Size = new Size(191, 22);
-            mdlToolStripMenuItem.Text = "ReadMDL";
-            mdlToolStripMenuItem.Click += mdlToolStripMenuItem_Click;
             // 
             // readPATHToolStripMenuItem
             // 
@@ -1553,7 +1553,6 @@
         private System.Windows.Forms.ToolStripMenuItem mWCBNDPackToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem mWCBNDExtractToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem debug3ToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem mdlToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem readPATHToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem otherGamesToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem cToolStripMenuItem;
@@ -1598,6 +1597,7 @@
         private ToolStripMenuItem billyHatcherGinjaTofbxToolStripMenuItem;
         private ToolStripMenuItem dumpExtremeAnimsToolStripMenuItem;
         private ToolStripMenuItem evtSkitLuaDecompilerToolStripMenuItem;
+        private ToolStripMenuItem metalWolfChaosMDLConvertUnfinishedMostlyWorksToolStripMenuItem;
     }
 }
 
