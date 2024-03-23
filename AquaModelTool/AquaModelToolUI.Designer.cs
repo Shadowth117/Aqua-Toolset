@@ -65,6 +65,7 @@
             fixFromSoftMeshMirroringToolStripMenuItem = new ToolStripMenuItem();
             applyMaterialNamesToMeshToolStripMenuItem = new ToolStripMenuItem();
             transformMeshToolStripMenuItem = new ToolStripMenuItem();
+            addRootNodeLikeBlendersBBToolSMDImportToolStripMenuItem = new ToolStripMenuItem();
             toolStripSeparator14 = new ToolStripSeparator();
             setSoulsGameToolStripMenuItem = new ToolStripMenuItem();
             extractSoulsMapObjectLayoutFrommsbToolStripMenuItem = new ToolStripMenuItem();
@@ -75,6 +76,8 @@
             toolStripSeparator16 = new ToolStripSeparator();
             mWCBNDExtractToolStripMenuItem = new ToolStripMenuItem();
             mWCBNDPackToolStripMenuItem = new ToolStripMenuItem();
+            metalWolfChaosMMDConvertToolStripMenuItem = new ToolStripMenuItem();
+            metalWolfChaosOTRConvertToolStripMenuItem = new ToolStripMenuItem();
             metalWolfChaosMDLConvertUnfinishedMostlyWorksToolStripMenuItem = new ToolStripMenuItem();
             toolStripSeparator12 = new ToolStripSeparator();
             generateMCGMCPToolStripMenuItem = new ToolStripMenuItem();
@@ -198,8 +201,13 @@
             readARCToolStripMenuItem = new ToolStripMenuItem();
             dumpBillyArcPof0ToolStripMenuItem = new ToolStripMenuItem();
             dumpExtremeAnimsToolStripMenuItem = new ToolStripMenuItem();
+            readGEPlayerToolStripMenuItem = new ToolStripMenuItem();
+            readAniModelToolStripMenuItem = new ToolStripMenuItem();
+            readLibModelToolStripMenuItem = new ToolStripMenuItem();
+            protoThingToItemModelToolStripMenuItem = new ToolStripMenuItem();
             filePanel = new Panel();
             splitter1 = new Splitter();
+            doNotAdjustRootRotationrequiresAddedRootNodeToolStripMenuItem = new ToolStripMenuItem();
             menuStrip1.SuspendLayout();
             SuspendLayout();
             // 
@@ -415,7 +423,7 @@
             // 
             // otherGamesToolStripMenuItem
             // 
-            otherGamesToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { convertSoulsflverTofbxToolStripMenuItem, exportWithMetadataToolStripMenuItem, fixFromSoftMeshMirroringToolStripMenuItem, applyMaterialNamesToMeshToolStripMenuItem, transformMeshToolStripMenuItem, toolStripSeparator14, setSoulsGameToolStripMenuItem, extractSoulsMapObjectLayoutFrommsbToolStripMenuItem, mSBExtractionExtractUnreferencedModelsAndTexturesToolStripMenuItem, mSBExtractionSeparateExtractionByModelToolStripMenuItem, toolStripSeparator15, dumpAllFromSoulsbndToolStripMenuItem, toolStripSeparator16, mWCBNDExtractToolStripMenuItem, mWCBNDPackToolStripMenuItem, metalWolfChaosMDLConvertUnfinishedMostlyWorksToolStripMenuItem, toolStripSeparator12, generateMCGMCPToolStripMenuItem, convertModelToDemonsSoulsflverToolStripMenuItem, toolStripSeparator11, convertDemonsSoulsPS5CmdlToFbxToolStripMenuItem });
+            otherGamesToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { convertSoulsflverTofbxToolStripMenuItem, exportWithMetadataToolStripMenuItem, fixFromSoftMeshMirroringToolStripMenuItem, applyMaterialNamesToMeshToolStripMenuItem, transformMeshToolStripMenuItem, addRootNodeLikeBlendersBBToolSMDImportToolStripMenuItem, doNotAdjustRootRotationrequiresAddedRootNodeToolStripMenuItem, toolStripSeparator14, setSoulsGameToolStripMenuItem, extractSoulsMapObjectLayoutFrommsbToolStripMenuItem, mSBExtractionExtractUnreferencedModelsAndTexturesToolStripMenuItem, mSBExtractionSeparateExtractionByModelToolStripMenuItem, toolStripSeparator15, dumpAllFromSoulsbndToolStripMenuItem, toolStripSeparator16, mWCBNDExtractToolStripMenuItem, mWCBNDPackToolStripMenuItem, metalWolfChaosMMDConvertToolStripMenuItem, metalWolfChaosOTRConvertToolStripMenuItem, metalWolfChaosMDLConvertUnfinishedMostlyWorksToolStripMenuItem, toolStripSeparator12, generateMCGMCPToolStripMenuItem, convertModelToDemonsSoulsflverToolStripMenuItem, toolStripSeparator11, convertDemonsSoulsPS5CmdlToFbxToolStripMenuItem });
             otherGamesToolStripMenuItem.Name = "otherGamesToolStripMenuItem";
             otherGamesToolStripMenuItem.Size = new Size(344, 22);
             otherGamesToolStripMenuItem.Text = "Souls And FromSoft Games";
@@ -464,6 +472,16 @@
             transformMeshToolStripMenuItem.Size = new Size(620, 22);
             transformMeshToolStripMenuItem.Text = "Transform Mesh";
             transformMeshToolStripMenuItem.Click += SaveSoulsSettings;
+            // 
+            // addRootNodeLikeBlendersBBToolSMDImportToolStripMenuItem
+            // 
+            addRootNodeLikeBlendersBBToolSMDImportToolStripMenuItem.Checked = true;
+            addRootNodeLikeBlendersBBToolSMDImportToolStripMenuItem.CheckOnClick = true;
+            addRootNodeLikeBlendersBBToolSMDImportToolStripMenuItem.CheckState = CheckState.Checked;
+            addRootNodeLikeBlendersBBToolSMDImportToolStripMenuItem.Name = "addRootNodeLikeBlendersBBToolSMDImportToolStripMenuItem";
+            addRootNodeLikeBlendersBBToolSMDImportToolStripMenuItem.Size = new Size(620, 22);
+            addRootNodeLikeBlendersBBToolSMDImportToolStripMenuItem.Text = "Add Root Node (Like Blender's BBTool SMD import)";
+            addRootNodeLikeBlendersBBToolSMDImportToolStripMenuItem.Click += SaveSoulsSettings;
             // 
             // toolStripSeparator14
             // 
@@ -525,7 +543,7 @@
             // 
             mWCBNDExtractToolStripMenuItem.Name = "mWCBNDExtractToolStripMenuItem";
             mWCBNDExtractToolStripMenuItem.Size = new Size(620, 22);
-            mWCBNDExtractToolStripMenuItem.Text = "Metal Wolf Chaos BND Extract";
+            mWCBNDExtractToolStripMenuItem.Text = "Metal Wolf Chaos BND, M/TData, Dev/Div Extract";
             mWCBNDExtractToolStripMenuItem.Click += mWCBNDExtractToolStripMenuItem_Click;
             // 
             // mWCBNDPackToolStripMenuItem
@@ -534,6 +552,20 @@
             mWCBNDPackToolStripMenuItem.Size = new Size(620, 22);
             mWCBNDPackToolStripMenuItem.Text = "Metal Wolf Chaos BND Pack";
             mWCBNDPackToolStripMenuItem.Click += mWCBNDPackToolStripMenuItem_Click;
+            // 
+            // metalWolfChaosMMDConvertToolStripMenuItem
+            // 
+            metalWolfChaosMMDConvertToolStripMenuItem.Name = "metalWolfChaosMMDConvertToolStripMenuItem";
+            metalWolfChaosMMDConvertToolStripMenuItem.Size = new Size(620, 22);
+            metalWolfChaosMMDConvertToolStripMenuItem.Text = "Metal Wolf Chaos MMD convert";
+            metalWolfChaosMMDConvertToolStripMenuItem.Click += metalWolfChaosMMDConvertToolStripMenuItem_Click;
+            // 
+            // metalWolfChaosOTRConvertToolStripMenuItem
+            // 
+            metalWolfChaosOTRConvertToolStripMenuItem.Name = "metalWolfChaosOTRConvertToolStripMenuItem";
+            metalWolfChaosOTRConvertToolStripMenuItem.Size = new Size(620, 22);
+            metalWolfChaosOTRConvertToolStripMenuItem.Text = "Metal Wolf Chaos OTR convert";
+            metalWolfChaosOTRConvertToolStripMenuItem.Click += metalWolfChaosOTRConvertToolStripMenuItem_Click;
             // 
             // metalWolfChaosMDLConvertUnfinishedMostlyWorksToolStripMenuItem
             // 
@@ -1310,7 +1342,7 @@
             // 
             // debug3ToolStripMenuItem
             // 
-            debug3ToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { readPATHToolStripMenuItem, oldBillyMC2ConvertToolStripMenuItem, readPOF0ToolStripMenuItem, readStageDefToolStripMenuItem, readGrassToolStripMenuItem, readMRPRoomGoodsToolStripMenuItem, decryptINCToolStripMenuItem, readARCToolStripMenuItem, dumpBillyArcPof0ToolStripMenuItem, dumpExtremeAnimsToolStripMenuItem });
+            debug3ToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { readPATHToolStripMenuItem, oldBillyMC2ConvertToolStripMenuItem, readPOF0ToolStripMenuItem, readStageDefToolStripMenuItem, readGrassToolStripMenuItem, readMRPRoomGoodsToolStripMenuItem, decryptINCToolStripMenuItem, readARCToolStripMenuItem, dumpBillyArcPof0ToolStripMenuItem, dumpExtremeAnimsToolStripMenuItem, readGEPlayerToolStripMenuItem, readAniModelToolStripMenuItem, readLibModelToolStripMenuItem, protoThingToItemModelToolStripMenuItem });
             debug3ToolStripMenuItem.Name = "debug3ToolStripMenuItem";
             debug3ToolStripMenuItem.Size = new Size(60, 23);
             debug3ToolStripMenuItem.Text = "Debug3";
@@ -1318,72 +1350,100 @@
             // readPATHToolStripMenuItem
             // 
             readPATHToolStripMenuItem.Name = "readPATHToolStripMenuItem";
-            readPATHToolStripMenuItem.Size = new Size(191, 22);
+            readPATHToolStripMenuItem.Size = new Size(203, 22);
             readPATHToolStripMenuItem.Text = "ReadPATH";
             readPATHToolStripMenuItem.Click += readPATHToolStripMenuItem_Click;
             // 
             // oldBillyMC2ConvertToolStripMenuItem
             // 
             oldBillyMC2ConvertToolStripMenuItem.Name = "oldBillyMC2ConvertToolStripMenuItem";
-            oldBillyMC2ConvertToolStripMenuItem.Size = new Size(191, 22);
+            oldBillyMC2ConvertToolStripMenuItem.Size = new Size(203, 22);
             oldBillyMC2ConvertToolStripMenuItem.Text = "Old Billy MC2 convert";
             oldBillyMC2ConvertToolStripMenuItem.Click += oldBillyMC2ConvertToolStripMenuItem_Click;
             // 
             // readPOF0ToolStripMenuItem
             // 
             readPOF0ToolStripMenuItem.Name = "readPOF0ToolStripMenuItem";
-            readPOF0ToolStripMenuItem.Size = new Size(191, 22);
+            readPOF0ToolStripMenuItem.Size = new Size(203, 22);
             readPOF0ToolStripMenuItem.Text = "ReadPOF0";
             readPOF0ToolStripMenuItem.Click += readPOF0ToolStripMenuItem_Click;
             // 
             // readStageDefToolStripMenuItem
             // 
             readStageDefToolStripMenuItem.Name = "readStageDefToolStripMenuItem";
-            readStageDefToolStripMenuItem.Size = new Size(191, 22);
+            readStageDefToolStripMenuItem.Size = new Size(203, 22);
             readStageDefToolStripMenuItem.Text = "ReadStageDef";
             readStageDefToolStripMenuItem.Click += readStageDefToolStripMenuItem_Click;
             // 
             // readGrassToolStripMenuItem
             // 
             readGrassToolStripMenuItem.Name = "readGrassToolStripMenuItem";
-            readGrassToolStripMenuItem.Size = new Size(191, 22);
+            readGrassToolStripMenuItem.Size = new Size(203, 22);
             readGrassToolStripMenuItem.Text = "ReadGrass";
             readGrassToolStripMenuItem.Click += readGrassToolStripMenuItem_Click;
             // 
             // readMRPRoomGoodsToolStripMenuItem
             // 
             readMRPRoomGoodsToolStripMenuItem.Name = "readMRPRoomGoodsToolStripMenuItem";
-            readMRPRoomGoodsToolStripMenuItem.Size = new Size(191, 22);
+            readMRPRoomGoodsToolStripMenuItem.Size = new Size(203, 22);
             readMRPRoomGoodsToolStripMenuItem.Text = "ReadMRPRoomGoods";
             readMRPRoomGoodsToolStripMenuItem.Click += readMRPRoomGoodsToolStripMenuItem_Click;
             // 
             // decryptINCToolStripMenuItem
             // 
             decryptINCToolStripMenuItem.Name = "decryptINCToolStripMenuItem";
-            decryptINCToolStripMenuItem.Size = new Size(191, 22);
+            decryptINCToolStripMenuItem.Size = new Size(203, 22);
             decryptINCToolStripMenuItem.Text = "DecryptINC";
             decryptINCToolStripMenuItem.Click += decryptINCToolStripMenuItem_Click;
             // 
             // readARCToolStripMenuItem
             // 
             readARCToolStripMenuItem.Name = "readARCToolStripMenuItem";
-            readARCToolStripMenuItem.Size = new Size(191, 22);
+            readARCToolStripMenuItem.Size = new Size(203, 22);
             readARCToolStripMenuItem.Text = "ReadARC";
             readARCToolStripMenuItem.Click += readARCToolStripMenuItem_Click;
             // 
             // dumpBillyArcPof0ToolStripMenuItem
             // 
             dumpBillyArcPof0ToolStripMenuItem.Name = "dumpBillyArcPof0ToolStripMenuItem";
-            dumpBillyArcPof0ToolStripMenuItem.Size = new Size(191, 22);
+            dumpBillyArcPof0ToolStripMenuItem.Size = new Size(203, 22);
             dumpBillyArcPof0ToolStripMenuItem.Text = "DumpBillyArcPof0";
             dumpBillyArcPof0ToolStripMenuItem.Click += dumpBillyArcPof0ToolStripMenuItem_Click;
             // 
             // dumpExtremeAnimsToolStripMenuItem
             // 
             dumpExtremeAnimsToolStripMenuItem.Name = "dumpExtremeAnimsToolStripMenuItem";
-            dumpExtremeAnimsToolStripMenuItem.Size = new Size(191, 22);
+            dumpExtremeAnimsToolStripMenuItem.Size = new Size(203, 22);
             dumpExtremeAnimsToolStripMenuItem.Text = "DumpExtremeAnims";
             dumpExtremeAnimsToolStripMenuItem.Click += dumpExtremeAnimsToolStripMenuItem_Click;
+            // 
+            // readGEPlayerToolStripMenuItem
+            // 
+            readGEPlayerToolStripMenuItem.Name = "readGEPlayerToolStripMenuItem";
+            readGEPlayerToolStripMenuItem.Size = new Size(203, 22);
+            readGEPlayerToolStripMenuItem.Text = "ReadGEPlayer";
+            readGEPlayerToolStripMenuItem.Click += readGEPlayerToolStripMenuItem_Click;
+            // 
+            // readAniModelToolStripMenuItem
+            // 
+            readAniModelToolStripMenuItem.Name = "readAniModelToolStripMenuItem";
+            readAniModelToolStripMenuItem.Size = new Size(203, 22);
+            readAniModelToolStripMenuItem.Text = "ReadAniModel";
+            readAniModelToolStripMenuItem.Click += readAniModelToolStripMenuItem_Click;
+            // 
+            // readLibModelToolStripMenuItem
+            // 
+            readLibModelToolStripMenuItem.Name = "readLibModelToolStripMenuItem";
+            readLibModelToolStripMenuItem.Size = new Size(203, 22);
+            readLibModelToolStripMenuItem.Text = "ReadLibModel";
+            readLibModelToolStripMenuItem.Click += readLibModelToolStripMenuItem_Click;
+            // 
+            // protoThingToItemModelToolStripMenuItem
+            // 
+            protoThingToItemModelToolStripMenuItem.Name = "protoThingToItemModelToolStripMenuItem";
+            protoThingToItemModelToolStripMenuItem.Size = new Size(203, 22);
+            protoThingToItemModelToolStripMenuItem.Text = "ProtoThingToItemModel";
+            protoThingToItemModelToolStripMenuItem.Click += protoThingToItemModelToolStripMenuItem_Click;
             // 
             // filePanel
             // 
@@ -1404,6 +1464,14 @@
             splitter1.Size = new Size(4, 296);
             splitter1.TabIndex = 2;
             splitter1.TabStop = false;
+            // 
+            // doNotAdjustRootRotationrequiresAddedRootNodeToolStripMenuItem
+            // 
+            doNotAdjustRootRotationrequiresAddedRootNodeToolStripMenuItem.CheckOnClick = true;
+            doNotAdjustRootRotationrequiresAddedRootNodeToolStripMenuItem.Name = "doNotAdjustRootRotationrequiresAddedRootNodeToolStripMenuItem";
+            doNotAdjustRootRotationrequiresAddedRootNodeToolStripMenuItem.Size = new Size(620, 22);
+            doNotAdjustRootRotationrequiresAddedRootNodeToolStripMenuItem.Text = "Do not adjust root rotation (requires added root node)";
+            doNotAdjustRootRotationrequiresAddedRootNodeToolStripMenuItem.Click += SaveSoulsSettings;
             // 
             // AquaModelTool
             // 
@@ -1598,6 +1666,14 @@
         private ToolStripMenuItem dumpExtremeAnimsToolStripMenuItem;
         private ToolStripMenuItem evtSkitLuaDecompilerToolStripMenuItem;
         private ToolStripMenuItem metalWolfChaosMDLConvertUnfinishedMostlyWorksToolStripMenuItem;
+        private ToolStripMenuItem metalWolfChaosMMDConvertToolStripMenuItem;
+        private ToolStripMenuItem metalWolfChaosOTRConvertToolStripMenuItem;
+        private ToolStripMenuItem readGEPlayerToolStripMenuItem;
+        private ToolStripMenuItem readAniModelToolStripMenuItem;
+        private ToolStripMenuItem protoThingToItemModelToolStripMenuItem;
+        private ToolStripMenuItem readLibModelToolStripMenuItem;
+        private ToolStripMenuItem addRootNodeLikeBlendersBBToolSMDImportToolStripMenuItem;
+        private ToolStripMenuItem doNotAdjustRootRotationrequiresAddedRootNodeToolStripMenuItem;
     }
 }
 

@@ -25,8 +25,10 @@
         <CheckBox x:Name="mirrorCB" Content="Fix FromSoft Mesh Mirorring" HorizontalAlignment="Left" Margin="10,68,0,0" VerticalAlignment="Top" IsChecked="True" Click="smtSettingSet"/>
         <CheckBox x:Name="matNamesToMeshCB" Content="Apply Material Names to Mesh" HorizontalAlignment="Left" Margin="10,88,0,0" VerticalAlignment="Top" Click="smtSettingSet"/>
         <CheckBox x:Name="transformMeshCB" Content="Transform Mesh" HorizontalAlignment="Left" Margin="10,108,0,0" VerticalAlignment="Top" IsChecked="True" Click="smtSettingSet"/>
-        <CheckBox x:Name="extractUnreferencedFilesCB" Content="(MSB Extraction) Extract Unreferenced Files" HorizontalAlignment="Left" Margin="10,153,0,0" VerticalAlignment="Top" IsChecked="True" Click="smtSettingSet"/>
-        <CheckBox x:Name="separateModelsCB" Content="(MSB Extraction) Separate To .flver Model Instance Sets. **Please have this on for Bloodborne and forward!**" HorizontalAlignment="Left" Margin="10,173,0,0" VerticalAlignment="Top" IsChecked="True" Click="smtSettingSet"/>
+        <CheckBox x:Name="addRootNodeCB" Content="Add Root Node (Like Blender's BBTool SMD import)" HorizontalAlignment="Left" Margin="9,128,0,0" VerticalAlignment="Top" IsChecked="True" Click="smtSettingSet"/>
+        <CheckBox x:Name="doNotAdjustRootRotCB" Content="Do Not Adjust Root Rotation (Requires Add Root Node)" HorizontalAlignment="Left" Margin="9,148,0,0" VerticalAlignment="Top" IsChecked="False" Click="smtSettingSet"/>
+        <CheckBox x:Name="extractUnreferencedFilesCB" Content="(MSB Extraction) Extract Unreferenced Files" HorizontalAlignment="Left" Margin="10,189,0,0" VerticalAlignment="Top" IsChecked="True" Click="smtSettingSet"/>
+        <CheckBox x:Name="separateModelsCB" Content="(MSB Extraction) Separate To .flver Model Instance Sets. **Please have this on for Bloodborne and forward!**" HorizontalAlignment="Left" Margin="10,209,0,0" VerticalAlignment="Top" IsChecked="True" Click="smtSettingSet"/>
         <ComboBox x:Name="scaleHandlingCB" HorizontalAlignment="Left" Margin="316,45,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="comboBox_SelectionChanged"/>
         <Label x:Name="scaleHandlingLabel" Content="Scale Handling:" HorizontalAlignment="Left" Margin="316,23,0,0" VerticalAlignment="Top"/>
         <Label x:Name="scaleUDModLabel" Content="Custom Scale:" HorizontalAlignment="Left" Margin="316,65,0,0" VerticalAlignment="Top"/>

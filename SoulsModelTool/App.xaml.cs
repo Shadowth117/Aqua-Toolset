@@ -115,6 +115,18 @@ namespace SoulsModelTool
                         case "-launch":
                             launchUi = true;
                             break;
+                        case "-addRootNode":
+                            smtSetting.addRootNodeLikeBlenderSmdImport = true;
+                            break;
+                        case "-dontAddRootNode":
+                            smtSetting.addRootNodeLikeBlenderSmdImport = false;
+                            break;
+                        case "-adjustRootNode":
+                            smtSetting.doNotAdjustRootRotation = false;
+                            break;
+                        case "-dontadjustRootNode":
+                            smtSetting.doNotAdjustRootRotation = true;
+                            break;
                         default:
                             filePaths.Add(arg);
                             break;
