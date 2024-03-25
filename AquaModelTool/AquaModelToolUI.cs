@@ -4049,24 +4049,6 @@ namespace AquaModelTool
             }
         }
 
-        private void readMCGMCPToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            var openFileDialog = new OpenFileDialog()
-            {
-                Title = "Select MCP/MCG File",
-                Filter = "MCP/MCG files|*.mcg;*.mcp",
-                FileName = "",
-                Multiselect = true
-            };
-            if (openFileDialog.ShowDialog() == DialogResult.OK)
-            {
-                foreach (var file in openFileDialog.FileNames)
-                {
-                    SoulsConvert.ReadSoulsFile(file);
-                }
-            }
-        }
-
         private void readMSBToolStripMenuItem_Click(object sender, EventArgs e)
         {
             var openFileDialog = new OpenFileDialog()

@@ -66,6 +66,7 @@
             applyMaterialNamesToMeshToolStripMenuItem = new ToolStripMenuItem();
             transformMeshToolStripMenuItem = new ToolStripMenuItem();
             addRootNodeLikeBlendersBBToolSMDImportToolStripMenuItem = new ToolStripMenuItem();
+            doNotAdjustRootRotationrequiresAddedRootNodeToolStripMenuItem = new ToolStripMenuItem();
             toolStripSeparator14 = new ToolStripSeparator();
             setSoulsGameToolStripMenuItem = new ToolStripMenuItem();
             extractSoulsMapObjectLayoutFrommsbToolStripMenuItem = new ToolStripMenuItem();
@@ -207,7 +208,6 @@
             protoThingToItemModelToolStripMenuItem = new ToolStripMenuItem();
             filePanel = new Panel();
             splitter1 = new Splitter();
-            doNotAdjustRootRotationrequiresAddedRootNodeToolStripMenuItem = new ToolStripMenuItem();
             menuStrip1.SuspendLayout();
             SuspendLayout();
             // 
@@ -426,7 +426,7 @@
             otherGamesToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { convertSoulsflverTofbxToolStripMenuItem, exportWithMetadataToolStripMenuItem, fixFromSoftMeshMirroringToolStripMenuItem, applyMaterialNamesToMeshToolStripMenuItem, transformMeshToolStripMenuItem, addRootNodeLikeBlendersBBToolSMDImportToolStripMenuItem, doNotAdjustRootRotationrequiresAddedRootNodeToolStripMenuItem, toolStripSeparator14, setSoulsGameToolStripMenuItem, extractSoulsMapObjectLayoutFrommsbToolStripMenuItem, mSBExtractionExtractUnreferencedModelsAndTexturesToolStripMenuItem, mSBExtractionSeparateExtractionByModelToolStripMenuItem, toolStripSeparator15, dumpAllFromSoulsbndToolStripMenuItem, toolStripSeparator16, mWCBNDExtractToolStripMenuItem, mWCBNDPackToolStripMenuItem, metalWolfChaosMMDConvertToolStripMenuItem, metalWolfChaosOTRConvertToolStripMenuItem, metalWolfChaosMDLConvertUnfinishedMostlyWorksToolStripMenuItem, toolStripSeparator12, generateMCGMCPToolStripMenuItem, convertModelToDemonsSoulsflverToolStripMenuItem, toolStripSeparator11, convertDemonsSoulsPS5CmdlToFbxToolStripMenuItem });
             otherGamesToolStripMenuItem.Name = "otherGamesToolStripMenuItem";
             otherGamesToolStripMenuItem.Size = new Size(344, 22);
-            otherGamesToolStripMenuItem.Text = "Souls And FromSoft Games";
+            otherGamesToolStripMenuItem.Text = "Souls And FromSoft/BluePoint Games";
             // 
             // convertSoulsflverTofbxToolStripMenuItem
             // 
@@ -482,6 +482,14 @@
             addRootNodeLikeBlendersBBToolSMDImportToolStripMenuItem.Size = new Size(620, 22);
             addRootNodeLikeBlendersBBToolSMDImportToolStripMenuItem.Text = "Add Root Node (Like Blender's BBTool SMD import)";
             addRootNodeLikeBlendersBBToolSMDImportToolStripMenuItem.Click += SaveSoulsSettings;
+            // 
+            // doNotAdjustRootRotationrequiresAddedRootNodeToolStripMenuItem
+            // 
+            doNotAdjustRootRotationrequiresAddedRootNodeToolStripMenuItem.CheckOnClick = true;
+            doNotAdjustRootRotationrequiresAddedRootNodeToolStripMenuItem.Name = "doNotAdjustRootRotationrequiresAddedRootNodeToolStripMenuItem";
+            doNotAdjustRootRotationrequiresAddedRootNodeToolStripMenuItem.Size = new Size(620, 22);
+            doNotAdjustRootRotationrequiresAddedRootNodeToolStripMenuItem.Text = "Do not adjust root rotation (requires added root node)";
+            doNotAdjustRootRotationrequiresAddedRootNodeToolStripMenuItem.Click += SaveSoulsSettings;
             // 
             // toolStripSeparator14
             // 
@@ -603,7 +611,7 @@
             // 
             convertDemonsSoulsPS5CmdlToFbxToolStripMenuItem.Name = "convertDemonsSoulsPS5CmdlToFbxToolStripMenuItem";
             convertDemonsSoulsPS5CmdlToFbxToolStripMenuItem.Size = new Size(620, 22);
-            convertDemonsSoulsPS5CmdlToFbxToolStripMenuItem.Text = "Convert Demon's Souls PS5 cmdl to fbx";
+            convertDemonsSoulsPS5CmdlToFbxToolStripMenuItem.Text = "Convert Demon's Souls PS5 cmdl, cmsh to fbx";
             convertDemonsSoulsPS5CmdlToFbxToolStripMenuItem.Click += convertDemonsSoulsPS5CmdlToFbxToolStripMenuItem_Click;
             // 
             // otherGamesToolStripMenuItem1
@@ -1464,14 +1472,6 @@
             splitter1.Size = new Size(4, 296);
             splitter1.TabIndex = 2;
             splitter1.TabStop = false;
-            // 
-            // doNotAdjustRootRotationrequiresAddedRootNodeToolStripMenuItem
-            // 
-            doNotAdjustRootRotationrequiresAddedRootNodeToolStripMenuItem.CheckOnClick = true;
-            doNotAdjustRootRotationrequiresAddedRootNodeToolStripMenuItem.Name = "doNotAdjustRootRotationrequiresAddedRootNodeToolStripMenuItem";
-            doNotAdjustRootRotationrequiresAddedRootNodeToolStripMenuItem.Size = new Size(620, 22);
-            doNotAdjustRootRotationrequiresAddedRootNodeToolStripMenuItem.Text = "Do not adjust root rotation (requires added root node)";
-            doNotAdjustRootRotationrequiresAddedRootNodeToolStripMenuItem.Click += SaveSoulsSettings;
             // 
             // AquaModelTool
             // 
