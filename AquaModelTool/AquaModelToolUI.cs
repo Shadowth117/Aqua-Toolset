@@ -39,6 +39,7 @@ using Microsoft.WindowsAPICodePack.Dialogs;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Globalization;
+using System.IO;
 using System.Numerics;
 using System.Reflection;
 using System.Text;
@@ -4720,11 +4721,7 @@ namespace AquaModelTool
             {
                 foreach (var file in openFileDialog.FileNames)
                 {
-                    using (MemoryStream stream = new MemoryStream(File.ReadAllBytes(file)))
-                    using (var streamReader = new BufferedStreamReaderBE<MemoryStream>(stream))
-                    {
-                        var cgpr = new CGPR(streamReader);
-                    }
+                    var cgpr = new CGPR(File.ReadAllBytes(file));
                 }
             }
         }
@@ -4941,28 +4938,6 @@ namespace AquaModelTool
                 foreach (var file in openFileDialog.FileNames)
                 {
                     SoulsConvert.ReadNMB(file, File.ReadAllBytes(file));
-                }
-            }
-        }
-
-        private void readCMDLToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            var openFileDialog = new OpenFileDialog()
-            {
-                Title = "Select DeSR CMDL File",
-                Filter = "DeSR CMDL *.cmdl files|*.cmdl",
-                FileName = "",
-                Multiselect = true
-            };
-            if (openFileDialog.ShowDialog() == DialogResult.OK)
-            {
-                foreach (var file in openFileDialog.FileNames)
-                {
-                    using (MemoryStream stream = new MemoryStream(File.ReadAllBytes(file)))
-                    using (var streamReader = new BufferedStreamReaderBE<MemoryStream>(stream))
-                    {
-                        var cmdl = new CMDL(streamReader);
-                    }
                 }
             }
         }
@@ -6019,6 +5994,95 @@ namespace AquaModelTool
                     {
                         arc.gvm.Save(Path.Combine(outDir, "textures.gvm"));
                     }
+                }
+            }
+        }
+
+        private void readGalleryEggToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var openFileDialog = new OpenFileDialog()
+            {
+                Title = "Select Billy Hatcher gallery_egg.arc",
+                Filter = "Billy Hatcher gallery_egg.arc files|gallery_egg.arc",
+                FileName = "",
+                Multiselect = true
+            };
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                foreach (var file in openFileDialog.FileNames)
+                {
+                    var arc = new GalleryEgg(File.ReadAllBytes(file));
+
+                    var outDir = file + "_out";
+                    Directory.CreateDirectory(outDir);
+                    var model = arc.model;
+                    if (model != null)
+                    {
+                        var outPath = Path.Combine(outDir, $"model.fbx");
+                        var aqp = NinjaModelConvert.NinjaToAqua(model, out var aqn);
+                        if (aqp != null && aqp.vtxlList.Count > 0 || aqp.tempTris[0].faceVerts.Count > 0)
+                        {
+                            aqp.ConvertToPSO2Model(true, false, false, true, false, false, false, true);
+                            aqp.ConvertToLegacyTypes();
+                            aqp.CreateTrueVertWeights();
+
+                            FbxExporterNative.ExportToFile(aqp, aqn, new List<AquaMotion>(), outPath, new List<string>(), new List<Matrix4x4>(), false);
+                        }
+                    }
+                    if (arc.texArchives != null)
+                    {
+                        for (int i = 0; i < arc.texLists.Count; i++)
+                        {
+                            arc.texArchives[i].Save(Path.Combine(outDir, arc.texLists[i].texNames[0] + ".gvm"));
+                        }
+                    }
+                }
+            }
+        }
+
+        private void tryToDecompressShadowOfTheColossusFileToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var openFileDialog = new OpenFileDialog()
+            {
+                Title = "Select SOTC File",
+                Filter = "Shadow of the Colossus files|*",
+                FileName = "",
+                Multiselect = true
+            };
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                foreach (var file in openFileDialog.FileNames)
+                {
+                    var fileBytes = File.ReadAllBytes(file);
+                    var decompNibble = fileBytes[fileBytes.Length - 1] / 0x10;
+                    var decompLength = BitConverter.ToUInt32(fileBytes, fileBytes.Length - 4) - decompNibble * 0x10000000L;
+
+                    //Add back on end bytes to match uncompressed files
+                    var tempFile = Oodle.OodleDecompress(fileBytes, decompLength);
+                    var newFile = new byte[decompLength + 0xC];
+                    Array.Copy(fileBytes, fileBytes.Length - 0xC, newFile, decompLength, 0xC);
+                    Array.Copy(tempFile, 0, newFile, 0, decompLength);
+                    fileBytes = newFile;
+
+                    File.WriteAllBytes(file + ".decomp", fileBytes);
+                }
+            }
+        }
+
+        private void readCMDLToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var openFileDialog = new OpenFileDialog()
+            {
+                Title = "Select cmdl File",
+                Filter = "BluePoint cmdl files|*.cmdl",
+                FileName = "",
+                Multiselect = true
+            };
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                foreach (var file in openFileDialog.FileNames)
+                {
+                    var cmdl = new CMDL(File.ReadAllBytes(file));
                 }
             }
         }

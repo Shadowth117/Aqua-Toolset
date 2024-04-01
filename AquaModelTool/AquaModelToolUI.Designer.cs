@@ -85,6 +85,7 @@
             convertModelToDemonsSoulsflverToolStripMenuItem = new ToolStripMenuItem();
             toolStripSeparator11 = new ToolStripSeparator();
             convertDemonsSoulsPS5CmdlToFbxToolStripMenuItem = new ToolStripMenuItem();
+            tryToDecompressShadowOfTheColossusFileToolStripMenuItem = new ToolStripMenuItem();
             otherGamesToolStripMenuItem1 = new ToolStripMenuItem();
             cToolStripMenuItem = new ToolStripMenuItem();
             convertPSPortableunjToolStripMenuItem1 = new ToolStripMenuItem();
@@ -190,7 +191,6 @@
             sTGExportBustedToolStripMenuItem = new ToolStripMenuItem();
             readNSAToolStripMenuItem = new ToolStripMenuItem();
             readNMBToolStripMenuItem = new ToolStripMenuItem();
-            readCMDLToolStripMenuItem = new ToolStripMenuItem();
             debug3ToolStripMenuItem = new ToolStripMenuItem();
             readPATHToolStripMenuItem = new ToolStripMenuItem();
             oldBillyMC2ConvertToolStripMenuItem = new ToolStripMenuItem();
@@ -206,6 +206,8 @@
             readAniModelToolStripMenuItem = new ToolStripMenuItem();
             readLibModelToolStripMenuItem = new ToolStripMenuItem();
             protoThingToItemModelToolStripMenuItem = new ToolStripMenuItem();
+            readGalleryEggToolStripMenuItem = new ToolStripMenuItem();
+            readCMDLToolStripMenuItem = new ToolStripMenuItem();
             filePanel = new Panel();
             splitter1 = new Splitter();
             menuStrip1.SuspendLayout();
@@ -423,7 +425,7 @@
             // 
             // otherGamesToolStripMenuItem
             // 
-            otherGamesToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { convertSoulsflverTofbxToolStripMenuItem, exportWithMetadataToolStripMenuItem, fixFromSoftMeshMirroringToolStripMenuItem, applyMaterialNamesToMeshToolStripMenuItem, transformMeshToolStripMenuItem, addRootNodeLikeBlendersBBToolSMDImportToolStripMenuItem, doNotAdjustRootRotationrequiresAddedRootNodeToolStripMenuItem, toolStripSeparator14, setSoulsGameToolStripMenuItem, extractSoulsMapObjectLayoutFrommsbToolStripMenuItem, mSBExtractionExtractUnreferencedModelsAndTexturesToolStripMenuItem, mSBExtractionSeparateExtractionByModelToolStripMenuItem, toolStripSeparator15, dumpAllFromSoulsbndToolStripMenuItem, toolStripSeparator16, mWCBNDExtractToolStripMenuItem, mWCBNDPackToolStripMenuItem, metalWolfChaosMMDConvertToolStripMenuItem, metalWolfChaosOTRConvertToolStripMenuItem, metalWolfChaosMDLConvertUnfinishedMostlyWorksToolStripMenuItem, toolStripSeparator12, generateMCGMCPToolStripMenuItem, convertModelToDemonsSoulsflverToolStripMenuItem, toolStripSeparator11, convertDemonsSoulsPS5CmdlToFbxToolStripMenuItem });
+            otherGamesToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { convertSoulsflverTofbxToolStripMenuItem, exportWithMetadataToolStripMenuItem, fixFromSoftMeshMirroringToolStripMenuItem, applyMaterialNamesToMeshToolStripMenuItem, transformMeshToolStripMenuItem, addRootNodeLikeBlendersBBToolSMDImportToolStripMenuItem, doNotAdjustRootRotationrequiresAddedRootNodeToolStripMenuItem, toolStripSeparator14, setSoulsGameToolStripMenuItem, extractSoulsMapObjectLayoutFrommsbToolStripMenuItem, mSBExtractionExtractUnreferencedModelsAndTexturesToolStripMenuItem, mSBExtractionSeparateExtractionByModelToolStripMenuItem, toolStripSeparator15, dumpAllFromSoulsbndToolStripMenuItem, toolStripSeparator16, mWCBNDExtractToolStripMenuItem, mWCBNDPackToolStripMenuItem, metalWolfChaosMMDConvertToolStripMenuItem, metalWolfChaosOTRConvertToolStripMenuItem, metalWolfChaosMDLConvertUnfinishedMostlyWorksToolStripMenuItem, toolStripSeparator12, generateMCGMCPToolStripMenuItem, convertModelToDemonsSoulsflverToolStripMenuItem, toolStripSeparator11, convertDemonsSoulsPS5CmdlToFbxToolStripMenuItem, tryToDecompressShadowOfTheColossusFileToolStripMenuItem });
             otherGamesToolStripMenuItem.Name = "otherGamesToolStripMenuItem";
             otherGamesToolStripMenuItem.Size = new Size(344, 22);
             otherGamesToolStripMenuItem.Text = "Souls And FromSoft/BluePoint Games";
@@ -507,7 +509,7 @@
             // 
             extractSoulsMapObjectLayoutFrommsbToolStripMenuItem.Name = "extractSoulsMapObjectLayoutFrommsbToolStripMenuItem";
             extractSoulsMapObjectLayoutFrommsbToolStripMenuItem.Size = new Size(620, 22);
-            extractSoulsMapObjectLayoutFrommsbToolStripMenuItem.Text = "Extract Souls MapObject layout from .msb";
+            extractSoulsMapObjectLayoutFrommsbToolStripMenuItem.Text = "Extract Souls MapObject Models With .msb Layout";
             extractSoulsMapObjectLayoutFrommsbToolStripMenuItem.Click += extractSoulsMapObjectLayoutFrommsbToolStripMenuItem_Click;
             // 
             // mSBExtractionExtractUnreferencedModelsAndTexturesToolStripMenuItem
@@ -611,8 +613,15 @@
             // 
             convertDemonsSoulsPS5CmdlToFbxToolStripMenuItem.Name = "convertDemonsSoulsPS5CmdlToFbxToolStripMenuItem";
             convertDemonsSoulsPS5CmdlToFbxToolStripMenuItem.Size = new Size(620, 22);
-            convertDemonsSoulsPS5CmdlToFbxToolStripMenuItem.Text = "Convert Demon's Souls PS5 cmdl, cmsh to fbx";
+            convertDemonsSoulsPS5CmdlToFbxToolStripMenuItem.Text = "Convert Shadow of the Colossus, Demon's Souls PS5 cmdl, cmsh to fbx";
             convertDemonsSoulsPS5CmdlToFbxToolStripMenuItem.Click += convertDemonsSoulsPS5CmdlToFbxToolStripMenuItem_Click;
+            // 
+            // tryToDecompressShadowOfTheColossusFileToolStripMenuItem
+            // 
+            tryToDecompressShadowOfTheColossusFileToolStripMenuItem.Name = "tryToDecompressShadowOfTheColossusFileToolStripMenuItem";
+            tryToDecompressShadowOfTheColossusFileToolStripMenuItem.Size = new Size(620, 22);
+            tryToDecompressShadowOfTheColossusFileToolStripMenuItem.Text = "Try to Decompress Shadow of the Colossus file";
+            tryToDecompressShadowOfTheColossusFileToolStripMenuItem.Click += tryToDecompressShadowOfTheColossusFileToolStripMenuItem_Click;
             // 
             // otherGamesToolStripMenuItem1
             // 
@@ -1161,7 +1170,7 @@
             // 
             // debug2ToolStripMenuItem
             // 
-            debug2ToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { boneFlagTestToolStripMenuItem, cMTTestToolStripMenuItem, pSZTextToolStripMenuItem, pSZEnemyZoneToolStripMenuItem, pSZObjZoneToolStripMenuItem, pSZEnemyDataToolStripMenuItem, dumpAllTextToolStripMenuItem, assimpExportToolStripMenuItem, readNNMotionToolStripMenuItem, parseCAWSToolStripMenuItem, readMSBToolStripMenuItem, parseCANIToolStripMenuItem, parseDRBToolStripMenuItem, sortCMSHToolStripMenuItem, scanPOS0GapToolStripMenuItem, gatherMatchingCMSHNamesToolStripMenuItem, readFCLToolStripMenuItem, readMotAnimToolStripMenuItem, readCGPRToolStripMenuItem, readMusToolStripMenuItem, readSTGToolStripMenuItem, readLATToolStripMenuItem, sTGExportBustedToolStripMenuItem, readNSAToolStripMenuItem, readNMBToolStripMenuItem, readCMDLToolStripMenuItem });
+            debug2ToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { boneFlagTestToolStripMenuItem, cMTTestToolStripMenuItem, pSZTextToolStripMenuItem, pSZEnemyZoneToolStripMenuItem, pSZObjZoneToolStripMenuItem, pSZEnemyDataToolStripMenuItem, dumpAllTextToolStripMenuItem, assimpExportToolStripMenuItem, readNNMotionToolStripMenuItem, parseCAWSToolStripMenuItem, readMSBToolStripMenuItem, parseCANIToolStripMenuItem, parseDRBToolStripMenuItem, sortCMSHToolStripMenuItem, scanPOS0GapToolStripMenuItem, gatherMatchingCMSHNamesToolStripMenuItem, readFCLToolStripMenuItem, readMotAnimToolStripMenuItem, readCGPRToolStripMenuItem, readMusToolStripMenuItem, readSTGToolStripMenuItem, readLATToolStripMenuItem, sTGExportBustedToolStripMenuItem, readNSAToolStripMenuItem, readNMBToolStripMenuItem });
             debug2ToolStripMenuItem.Name = "debug2ToolStripMenuItem";
             debug2ToolStripMenuItem.Size = new Size(60, 23);
             debug2ToolStripMenuItem.Text = "Debug2";
@@ -1341,16 +1350,9 @@
             readNMBToolStripMenuItem.Text = "ReadNMB";
             readNMBToolStripMenuItem.Click += readNMBToolStripMenuItem_Click;
             // 
-            // readCMDLToolStripMenuItem
-            // 
-            readCMDLToolStripMenuItem.Name = "readCMDLToolStripMenuItem";
-            readCMDLToolStripMenuItem.Size = new Size(231, 22);
-            readCMDLToolStripMenuItem.Text = "ReadCMDL";
-            readCMDLToolStripMenuItem.Click += readCMDLToolStripMenuItem_Click;
-            // 
             // debug3ToolStripMenuItem
             // 
-            debug3ToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { readPATHToolStripMenuItem, oldBillyMC2ConvertToolStripMenuItem, readPOF0ToolStripMenuItem, readStageDefToolStripMenuItem, readGrassToolStripMenuItem, readMRPRoomGoodsToolStripMenuItem, decryptINCToolStripMenuItem, readARCToolStripMenuItem, dumpBillyArcPof0ToolStripMenuItem, dumpExtremeAnimsToolStripMenuItem, readGEPlayerToolStripMenuItem, readAniModelToolStripMenuItem, readLibModelToolStripMenuItem, protoThingToItemModelToolStripMenuItem });
+            debug3ToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { readPATHToolStripMenuItem, oldBillyMC2ConvertToolStripMenuItem, readPOF0ToolStripMenuItem, readStageDefToolStripMenuItem, readGrassToolStripMenuItem, readMRPRoomGoodsToolStripMenuItem, decryptINCToolStripMenuItem, readARCToolStripMenuItem, dumpBillyArcPof0ToolStripMenuItem, dumpExtremeAnimsToolStripMenuItem, readGEPlayerToolStripMenuItem, readAniModelToolStripMenuItem, readLibModelToolStripMenuItem, protoThingToItemModelToolStripMenuItem, readGalleryEggToolStripMenuItem, readCMDLToolStripMenuItem });
             debug3ToolStripMenuItem.Name = "debug3ToolStripMenuItem";
             debug3ToolStripMenuItem.Size = new Size(60, 23);
             debug3ToolStripMenuItem.Text = "Debug3";
@@ -1452,6 +1454,20 @@
             protoThingToItemModelToolStripMenuItem.Size = new Size(203, 22);
             protoThingToItemModelToolStripMenuItem.Text = "ProtoThingToItemModel";
             protoThingToItemModelToolStripMenuItem.Click += protoThingToItemModelToolStripMenuItem_Click;
+            // 
+            // readGalleryEggToolStripMenuItem
+            // 
+            readGalleryEggToolStripMenuItem.Name = "readGalleryEggToolStripMenuItem";
+            readGalleryEggToolStripMenuItem.Size = new Size(203, 22);
+            readGalleryEggToolStripMenuItem.Text = "ReadGalleryEgg";
+            readGalleryEggToolStripMenuItem.Click += readGalleryEggToolStripMenuItem_Click;
+            // 
+            // readCMDLToolStripMenuItem
+            // 
+            readCMDLToolStripMenuItem.Name = "readCMDLToolStripMenuItem";
+            readCMDLToolStripMenuItem.Size = new Size(203, 22);
+            readCMDLToolStripMenuItem.Text = "ReadCMDL";
+            readCMDLToolStripMenuItem.Click += readCMDLToolStripMenuItem_Click;
             // 
             // filePanel
             // 
@@ -1616,7 +1632,6 @@
         private System.Windows.Forms.ToolStripMenuItem sTGExportBustedToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem readNSAToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem readNMBToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem readCMDLToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator16;
         private System.Windows.Forms.ToolStripMenuItem mWCBNDPackToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem mWCBNDExtractToolStripMenuItem;
@@ -1674,6 +1689,9 @@
         private ToolStripMenuItem readLibModelToolStripMenuItem;
         private ToolStripMenuItem addRootNodeLikeBlendersBBToolSMDImportToolStripMenuItem;
         private ToolStripMenuItem doNotAdjustRootRotationrequiresAddedRootNodeToolStripMenuItem;
+        private ToolStripMenuItem readGalleryEggToolStripMenuItem;
+        private ToolStripMenuItem tryToDecompressShadowOfTheColossusFileToolStripMenuItem;
+        private ToolStripMenuItem readCMDLToolStripMenuItem;
     }
 }
 
