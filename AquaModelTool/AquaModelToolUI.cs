@@ -399,9 +399,9 @@ namespace AquaModelTool
                     case ".trv":
                     case ".trw":
                         ClearData();
-                        aquaUI.packageModel = new AquaPackage();
-                        aquaUI.packageModel.ext = ext;
-                        aquaUI.packageModel.Read(File.ReadAllBytes(currentFile));
+                        aquaUI.packageMotion = new AquaPackage();
+                        aquaUI.packageMotion.ext = ext;
+                        aquaUI.packageMotion.Read(File.ReadAllBytes(currentFile));
 
                         this.Size = new Size(400, 320);
                         control = new AnimationEditor(aquaUI.packageMotion);
@@ -410,7 +410,7 @@ namespace AquaModelTool
                     case ".aqe":
                         ClearData();
                         aquaUI.aqEffect = new AquaEffect(File.ReadAllBytes(currentFile));
-                        isNIFL = aquaUI.packageModel.models[0].nifl.magic != 0;
+                        isNIFL = aquaUI.aqEffect.nifl.magic != 0;
                         control = new EffectEditor(aquaUI.aqEffect);
                         this.Size = new Size(800, 660);
                         setModelOptions(false);
@@ -2945,14 +2945,11 @@ namespace AquaModelTool
                 {
                     ApplyModelImporterSettings();
                     var aqp = AssimpModelImporter.AssimpAquaConvertFull(openFileDialog.FileName, 1, false, true, out AquaNode aqn);
+                    AquaPackage aqPackage = new AquaPackage(aqp);
                     var ext = Path.GetExtension(openFileDialog.FileName);
                     var outStr = openFileDialog.FileName.Replace(ext, "_out.aqp");
-                    File.WriteAllBytes(outStr, aqp.GetBytesNIFL());
+                    aqPackage.WritePackage(outStr);
                     File.WriteAllBytes(Path.ChangeExtension(outStr, ".aqn"), aqn.GetBytesNIFL());
-
-                    var testAqp = new AquaPackage();
-                    testAqp.ext = ".aqp";
-                    testAqp.Read(File.ReadAllBytes(Path.ChangeExtension(outStr, ".aqp")));
 
                     AquaUIOpenFile(outStr);
                 }
@@ -6083,6 +6080,63 @@ namespace AquaModelTool
                 foreach (var file in openFileDialog.FileNames)
                 {
                     var cmdl = new CMDL(File.ReadAllBytes(file));
+                }
+            }
+        }
+
+        private void testSwapToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var openFileDialog = new OpenFileDialog()
+            {
+                Title = "Select Tex File",
+                Filter = "Tex files|*",
+                FileName = "",
+                Multiselect = true
+            };
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                foreach (var file in openFileDialog.FileNames)
+                {
+                    var bytes = File.ReadAllBytes(file).ToList();
+                    var _123 = bytes.ToArray();
+                    var _132 = bytes.ToArray();
+                    for(int i = 0; i < bytes.Count - 3; i+= 4)
+                    {
+                        _132[i + 1] = bytes[i + 2];
+                        _132[i + 2] = bytes[i + 1];
+                    }
+                    var _213 = bytes.ToArray();
+                    for (int i = 0; i < bytes.Count - 3; i += 4)
+                    {
+                        _132[i] = bytes[i + 1];
+                        _132[i + 1] = bytes[i];
+                    }
+                    var _231 = bytes.ToArray();
+                    for (int i = 0; i < bytes.Count - 3; i += 4)
+                    {
+                        _132[i] = bytes[i + 1];
+                        _132[i + 1] = bytes[i + 2];
+                        _132[i + 2] = bytes[i];
+                    }
+                    var _312 = bytes.ToArray();
+                    for (int i = 0; i < bytes.Count - 3; i += 4)
+                    {
+                        _132[i] = bytes[i + 2];
+                        _132[i + 1] = bytes[i];
+                        _132[i + 2] = bytes[i + 1];
+                    }
+                    var _321 = bytes.ToArray();
+                    for (int i = 0; i < bytes.Count - 3; i += 4)
+                    {
+                        _132[i] = bytes[i + 2];
+                        _132[i + 1] = bytes[i + 1];
+                        _132[i + 2] = bytes[i];
+                    }
+                    File.WriteAllBytes(file + "_132", _132);
+                    File.WriteAllBytes(file + "_213", _213);
+                    File.WriteAllBytes(file + "_231", _231);
+                    File.WriteAllBytes(file + "_312", _312);
+                    File.WriteAllBytes(file + "_321", _321);
                 }
             }
         }
