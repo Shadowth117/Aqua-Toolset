@@ -12,6 +12,7 @@ using AquaModelLibrary.Data.BillyHatcher;
 using AquaModelLibrary.Data.BillyHatcher.ARCData;
 using AquaModelLibrary.Data.BluePoint.CAWS;
 using AquaModelLibrary.Data.BluePoint.CMDL;
+using AquaModelLibrary.Data.BluePoint.CTXR;
 using AquaModelLibrary.Data.FromSoft;
 using AquaModelLibrary.Data.Ninja;
 using AquaModelLibrary.Data.Ninja.Model;
@@ -3171,12 +3172,10 @@ namespace AquaModelTool
 
                 if (openFileDialog.ShowDialog() == DialogResult.OK)
                 {
-                    float scaleFactor = 1;
-
                     foreach (var file in openFileDialog.FileNames)
                     {
                         ApplyModelImporterSettings();
-                        AssimpModelImporter.AssimpAQMConvertAndWrite(file, forceNoCharacterMetadataCheckBox.Checked, true);
+                        AssimpModelImporter.AssimpAQMConvertAndWrite(file, forceNoCharacterMetadataCheckBox.Checked, useScaleKeysToolStripMenuItem.Checked);
                     }
                 }
             }
@@ -6084,59 +6083,52 @@ namespace AquaModelTool
             }
         }
 
-        private void testSwapToolStripMenuItem_Click(object sender, EventArgs e)
+        private void checkToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            var openFileDialog = new OpenFileDialog()
+            var openFileDialog = new CommonOpenFileDialog()
             {
-                Title = "Select Tex File",
-                Filter = "Tex files|*",
-                FileName = "",
+                Title = "Select root Demon's Souls Remake Folder",
+                IsFolderPicker = true,
+            };
+            if (openFileDialog.ShowDialog() == CommonFileDialogResult.Ok)
+            {
+                List<string> output = new List<string>();
+                var ctxrFiles = Directory.GetFiles(openFileDialog.FileName, "*.ctxr", SearchOption.AllDirectories);
+                List<int> test = new List<int>();
+                foreach (var ctxrPath in ctxrFiles)
+                {
+                    var fileBytes = File.ReadAllBytes(ctxrPath);
+                    var ctxr = new CTXR(fileBytes, true);
+                    if (!test.Contains(ctxr.desWidthBaseByte))
+                    {
+                        test.Add(ctxr.desWidthBaseByte);
+                    }
+                    if (!test.Contains(ctxr.desHeightBaseByte))
+                    {
+                        test.Add(ctxr.desHeightBaseByte);
+                    }
+                    output.Add($"0x{ctxr.textureFormat:X} UnkShort0: {ctxr.unkShort0:X} Base Width: {ctxr.desWidthBaseByte:X} {ctxr.desWidthByte:X} Base Height: {ctxr.desHeightBaseByte:X} {ctxr.desHeightByte:X} Ext: {ctxr.externalMipCount} Int: {ctxr.internalMipCount} Size: {fileBytes.Length:X} UnkTexInt: {ctxr.textureType} {ctxrPath.Replace(openFileDialog.FileName, "")} ");
+                    ctxr.WriteToDDS(ctxrPath, ctxrPath.Replace(".ctxr", ".dds"));
+                }
+                test.Sort();
+                File.WriteAllLines(Path.Combine(openFileDialog.FileName, "CTXRInfo.txt"), output);
+            }
+        }
+
+        private void convertDemonsSoulsPS5ctxrToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog()
+            {
+                Title = "Select Demon's Souls PS5 ctxr file(s)",
+                Filter = "Demon's Souls PS5 ctxr Files (*.ctxr)|*.ctxr|All Files (*.*)|*",
                 Multiselect = true
             };
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
                 foreach (var file in openFileDialog.FileNames)
                 {
-                    var bytes = File.ReadAllBytes(file).ToList();
-                    var _123 = bytes.ToArray();
-                    var _132 = bytes.ToArray();
-                    for(int i = 0; i < bytes.Count - 3; i+= 4)
-                    {
-                        _132[i + 1] = bytes[i + 2];
-                        _132[i + 2] = bytes[i + 1];
-                    }
-                    var _213 = bytes.ToArray();
-                    for (int i = 0; i < bytes.Count - 3; i += 4)
-                    {
-                        _132[i] = bytes[i + 1];
-                        _132[i + 1] = bytes[i];
-                    }
-                    var _231 = bytes.ToArray();
-                    for (int i = 0; i < bytes.Count - 3; i += 4)
-                    {
-                        _132[i] = bytes[i + 1];
-                        _132[i + 1] = bytes[i + 2];
-                        _132[i + 2] = bytes[i];
-                    }
-                    var _312 = bytes.ToArray();
-                    for (int i = 0; i < bytes.Count - 3; i += 4)
-                    {
-                        _132[i] = bytes[i + 2];
-                        _132[i + 1] = bytes[i];
-                        _132[i + 2] = bytes[i + 1];
-                    }
-                    var _321 = bytes.ToArray();
-                    for (int i = 0; i < bytes.Count - 3; i += 4)
-                    {
-                        _132[i] = bytes[i + 2];
-                        _132[i + 1] = bytes[i + 1];
-                        _132[i + 2] = bytes[i];
-                    }
-                    File.WriteAllBytes(file + "_132", _132);
-                    File.WriteAllBytes(file + "_213", _213);
-                    File.WriteAllBytes(file + "_231", _231);
-                    File.WriteAllBytes(file + "_312", _312);
-                    File.WriteAllBytes(file + "_321", _321);
+                    var ctxr = new CTXR(File.ReadAllBytes(file), true);
+                    ctxr.WriteToDDS(file, file.Replace(".ctxr", ".dds"));
                 }
             }
         }
