@@ -6051,16 +6051,22 @@ namespace AquaModelTool
                 {
                     var fileBytes = File.ReadAllBytes(file);
                     var decompNibble = fileBytes[fileBytes.Length - 1] / 0x10;
-                    var decompLength = BitConverter.ToUInt32(fileBytes, fileBytes.Length - 4) - decompNibble * 0x10000000L;
+                    if(decompNibble != 0 && !(fileBytes[0] == 0x89 && fileBytes[1] == 0x50 && fileBytes[2] == 0x4E && fileBytes[3] == 0x47))
+                    {
+                        var decompLength = BitConverter.ToUInt32(fileBytes, fileBytes.Length - 4) - decompNibble * 0x10000000L;
 
-                    //Add back on end bytes to match uncompressed files
-                    var tempFile = Oodle.OodleDecompress(fileBytes, decompLength);
-                    var newFile = new byte[decompLength + 0xC];
-                    Array.Copy(fileBytes, fileBytes.Length - 0xC, newFile, decompLength, 0xC);
-                    Array.Copy(tempFile, 0, newFile, 0, decompLength);
-                    fileBytes = newFile;
+                        //Add back on end bytes to match uncompressed files
+                        var tempFile = Oodle.OodleDecompress(fileBytes, decompLength);
+                        if(tempFile != null)
+                        {
+                            var newFile = new byte[decompLength + 0xC];
+                            Array.Copy(fileBytes, fileBytes.Length - 0xC, newFile, decompLength, 0xC);
+                            Array.Copy(tempFile, 0, newFile, 0, decompLength);
+                            fileBytes = newFile;
 
-                    File.WriteAllBytes(file + ".decomp", fileBytes);
+                            File.WriteAllBytes(file + ".decomp", fileBytes);
+                        }
+                    }
                 }
             }
         }
@@ -6099,15 +6105,15 @@ namespace AquaModelTool
                 {
                     var fileBytes = File.ReadAllBytes(ctxrPath);
                     var ctxr = new CTXR(fileBytes, true);
-                    if (!test.Contains(ctxr.desWidthBaseByte))
+                    if (!test.Contains(ctxr.WidthBaseByte))
                     {
-                        test.Add(ctxr.desWidthBaseByte);
+                        test.Add(ctxr.WidthBaseByte);
                     }
-                    if (!test.Contains(ctxr.desHeightBaseByte))
+                    if (!test.Contains(ctxr.HeightBaseByte))
                     {
-                        test.Add(ctxr.desHeightBaseByte);
+                        test.Add(ctxr.HeightBaseByte);
                     }
-                    output.Add($"0x{ctxr.textureFormat:X} UnkShort0: {ctxr.unkShort0:X} Base Width: {ctxr.desWidthBaseByte:X} {ctxr.desWidthByte:X} Base Height: {ctxr.desHeightBaseByte:X} {ctxr.desHeightByte:X} Ext: {ctxr.externalMipCount} Int: {ctxr.internalMipCount} Size: {fileBytes.Length:X} UnkTexInt: {ctxr.textureType} {ctxrPath.Replace(openFileDialog.FileName, "")} ");
+                    output.Add($"0x{ctxr.textureFormat:X} UnkShort0: {ctxr.unkShort0:X} Base Width: {ctxr.WidthBaseByte:X} {ctxr.WidthMultiplierByte:X} Base Height: {ctxr.HeightBaseByte:X} {ctxr.HeightMultiplierByte:X} Ext: {ctxr.externalMipCount} Int: {ctxr.internalMipCount} Size: {fileBytes.Length:X} UnkTexInt: {ctxr.textureType} {ctxrPath.Replace(openFileDialog.FileName, "")} ");
                     ctxr.WriteToDDS(ctxrPath, ctxrPath.Replace(".ctxr", ".dds"));
                 }
                 test.Sort();
@@ -6119,8 +6125,8 @@ namespace AquaModelTool
         {
             OpenFileDialog openFileDialog = new OpenFileDialog()
             {
-                Title = "Select Demon's Souls PS5 ctxr file(s)",
-                Filter = "Demon's Souls PS5 ctxr Files (*.ctxr)|*.ctxr|All Files (*.*)|*",
+                Title = "Select BluePoint PS4/PS5 *.ctxr file(s)",
+                Filter = "BluePoint PS4/PS5 *.ctxr Files (*.ctxr)|*.ctxr|All Files (*.*)|*",
                 Multiselect = true
             };
             if (openFileDialog.ShowDialog() == DialogResult.OK)

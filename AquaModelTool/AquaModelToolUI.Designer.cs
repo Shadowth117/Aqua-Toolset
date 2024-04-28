@@ -86,6 +86,7 @@
             convertModelToDemonsSoulsflverToolStripMenuItem = new ToolStripMenuItem();
             toolStripSeparator11 = new ToolStripSeparator();
             convertDemonsSoulsPS5CmdlToFbxToolStripMenuItem = new ToolStripMenuItem();
+            convertDemonsSoulsPS5ctxrToolStripMenuItem = new ToolStripMenuItem();
             tryToDecompressShadowOfTheColossusFileToolStripMenuItem = new ToolStripMenuItem();
             otherGamesToolStripMenuItem1 = new ToolStripMenuItem();
             cToolStripMenuItem = new ToolStripMenuItem();
@@ -212,7 +213,6 @@
             checkToolStripMenuItem = new ToolStripMenuItem();
             filePanel = new Panel();
             splitter1 = new Splitter();
-            convertDemonsSoulsPS5ctxrToolStripMenuItem = new ToolStripMenuItem();
             menuStrip1.SuspendLayout();
             SuspendLayout();
             // 
@@ -625,6 +625,13 @@
             convertDemonsSoulsPS5CmdlToFbxToolStripMenuItem.Size = new Size(620, 22);
             convertDemonsSoulsPS5CmdlToFbxToolStripMenuItem.Text = "Convert Shadow of the Colossus, Demon's Souls PS5 cmdl, cmsh to fbx";
             convertDemonsSoulsPS5CmdlToFbxToolStripMenuItem.Click += convertDemonsSoulsPS5CmdlToFbxToolStripMenuItem_Click;
+            // 
+            // convertDemonsSoulsPS5ctxrToolStripMenuItem
+            // 
+            convertDemonsSoulsPS5ctxrToolStripMenuItem.Name = "convertDemonsSoulsPS5ctxrToolStripMenuItem";
+            convertDemonsSoulsPS5ctxrToolStripMenuItem.Size = new Size(620, 22);
+            convertDemonsSoulsPS5ctxrToolStripMenuItem.Text = "Convert BluePoint PS4/PS5 .ctxr";
+            convertDemonsSoulsPS5ctxrToolStripMenuItem.Click += convertDemonsSoulsPS5ctxrToolStripMenuItem_Click;
             // 
             // tryToDecompressShadowOfTheColossusFileToolStripMenuItem
             // 
@@ -1505,13 +1512,6 @@
             splitter1.Size = new Size(4, 296);
             splitter1.TabIndex = 2;
             splitter1.TabStop = false;
-            // 
-            // convertDemonsSoulsPS5ctxrToolStripMenuItem
-            // 
-            convertDemonsSoulsPS5ctxrToolStripMenuItem.Name = "convertDemonsSoulsPS5ctxrToolStripMenuItem";
-            convertDemonsSoulsPS5ctxrToolStripMenuItem.Size = new Size(620, 22);
-            convertDemonsSoulsPS5ctxrToolStripMenuItem.Text = "Convert Demon's Souls PS5 .ctxr";
-            convertDemonsSoulsPS5ctxrToolStripMenuItem.Click += convertDemonsSoulsPS5ctxrToolStripMenuItem_Click;
             // 
             // AquaModelTool
             // 
