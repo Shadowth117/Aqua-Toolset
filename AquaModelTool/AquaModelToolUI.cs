@@ -6051,13 +6051,13 @@ namespace AquaModelTool
                 {
                     var fileBytes = File.ReadAllBytes(file);
                     var decompNibble = fileBytes[fileBytes.Length - 1] / 0x10;
-                    if(decompNibble != 0 && !(fileBytes[0] == 0x89 && fileBytes[1] == 0x50 && fileBytes[2] == 0x4E && fileBytes[3] == 0x47))
+                    if (decompNibble != 0 && !(fileBytes[0] == 0x89 && fileBytes[1] == 0x50 && fileBytes[2] == 0x4E && fileBytes[3] == 0x47))
                     {
                         var decompLength = BitConverter.ToUInt32(fileBytes, fileBytes.Length - 4) - decompNibble * 0x10000000L;
 
                         //Add back on end bytes to match uncompressed files
                         var tempFile = Oodle.OodleDecompress(fileBytes, decompLength);
-                        if(tempFile != null)
+                        if (tempFile != null)
                         {
                             var newFile = new byte[decompLength + 0xC];
                             Array.Copy(fileBytes, fileBytes.Length - 0xC, newFile, decompLength, 0xC);
@@ -6135,6 +6135,33 @@ namespace AquaModelTool
                 {
                     var ctxr = new CTXR(File.ReadAllBytes(file), true);
                     ctxr.WriteToDDS(file, file.Replace(".ctxr", ".dds"));
+                }
+            }
+        }
+
+        private void checkAllcmshToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var openFileDialog = new CommonOpenFileDialog()
+            {
+                Title = "Select root Demon's Souls Remake Folder",
+                IsFolderPicker = true,
+            };
+            if (openFileDialog.ShowDialog() == CommonFileDialogResult.Ok)
+            {
+                List<string> output = new List<string>();
+                var cmshFiles = Directory.GetFiles(openFileDialog.FileName, "*.cmsh", SearchOption.AllDirectories);
+
+                List<string> failedFiles = new List<string>();
+                foreach (var file in cmshFiles)
+                {
+                    try
+                    {
+                        var a = new AquaModelLibrary.Data.BluePoint.CMSH.CMSH(File.ReadAllBytes(file));
+                    }
+                    catch (Exception ex)
+                    {
+                        failedFiles.Add(file);
+                    }
                 }
             }
         }

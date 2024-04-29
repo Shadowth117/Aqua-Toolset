@@ -211,8 +211,10 @@
             readGalleryEggToolStripMenuItem = new ToolStripMenuItem();
             readCMDLToolStripMenuItem = new ToolStripMenuItem();
             checkToolStripMenuItem = new ToolStripMenuItem();
+            checkAllcmshToolStripMenuItem = new ToolStripMenuItem();
             filePanel = new Panel();
             splitter1 = new Splitter();
+            noteShadowOfTheColossusPS4psarcsMUSTHaveTheirContentsPlacedInTheGamesEbootbinDirectoryToolStripMenuItem = new ToolStripMenuItem();
             menuStrip1.SuspendLayout();
             SuspendLayout();
             // 
@@ -437,7 +439,7 @@
             // 
             // otherGamesToolStripMenuItem
             // 
-            otherGamesToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { convertSoulsflverTofbxToolStripMenuItem, exportWithMetadataToolStripMenuItem, fixFromSoftMeshMirroringToolStripMenuItem, applyMaterialNamesToMeshToolStripMenuItem, transformMeshToolStripMenuItem, addRootNodeLikeBlendersBBToolSMDImportToolStripMenuItem, doNotAdjustRootRotationrequiresAddedRootNodeToolStripMenuItem, toolStripSeparator14, setSoulsGameToolStripMenuItem, extractSoulsMapObjectLayoutFrommsbToolStripMenuItem, mSBExtractionExtractUnreferencedModelsAndTexturesToolStripMenuItem, mSBExtractionSeparateExtractionByModelToolStripMenuItem, toolStripSeparator15, dumpAllFromSoulsbndToolStripMenuItem, toolStripSeparator16, mWCBNDExtractToolStripMenuItem, mWCBNDPackToolStripMenuItem, metalWolfChaosMMDConvertToolStripMenuItem, metalWolfChaosOTRConvertToolStripMenuItem, metalWolfChaosMDLConvertUnfinishedMostlyWorksToolStripMenuItem, toolStripSeparator12, generateMCGMCPToolStripMenuItem, convertModelToDemonsSoulsflverToolStripMenuItem, toolStripSeparator11, convertDemonsSoulsPS5CmdlToFbxToolStripMenuItem, convertDemonsSoulsPS5ctxrToolStripMenuItem, tryToDecompressShadowOfTheColossusFileToolStripMenuItem });
+            otherGamesToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { convertSoulsflverTofbxToolStripMenuItem, exportWithMetadataToolStripMenuItem, fixFromSoftMeshMirroringToolStripMenuItem, applyMaterialNamesToMeshToolStripMenuItem, transformMeshToolStripMenuItem, addRootNodeLikeBlendersBBToolSMDImportToolStripMenuItem, doNotAdjustRootRotationrequiresAddedRootNodeToolStripMenuItem, toolStripSeparator14, setSoulsGameToolStripMenuItem, extractSoulsMapObjectLayoutFrommsbToolStripMenuItem, mSBExtractionExtractUnreferencedModelsAndTexturesToolStripMenuItem, mSBExtractionSeparateExtractionByModelToolStripMenuItem, toolStripSeparator15, dumpAllFromSoulsbndToolStripMenuItem, toolStripSeparator16, mWCBNDExtractToolStripMenuItem, mWCBNDPackToolStripMenuItem, metalWolfChaosMMDConvertToolStripMenuItem, metalWolfChaosOTRConvertToolStripMenuItem, metalWolfChaosMDLConvertUnfinishedMostlyWorksToolStripMenuItem, toolStripSeparator12, generateMCGMCPToolStripMenuItem, convertModelToDemonsSoulsflverToolStripMenuItem, toolStripSeparator11, convertDemonsSoulsPS5CmdlToFbxToolStripMenuItem, convertDemonsSoulsPS5ctxrToolStripMenuItem, tryToDecompressShadowOfTheColossusFileToolStripMenuItem, noteShadowOfTheColossusPS4psarcsMUSTHaveTheirContentsPlacedInTheGamesEbootbinDirectoryToolStripMenuItem });
             otherGamesToolStripMenuItem.Name = "otherGamesToolStripMenuItem";
             otherGamesToolStripMenuItem.Size = new Size(344, 22);
             otherGamesToolStripMenuItem.Text = "Souls And FromSoft/BluePoint Games";
@@ -445,7 +447,7 @@
             // convertSoulsflverTofbxToolStripMenuItem
             // 
             convertSoulsflverTofbxToolStripMenuItem.Name = "convertSoulsflverTofbxToolStripMenuItem";
-            convertSoulsflverTofbxToolStripMenuItem.Size = new Size(620, 22);
+            convertSoulsflverTofbxToolStripMenuItem.Size = new Size(650, 22);
             convertSoulsflverTofbxToolStripMenuItem.Text = "Convert From Software .flver/.flv, .mdl to .fbx, dump .tpf. Can be in dcx/*bnd";
             convertSoulsflverTofbxToolStripMenuItem.Click += convertSoulsflverTofbxToolStripMenuItem_Click;
             // 
@@ -455,7 +457,7 @@
             exportWithMetadataToolStripMenuItem.CheckOnClick = true;
             exportWithMetadataToolStripMenuItem.CheckState = CheckState.Checked;
             exportWithMetadataToolStripMenuItem.Name = "exportWithMetadataToolStripMenuItem";
-            exportWithMetadataToolStripMenuItem.Size = new Size(620, 22);
+            exportWithMetadataToolStripMenuItem.Size = new Size(650, 22);
             exportWithMetadataToolStripMenuItem.Text = "Convert flver with Metadata";
             exportWithMetadataToolStripMenuItem.Click += SaveSoulsSettings;
             // 
@@ -465,7 +467,7 @@
             fixFromSoftMeshMirroringToolStripMenuItem.CheckOnClick = true;
             fixFromSoftMeshMirroringToolStripMenuItem.CheckState = CheckState.Checked;
             fixFromSoftMeshMirroringToolStripMenuItem.Name = "fixFromSoftMeshMirroringToolStripMenuItem";
-            fixFromSoftMeshMirroringToolStripMenuItem.Size = new Size(620, 22);
+            fixFromSoftMeshMirroringToolStripMenuItem.Size = new Size(650, 22);
             fixFromSoftMeshMirroringToolStripMenuItem.Text = "Fix FromSoft mesh mirroring";
             fixFromSoftMeshMirroringToolStripMenuItem.Click += SaveSoulsSettings;
             // 
@@ -473,7 +475,7 @@
             // 
             applyMaterialNamesToMeshToolStripMenuItem.CheckOnClick = true;
             applyMaterialNamesToMeshToolStripMenuItem.Name = "applyMaterialNamesToMeshToolStripMenuItem";
-            applyMaterialNamesToMeshToolStripMenuItem.Size = new Size(620, 22);
+            applyMaterialNamesToMeshToolStripMenuItem.Size = new Size(650, 22);
             applyMaterialNamesToMeshToolStripMenuItem.Text = "Apply material names to mesh";
             applyMaterialNamesToMeshToolStripMenuItem.Click += SaveSoulsSettings;
             // 
@@ -483,7 +485,7 @@
             transformMeshToolStripMenuItem.CheckOnClick = true;
             transformMeshToolStripMenuItem.CheckState = CheckState.Checked;
             transformMeshToolStripMenuItem.Name = "transformMeshToolStripMenuItem";
-            transformMeshToolStripMenuItem.Size = new Size(620, 22);
+            transformMeshToolStripMenuItem.Size = new Size(650, 22);
             transformMeshToolStripMenuItem.Text = "Transform Mesh";
             transformMeshToolStripMenuItem.Click += SaveSoulsSettings;
             // 
@@ -491,7 +493,7 @@
             // 
             addRootNodeLikeBlendersBBToolSMDImportToolStripMenuItem.CheckOnClick = true;
             addRootNodeLikeBlendersBBToolSMDImportToolStripMenuItem.Name = "addRootNodeLikeBlendersBBToolSMDImportToolStripMenuItem";
-            addRootNodeLikeBlendersBBToolSMDImportToolStripMenuItem.Size = new Size(620, 22);
+            addRootNodeLikeBlendersBBToolSMDImportToolStripMenuItem.Size = new Size(650, 22);
             addRootNodeLikeBlendersBBToolSMDImportToolStripMenuItem.Text = "Add Root Node (Like Blender's BBTool SMD import)";
             addRootNodeLikeBlendersBBToolSMDImportToolStripMenuItem.Click += SaveSoulsSettings;
             // 
@@ -499,26 +501,26 @@
             // 
             doNotAdjustRootRotationrequiresAddedRootNodeToolStripMenuItem.CheckOnClick = true;
             doNotAdjustRootRotationrequiresAddedRootNodeToolStripMenuItem.Name = "doNotAdjustRootRotationrequiresAddedRootNodeToolStripMenuItem";
-            doNotAdjustRootRotationrequiresAddedRootNodeToolStripMenuItem.Size = new Size(620, 22);
+            doNotAdjustRootRotationrequiresAddedRootNodeToolStripMenuItem.Size = new Size(650, 22);
             doNotAdjustRootRotationrequiresAddedRootNodeToolStripMenuItem.Text = "Do not adjust root rotation (requires added root node)";
             doNotAdjustRootRotationrequiresAddedRootNodeToolStripMenuItem.Click += SaveSoulsSettings;
             // 
             // toolStripSeparator14
             // 
             toolStripSeparator14.Name = "toolStripSeparator14";
-            toolStripSeparator14.Size = new Size(617, 6);
+            toolStripSeparator14.Size = new Size(647, 6);
             // 
             // setSoulsGameToolStripMenuItem
             // 
             setSoulsGameToolStripMenuItem.Name = "setSoulsGameToolStripMenuItem";
-            setSoulsGameToolStripMenuItem.Size = new Size(620, 22);
+            setSoulsGameToolStripMenuItem.Size = new Size(650, 22);
             setSoulsGameToolStripMenuItem.Text = "Set FromSoft Game";
             setSoulsGameToolStripMenuItem.Click += setSoulsGameToolStripMenuItem_Click;
             // 
             // extractSoulsMapObjectLayoutFrommsbToolStripMenuItem
             // 
             extractSoulsMapObjectLayoutFrommsbToolStripMenuItem.Name = "extractSoulsMapObjectLayoutFrommsbToolStripMenuItem";
-            extractSoulsMapObjectLayoutFrommsbToolStripMenuItem.Size = new Size(620, 22);
+            extractSoulsMapObjectLayoutFrommsbToolStripMenuItem.Size = new Size(650, 22);
             extractSoulsMapObjectLayoutFrommsbToolStripMenuItem.Text = "Extract Souls MapObject Models With .msb Layout";
             extractSoulsMapObjectLayoutFrommsbToolStripMenuItem.Click += extractSoulsMapObjectLayoutFrommsbToolStripMenuItem_Click;
             // 
@@ -528,7 +530,7 @@
             mSBExtractionExtractUnreferencedModelsAndTexturesToolStripMenuItem.CheckOnClick = true;
             mSBExtractionExtractUnreferencedModelsAndTexturesToolStripMenuItem.CheckState = CheckState.Checked;
             mSBExtractionExtractUnreferencedModelsAndTexturesToolStripMenuItem.Name = "mSBExtractionExtractUnreferencedModelsAndTexturesToolStripMenuItem";
-            mSBExtractionExtractUnreferencedModelsAndTexturesToolStripMenuItem.Size = new Size(620, 22);
+            mSBExtractionExtractUnreferencedModelsAndTexturesToolStripMenuItem.Size = new Size(650, 22);
             mSBExtractionExtractUnreferencedModelsAndTexturesToolStripMenuItem.Text = "(MSB Extraction) Extract Unreferenced Models and Textures";
             mSBExtractionExtractUnreferencedModelsAndTexturesToolStripMenuItem.Click += SaveSoulsSettings;
             // 
@@ -538,71 +540,71 @@
             mSBExtractionSeparateExtractionByModelToolStripMenuItem.CheckOnClick = true;
             mSBExtractionSeparateExtractionByModelToolStripMenuItem.CheckState = CheckState.Checked;
             mSBExtractionSeparateExtractionByModelToolStripMenuItem.Name = "mSBExtractionSeparateExtractionByModelToolStripMenuItem";
-            mSBExtractionSeparateExtractionByModelToolStripMenuItem.Size = new Size(620, 22);
+            mSBExtractionSeparateExtractionByModelToolStripMenuItem.Size = new Size(650, 22);
             mSBExtractionSeparateExtractionByModelToolStripMenuItem.Text = "(MSB Extraction) Separate To .flver Model Instance Sets **PLEASE use this for Bloodborne and forward!**";
             mSBExtractionSeparateExtractionByModelToolStripMenuItem.Click += SaveSoulsSettings;
             // 
             // toolStripSeparator15
             // 
             toolStripSeparator15.Name = "toolStripSeparator15";
-            toolStripSeparator15.Size = new Size(617, 6);
+            toolStripSeparator15.Size = new Size(647, 6);
             // 
             // dumpAllFromSoulsbndToolStripMenuItem
             // 
             dumpAllFromSoulsbndToolStripMenuItem.Name = "dumpAllFromSoulsbndToolStripMenuItem";
-            dumpAllFromSoulsbndToolStripMenuItem.Size = new Size(620, 22);
+            dumpAllFromSoulsbndToolStripMenuItem.Size = new Size(650, 22);
             dumpAllFromSoulsbndToolStripMenuItem.Text = "Dump all from Souls .*bnd";
             dumpAllFromSoulsbndToolStripMenuItem.Click += dumpAllFromSoulsbndToolStripMenuItem_Click;
             // 
             // toolStripSeparator16
             // 
             toolStripSeparator16.Name = "toolStripSeparator16";
-            toolStripSeparator16.Size = new Size(617, 6);
+            toolStripSeparator16.Size = new Size(647, 6);
             // 
             // mWCBNDExtractToolStripMenuItem
             // 
             mWCBNDExtractToolStripMenuItem.Name = "mWCBNDExtractToolStripMenuItem";
-            mWCBNDExtractToolStripMenuItem.Size = new Size(620, 22);
+            mWCBNDExtractToolStripMenuItem.Size = new Size(650, 22);
             mWCBNDExtractToolStripMenuItem.Text = "Metal Wolf Chaos BND, M/TData, Dev/Div Extract";
             mWCBNDExtractToolStripMenuItem.Click += mWCBNDExtractToolStripMenuItem_Click;
             // 
             // mWCBNDPackToolStripMenuItem
             // 
             mWCBNDPackToolStripMenuItem.Name = "mWCBNDPackToolStripMenuItem";
-            mWCBNDPackToolStripMenuItem.Size = new Size(620, 22);
+            mWCBNDPackToolStripMenuItem.Size = new Size(650, 22);
             mWCBNDPackToolStripMenuItem.Text = "Metal Wolf Chaos BND Pack";
             mWCBNDPackToolStripMenuItem.Click += mWCBNDPackToolStripMenuItem_Click;
             // 
             // metalWolfChaosMMDConvertToolStripMenuItem
             // 
             metalWolfChaosMMDConvertToolStripMenuItem.Name = "metalWolfChaosMMDConvertToolStripMenuItem";
-            metalWolfChaosMMDConvertToolStripMenuItem.Size = new Size(620, 22);
+            metalWolfChaosMMDConvertToolStripMenuItem.Size = new Size(650, 22);
             metalWolfChaosMMDConvertToolStripMenuItem.Text = "Metal Wolf Chaos MMD convert";
             metalWolfChaosMMDConvertToolStripMenuItem.Click += metalWolfChaosMMDConvertToolStripMenuItem_Click;
             // 
             // metalWolfChaosOTRConvertToolStripMenuItem
             // 
             metalWolfChaosOTRConvertToolStripMenuItem.Name = "metalWolfChaosOTRConvertToolStripMenuItem";
-            metalWolfChaosOTRConvertToolStripMenuItem.Size = new Size(620, 22);
+            metalWolfChaosOTRConvertToolStripMenuItem.Size = new Size(650, 22);
             metalWolfChaosOTRConvertToolStripMenuItem.Text = "Metal Wolf Chaos OTR convert";
             metalWolfChaosOTRConvertToolStripMenuItem.Click += metalWolfChaosOTRConvertToolStripMenuItem_Click;
             // 
             // metalWolfChaosMDLConvertUnfinishedMostlyWorksToolStripMenuItem
             // 
             metalWolfChaosMDLConvertUnfinishedMostlyWorksToolStripMenuItem.Name = "metalWolfChaosMDLConvertUnfinishedMostlyWorksToolStripMenuItem";
-            metalWolfChaosMDLConvertUnfinishedMostlyWorksToolStripMenuItem.Size = new Size(620, 22);
+            metalWolfChaosMDLConvertUnfinishedMostlyWorksToolStripMenuItem.Size = new Size(650, 22);
             metalWolfChaosMDLConvertUnfinishedMostlyWorksToolStripMenuItem.Text = "Metal Wolf Chaos MDL convert (Unfinished, mostly works)";
             metalWolfChaosMDLConvertUnfinishedMostlyWorksToolStripMenuItem.Click += metalWolfChaosMDLConvertUnfinishedMostlyWorksToolStripMenuItem_Click;
             // 
             // toolStripSeparator12
             // 
             toolStripSeparator12.Name = "toolStripSeparator12";
-            toolStripSeparator12.Size = new Size(617, 6);
+            toolStripSeparator12.Size = new Size(647, 6);
             // 
             // generateMCGMCPToolStripMenuItem
             // 
             generateMCGMCPToolStripMenuItem.Name = "generateMCGMCPToolStripMenuItem";
-            generateMCGMCPToolStripMenuItem.Size = new Size(620, 22);
+            generateMCGMCPToolStripMenuItem.Size = new Size(650, 22);
             generateMCGMCPToolStripMenuItem.Text = "Generate Demon's Souls MCG/MCP";
             generateMCGMCPToolStripMenuItem.Click += generateMCGMCPToolStripMenuItem_Click;
             // 
@@ -610,33 +612,33 @@
             // 
             convertModelToDemonsSoulsflverToolStripMenuItem.Name = "convertModelToDemonsSoulsflverToolStripMenuItem";
             convertModelToDemonsSoulsflverToolStripMenuItem.RightToLeft = RightToLeft.No;
-            convertModelToDemonsSoulsflverToolStripMenuItem.Size = new Size(620, 22);
+            convertModelToDemonsSoulsflverToolStripMenuItem.Size = new Size(650, 22);
             convertModelToDemonsSoulsflverToolStripMenuItem.Text = "Convert model to Demon's Souls .flver";
             convertModelToDemonsSoulsflverToolStripMenuItem.Click += convertModelToDemonsSoulsflverToolStripMenuItem_Click;
             // 
             // toolStripSeparator11
             // 
             toolStripSeparator11.Name = "toolStripSeparator11";
-            toolStripSeparator11.Size = new Size(617, 6);
+            toolStripSeparator11.Size = new Size(647, 6);
             // 
             // convertDemonsSoulsPS5CmdlToFbxToolStripMenuItem
             // 
             convertDemonsSoulsPS5CmdlToFbxToolStripMenuItem.Name = "convertDemonsSoulsPS5CmdlToFbxToolStripMenuItem";
-            convertDemonsSoulsPS5CmdlToFbxToolStripMenuItem.Size = new Size(620, 22);
+            convertDemonsSoulsPS5CmdlToFbxToolStripMenuItem.Size = new Size(650, 22);
             convertDemonsSoulsPS5CmdlToFbxToolStripMenuItem.Text = "Convert Shadow of the Colossus, Demon's Souls PS5 cmdl, cmsh to fbx";
             convertDemonsSoulsPS5CmdlToFbxToolStripMenuItem.Click += convertDemonsSoulsPS5CmdlToFbxToolStripMenuItem_Click;
             // 
             // convertDemonsSoulsPS5ctxrToolStripMenuItem
             // 
             convertDemonsSoulsPS5ctxrToolStripMenuItem.Name = "convertDemonsSoulsPS5ctxrToolStripMenuItem";
-            convertDemonsSoulsPS5ctxrToolStripMenuItem.Size = new Size(620, 22);
+            convertDemonsSoulsPS5ctxrToolStripMenuItem.Size = new Size(650, 22);
             convertDemonsSoulsPS5ctxrToolStripMenuItem.Text = "Convert BluePoint PS4/PS5 .ctxr";
             convertDemonsSoulsPS5ctxrToolStripMenuItem.Click += convertDemonsSoulsPS5ctxrToolStripMenuItem_Click;
             // 
             // tryToDecompressShadowOfTheColossusFileToolStripMenuItem
             // 
             tryToDecompressShadowOfTheColossusFileToolStripMenuItem.Name = "tryToDecompressShadowOfTheColossusFileToolStripMenuItem";
-            tryToDecompressShadowOfTheColossusFileToolStripMenuItem.Size = new Size(620, 22);
+            tryToDecompressShadowOfTheColossusFileToolStripMenuItem.Size = new Size(650, 22);
             tryToDecompressShadowOfTheColossusFileToolStripMenuItem.Text = "Try to Decompress Shadow of the Colossus file";
             tryToDecompressShadowOfTheColossusFileToolStripMenuItem.Click += tryToDecompressShadowOfTheColossusFileToolStripMenuItem_Click;
             // 
@@ -1369,7 +1371,7 @@
             // 
             // debug3ToolStripMenuItem
             // 
-            debug3ToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { readPATHToolStripMenuItem, oldBillyMC2ConvertToolStripMenuItem, readPOF0ToolStripMenuItem, readStageDefToolStripMenuItem, readGrassToolStripMenuItem, readMRPRoomGoodsToolStripMenuItem, decryptINCToolStripMenuItem, readARCToolStripMenuItem, dumpBillyArcPof0ToolStripMenuItem, dumpExtremeAnimsToolStripMenuItem, readGEPlayerToolStripMenuItem, readAniModelToolStripMenuItem, readLibModelToolStripMenuItem, protoThingToItemModelToolStripMenuItem, readGalleryEggToolStripMenuItem, readCMDLToolStripMenuItem, checkToolStripMenuItem });
+            debug3ToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { readPATHToolStripMenuItem, oldBillyMC2ConvertToolStripMenuItem, readPOF0ToolStripMenuItem, readStageDefToolStripMenuItem, readGrassToolStripMenuItem, readMRPRoomGoodsToolStripMenuItem, decryptINCToolStripMenuItem, readARCToolStripMenuItem, dumpBillyArcPof0ToolStripMenuItem, dumpExtremeAnimsToolStripMenuItem, readGEPlayerToolStripMenuItem, readAniModelToolStripMenuItem, readLibModelToolStripMenuItem, protoThingToItemModelToolStripMenuItem, readGalleryEggToolStripMenuItem, readCMDLToolStripMenuItem, checkToolStripMenuItem, checkAllcmshToolStripMenuItem });
             debug3ToolStripMenuItem.Name = "debug3ToolStripMenuItem";
             debug3ToolStripMenuItem.Size = new Size(60, 23);
             debug3ToolStripMenuItem.Text = "Debug3";
@@ -1493,6 +1495,13 @@
             checkToolStripMenuItem.Text = "Check all *.ctxr";
             checkToolStripMenuItem.Click += checkToolStripMenuItem_Click;
             // 
+            // checkAllcmshToolStripMenuItem
+            // 
+            checkAllcmshToolStripMenuItem.Name = "checkAllcmshToolStripMenuItem";
+            checkAllcmshToolStripMenuItem.Size = new Size(203, 22);
+            checkAllcmshToolStripMenuItem.Text = "Check all *.cmsh";
+            checkAllcmshToolStripMenuItem.Click += checkAllcmshToolStripMenuItem_Click;
+            // 
             // filePanel
             // 
             filePanel.AutoSize = true;
@@ -1512,6 +1521,13 @@
             splitter1.Size = new Size(4, 296);
             splitter1.TabIndex = 2;
             splitter1.TabStop = false;
+            // 
+            // noteShadowOfTheColossusPS4psarcsMUSTHaveTheirContentsPlacedInTheGamesEbootbinDirectoryToolStripMenuItem
+            // 
+            noteShadowOfTheColossusPS4psarcsMUSTHaveTheirContentsPlacedInTheGamesEbootbinDirectoryToolStripMenuItem.Enabled = false;
+            noteShadowOfTheColossusPS4psarcsMUSTHaveTheirContentsPlacedInTheGamesEbootbinDirectoryToolStripMenuItem.Name = "noteShadowOfTheColossusPS4psarcsMUSTHaveTheirContentsPlacedInTheGamesEbootbinDirectoryToolStripMenuItem";
+            noteShadowOfTheColossusPS4psarcsMUSTHaveTheirContentsPlacedInTheGamesEbootbinDirectoryToolStripMenuItem.Size = new Size(650, 22);
+            noteShadowOfTheColossusPS4psarcsMUSTHaveTheirContentsPlacedInTheGamesEbootbinDirectoryToolStripMenuItem.Text = "Note: Shadow of the Colossus PS4 .psarcs MUST have their contents placed in the game's eboot.bin directory!";
             // 
             // AquaModelTool
             // 
@@ -1719,6 +1735,8 @@
         private ToolStripMenuItem checkToolStripMenuItem;
         private ToolStripMenuItem useScaleKeysToolStripMenuItem;
         private ToolStripMenuItem convertDemonsSoulsPS5ctxrToolStripMenuItem;
+        private ToolStripMenuItem checkAllcmshToolStripMenuItem;
+        private ToolStripMenuItem noteShadowOfTheColossusPS4psarcsMUSTHaveTheirContentsPlacedInTheGamesEbootbinDirectoryToolStripMenuItem;
     }
 }
 
