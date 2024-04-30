@@ -3760,7 +3760,7 @@ namespace AquaModelTool
             {
                 foreach (var file in openFileDialog.FileNames)
                 {
-                    BluePointConvert.ReadCMDL(file);
+                    BluePointConvert.ConvertCMDLCMSH(file);
                 }
             }
         }
@@ -4109,7 +4109,7 @@ namespace AquaModelTool
                 List<string> failedFiles = new List<string>();
                 foreach (var file in openFileDialog.FileNames)
                 {
-                    var cani = BluePointConvert.ReadCANI(file);
+                    var cani = BluePointConvert.ConvertCANI(file);
                     /*
                     aquaUI.aqua.aquaModels.Clear();
                     ModelSet set = new ModelSet();
@@ -6131,11 +6131,11 @@ namespace AquaModelTool
             };
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
-                foreach (var file in openFileDialog.FileNames)
+                Parallel.ForEach(openFileDialog.FileNames, file =>
                 {
                     var ctxr = new CTXR(File.ReadAllBytes(file), true);
                     ctxr.WriteToDDS(file, file.Replace(".ctxr", ".dds"));
-                }
+                });
             }
         }
 

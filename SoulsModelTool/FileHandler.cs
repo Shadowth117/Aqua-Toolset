@@ -11,7 +11,7 @@ namespace SoulsModelTool
     {
         public static void ConvertBluepointModel(string file)
         {
-            BluePointConvert.ReadCMDL(file);
+            BluePointConvert.ConvertCMDLCMSH(file);
         }
 
         public static void ConvertFileSMT(string[] FileNames)
