@@ -10,6 +10,7 @@ using AquaModelLibrary.Core.ToolUX;
 using AquaModelLibrary.Data.AM2.BorderBreakPS4;
 using AquaModelLibrary.Data.BillyHatcher;
 using AquaModelLibrary.Data.BillyHatcher.ARCData;
+using AquaModelLibrary.Data.BlueDragon;
 using AquaModelLibrary.Data.BluePoint.CAWS;
 using AquaModelLibrary.Data.BluePoint.CMDL;
 using AquaModelLibrary.Data.BluePoint.CTXR;
@@ -6054,6 +6055,10 @@ namespace AquaModelTool
                     if (decompNibble != 0 && !(fileBytes[0] == 0x89 && fileBytes[1] == 0x50 && fileBytes[2] == 0x4E && fileBytes[3] == 0x47))
                     {
                         var decompLength = BitConverter.ToUInt32(fileBytes, fileBytes.Length - 4) - decompNibble * 0x10000000L;
+                        if(decompLength <= 0)
+                        {
+                            continue;
+                        }
 
                         //Add back on end bytes to match uncompressed files
                         var tempFile = Oodle.OodleDecompress(fileBytes, decompLength);
@@ -6163,6 +6168,48 @@ namespace AquaModelTool
                         failedFiles.Add(file);
                     }
                 }
+            }
+        }
+
+        private void blueDragonipkExtractToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog()
+            {
+                Title = "Select Blue Dragon (Xbox 360) *.ipk, *.mpk file(s)",
+                Filter = "Blue Dragon archive *.ipk, *.mpk Files (*.ipk, *.mpk)|*.ipk;*.mpk|All Files (*.*)|*",
+                Multiselect = true
+            };
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                Parallel.ForEach(openFileDialog.FileNames, file =>
+                {
+                    var ipk = new IPK(File.ReadAllBytes(file));
+                    var outPath = file + "_out";
+                    Directory.CreateDirectory(outPath);
+                    foreach (var fileSet in ipk.fileDict)
+                    {
+                        var outFilePath = Path.Combine(outPath, fileSet.Key);
+                        Directory.CreateDirectory(Path.GetDirectoryName(outFilePath));
+                        File.WriteAllBytes(outFilePath, fileSet.Value);
+                    }
+                });
+            }
+        }
+
+        private void deswizzleTestToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog()
+            {
+                Title = "Select *",
+                Filter = "All Files (*.*)|*",
+                Multiselect = true
+            };
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                Parallel.ForEach(openFileDialog.FileNames, file =>
+                {
+                    File.WriteAllBytes(file + "_deswizTest", DeSwizzler.Xbox360DeSwizzle(File.ReadAllBytes(file), 256, 256, DirectXTex.DirectXTexUtility.DXGIFormat.BC3UNORM));
+                });
             }
         }
     }

@@ -88,6 +88,7 @@
             convertDemonsSoulsPS5CmdlToFbxToolStripMenuItem = new ToolStripMenuItem();
             convertDemonsSoulsPS5ctxrToolStripMenuItem = new ToolStripMenuItem();
             tryToDecompressShadowOfTheColossusFileToolStripMenuItem = new ToolStripMenuItem();
+            noteShadowOfTheColossusPS4psarcsMUSTHaveTheirContentsPlacedInTheGamesEbootbinDirectoryToolStripMenuItem = new ToolStripMenuItem();
             otherGamesToolStripMenuItem1 = new ToolStripMenuItem();
             cToolStripMenuItem = new ToolStripMenuItem();
             convertPSPortableunjToolStripMenuItem1 = new ToolStripMenuItem();
@@ -116,6 +117,8 @@
             billyHatcherCyrillicbinTextTotxtToolStripMenuItem = new ToolStripMenuItem();
             billyHatcherCyrillictxtTobinToolStripMenuItem = new ToolStripMenuItem();
             toolStripSeparator17 = new ToolStripSeparator();
+            otherGamesToolStripMenuItem3 = new ToolStripMenuItem();
+            blueDragonipkExtractToolStripMenuItem = new ToolStripMenuItem();
             toolStripSeparator5 = new ToolStripSeparator();
             batchPSO2ToFBXToolStripMenuItem = new ToolStripMenuItem();
             batchParsePSO2SetToTextToolStripMenuItem = new ToolStripMenuItem();
@@ -212,9 +215,9 @@
             readCMDLToolStripMenuItem = new ToolStripMenuItem();
             checkToolStripMenuItem = new ToolStripMenuItem();
             checkAllcmshToolStripMenuItem = new ToolStripMenuItem();
+            deswizzleTestToolStripMenuItem = new ToolStripMenuItem();
             filePanel = new Panel();
             splitter1 = new Splitter();
-            noteShadowOfTheColossusPS4psarcsMUSTHaveTheirContentsPlacedInTheGamesEbootbinDirectoryToolStripMenuItem = new ToolStripMenuItem();
             menuStrip1.SuspendLayout();
             SuspendLayout();
             // 
@@ -420,7 +423,7 @@
             // 
             // toolsToolStripMenuItem
             // 
-            toolsToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { updateClassicPlayerAnimToNGSAnimToolStripMenuItem, toolStripSeparator4, otherGamesToolStripMenuItem, otherGamesToolStripMenuItem1, otherGamesToolStripMenuItem2, toolStripSeparator5, batchPSO2ToFBXToolStripMenuItem, batchParsePSO2SetToTextToolStripMenuItem, legacyAqp2objObjExportToolStripMenuItem, legacyAqp2objBatchExportToolStripMenuItem, legacyAqp2objObjImportToolStripMenuItem, prmEffectModelExportToolStripMenuItem, prmEffectFromModelToolStripMenuItem, toolStripSeparator3, evtSkitLuaDecompilerToolStripMenuItem, convertTxtToPSO2TextToolStripMenuItem, convertTxtToPSO2TextFolderSelectToolStripMenuItem, parsePSO2TextToolStripMenuItem, parsePSO2TextFolderSelectToolStripMenuItem, toolStripSeparator6, checkAllShaderExtrasToolStripMenuItem, convertNATextToEnPatchToolStripMenuItem, generateCharacterFileSheetToolStripMenuItem, parseVTBFToTextToolStripMenuItem, assembleNGSMapToolStripMenuItem, convertMapTexturesTopngToolStripMenuItem, usePCDirectoriesToolStripMenuItem });
+            toolsToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { updateClassicPlayerAnimToNGSAnimToolStripMenuItem, toolStripSeparator4, otherGamesToolStripMenuItem, otherGamesToolStripMenuItem1, otherGamesToolStripMenuItem2, otherGamesToolStripMenuItem3, toolStripSeparator5, batchPSO2ToFBXToolStripMenuItem, batchParsePSO2SetToTextToolStripMenuItem, legacyAqp2objObjExportToolStripMenuItem, legacyAqp2objBatchExportToolStripMenuItem, legacyAqp2objObjImportToolStripMenuItem, prmEffectModelExportToolStripMenuItem, prmEffectFromModelToolStripMenuItem, toolStripSeparator3, evtSkitLuaDecompilerToolStripMenuItem, convertTxtToPSO2TextToolStripMenuItem, convertTxtToPSO2TextFolderSelectToolStripMenuItem, parsePSO2TextToolStripMenuItem, parsePSO2TextFolderSelectToolStripMenuItem, toolStripSeparator6, checkAllShaderExtrasToolStripMenuItem, convertNATextToEnPatchToolStripMenuItem, generateCharacterFileSheetToolStripMenuItem, parseVTBFToTextToolStripMenuItem, assembleNGSMapToolStripMenuItem, convertMapTexturesTopngToolStripMenuItem, usePCDirectoriesToolStripMenuItem });
             toolsToolStripMenuItem.Name = "toolsToolStripMenuItem";
             toolsToolStripMenuItem.Size = new Size(46, 23);
             toolsToolStripMenuItem.Text = "Tools";
@@ -642,6 +645,13 @@
             tryToDecompressShadowOfTheColossusFileToolStripMenuItem.Text = "Try to Decompress Shadow of the Colossus file";
             tryToDecompressShadowOfTheColossusFileToolStripMenuItem.Click += tryToDecompressShadowOfTheColossusFileToolStripMenuItem_Click;
             // 
+            // noteShadowOfTheColossusPS4psarcsMUSTHaveTheirContentsPlacedInTheGamesEbootbinDirectoryToolStripMenuItem
+            // 
+            noteShadowOfTheColossusPS4psarcsMUSTHaveTheirContentsPlacedInTheGamesEbootbinDirectoryToolStripMenuItem.Enabled = false;
+            noteShadowOfTheColossusPS4psarcsMUSTHaveTheirContentsPlacedInTheGamesEbootbinDirectoryToolStripMenuItem.Name = "noteShadowOfTheColossusPS4psarcsMUSTHaveTheirContentsPlacedInTheGamesEbootbinDirectoryToolStripMenuItem";
+            noteShadowOfTheColossusPS4psarcsMUSTHaveTheirContentsPlacedInTheGamesEbootbinDirectoryToolStripMenuItem.Size = new Size(650, 22);
+            noteShadowOfTheColossusPS4psarcsMUSTHaveTheirContentsPlacedInTheGamesEbootbinDirectoryToolStripMenuItem.Text = "Note: Shadow of the Colossus PS4 .psarcs MUST have their contents placed in the game's eboot.bin directory!";
+            // 
             // otherGamesToolStripMenuItem1
             // 
             otherGamesToolStripMenuItem1.DropDownItems.AddRange(new ToolStripItem[] { cToolStripMenuItem, convertPSPortableunjToolStripMenuItem1, convertPSUxnjOrModelxnrToolStripMenuItem, convertPSUnomTofbxToolStripMenuItem, convertAnimsTonomToolStripMenuItem, convertPSO2PlayeraqmToPSUnomToolStripMenuItem, toolStripSeparator9, convertPSOnrelTotrpToolStripMenuItem, convertPSOxvrToolStripMenuItem, dumpPSOxvmToolStripMenuItem });
@@ -830,6 +840,20 @@
             // 
             toolStripSeparator17.Name = "toolStripSeparator17";
             toolStripSeparator17.Size = new Size(424, 6);
+            // 
+            // otherGamesToolStripMenuItem3
+            // 
+            otherGamesToolStripMenuItem3.DropDownItems.AddRange(new ToolStripItem[] { blueDragonipkExtractToolStripMenuItem });
+            otherGamesToolStripMenuItem3.Name = "otherGamesToolStripMenuItem3";
+            otherGamesToolStripMenuItem3.Size = new Size(344, 22);
+            otherGamesToolStripMenuItem3.Text = "Other Games";
+            // 
+            // blueDragonipkExtractToolStripMenuItem
+            // 
+            blueDragonipkExtractToolStripMenuItem.Name = "blueDragonipkExtractToolStripMenuItem";
+            blueDragonipkExtractToolStripMenuItem.Size = new Size(641, 22);
+            blueDragonipkExtractToolStripMenuItem.Text = "Blue Dragon *.ipk, *.mpk Extract (.dds files in archives are 360 swizzled and do not use a normal .dds header)";
+            blueDragonipkExtractToolStripMenuItem.Click += blueDragonipkExtractToolStripMenuItem_Click;
             // 
             // toolStripSeparator5
             // 
@@ -1371,7 +1395,7 @@
             // 
             // debug3ToolStripMenuItem
             // 
-            debug3ToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { readPATHToolStripMenuItem, oldBillyMC2ConvertToolStripMenuItem, readPOF0ToolStripMenuItem, readStageDefToolStripMenuItem, readGrassToolStripMenuItem, readMRPRoomGoodsToolStripMenuItem, decryptINCToolStripMenuItem, readARCToolStripMenuItem, dumpBillyArcPof0ToolStripMenuItem, dumpExtremeAnimsToolStripMenuItem, readGEPlayerToolStripMenuItem, readAniModelToolStripMenuItem, readLibModelToolStripMenuItem, protoThingToItemModelToolStripMenuItem, readGalleryEggToolStripMenuItem, readCMDLToolStripMenuItem, checkToolStripMenuItem, checkAllcmshToolStripMenuItem });
+            debug3ToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { readPATHToolStripMenuItem, oldBillyMC2ConvertToolStripMenuItem, readPOF0ToolStripMenuItem, readStageDefToolStripMenuItem, readGrassToolStripMenuItem, readMRPRoomGoodsToolStripMenuItem, decryptINCToolStripMenuItem, readARCToolStripMenuItem, dumpBillyArcPof0ToolStripMenuItem, dumpExtremeAnimsToolStripMenuItem, readGEPlayerToolStripMenuItem, readAniModelToolStripMenuItem, readLibModelToolStripMenuItem, protoThingToItemModelToolStripMenuItem, readGalleryEggToolStripMenuItem, readCMDLToolStripMenuItem, checkToolStripMenuItem, checkAllcmshToolStripMenuItem, deswizzleTestToolStripMenuItem });
             debug3ToolStripMenuItem.Name = "debug3ToolStripMenuItem";
             debug3ToolStripMenuItem.Size = new Size(60, 23);
             debug3ToolStripMenuItem.Text = "Debug3";
@@ -1502,6 +1526,13 @@
             checkAllcmshToolStripMenuItem.Text = "Check all *.cmsh";
             checkAllcmshToolStripMenuItem.Click += checkAllcmshToolStripMenuItem_Click;
             // 
+            // deswizzleTestToolStripMenuItem
+            // 
+            deswizzleTestToolStripMenuItem.Name = "deswizzleTestToolStripMenuItem";
+            deswizzleTestToolStripMenuItem.Size = new Size(203, 22);
+            deswizzleTestToolStripMenuItem.Text = "360DeswizzleTest";
+            deswizzleTestToolStripMenuItem.Click += deswizzleTestToolStripMenuItem_Click;
+            // 
             // filePanel
             // 
             filePanel.AutoSize = true;
@@ -1521,13 +1552,6 @@
             splitter1.Size = new Size(4, 296);
             splitter1.TabIndex = 2;
             splitter1.TabStop = false;
-            // 
-            // noteShadowOfTheColossusPS4psarcsMUSTHaveTheirContentsPlacedInTheGamesEbootbinDirectoryToolStripMenuItem
-            // 
-            noteShadowOfTheColossusPS4psarcsMUSTHaveTheirContentsPlacedInTheGamesEbootbinDirectoryToolStripMenuItem.Enabled = false;
-            noteShadowOfTheColossusPS4psarcsMUSTHaveTheirContentsPlacedInTheGamesEbootbinDirectoryToolStripMenuItem.Name = "noteShadowOfTheColossusPS4psarcsMUSTHaveTheirContentsPlacedInTheGamesEbootbinDirectoryToolStripMenuItem";
-            noteShadowOfTheColossusPS4psarcsMUSTHaveTheirContentsPlacedInTheGamesEbootbinDirectoryToolStripMenuItem.Size = new Size(650, 22);
-            noteShadowOfTheColossusPS4psarcsMUSTHaveTheirContentsPlacedInTheGamesEbootbinDirectoryToolStripMenuItem.Text = "Note: Shadow of the Colossus PS4 .psarcs MUST have their contents placed in the game's eboot.bin directory!";
             // 
             // AquaModelTool
             // 
@@ -1737,6 +1761,9 @@
         private ToolStripMenuItem convertDemonsSoulsPS5ctxrToolStripMenuItem;
         private ToolStripMenuItem checkAllcmshToolStripMenuItem;
         private ToolStripMenuItem noteShadowOfTheColossusPS4psarcsMUSTHaveTheirContentsPlacedInTheGamesEbootbinDirectoryToolStripMenuItem;
+        private ToolStripMenuItem otherGamesToolStripMenuItem3;
+        private ToolStripMenuItem blueDragonipkExtractToolStripMenuItem;
+        private ToolStripMenuItem deswizzleTestToolStripMenuItem;
     }
 }
 
