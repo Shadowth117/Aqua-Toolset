@@ -404,6 +404,7 @@ namespace AquaModelTool
                         aquaUI.packageMotion = new AquaPackage();
                         aquaUI.packageMotion.ext = ext;
                         aquaUI.packageMotion.Read(File.ReadAllBytes(currentFile));
+                        isNIFL = aquaUI.packageMotion.motions[0].nifl.magic != 0;
 
                         this.Size = new Size(400, 320);
                         control = new AnimationEditor(aquaUI.packageMotion);
