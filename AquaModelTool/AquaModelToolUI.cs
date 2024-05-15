@@ -3760,10 +3760,31 @@ namespace AquaModelTool
             };
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
+#if !DEBUG
+                List<string> cmshErrors = new List<string>();
+#endif
                 foreach (var file in openFileDialog.FileNames)
                 {
-                    BluePointConvert.ConvertCMDLCMSH(file);
+#if !DEBUG
+                    try
+                    {
+#endif
+                        BluePointConvert.ConvertCMDLCMSH(file);
+#if !DEBUG
+                    }
+                    catch(Exception ex)
+                    {
+                        cmshErrors.Add(ex.Message);
+                    }
+#endif
                 }
+#if !DEBUG
+                if (cmshErrors.Count > 0)
+                {
+                    var programPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+                    File.WriteAllLines(Path.Combine(programPath, "cmshError.txt"), cmshErrors);
+                }
+#endif
             }
         }
 
