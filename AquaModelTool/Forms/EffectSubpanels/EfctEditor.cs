@@ -38,7 +38,7 @@ namespace AquaModelTool
             float30UD.Value = (decimal)efct.efct.float_30;
             int48UD.Value = efct.efct.int_48;
             int50UD.Value = efct.efct.int_50;
-            boolInt54UD.Value = efct.efct.boolInt_54;
+            loopEffectUD.Value = efct.efct.loopEffect;
             boolInt58UD.Value = efct.efct.boolInt_58;
             boolInt5CUD.Value = efct.efct.boolInt_5C;
             float60UD.Value = (decimal)efct.efct.float_60;
@@ -196,9 +196,9 @@ namespace AquaModelTool
 
         private void boolInt54UD_ValueChanged(object sender, EventArgs e)
         {
-            efct.efct.boolInt_54 = (int)boolInt54UD.Value;
+            efct.efct.loopEffect = (int)loopEffectUD.Value;
 
-            boolInt54UD.Value = efct.efct.boolInt_54;
+            loopEffectUD.Value = efct.efct.loopEffect;
         }
 
         private void boolInt58UD_ValueChanged(object sender, EventArgs e)
