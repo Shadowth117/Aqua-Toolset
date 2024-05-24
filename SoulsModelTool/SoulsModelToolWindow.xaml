@@ -19,7 +19,7 @@
                 <MenuItem Header="MSB Map Model Extraction" Click="MSBExtract"/>
             </MenuItem>
         </Menu>
-        <xctk:DoubleUpDown x:Name="scaleUD" Margin="316,86,264,0" Value="1" VerticalAlignment="Top"/>
+        <xctk:DoubleUpDown x:Name="scaleUD" Margin="316,86,264,0" Value="1" VerticalAlignment="Top" ValueChanged="scaleUDChanged"/>
         <Label x:Name="fromSoftModsLabel" Content="Fromsoft modifiers:" HorizontalAlignment="Left" Margin="5,23,0,0" VerticalAlignment="Top"/>
         <CheckBox x:Name="useMetaDataCB" Content="Convert Flver with metadata" HorizontalAlignment="Left" Margin="10,48,0,0" VerticalAlignment="Top" IsChecked="True" Click="smtSettingSet"/>
         <CheckBox x:Name="mirrorCB" Content="Fix FromSoft Mesh Mirorring" HorizontalAlignment="Left" Margin="10,68,0,0" VerticalAlignment="Top" IsChecked="True" Click="smtSettingSet"/>

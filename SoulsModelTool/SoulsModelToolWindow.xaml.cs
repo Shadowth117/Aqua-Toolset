@@ -232,5 +232,10 @@ namespace SoulsModelTool
                 scaleUD.IsEnabled = false;
             }
         }
+
+        private void scaleUDChanged(object sender, RoutedPropertyChangedEventArgs<object> routedEvent)
+        {
+            mainSetting.customScaleValue = scaleUD.Value.ToString();
+        }
     }
 }
