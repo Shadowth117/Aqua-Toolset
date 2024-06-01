@@ -3769,7 +3769,7 @@ namespace AquaModelTool
                     try
                     {
 #endif
-                        BluePointConvert.ConvertCMDLCMSH(file);
+                    BluePointConvert.ConvertCMDLCMSH(file);
 #if !DEBUG
                     }
                     catch(Exception ex)
@@ -4937,8 +4937,8 @@ namespace AquaModelTool
                 };
                 if (openFileDialog2.ShowDialog() == DialogResult.OK)
                 {
-
-                    SoulsConvert.ConvertMorphemeAnims(openFileDialog.FileNames.ToList(), openFileDialog2.FileName);
+                    var nmbPath = (Directory.GetFiles(Path.GetDirectoryName(openFileDialog.FileNames[0]), "*.nmb"))[0];
+                    SoulsConvert.ConvertMorphemeAnims(openFileDialog.FileNames.ToList(), openFileDialog2.FileName, nmbPath);
                 }
             }
         }
@@ -6077,7 +6077,7 @@ namespace AquaModelTool
                     if (decompNibble != 0 && !(fileBytes[0] == 0x89 && fileBytes[1] == 0x50 && fileBytes[2] == 0x4E && fileBytes[3] == 0x47))
                     {
                         var decompLength = BitConverter.ToUInt32(fileBytes, fileBytes.Length - 4) - decompNibble * 0x10000000L;
-                        if(decompLength <= 0)
+                        if (decompLength <= 0)
                         {
                             continue;
                         }
@@ -6128,10 +6128,12 @@ namespace AquaModelTool
                 List<string> output = new List<string>();
                 var ctxrFiles = Directory.GetFiles(openFileDialog.FileName, "*.ctxr", SearchOption.AllDirectories);
                 List<int> test = new List<int>();
+                /*
                 foreach (var ctxrPath in ctxrFiles)
                 {
                     var fileBytes = File.ReadAllBytes(ctxrPath);
                     var ctxr = new CTXR(fileBytes, true);
+                    
                     if (!test.Contains(ctxr.WidthBaseByte))
                     {
                         test.Add(ctxr.WidthBaseByte);
@@ -6141,8 +6143,14 @@ namespace AquaModelTool
                         test.Add(ctxr.HeightBaseByte);
                     }
                     output.Add($"0x{ctxr.textureFormat:X} UnkShort0: {ctxr.unkShort0:X} Base Width: {ctxr.WidthBaseByte:X} {ctxr.WidthMultiplierByte:X} Base Height: {ctxr.HeightBaseByte:X} {ctxr.HeightMultiplierByte:X} Ext: {ctxr.externalMipCount} Int: {ctxr.internalMipCount} Size: {fileBytes.Length:X} UnkTexInt: {ctxr.textureType} {ctxrPath.Replace(openFileDialog.FileName, "")} ");
+                    
                     ctxr.WriteToDDS(ctxrPath, ctxrPath.Replace(".ctxr", ".dds"));
-                }
+                }*/
+                Parallel.ForEach(ctxrFiles, file =>
+                {
+                    var ctxr = new CTXR(File.ReadAllBytes(file), true);
+                    ctxr.WriteToDDS(file, file.Replace(".ctxr", ".dds"));
+                });
                 test.Sort();
                 File.WriteAllLines(Path.Combine(openFileDialog.FileName, "CTXRInfo.txt"), output);
             }
@@ -6222,7 +6230,7 @@ namespace AquaModelTool
         {
             OpenFileDialog openFileDialog = new OpenFileDialog()
             {
-                Title = "Select *",
+                Title = "Select Blue Dragon dds",
                 Filter = "All Files (*.*)|*",
                 Multiselect = true
             };
@@ -6230,7 +6238,115 @@ namespace AquaModelTool
             {
                 Parallel.ForEach(openFileDialog.FileNames, file =>
                 {
-                    File.WriteAllBytes(file + "_deswizTest", DeSwizzler.Xbox360DeSwizzle(File.ReadAllBytes(file), 256, 256, DirectXTex.DirectXTexUtility.DXGIFormat.BC3UNORM));
+                    var bddds = new BDDDS(File.ReadAllBytes(file));
+                    bddds.GetResolution(out int width, out int height);
+                    var newDds = bddds.GenerateDDSHeader(bddds.GetPixelFormat(), width, height, 1, 1);
+                    newDds.AddRange(DeSwizzler.Xbox360DeSwizzle(bddds.buffer, width, height, bddds.GetPixelFormat()));
+
+                    File.WriteAllBytes(file + "_out.dds", newDds.ToArray());
+                });
+            }
+        }
+
+        private void checkAllBillySetObjToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var openFileDialog = new CommonOpenFileDialog()
+            {
+                Title = "Select Billy PC directory",
+                IsFolderPicker = true,
+            };
+            if (openFileDialog.ShowDialog() == CommonFileDialogResult.Ok)
+            {
+                List<string> output = new List<string>();
+                var setFiles = Directory.GetFiles(openFileDialog.FileName, "set_obj_*", SearchOption.AllDirectories);
+
+                Dictionary<int, string> uniqueObjectIds = new Dictionary<int, string>();
+                Dictionary<int, string> property3Uses = new Dictionary<int, string>();
+                Dictionary<int, string> property4Uses = new Dictionary<int, string>();
+                Dictionary<int, string> property5Uses = new Dictionary<int, string>();
+                foreach (string file in setFiles)
+                {
+                    using (MemoryStream ms = new MemoryStream(File.ReadAllBytes(file)))
+                    using (BufferedStreamReaderBE<MemoryStream> sr = new BufferedStreamReaderBE<MemoryStream>(ms))
+                    {
+                        sr._BEReadActive = true;
+                        for (int i = 0; i < 1024; i++)
+                        {
+                            var id = sr.ReadBE<int>();
+                            if (!uniqueObjectIds.ContainsKey(id))
+                            {
+                                uniqueObjectIds.Add(id, $"File: {Path.GetFileName(file)} Object Id: {i}");
+                            }
+                            //Seek through transforms
+                            sr.Seek(0x18, SeekOrigin.Current);
+                            int property1 = sr.ReadBE<int>();
+                            int property2 = sr.ReadBE<int>();
+
+                            int property3 = sr.ReadBE<int>();
+                            if (property3 != 0 && !property3Uses.ContainsKey(id))
+                            {
+                                property3Uses.Add(id, $"File: {Path.GetFileName(file)} Object Id: {i} Property 3: {property3}");
+                            }
+
+                            int property4 = sr.ReadBE<int>();
+                            if (property4 != 0 && !property4Uses.ContainsKey(id))
+                            {
+                                property4Uses.Add(id, $"File: {Path.GetFileName(file)} Object Id: {i} Property 4: {property4}");
+                            }
+
+                            float fltProperty1 = sr.ReadBE<float>();
+                            float fltProperty2 = sr.ReadBE<float>();
+                            float fltProperty3 = sr.ReadBE<float>();
+                            float fltProperty4 = sr.ReadBE<float>();
+
+                            int intProperty5 = sr.ReadBE<int>();
+                            if (intProperty5 != 0 && !property5Uses.ContainsKey(id))
+                            {
+                                property5Uses.Add(id, $"File: {Path.GetFileName(file)} Object Id: {i} Property 4: {intProperty5}");
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        private void ps3DdsTestToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog()
+            {
+                Title = "Select PS3 dds",
+                Filter = "All Files (*.*)|*",
+                Multiselect = true
+            };
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                Parallel.ForEach(openFileDialog.FileNames, file =>
+                {
+                    var newDds = new List<byte> { };
+                    newDds.AddRange(DeSwizzler.PS3DeSwizzle(File.ReadAllBytes(file), 8, 16, DirectXTex.DirectXTexUtility.DXGIFormat.R8G8B8A8UNORM));
+
+                    File.WriteAllBytes(file + "_out.dds", newDds.ToArray());
+                });
+            }
+        }
+
+        private void testReadOldCMDLToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog()
+            {
+                Title = "Select old cmdl",
+                Filter = "All Files (*.cmdl*)|*.cmdl",
+                Multiselect = true
+            };
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                Parallel.ForEach(openFileDialog.FileNames, file =>
+                {
+                    using (MemoryStream ms = new MemoryStream(File.ReadAllBytes(file)))
+                    using (BufferedStreamReaderBE<MemoryStream> sr = new BufferedStreamReaderBE<MemoryStream>(ms))
+                    {
+                        var cmdl = new AquaModelLibrary.Data.BluePoint.CMDL.CMDLBasic.CMDLBasic(sr);
+                    }
                 });
             }
         }
