@@ -216,8 +216,11 @@
             checkToolStripMenuItem = new ToolStripMenuItem();
             checkAllcmshToolStripMenuItem = new ToolStripMenuItem();
             deswizzleTestToolStripMenuItem = new ToolStripMenuItem();
+            checkAllBillySetObjToolStripMenuItem = new ToolStripMenuItem();
+            ps3DdsTestToolStripMenuItem = new ToolStripMenuItem();
             filePanel = new Panel();
             splitter1 = new Splitter();
+            testReadOldCMDLToolStripMenuItem = new ToolStripMenuItem();
             menuStrip1.SuspendLayout();
             SuspendLayout();
             // 
@@ -635,7 +638,7 @@
             // 
             convertDemonsSoulsPS5ctxrToolStripMenuItem.Name = "convertDemonsSoulsPS5ctxrToolStripMenuItem";
             convertDemonsSoulsPS5ctxrToolStripMenuItem.Size = new Size(650, 22);
-            convertDemonsSoulsPS5ctxrToolStripMenuItem.Text = "Convert BluePoint PS4/PS5 .ctxr";
+            convertDemonsSoulsPS5ctxrToolStripMenuItem.Text = "Convert BluePoint PS3/PS4/PS5 .ctxr";
             convertDemonsSoulsPS5ctxrToolStripMenuItem.Click += convertDemonsSoulsPS5ctxrToolStripMenuItem_Click;
             // 
             // tryToDecompressShadowOfTheColossusFileToolStripMenuItem
@@ -851,8 +854,8 @@
             // blueDragonipkExtractToolStripMenuItem
             // 
             blueDragonipkExtractToolStripMenuItem.Name = "blueDragonipkExtractToolStripMenuItem";
-            blueDragonipkExtractToolStripMenuItem.Size = new Size(641, 22);
-            blueDragonipkExtractToolStripMenuItem.Text = "Blue Dragon *.ipk, *.mpk Extract (.dds files in archives are 360 swizzled and do not use a normal .dds header)";
+            blueDragonipkExtractToolStripMenuItem.Size = new Size(246, 22);
+            blueDragonipkExtractToolStripMenuItem.Text = "Blue Dragon *.ipk, *.mpk Extract ";
             blueDragonipkExtractToolStripMenuItem.Click += blueDragonipkExtractToolStripMenuItem_Click;
             // 
             // toolStripSeparator5
@@ -1395,7 +1398,7 @@
             // 
             // debug3ToolStripMenuItem
             // 
-            debug3ToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { readPATHToolStripMenuItem, oldBillyMC2ConvertToolStripMenuItem, readPOF0ToolStripMenuItem, readStageDefToolStripMenuItem, readGrassToolStripMenuItem, readMRPRoomGoodsToolStripMenuItem, decryptINCToolStripMenuItem, readARCToolStripMenuItem, dumpBillyArcPof0ToolStripMenuItem, dumpExtremeAnimsToolStripMenuItem, readGEPlayerToolStripMenuItem, readAniModelToolStripMenuItem, readLibModelToolStripMenuItem, protoThingToItemModelToolStripMenuItem, readGalleryEggToolStripMenuItem, readCMDLToolStripMenuItem, checkToolStripMenuItem, checkAllcmshToolStripMenuItem, deswizzleTestToolStripMenuItem });
+            debug3ToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { readPATHToolStripMenuItem, oldBillyMC2ConvertToolStripMenuItem, readPOF0ToolStripMenuItem, readStageDefToolStripMenuItem, readGrassToolStripMenuItem, readMRPRoomGoodsToolStripMenuItem, decryptINCToolStripMenuItem, readARCToolStripMenuItem, dumpBillyArcPof0ToolStripMenuItem, dumpExtremeAnimsToolStripMenuItem, readGEPlayerToolStripMenuItem, readAniModelToolStripMenuItem, readLibModelToolStripMenuItem, protoThingToItemModelToolStripMenuItem, readGalleryEggToolStripMenuItem, readCMDLToolStripMenuItem, checkToolStripMenuItem, checkAllcmshToolStripMenuItem, deswizzleTestToolStripMenuItem, checkAllBillySetObjToolStripMenuItem, ps3DdsTestToolStripMenuItem, testReadOldCMDLToolStripMenuItem });
             debug3ToolStripMenuItem.Name = "debug3ToolStripMenuItem";
             debug3ToolStripMenuItem.Size = new Size(60, 23);
             debug3ToolStripMenuItem.Text = "Debug3";
@@ -1530,8 +1533,22 @@
             // 
             deswizzleTestToolStripMenuItem.Name = "deswizzleTestToolStripMenuItem";
             deswizzleTestToolStripMenuItem.Size = new Size(203, 22);
-            deswizzleTestToolStripMenuItem.Text = "360DeswizzleTest";
+            deswizzleTestToolStripMenuItem.Text = "Blue Dragon dds test";
             deswizzleTestToolStripMenuItem.Click += deswizzleTestToolStripMenuItem_Click;
+            // 
+            // checkAllBillySetObjToolStripMenuItem
+            // 
+            checkAllBillySetObjToolStripMenuItem.Name = "checkAllBillySetObjToolStripMenuItem";
+            checkAllBillySetObjToolStripMenuItem.Size = new Size(203, 22);
+            checkAllBillySetObjToolStripMenuItem.Text = "Check all billy setObj";
+            checkAllBillySetObjToolStripMenuItem.Click += checkAllBillySetObjToolStripMenuItem_Click;
+            // 
+            // ps3DdsTestToolStripMenuItem
+            // 
+            ps3DdsTestToolStripMenuItem.Name = "ps3DdsTestToolStripMenuItem";
+            ps3DdsTestToolStripMenuItem.Size = new Size(203, 22);
+            ps3DdsTestToolStripMenuItem.Text = "ps3 dds test";
+            ps3DdsTestToolStripMenuItem.Click += ps3DdsTestToolStripMenuItem_Click;
             // 
             // filePanel
             // 
@@ -1552,6 +1569,13 @@
             splitter1.Size = new Size(4, 296);
             splitter1.TabIndex = 2;
             splitter1.TabStop = false;
+            // 
+            // testReadOldCMDLToolStripMenuItem
+            // 
+            testReadOldCMDLToolStripMenuItem.Name = "testReadOldCMDLToolStripMenuItem";
+            testReadOldCMDLToolStripMenuItem.Size = new Size(203, 22);
+            testReadOldCMDLToolStripMenuItem.Text = "Test Read Old CMDL";
+            testReadOldCMDLToolStripMenuItem.Click += testReadOldCMDLToolStripMenuItem_Click;
             // 
             // AquaModelTool
             // 
@@ -1764,6 +1788,9 @@
         private ToolStripMenuItem otherGamesToolStripMenuItem3;
         private ToolStripMenuItem blueDragonipkExtractToolStripMenuItem;
         private ToolStripMenuItem deswizzleTestToolStripMenuItem;
+        private ToolStripMenuItem checkAllBillySetObjToolStripMenuItem;
+        private ToolStripMenuItem ps3DdsTestToolStripMenuItem;
+        private ToolStripMenuItem testReadOldCMDLToolStripMenuItem;
     }
 }
 
