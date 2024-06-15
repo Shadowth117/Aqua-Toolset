@@ -6,6 +6,7 @@ using Microsoft.WindowsAPICodePack.Dialogs;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -19,13 +20,18 @@ namespace SoulsModelTool
     /// </summary>
     public partial class SoulsModelToolWindow : Window
     {
-        public string settingsPath = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location) + "\\";
+        public string settingsPath =
+            System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location) + "\\";
+
         public string settingsFile = "SoulsSettings.json";
         public string mainSettingsFile = "Settings.json";
         public SMTSetting smtSetting = new SMTSetting();
         public MainSetting mainSetting = new MainSetting();
+        public string[] importFormats;
+        public string[] convertFormats;
 
         JsonSerializerSettings jss = new JsonSerializerSettings() { Formatting = Formatting.Indented };
+
         public SoulsModelToolWindow(List<string> paths, SMTSetting _smtSetting, MainSetting _mainSetting)
         {
             smtSetting = _smtSetting;
@@ -40,6 +46,35 @@ namespace SoulsModelTool
             addRootNodeCB.IsChecked = smtSetting.addRootNodeLikeBlenderSmdImport;
             doNotAdjustRootRotCB.IsChecked = smtSetting.doNotAdjustRootRotation;
             doNotAdjustRootRotCB.IsEnabled = (bool)addRootNodeCB.IsChecked;
+
+            // using var ctx = new Assimp.AssimpContext();
+            // var formats = ctx.GetSupportedImportFormats().ToList();
+            // formats.Sort();
+            //
+            // importFormats = formats.ToArray();
+
+            importFormats = new[]
+            {
+                ".fbx",
+                ".dae",
+                ".glb",
+                ".gltf",
+                ".pmx",
+                ".smd"
+            };
+
+            convertFormats = new[]
+            {
+                ".flver",
+                ".flv",
+                ".mdl",
+                ".bnd",
+                ".dcx",
+                ".tpf",
+                ".cmsh",
+                ".cmdl"
+            };
+
             FileHandler.SetSMTSettings(smtSetting);
             FileHandler.ApplyModelImporterSettings(mainSetting);
             SetGameLabel();
@@ -62,6 +97,7 @@ namespace SoulsModelTool
                         break;
                 }
             }
+
             if (Double.TryParse(mainSetting.customScaleValue, out double result))
             {
                 scaleUD.Value = result;
@@ -77,10 +113,14 @@ namespace SoulsModelTool
             FileHandler.ApplyModelImporterSettings(mainSetting);
             FileHandler.SetSMTSettings(smtSetting);
 
+            string[] transformedFilters = convertFormats.Select(ext => $"*{ext}").ToArray();
+            string filterNames = string.Join(", ", transformedFilters);
+            string actualFilter = string.Join(";", transformedFilters);
             OpenFileDialog openFileDialog = new OpenFileDialog()
             {
                 Title = "Select From Software flver, MDL4, TPF, BND or BluePoint CMDL or CMSH file(s)",
-                Filter = "From Software flver, MDL4, or BND Files (*.flver, *.flv, *.mdl, *.*bnd, *.dcx, *.tpf, *.cmsh, *.cmdl)|*.flver;*.flv;*.mdl;*.*bnd;*.dcx;*.tpf;*.cmsh;*.cmdl|All Files (*.*)|*",
+                Filter =
+                    $"From Software flver, MDL4, or BND Files ({filterNames})|{actualFilter}|All Files (*.*)|*",
                 Multiselect = true
             };
             if (openFileDialog.ShowDialog() == true)
@@ -108,47 +148,57 @@ namespace SoulsModelTool
             FileHandler.ApplyModelImporterSettings(mainSetting);
             FileHandler.SetSMTSettings(smtSetting);
 
-            using (var ctx = new Assimp.AssimpContext())
+
+            OpenFileDialog openFileDialog = new()
             {
-                var formats = ctx.GetSupportedImportFormats().ToList();
-                formats.Sort();
+                Title = "Import model file, fbx recommended (output .aqp and .aqn will write to import directory)",
+                Filter = ""
+            };
+            string[] transformedFilters = importFormats.Select(ext => $"*{ext}").ToArray();
+            string filterNames = string.Join(", ", transformedFilters);
+            string actualFilter = string.Join(";", transformedFilters);
+            string combinedFilter = $"Model files ({filterNames})|{actualFilter}|All Files (*.*)|*";
+            openFileDialog.Filter = combinedFilter;
 
-                OpenFileDialog openFileDialog = new()
+            if (openFileDialog.ShowDialog() == true && LayoutDataSet())
+            {
+                ConvertFBXToDeSModelCallback(openFileDialog.FileName);
+            }
+        }
+
+        private bool LayoutDataSet()
+        {
+            if (!File.Exists(Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location),
+                    "DeSMtdLayoutData.bin")))
+            {
+                MessageBox.Show(
+                    "No DeSMtdLayoutData.bin detected! Please select a PS3 Demon's Souls game folder!");
+                var browseDialog = new CommonOpenFileDialog()
                 {
-                    Title = "Import model file, fbx recommended (output .aqp and .aqn will write to import directory)",
-                    Filter = ""
+                    Title = "Open PS3 Demon's Souls root folder",
+                    IsFolderPicker = true,
                 };
-                string tempFilter = "(*.fbx,*.dae,*.glb,*.gltf,*.pmx,*.smd)|*.fbx;*.dae;*.glb;*.gltf;*.pmx;*.smd";
-                string tempFilter2 = "";
-                openFileDialog.Filter = tempFilter + tempFilter2;
 
-                if (openFileDialog.ShowDialog() == true)
+                if (browseDialog.ShowDialog() == CommonFileDialogResult.Ok)
                 {
-                    if (!File.Exists(Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "DeSMtdLayoutData.bin")))
-                    {
-                        MessageBox.Show("No DeSMtdLayoutData.bin detected! Please select a PS3 Demon's Souls game folder!");
-                        var browseDialog = new CommonOpenFileDialog()
-                        {
-                            Title = "Open PS3 Demon's Souls root folder",
-                            IsFolderPicker = true,
-                        };
-
-                        if (browseDialog.ShowDialog() == CommonFileDialogResult.Ok)
-                        {
-                            SoulsConvert.GetDeSLayoutMTDInfo(browseDialog.FileName);
-                        }
-                        else
-                        {
-                            MessageBox.Show("You MUST have an DeSMtdLayoutData.bin file to proceed!");
-                            return;
-                        }
-                    }
-
-                    var ext = Path.GetExtension(openFileDialog.FileName);
-                    var outStr = openFileDialog.FileName.Replace(ext, "_out.flver");
-                    SoulsConvert.ConvertModelToFlverAndWrite(openFileDialog.FileName, outStr, 1, true, true, SoulsGame.DemonsSouls);
+                    SoulsConvert.GetDeSLayoutMTDInfo(browseDialog.FileName);
+                }
+                else
+                {
+                    MessageBox.Show("You MUST have an DeSMtdLayoutData.bin file to proceed!");
+                    return false;
                 }
             }
+
+            return true;
+        }
+
+        private void ConvertFBXToDeSModelCallback(string path)
+        {
+            var ext = Path.GetExtension(path);
+            var outStr = path.Replace(ext, "_out.flver");
+            SoulsConvert.ConvertModelToFlverAndWrite(path, outStr, 1, true, true,
+                SoulsGame.DemonsSouls);
         }
 
         private void smtSettingSet(object sender = null, RoutedEventArgs e = null)
@@ -167,6 +217,23 @@ namespace SoulsModelTool
             File.WriteAllText(settingsPath + settingsFile, smtSettingText);
         }
 
+        private bool MSBGameSet()
+        {
+            if (SoulsConvert.game == SoulsGame.None)
+            {
+                SetGame();
+                if (SoulsConvert.game == SoulsGame.None)
+                {
+                    //User already warned when setting game.
+                    return false;
+                }
+
+                smtSettingSet();
+            }
+
+            return true;
+        }
+
         private void MSBExtract(object sender, RoutedEventArgs e)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog()
@@ -177,16 +244,8 @@ namespace SoulsModelTool
             };
             if (openFileDialog.ShowDialog() == true)
             {
-                if (SoulsConvert.game == SoulsGame.None)
-                {
-                    SetGame();
-                    if (SoulsConvert.game == SoulsGame.None)
-                    {
-                        //User already warned when setting game.
-                        return;
-                    }
-                    smtSettingSet();
-                }
+                if (!MSBGameSet()) return;
+
                 foreach (var file in openFileDialog.FileNames)
                 {
                     MSBModelExtractor.ExtractMSBMapModels(file);
@@ -210,8 +269,10 @@ namespace SoulsModelTool
                 }
                 else
                 {
-                    MessageBox.Show("You must select a valid From Software title!\nCurrent valid titles are: Demon's Souls, Dark Souls: Prepare to Die Edition, Dark Souls Remastered, Dark Souls II: Scholar of the First Sin, Bloodborne, Dark Souls III, Sekiro, Elden Ring");
+                    MessageBox.Show(
+                        "You must select a valid From Software title!\nCurrent valid titles are: Demon's Souls, Dark Souls: Prepare to Die Edition, Dark Souls Remastered, Dark Souls II: Scholar of the First Sin, Bloodborne, Dark Souls III, Sekiro, Elden Ring");
                 }
+
                 SetGameLabel();
             }
         }
@@ -236,6 +297,46 @@ namespace SoulsModelTool
         private void scaleUDChanged(object sender, RoutedPropertyChangedEventArgs<object> routedEvent)
         {
             mainSetting.customScaleValue = scaleUD.Value.ToString();
+        }
+
+        private void FileDrop(object sender, DragEventArgs e)
+        {
+            if (!e.Data.GetDataPresent(DataFormats.FileDrop)) return;
+
+            var files = e.Data.GetData(DataFormats.FileDrop) as string[];
+
+            if (files == null || files.Length <= 0) return;
+
+            string[] msbExtensions = { ".msb", ".msb.dcx" };
+            string[] msbs = files.Where(f => msbExtensions.Contains(Path.GetExtension(f))).ToArray();
+            string[] fbxs = files.Where(f => importFormats.Contains(Path.GetExtension(f))).ToArray();
+            string[] folders = files.Where(f => Directory.Exists(f)).ToArray();
+            string[] convert = files.Where(f => convertFormats.Contains(Path.GetExtension(f))).ToArray();
+
+            FileHandler.ApplyModelImporterSettings(mainSetting);
+            FileHandler.SetSMTSettings(smtSetting);
+
+            if (convert.Any())
+                FileHandler.ConvertFileSMT(convert);
+
+            if (fbxs.Any() && LayoutDataSet())
+            {
+                foreach (string fbx in fbxs)
+                {
+                    ConvertFBXToDeSModelCallback(fbx);
+                }
+            }
+
+            if (folders.Any())
+                SoulsMapMetadataGenerator.Generate(folders.ToList(), out var mcCombo);
+
+            if (msbs.Any() && MSBGameSet())
+            {
+                foreach (string msb in msbs)
+                {
+                    MSBModelExtractor.ExtractMSBMapModels(msb);
+                }
+            }
         }
     }
 }
