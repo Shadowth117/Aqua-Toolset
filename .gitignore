@@ -382,3 +382,5 @@ x64/
 enc_temp_folder/
 
 NvTriStrip.Net
+
+.idea/

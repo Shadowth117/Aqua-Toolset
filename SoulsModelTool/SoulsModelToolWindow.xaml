@@ -6,7 +6,8 @@
         xmlns:local="clr-namespace:SoulsModelTool"
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit" 
         mc:Ignorable="d"
-        Title="Souls Model Tool" Height="346" Width="700">
+        Title="Souls Model Tool" Height="346" Width="700"
+        AllowDrop="True" Drop="FileDrop">
     <Grid>
         <Menu x:Name="menu" Height="18" Margin="0,0,0,0" VerticalAlignment="Top">
             <MenuItem Header="File">
@@ -20,7 +21,7 @@
             </MenuItem>
         </Menu>
         <xctk:DoubleUpDown x:Name="scaleUD" Margin="316,86,264,0" Value="1" VerticalAlignment="Top" ValueChanged="scaleUDChanged"/>
-        <Label x:Name="fromSoftModsLabel" Content="Fromsoft modifiers:" HorizontalAlignment="Left" Margin="5,23,0,0" VerticalAlignment="Top"/>
+        <Label Content="Fromsoft modifiers:" HorizontalAlignment="Left" Margin="5,23,0,0" VerticalAlignment="Top"/>
         <CheckBox x:Name="useMetaDataCB" Content="Convert Flver with metadata" HorizontalAlignment="Left" Margin="10,48,0,0" VerticalAlignment="Top" IsChecked="True" Click="smtSettingSet"/>
         <CheckBox x:Name="mirrorCB" Content="Fix FromSoft Mesh Mirorring" HorizontalAlignment="Left" Margin="10,68,0,0" VerticalAlignment="Top" IsChecked="True" Click="smtSettingSet"/>
         <CheckBox x:Name="matNamesToMeshCB" Content="Apply Material Names to Mesh" HorizontalAlignment="Left" Margin="10,88,0,0" VerticalAlignment="Top" Click="smtSettingSet"/>
@@ -30,7 +31,7 @@
         <CheckBox x:Name="extractUnreferencedFilesCB" Content="(MSB Extraction) Extract Unreferenced Files" HorizontalAlignment="Left" Margin="10,189,0,0" VerticalAlignment="Top" IsChecked="True" Click="smtSettingSet"/>
         <CheckBox x:Name="separateModelsCB" Content="(MSB Extraction) Separate To .flver Model Instance Sets. **Please have this on for Bloodborne and forward!**" HorizontalAlignment="Left" Margin="10,209,0,0" VerticalAlignment="Top" IsChecked="True" Click="smtSettingSet"/>
         <ComboBox x:Name="scaleHandlingCB" HorizontalAlignment="Left" Margin="316,45,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="comboBox_SelectionChanged"/>
-        <Label x:Name="scaleHandlingLabel" Content="Scale Handling:" HorizontalAlignment="Left" Margin="316,23,0,0" VerticalAlignment="Top"/>
-        <Label x:Name="scaleUDModLabel" Content="Custom Scale:" HorizontalAlignment="Left" Margin="316,65,0,0" VerticalAlignment="Top"/>
+        <Label Target="{Binding ElementName=scaleHandlingCB}" Content="Scale Handling:" HorizontalAlignment="Left" Margin="316,23,0,0" VerticalAlignment="Top"/>
+        <Label Target="{Binding ElementName=scaleUD}" Content="Custom Scale:" HorizontalAlignment="Left" Margin="316,65,0,0" VerticalAlignment="Top"/>
     </Grid>
 </Window>
