@@ -65,10 +65,10 @@
                 <GroupBox Header="MSB extraction">
                     <StackPanel>
                         <CheckBox x:Name="extractUnreferencedFilesCB"
-                                  Content="(MSB extraction) Extract Unreferenced Files" IsChecked="True"
+                                  Content="Extract Unreferenced Files" IsChecked="True"
                                   Click="smtSettingSet" />
                         <CheckBox x:Name="separateModelsCB"
-                                  Content="(MSB extraction) Separate To .flver Model Instance Sets. **Please have this on for Bloodborne and forward!**"
+                                  Content="Separate To .flver Model Instance Sets. **Please have this on for Bloodborne and forward!**"
                                   IsChecked="True"
                                   Click="smtSettingSet">
                         </CheckBox>
