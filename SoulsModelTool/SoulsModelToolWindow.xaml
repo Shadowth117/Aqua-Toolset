@@ -4,34 +4,83 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SoulsModelTool"
-        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit" 
+        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         mc:Ignorable="d"
         Title="Souls Model Tool" Height="346" Width="700"
         AllowDrop="True" Drop="FileDrop">
-    <Grid>
-        <Menu x:Name="menu" Height="18" Margin="0,0,0,0" VerticalAlignment="Top">
+    <Window.Resources>
+        <Style TargetType="FrameworkElement" x:Key="AreaSpacing">
+            <Setter Property="Margin" Value="5" />
+        </Style>
+        <Style TargetType="FrameworkElement" x:Key="ElementSpacing">
+            <Setter Property="Margin" Value="0 3" />
+        </Style>
+        <Style TargetType="CheckBox" BasedOn="{StaticResource ElementSpacing}">
+            <Setter Property="ContentTemplate"> <!-- This is for text wrapping the "Please have this on" text -->
+                <Setter.Value>
+                    <DataTemplate>
+                        <TextBlock Text="{TemplateBinding Content}" TextWrapping="Wrap" />
+                    </DataTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+    <StackPanel>
+        <Menu x:Name="menu" Height="18">
             <MenuItem Header="File">
-                <MenuItem Header="Convert From Soft model, TPF, or archive" Click="ConvertModelToFBX"/>
-                <Separator/>
-                <MenuItem Header="Convert FBX to Demon's Souls (PS3) flver" Click="ConvertFBXToDeSModel"/>
-                <MenuItem Header="Generate MCG, MCP" Click="GenerateMCPMCG"/>
-                <Separator/>
-                <MenuItem x:Name="SetGameOption" Header="Set Game (For MSB Extraction)" Click="SetGame"/>
-                <MenuItem Header="MSB Map Model Extraction" Click="MSBExtract"/>
+                <MenuItem Header="Convert From Soft model, TPF, or archive" Click="ConvertModelToFBX" />
+                <Separator />
+                <MenuItem Header="Convert FBX to Demon's Souls (PS3) flver" Click="ConvertFBXToDeSModel" />
+                <MenuItem Header="Generate MCG, MCP" Click="GenerateMCPMCG" />
+                <Separator />
+                <MenuItem x:Name="SetGameOption" Header="Set Game (For MSB Extraction)" Click="SetGame" />
+                <MenuItem Header="MSB Map Model Extraction" Click="MSBExtract" />
             </MenuItem>
         </Menu>
-        <xctk:DoubleUpDown x:Name="scaleUD" Margin="316,86,264,0" Value="1" VerticalAlignment="Top" ValueChanged="scaleUDChanged"/>
-        <Label Content="Fromsoft modifiers:" HorizontalAlignment="Left" Margin="5,23,0,0" VerticalAlignment="Top"/>
-        <CheckBox x:Name="useMetaDataCB" Content="Convert Flver with metadata" HorizontalAlignment="Left" Margin="10,48,0,0" VerticalAlignment="Top" IsChecked="True" Click="smtSettingSet"/>
-        <CheckBox x:Name="mirrorCB" Content="Fix FromSoft Mesh Mirorring" HorizontalAlignment="Left" Margin="10,68,0,0" VerticalAlignment="Top" IsChecked="True" Click="smtSettingSet"/>
-        <CheckBox x:Name="matNamesToMeshCB" Content="Apply Material Names to Mesh" HorizontalAlignment="Left" Margin="10,88,0,0" VerticalAlignment="Top" Click="smtSettingSet"/>
-        <CheckBox x:Name="transformMeshCB" Content="Transform Mesh" HorizontalAlignment="Left" Margin="10,108,0,0" VerticalAlignment="Top" IsChecked="True" Click="smtSettingSet"/>
-        <CheckBox x:Name="addRootNodeCB" Content="Add Root Node (Like Blender's BBTool SMD import)" HorizontalAlignment="Left" Margin="9,128,0,0" VerticalAlignment="Top" IsChecked="True" Click="smtSettingSet"/>
-        <CheckBox x:Name="doNotAdjustRootRotCB" Content="Do Not Adjust Root Rotation (Requires Add Root Node)" HorizontalAlignment="Left" Margin="9,148,0,0" VerticalAlignment="Top" IsChecked="False" Click="smtSettingSet"/>
-        <CheckBox x:Name="extractUnreferencedFilesCB" Content="(MSB Extraction) Extract Unreferenced Files" HorizontalAlignment="Left" Margin="10,189,0,0" VerticalAlignment="Top" IsChecked="True" Click="smtSettingSet"/>
-        <CheckBox x:Name="separateModelsCB" Content="(MSB Extraction) Separate To .flver Model Instance Sets. **Please have this on for Bloodborne and forward!**" HorizontalAlignment="Left" Margin="10,209,0,0" VerticalAlignment="Top" IsChecked="True" Click="smtSettingSet"/>
-        <ComboBox x:Name="scaleHandlingCB" HorizontalAlignment="Left" Margin="316,45,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="comboBox_SelectionChanged"/>
-        <Label Target="{Binding ElementName=scaleHandlingCB}" Content="Scale Handling:" HorizontalAlignment="Left" Margin="316,23,0,0" VerticalAlignment="Top"/>
-        <Label Target="{Binding ElementName=scaleUD}" Content="Custom Scale:" HorizontalAlignment="Left" Margin="316,65,0,0" VerticalAlignment="Top"/>
-    </Grid>
+        <Grid HorizontalAlignment="Left">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <StackPanel Style="{StaticResource AreaSpacing}">
+                <GroupBox Header="Fromsoft modifiers">
+                    <StackPanel>
+                        <CheckBox x:Name="useMetaDataCB" Content="Convert FLVER with metadata" IsChecked="True"
+                                  Click="smtSettingSet" />
+                        <CheckBox x:Name="mirrorCB" Content="Fix FromSoft mesh mirroring" IsChecked="True"
+                                  Click="smtSettingSet" />
+                        <CheckBox x:Name="matNamesToMeshCB" Content="Apply material names to mesh"
+                                  Click="smtSettingSet" />
+                        <CheckBox x:Name="transformMeshCB" Content="Transform mesh" IsChecked="True"
+                                  Click="smtSettingSet" />
+                        <CheckBox x:Name="addRootNodeCB" Content="Add root node (Like Blender's BBTool SMD import)"
+                                  IsChecked="True"
+                                  Click="smtSettingSet" />
+                        <CheckBox x:Name="doNotAdjustRootRotCB"
+                                  Content="Do not adjust root rotation (Requires &quot;Add root node&quot;)"
+                                  IsChecked="False"
+                                  Click="smtSettingSet" />
+                    </StackPanel>
+                </GroupBox>
+                <GroupBox Header="MSB extraction">
+                    <StackPanel>
+                        <CheckBox x:Name="extractUnreferencedFilesCB"
+                                  Content="Extract Unreferenced Files" IsChecked="True"
+                                  Click="smtSettingSet" />
+                        <CheckBox x:Name="separateModelsCB"
+                                  Content="Separate To .flver Model Instance Sets. **Please have this on for Bloodborne and forward!**"
+                                  IsChecked="True"
+                                  Click="smtSettingSet">
+                        </CheckBox>
+                    </StackPanel>
+                </GroupBox>
+            </StackPanel>
+            <StackPanel Grid.Column="1" Style="{StaticResource AreaSpacing}">
+                <Label Target="{Binding ElementName=scaleUD}" Content="Custom Scale:" />
+                <xctk:DoubleUpDown x:Name="scaleUD" Width="120" Value="1" ValueChanged="scaleUDChanged" />
+                <Label Target="{Binding ElementName=scaleHandlingCB}" Content="Scale Handling:" />
+                <ComboBox x:Name="scaleHandlingCB" Width="120" SelectionChanged="comboBox_SelectionChanged" />
+            </StackPanel>
+        </Grid>
+    </StackPanel>
 </Window>
