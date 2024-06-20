@@ -218,9 +218,10 @@
             deswizzleTestToolStripMenuItem = new ToolStripMenuItem();
             checkAllBillySetObjToolStripMenuItem = new ToolStripMenuItem();
             ps3DdsTestToolStripMenuItem = new ToolStripMenuItem();
+            testReadOldCMDLToolStripMenuItem = new ToolStripMenuItem();
             filePanel = new Panel();
             splitter1 = new Splitter();
-            testReadOldCMDLToolStripMenuItem = new ToolStripMenuItem();
+            readGEEggToolStripMenuItem = new ToolStripMenuItem();
             menuStrip1.SuspendLayout();
             SuspendLayout();
             // 
@@ -1398,7 +1399,7 @@
             // 
             // debug3ToolStripMenuItem
             // 
-            debug3ToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { readPATHToolStripMenuItem, oldBillyMC2ConvertToolStripMenuItem, readPOF0ToolStripMenuItem, readStageDefToolStripMenuItem, readGrassToolStripMenuItem, readMRPRoomGoodsToolStripMenuItem, decryptINCToolStripMenuItem, readARCToolStripMenuItem, dumpBillyArcPof0ToolStripMenuItem, dumpExtremeAnimsToolStripMenuItem, readGEPlayerToolStripMenuItem, readAniModelToolStripMenuItem, readLibModelToolStripMenuItem, protoThingToItemModelToolStripMenuItem, readGalleryEggToolStripMenuItem, readCMDLToolStripMenuItem, checkToolStripMenuItem, checkAllcmshToolStripMenuItem, deswizzleTestToolStripMenuItem, checkAllBillySetObjToolStripMenuItem, ps3DdsTestToolStripMenuItem, testReadOldCMDLToolStripMenuItem });
+            debug3ToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { readPATHToolStripMenuItem, oldBillyMC2ConvertToolStripMenuItem, readPOF0ToolStripMenuItem, readStageDefToolStripMenuItem, readGrassToolStripMenuItem, readMRPRoomGoodsToolStripMenuItem, decryptINCToolStripMenuItem, readARCToolStripMenuItem, dumpBillyArcPof0ToolStripMenuItem, dumpExtremeAnimsToolStripMenuItem, readGEPlayerToolStripMenuItem, readAniModelToolStripMenuItem, readLibModelToolStripMenuItem, protoThingToItemModelToolStripMenuItem, readGalleryEggToolStripMenuItem, readCMDLToolStripMenuItem, checkToolStripMenuItem, checkAllcmshToolStripMenuItem, deswizzleTestToolStripMenuItem, checkAllBillySetObjToolStripMenuItem, ps3DdsTestToolStripMenuItem, testReadOldCMDLToolStripMenuItem, readGEEggToolStripMenuItem });
             debug3ToolStripMenuItem.Name = "debug3ToolStripMenuItem";
             debug3ToolStripMenuItem.Size = new Size(60, 23);
             debug3ToolStripMenuItem.Text = "Debug3";
@@ -1550,6 +1551,13 @@
             ps3DdsTestToolStripMenuItem.Text = "ps3 dds test";
             ps3DdsTestToolStripMenuItem.Click += ps3DdsTestToolStripMenuItem_Click;
             // 
+            // testReadOldCMDLToolStripMenuItem
+            // 
+            testReadOldCMDLToolStripMenuItem.Name = "testReadOldCMDLToolStripMenuItem";
+            testReadOldCMDLToolStripMenuItem.Size = new Size(203, 22);
+            testReadOldCMDLToolStripMenuItem.Text = "Test Read Old CMDL";
+            testReadOldCMDLToolStripMenuItem.Click += testReadOldCMDLToolStripMenuItem_Click;
+            // 
             // filePanel
             // 
             filePanel.AutoSize = true;
@@ -1570,12 +1578,12 @@
             splitter1.TabIndex = 2;
             splitter1.TabStop = false;
             // 
-            // testReadOldCMDLToolStripMenuItem
+            // readGEEggToolStripMenuItem
             // 
-            testReadOldCMDLToolStripMenuItem.Name = "testReadOldCMDLToolStripMenuItem";
-            testReadOldCMDLToolStripMenuItem.Size = new Size(203, 22);
-            testReadOldCMDLToolStripMenuItem.Text = "Test Read Old CMDL";
-            testReadOldCMDLToolStripMenuItem.Click += testReadOldCMDLToolStripMenuItem_Click;
+            readGEEggToolStripMenuItem.Name = "readGEEggToolStripMenuItem";
+            readGEEggToolStripMenuItem.Size = new Size(203, 22);
+            readGEEggToolStripMenuItem.Text = "ReadGEEgg";
+            readGEEggToolStripMenuItem.Click += readGEEggToolStripMenuItem_Click;
             // 
             // AquaModelTool
             // 
@@ -1791,6 +1799,7 @@
         private ToolStripMenuItem checkAllBillySetObjToolStripMenuItem;
         private ToolStripMenuItem ps3DdsTestToolStripMenuItem;
         private ToolStripMenuItem testReadOldCMDLToolStripMenuItem;
+        private ToolStripMenuItem readGEEggToolStripMenuItem;
     }
 }
 

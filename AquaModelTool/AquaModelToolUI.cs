@@ -5833,7 +5833,7 @@ namespace AquaModelTool
         {
             var openFileDialog = new OpenFileDialog()
             {
-                Title = "Select Billy Hatcher ani_model_*.arc File",
+                Title = "Select Billy Hatcher ge_player*.arc File",
                 Filter = "Billy Hatcher ge_player*.arc files|ge_player*.arc",
                 FileName = "",
                 Multiselect = true
@@ -6349,6 +6349,49 @@ namespace AquaModelTool
                     }
                 });
             }
+        }
+
+        private void readGEEggToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var openFileDialog = new OpenFileDialog()
+            {
+                Title = "Select Billy Hatcher ge_egg.arc File",
+                Filter = "Billy Hatcher ge_egg.arc files|ge_egg.arc",
+                FileName = "",
+                Multiselect = true
+            };
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                foreach (var file in openFileDialog.FileNames)
+                {
+                    var arc = new GEEGG(File.ReadAllBytes(file));
+
+                    var outDir = file + "_out";
+                    Directory.CreateDirectory(outDir);
+                    for (int i = 0; i < arc.models.Count; i++)
+                    {
+                        var model = arc.models[i];
+                        if (model != null)
+                        {
+                            var outPath = Path.Combine(outDir, $"model_{i}.fbx");
+                            var aqp = NinjaModelConvert.NinjaToAqua(model, out var aqn);
+                            if (aqp != null && aqp.vtxlList.Count > 0 || (aqp.tempTris.Count > 0 && aqp.tempTris[0].faceVerts.Count > 0))
+                            {
+                                aqp.ConvertToPSO2Model(true, false, false, true, false, false, false, true);
+                                aqp.ConvertToLegacyTypes();
+                                aqp.CreateTrueVertWeights();
+
+                                FbxExporterNative.ExportToFile(aqp, aqn, new List<AquaMotion>(), outPath, new List<string>(), new List<Matrix4x4>(), false);
+                            }
+                        }
+                    }
+                    if (arc.gvm != null)
+                    {
+                        arc.gvm.Save(Path.Combine(outDir, "textures.gvm"));
+                    }
+                }
+            }
+            
         }
     }
 }
