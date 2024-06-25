@@ -106,25 +106,25 @@ namespace SoulsModelTool
                         case "-meshnameisdefault":
                             smtSetting.applyMaterialNamesToMesh = false;
                             break;
-                        case "-transformMesh":
+                        case "-transformmesh":
                             smtSetting.transformMesh = true;
                             break;
-                        case "-donttransformMesh":
+                        case "-donttransformmesh":
                             smtSetting.transformMesh = false;
                             break;
                         case "-launch":
                             launchUi = true;
                             break;
-                        case "-addRootNode":
+                        case "-addrootnode":
                             smtSetting.addRootNodeLikeBlenderSmdImport = true;
                             break;
-                        case "-dontAddRootNode":
+                        case "-dontaddrootnode":
                             smtSetting.addRootNodeLikeBlenderSmdImport = false;
                             break;
-                        case "-adjustRootNode":
+                        case "-adjustrootnode":
                             smtSetting.doNotAdjustRootRotation = false;
                             break;
-                        case "-dontadjustRootNode":
+                        case "-dontadjustrootnode":
                             smtSetting.doNotAdjustRootRotation = true;
                             break;
                         default:
