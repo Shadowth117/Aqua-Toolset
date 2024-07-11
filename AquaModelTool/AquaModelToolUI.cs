@@ -38,6 +38,7 @@ using AquaModelLibrary.Helpers.Readers;
 using AquaModelLibrary.ToolUX.CommonForms;
 using ArchiveLib;
 using Microsoft.WindowsAPICodePack.Dialogs;
+using SoulsFormats;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Globalization;
@@ -4965,8 +4966,8 @@ namespace AquaModelTool
         {
             var openFileDialog = new OpenFileDialog()
             {
-                Title = "Select Metal Wolf Chaos Archive File",
-                Filter = "Metal Wolf Chaos DEV, DIV, m.dat, t.dat, BND files|*.dev;*.000;*.001;*.002;*.003;*_m.dat;*_t.dat;*.bnd;*.tex",
+                Title = "Select Otogi 1/2/Metal Wolf Chaos Archive File",
+                Filter = "DEV, DIV, m.dat, t.dat, BND files|*.dev;*.000;*.001;*.002;*.003;*_m.dat;*_t.dat;*.bnd;*.tex",
                 FileName = "",
                 Multiselect = true
             };
@@ -6364,6 +6365,7 @@ namespace AquaModelTool
             {
                 foreach (var file in openFileDialog.FileNames)
                 {
+                    /*
                     var arc = new GEEGG(File.ReadAllBytes(file));
 
                     var outDir = file + "_out";
@@ -6389,9 +6391,55 @@ namespace AquaModelTool
                     {
                         arc.gvm.Save(Path.Combine(outDir, "textures.gvm"));
                     }
+                    */
                 }
             }
-            
+
+        }
+
+        private void readFlverTestToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var flver = SoulsFormats.SoulsFile<SoulsFormats.FLVER2>.Read(File.ReadAllBytes(@"C:\Users\Shadi\Downloads\c3460 (1).flver"));
+            var flverMod = SoulsFormats.SoulsFile<SoulsFormats.FLVER2>.Read(@"C:\Users\Shadi\Downloads\c3460_edited.flver");
+        }
+
+        private void otogi12datExtractToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var openFileDialog = new OpenFileDialog()
+            {
+                Title = "Select Otogi .dat Archive File",
+                Filter = ".dat files|*.dat",
+                FileName = "",
+                Multiselect = true
+            };
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                foreach (var file in openFileDialog.FileNames)
+                {
+                    var fileBase = Path.GetFileNameWithoutExtension(file);
+                    var fileOutBase = fileBase + "_out";
+                    var outPathBase = Path.Combine(Path.GetDirectoryName(file), fileOutBase);
+                    var mdat = SoulsFile<SoulsFormats.Otogi2.DAT>.Read(file);
+
+                    Directory.CreateDirectory(outPathBase);
+                    if(mdat.Data1 != null)
+                    {
+                        File.WriteAllBytes(Path.Combine(outPathBase, fileBase + "_1.mdl"), mdat.Data1);
+                    }
+                    if (mdat.Data2 != null)
+                    {
+                        File.WriteAllBytes(Path.Combine(outPathBase, fileBase + "_2"), mdat.Data2);
+                    }
+                    if (mdat.Data3 != null)
+                    {
+                        File.WriteAllBytes(Path.Combine(outPathBase, fileBase + "_3"), mdat.Data3);
+                    }
+                    foreach(var tex in mdat.Textures)
+                    {
+                        File.WriteAllBytes(Path.Combine(outPathBase, tex.Name), tex.Data);
+                    }
+                }
+            }
         }
     }
 }
