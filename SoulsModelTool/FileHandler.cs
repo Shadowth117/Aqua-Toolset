@@ -39,7 +39,6 @@ namespace SoulsModelTool
             SoulsConvert.extractUnreferencedMapData = smtSetting.extractUnreferencedMapData;
             SoulsConvert.game = smtSetting.soulsGame;
             SoulsConvert.separateMSBDumpByModel = smtSetting.separateMSBDumpByModel;
-            SoulsConvert.addRootNodeLikeBlenderSmdImport = smtSetting.addRootNodeLikeBlenderSmdImport;
             SoulsConvert.doNotAdjustRootRotation = smtSetting.doNotAdjustRootRotation;
         }
 

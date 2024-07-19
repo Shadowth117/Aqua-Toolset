@@ -43,7 +43,6 @@ namespace SoulsModelTool
             transformMeshCB.IsChecked = smtSetting.transformMesh;
             extractUnreferencedFilesCB.IsChecked = smtSetting.extractUnreferencedMapData;
             separateModelsCB.IsChecked = smtSetting.separateMSBDumpByModel;
-            addRootNodeCB.IsChecked = smtSetting.addRootNodeLikeBlenderSmdImport;
             doNotAdjustRootRotCB.IsChecked = smtSetting.doNotAdjustRootRotation;
             doNotAdjustRootRotCB.IsEnabled = (bool)addRootNodeCB.IsChecked;
 
@@ -210,7 +209,6 @@ namespace SoulsModelTool
             smtSetting.soulsGame = SoulsConvert.game;
             smtSetting.extractUnreferencedMapData = (bool)extractUnreferencedFilesCB.IsChecked;
             smtSetting.separateMSBDumpByModel = (bool)separateModelsCB.IsChecked;
-            smtSetting.addRootNodeLikeBlenderSmdImport = (bool)addRootNodeCB.IsChecked;
             smtSetting.doNotAdjustRootRotation = (bool)doNotAdjustRootRotCB.IsChecked;
             doNotAdjustRootRotCB.IsEnabled = (bool)addRootNodeCB.IsChecked;
             string smtSettingText = JsonConvert.SerializeObject(smtSetting, jss);

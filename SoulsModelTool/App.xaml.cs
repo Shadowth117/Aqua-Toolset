@@ -115,12 +115,6 @@ namespace SoulsModelTool
                         case "-launch":
                             launchUi = true;
                             break;
-                        case "-addrootnode":
-                            smtSetting.addRootNodeLikeBlenderSmdImport = true;
-                            break;
-                        case "-dontaddrootnode":
-                            smtSetting.addRootNodeLikeBlenderSmdImport = false;
-                            break;
                         case "-adjustrootnode":
                             smtSetting.doNotAdjustRootRotation = false;
                             break;

@@ -148,9 +148,7 @@ namespace AquaModelTool
             transformMeshToolStripMenuItem.Checked = smtSetting.transformMesh;
             mSBExtractionExtractUnreferencedModelsAndTexturesToolStripMenuItem.Checked = smtSetting.extractUnreferencedMapData;
             mSBExtractionSeparateExtractionByModelToolStripMenuItem.Checked = smtSetting.separateMSBDumpByModel;
-            addRootNodeLikeBlendersBBToolSMDImportToolStripMenuItem.Checked = smtSetting.addRootNodeLikeBlenderSmdImport;
             doNotAdjustRootRotationrequiresAddedRootNodeToolStripMenuItem.Checked = smtSetting.doNotAdjustRootRotation;
-            doNotAdjustRootRotationrequiresAddedRootNodeToolStripMenuItem.Enabled = addRootNodeLikeBlendersBBToolSMDImportToolStripMenuItem.Checked;
 
             SoulsConvert.game = smtSetting.soulsGame;
             SetSoulsGameToolStripText();
@@ -4310,9 +4308,7 @@ namespace AquaModelTool
             smtSetting.soulsGame = SoulsConvert.game;
             smtSetting.extractUnreferencedMapData = mSBExtractionExtractUnreferencedModelsAndTexturesToolStripMenuItem.Checked;
             smtSetting.separateMSBDumpByModel = mSBExtractionSeparateExtractionByModelToolStripMenuItem.Checked;
-            smtSetting.addRootNodeLikeBlenderSmdImport = addRootNodeLikeBlendersBBToolSMDImportToolStripMenuItem.Checked;
             smtSetting.doNotAdjustRootRotation = doNotAdjustRootRotationrequiresAddedRootNodeToolStripMenuItem.Checked;
-            doNotAdjustRootRotationrequiresAddedRootNodeToolStripMenuItem.Enabled = addRootNodeLikeBlendersBBToolSMDImportToolStripMenuItem.Checked;
 
             string smtSettingText = JsonSerializer.Serialize(smtSetting, jss);
             File.WriteAllText(mainSettingsPath + soulsSettingsFile, smtSettingText);
@@ -4856,7 +4852,6 @@ namespace AquaModelTool
             SoulsConvert.transformMesh = transformMeshToolStripMenuItem.Checked;
             SoulsConvert.extractUnreferencedMapData = extractSoulsMapObjectLayoutFrommsbToolStripMenuItem.Checked;
             SoulsConvert.separateMSBDumpByModel = mSBExtractionSeparateExtractionByModelToolStripMenuItem.Checked;
-            SoulsConvert.addRootNodeLikeBlenderSmdImport = addRootNodeLikeBlendersBBToolSMDImportToolStripMenuItem.Checked;
             SoulsConvert.doNotAdjustRootRotation = doNotAdjustRootRotationrequiresAddedRootNodeToolStripMenuItem.Checked;
         }
 
@@ -6242,7 +6237,7 @@ namespace AquaModelTool
                     var bddds = new BDDDS(File.ReadAllBytes(file));
                     bddds.GetResolution(out int width, out int height);
                     var newDds = bddds.GenerateDDSHeader(bddds.GetPixelFormat(), width, height, 1, 1);
-                    newDds.AddRange(DeSwizzler.Xbox360DeSwizzle(bddds.buffer, width, height, bddds.GetPixelFormat()));
+                    newDds.AddRange(AquaModelLibrary.Helpers.DeSwizzler.Xbox360DeSwizzle(bddds.buffer, width, height, bddds.GetPixelFormat()));
 
                     File.WriteAllBytes(file + "_out.dds", newDds.ToArray());
                 });
@@ -6324,7 +6319,7 @@ namespace AquaModelTool
                 Parallel.ForEach(openFileDialog.FileNames, file =>
                 {
                     var newDds = new List<byte> { };
-                    newDds.AddRange(DeSwizzler.PS3DeSwizzle(File.ReadAllBytes(file), 8, 16, DirectXTex.DirectXTexUtility.DXGIFormat.R8G8B8A8UNORM));
+                    newDds.AddRange(AquaModelLibrary.Helpers.DeSwizzler.PS3DeSwizzle(File.ReadAllBytes(file), 8, 16, DirectXTex.DirectXTexUtility.DXGIFormat.R8G8B8A8UNORM));
 
                     File.WriteAllBytes(file + "_out.dds", newDds.ToArray());
                 });

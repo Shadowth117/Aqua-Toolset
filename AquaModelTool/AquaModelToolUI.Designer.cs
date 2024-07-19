@@ -66,7 +66,6 @@
             fixFromSoftMeshMirroringToolStripMenuItem = new ToolStripMenuItem();
             applyMaterialNamesToMeshToolStripMenuItem = new ToolStripMenuItem();
             transformMeshToolStripMenuItem = new ToolStripMenuItem();
-            addRootNodeLikeBlendersBBToolSMDImportToolStripMenuItem = new ToolStripMenuItem();
             doNotAdjustRootRotationrequiresAddedRootNodeToolStripMenuItem = new ToolStripMenuItem();
             toolStripSeparator14 = new ToolStripSeparator();
             setSoulsGameToolStripMenuItem = new ToolStripMenuItem();
@@ -77,6 +76,7 @@
             dumpAllFromSoulsbndToolStripMenuItem = new ToolStripMenuItem();
             toolStripSeparator16 = new ToolStripSeparator();
             mWCBNDExtractToolStripMenuItem = new ToolStripMenuItem();
+            otogi12datExtractToolStripMenuItem = new ToolStripMenuItem();
             mWCBNDPackToolStripMenuItem = new ToolStripMenuItem();
             metalWolfChaosMMDConvertToolStripMenuItem = new ToolStripMenuItem();
             metalWolfChaosOTRConvertToolStripMenuItem = new ToolStripMenuItem();
@@ -223,7 +223,6 @@
             readFlverTestToolStripMenuItem = new ToolStripMenuItem();
             filePanel = new Panel();
             splitter1 = new Splitter();
-            otogi12datExtractToolStripMenuItem = new ToolStripMenuItem();
             menuStrip1.SuspendLayout();
             SuspendLayout();
             // 
@@ -448,7 +447,7 @@
             // 
             // otherGamesToolStripMenuItem
             // 
-            otherGamesToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { convertSoulsflverTofbxToolStripMenuItem, exportWithMetadataToolStripMenuItem, fixFromSoftMeshMirroringToolStripMenuItem, applyMaterialNamesToMeshToolStripMenuItem, transformMeshToolStripMenuItem, addRootNodeLikeBlendersBBToolSMDImportToolStripMenuItem, doNotAdjustRootRotationrequiresAddedRootNodeToolStripMenuItem, toolStripSeparator14, setSoulsGameToolStripMenuItem, extractSoulsMapObjectLayoutFrommsbToolStripMenuItem, mSBExtractionExtractUnreferencedModelsAndTexturesToolStripMenuItem, mSBExtractionSeparateExtractionByModelToolStripMenuItem, toolStripSeparator15, dumpAllFromSoulsbndToolStripMenuItem, toolStripSeparator16, mWCBNDExtractToolStripMenuItem, otogi12datExtractToolStripMenuItem, mWCBNDPackToolStripMenuItem, metalWolfChaosMMDConvertToolStripMenuItem, metalWolfChaosOTRConvertToolStripMenuItem, metalWolfChaosMDLConvertUnfinishedMostlyWorksToolStripMenuItem, toolStripSeparator12, generateMCGMCPToolStripMenuItem, convertModelToDemonsSoulsflverToolStripMenuItem, toolStripSeparator11, convertDemonsSoulsPS5CmdlToFbxToolStripMenuItem, convertDemonsSoulsPS5ctxrToolStripMenuItem, tryToDecompressShadowOfTheColossusFileToolStripMenuItem, noteShadowOfTheColossusPS4psarcsMUSTHaveTheirContentsPlacedInTheGamesEbootbinDirectoryToolStripMenuItem });
+            otherGamesToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { convertSoulsflverTofbxToolStripMenuItem, exportWithMetadataToolStripMenuItem, fixFromSoftMeshMirroringToolStripMenuItem, applyMaterialNamesToMeshToolStripMenuItem, transformMeshToolStripMenuItem, doNotAdjustRootRotationrequiresAddedRootNodeToolStripMenuItem, toolStripSeparator14, setSoulsGameToolStripMenuItem, extractSoulsMapObjectLayoutFrommsbToolStripMenuItem, mSBExtractionExtractUnreferencedModelsAndTexturesToolStripMenuItem, mSBExtractionSeparateExtractionByModelToolStripMenuItem, toolStripSeparator15, dumpAllFromSoulsbndToolStripMenuItem, toolStripSeparator16, mWCBNDExtractToolStripMenuItem, otogi12datExtractToolStripMenuItem, mWCBNDPackToolStripMenuItem, metalWolfChaosMMDConvertToolStripMenuItem, metalWolfChaosOTRConvertToolStripMenuItem, metalWolfChaosMDLConvertUnfinishedMostlyWorksToolStripMenuItem, toolStripSeparator12, generateMCGMCPToolStripMenuItem, convertModelToDemonsSoulsflverToolStripMenuItem, toolStripSeparator11, convertDemonsSoulsPS5CmdlToFbxToolStripMenuItem, convertDemonsSoulsPS5ctxrToolStripMenuItem, tryToDecompressShadowOfTheColossusFileToolStripMenuItem, noteShadowOfTheColossusPS4psarcsMUSTHaveTheirContentsPlacedInTheGamesEbootbinDirectoryToolStripMenuItem });
             otherGamesToolStripMenuItem.Name = "otherGamesToolStripMenuItem";
             otherGamesToolStripMenuItem.Size = new Size(344, 22);
             otherGamesToolStripMenuItem.Text = "Souls And FromSoft/BluePoint Games";
@@ -497,14 +496,6 @@
             transformMeshToolStripMenuItem.Size = new Size(650, 22);
             transformMeshToolStripMenuItem.Text = "Transform Mesh";
             transformMeshToolStripMenuItem.Click += SaveSoulsSettings;
-            // 
-            // addRootNodeLikeBlendersBBToolSMDImportToolStripMenuItem
-            // 
-            addRootNodeLikeBlendersBBToolSMDImportToolStripMenuItem.CheckOnClick = true;
-            addRootNodeLikeBlendersBBToolSMDImportToolStripMenuItem.Name = "addRootNodeLikeBlendersBBToolSMDImportToolStripMenuItem";
-            addRootNodeLikeBlendersBBToolSMDImportToolStripMenuItem.Size = new Size(650, 22);
-            addRootNodeLikeBlendersBBToolSMDImportToolStripMenuItem.Text = "Add Root Node (Like Blender's BBTool SMD import)";
-            addRootNodeLikeBlendersBBToolSMDImportToolStripMenuItem.Click += SaveSoulsSettings;
             // 
             // doNotAdjustRootRotationrequiresAddedRootNodeToolStripMenuItem
             // 
@@ -576,6 +567,13 @@
             mWCBNDExtractToolStripMenuItem.Size = new Size(650, 22);
             mWCBNDExtractToolStripMenuItem.Text = "Otogi 1/2/Metal Wolf Chaos BND, M/TData, Dev/Div Extract";
             mWCBNDExtractToolStripMenuItem.Click += mWCBNDExtractToolStripMenuItem_Click;
+            // 
+            // otogi12datExtractToolStripMenuItem
+            // 
+            otogi12datExtractToolStripMenuItem.Name = "otogi12datExtractToolStripMenuItem";
+            otogi12datExtractToolStripMenuItem.Size = new Size(650, 22);
+            otogi12datExtractToolStripMenuItem.Text = "Otogi 1/2 .dat Extract";
+            otogi12datExtractToolStripMenuItem.Click += otogi12datExtractToolStripMenuItem_Click;
             // 
             // mWCBNDPackToolStripMenuItem
             // 
@@ -1594,13 +1592,6 @@
             splitter1.TabIndex = 2;
             splitter1.TabStop = false;
             // 
-            // otogi12datExtractToolStripMenuItem
-            // 
-            otogi12datExtractToolStripMenuItem.Name = "otogi12datExtractToolStripMenuItem";
-            otogi12datExtractToolStripMenuItem.Size = new Size(650, 22);
-            otogi12datExtractToolStripMenuItem.Text = "Otogi 1/2 .dat Extract";
-            otogi12datExtractToolStripMenuItem.Click += otogi12datExtractToolStripMenuItem_Click;
-            // 
             // AquaModelTool
             // 
             AllowDrop = true;
@@ -1799,7 +1790,6 @@
         private ToolStripMenuItem readAniModelToolStripMenuItem;
         private ToolStripMenuItem protoThingToItemModelToolStripMenuItem;
         private ToolStripMenuItem readLibModelToolStripMenuItem;
-        private ToolStripMenuItem addRootNodeLikeBlendersBBToolSMDImportToolStripMenuItem;
         private ToolStripMenuItem doNotAdjustRootRotationrequiresAddedRootNodeToolStripMenuItem;
         private ToolStripMenuItem readGalleryEggToolStripMenuItem;
         private ToolStripMenuItem tryToDecompressShadowOfTheColossusFileToolStripMenuItem;
