@@ -6122,8 +6122,8 @@ namespace AquaModelTool
             if (openFileDialog.ShowDialog() == CommonFileDialogResult.Ok)
             {
                 List<string> output = new List<string>();
+                Dictionary<string, string> outDict = new Dictionary<string, string>();
                 var ctxrFiles = Directory.GetFiles(openFileDialog.FileName, "*.ctxr", SearchOption.AllDirectories);
-                List<int> test = new List<int>();
                 /*
                 foreach (var ctxrPath in ctxrFiles)
                 {
@@ -6144,10 +6144,24 @@ namespace AquaModelTool
                 }*/
                 Parallel.ForEach(ctxrFiles, file =>
                 {
-                    var ctxr = new CTXR(File.ReadAllBytes(file), true);
-                    ctxr.WriteToDDS(file, file.Replace(".ctxr", ".dds"));
+                    if(!file.Contains("\\ui\\"))
+                    {
+                        var bytes = File.ReadAllBytes(file);
+                        var ctxr = new CTXR(bytes, false);
+                        var texWidth = CTXR.GetDesResolutionComponent(ctxr.WidthBaseByte, ctxr.WidthMultiplierByte, 0xC0);
+                        var texHeight = CTXR.GetDesResolutionComponent(ctxr.HeightBaseByte, ctxr.HeightMultiplierByte, 0x80);
+                        if (texWidth != texHeight && ctxr.WidthBaseByte != 0xBF && ctxr.textureFormat != -1 )
+                        {
+                            outDict.Add(file.Replace(openFileDialog.FileName, ""), $"0x{ctxr.textureFormat:X} Width: {texWidth} Height: {texHeight} {file.Replace(openFileDialog.FileName, "")} ");
+                        }
+                    }
                 });
-                test.Sort();
+                var keys = outDict.Keys.ToList();
+                keys.Sort();
+                foreach(var key in keys)
+                {
+                    output.Add(outDict[key]);
+                }
                 File.WriteAllLines(Path.Combine(openFileDialog.FileName, "CTXRInfo.txt"), output);
             }
         }
@@ -6394,8 +6408,6 @@ namespace AquaModelTool
 
         private void readFlverTestToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            var flver = SoulsFormats.SoulsFile<SoulsFormats.FLVER2>.Read(File.ReadAllBytes(@"C:\Users\Shadi\Downloads\c3460 (1).flver"));
-            var flverMod = SoulsFormats.SoulsFile<SoulsFormats.FLVER2>.Read(@"C:\Users\Shadi\Downloads\c3460_edited.flver");
         }
 
         private void otogi12datExtractToolStripMenuItem_Click(object sender, EventArgs e)
