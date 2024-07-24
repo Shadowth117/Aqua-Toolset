@@ -221,6 +221,7 @@
             testReadOldCMDLToolStripMenuItem = new ToolStripMenuItem();
             readGEEggToolStripMenuItem = new ToolStripMenuItem();
             readFlverTestToolStripMenuItem = new ToolStripMenuItem();
+            readWriteTexTestToolStripMenuItem = new ToolStripMenuItem();
             filePanel = new Panel();
             splitter1 = new Splitter();
             menuStrip1.SuspendLayout();
@@ -1399,7 +1400,7 @@
             // 
             // debug3ToolStripMenuItem
             // 
-            debug3ToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { readPATHToolStripMenuItem, oldBillyMC2ConvertToolStripMenuItem, readPOF0ToolStripMenuItem, readStageDefToolStripMenuItem, readGrassToolStripMenuItem, readMRPRoomGoodsToolStripMenuItem, decryptINCToolStripMenuItem, readARCToolStripMenuItem, dumpBillyArcPof0ToolStripMenuItem, dumpExtremeAnimsToolStripMenuItem, readGEPlayerToolStripMenuItem, readAniModelToolStripMenuItem, readLibModelToolStripMenuItem, protoThingToItemModelToolStripMenuItem, readGalleryEggToolStripMenuItem, readCMDLToolStripMenuItem, checkToolStripMenuItem, checkAllcmshToolStripMenuItem, deswizzleTestToolStripMenuItem, checkAllBillySetObjToolStripMenuItem, ps3DdsTestToolStripMenuItem, testReadOldCMDLToolStripMenuItem, readGEEggToolStripMenuItem, readFlverTestToolStripMenuItem });
+            debug3ToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { readPATHToolStripMenuItem, oldBillyMC2ConvertToolStripMenuItem, readPOF0ToolStripMenuItem, readStageDefToolStripMenuItem, readGrassToolStripMenuItem, readMRPRoomGoodsToolStripMenuItem, decryptINCToolStripMenuItem, readARCToolStripMenuItem, dumpBillyArcPof0ToolStripMenuItem, dumpExtremeAnimsToolStripMenuItem, readGEPlayerToolStripMenuItem, readAniModelToolStripMenuItem, readLibModelToolStripMenuItem, protoThingToItemModelToolStripMenuItem, readGalleryEggToolStripMenuItem, readCMDLToolStripMenuItem, checkToolStripMenuItem, checkAllcmshToolStripMenuItem, deswizzleTestToolStripMenuItem, checkAllBillySetObjToolStripMenuItem, ps3DdsTestToolStripMenuItem, testReadOldCMDLToolStripMenuItem, readGEEggToolStripMenuItem, readFlverTestToolStripMenuItem, readWriteTexTestToolStripMenuItem });
             debug3ToolStripMenuItem.Name = "debug3ToolStripMenuItem";
             debug3ToolStripMenuItem.Size = new Size(60, 23);
             debug3ToolStripMenuItem.Text = "Debug3";
@@ -1569,8 +1570,15 @@
             // 
             readFlverTestToolStripMenuItem.Name = "readFlverTestToolStripMenuItem";
             readFlverTestToolStripMenuItem.Size = new Size(203, 22);
-            readFlverTestToolStripMenuItem.Text = "ReadFlverTest";
+            readFlverTestToolStripMenuItem.Text = "DecompressSoulsFile";
             readFlverTestToolStripMenuItem.Click += readFlverTestToolStripMenuItem_Click;
+            // 
+            // readWriteTexTestToolStripMenuItem
+            // 
+            readWriteTexTestToolStripMenuItem.Name = "readWriteTexTestToolStripMenuItem";
+            readWriteTexTestToolStripMenuItem.Size = new Size(203, 22);
+            readWriteTexTestToolStripMenuItem.Text = "ReadWriteTexTest";
+            readWriteTexTestToolStripMenuItem.Click += readWriteTexTestToolStripMenuItem_Click;
             // 
             // filePanel
             // 
@@ -1808,6 +1816,7 @@
         private ToolStripMenuItem readGEEggToolStripMenuItem;
         private ToolStripMenuItem readFlverTestToolStripMenuItem;
         private ToolStripMenuItem otogi12datExtractToolStripMenuItem;
+        private ToolStripMenuItem readWriteTexTestToolStripMenuItem;
     }
 }
 

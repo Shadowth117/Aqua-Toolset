@@ -30,7 +30,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ZamboniLib", "PSO2-Aqua-Lib
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnluacNET", "PSO2-Aqua-Library\UnluacNET\UnluacNET.csproj", "{ED5D3E22-804B-4BAA-BD7F-F47F19804CF8}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SoulsFormats", "PSO2-Aqua-Library\SoulsFormats\SoulsFormats\SoulsFormats.csproj", "{A55D0A52-904C-4BF2-970B-17299B433588}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SoulsFormats", "PSO2-Aqua-Library\SoulsFormatsNEXT\SoulsFormats\SoulsFormats.csproj", "{A55D0A52-904C-4BF2-970B-17299B433588}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SAToolsShared", "SAToolsShared", "{195E7C54-CE52-4EFD-B642-1BB6A9AC274F}"
 EndProject

@@ -6079,7 +6079,7 @@ namespace AquaModelTool
                         }
 
                         //Add back on end bytes to match uncompressed files
-                        var tempFile = Oodle.OodleDecompress(fileBytes, decompLength);
+                        var tempFile = Zamboni.Oodle.OodleDecompress(fileBytes, decompLength);
                         if (tempFile != null)
                         {
                             var newFile = new byte[decompLength + 0xC];
@@ -6144,13 +6144,13 @@ namespace AquaModelTool
                 }*/
                 Parallel.ForEach(ctxrFiles, file =>
                 {
-                    if(!file.Contains("\\ui\\"))
+                    if (!file.Contains("\\ui\\"))
                     {
                         var bytes = File.ReadAllBytes(file);
                         var ctxr = new CTXR(bytes, false);
                         var texWidth = CTXR.GetDesResolutionComponent(ctxr.WidthBaseByte, ctxr.WidthMultiplierByte, 0xC0);
                         var texHeight = CTXR.GetDesResolutionComponent(ctxr.HeightBaseByte, ctxr.HeightMultiplierByte, 0x80);
-                        if (texWidth != texHeight && ctxr.WidthBaseByte != 0xBF && ctxr.textureFormat != -1 )
+                        if (texWidth != texHeight && ctxr.WidthBaseByte != 0xBF && ctxr.textureFormat != -1)
                         {
                             outDict.Add(file.Replace(openFileDialog.FileName, ""), $"0x{ctxr.textureFormat:X} Width: {texWidth} Height: {texHeight} {file.Replace(openFileDialog.FileName, "")} ");
                         }
@@ -6158,7 +6158,7 @@ namespace AquaModelTool
                 });
                 var keys = outDict.Keys.ToList();
                 keys.Sort();
-                foreach(var key in keys)
+                foreach (var key in keys)
                 {
                     output.Add(outDict[key]);
                 }
@@ -6408,6 +6408,22 @@ namespace AquaModelTool
 
         private void readFlverTestToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            var openFileDialog = new OpenFileDialog()
+            {
+                Title = "Select dcx File",
+                Filter = ".tpf.dcx files|*.tpf.dcx",
+                FileName = "",
+                Multiselect = true
+            };
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                foreach(var file in openFileDialog.FileNames)
+                {
+                    var fileData = SoulsFile<TPF>.Read(file);
+                    fileData.Compression = DCX.Type.None;
+                    File.WriteAllBytes(file.Replace("tpf.dcx", "tpf"), fileData.Write());
+                }
+            }
         }
 
         private void otogi12datExtractToolStripMenuItem_Click(object sender, EventArgs e)
@@ -6429,7 +6445,7 @@ namespace AquaModelTool
                     var mdat = SoulsFile<SoulsFormats.Otogi2.DAT>.Read(file);
 
                     Directory.CreateDirectory(outPathBase);
-                    if(mdat.Data1 != null)
+                    if (mdat.Data1 != null)
                     {
                         File.WriteAllBytes(Path.Combine(outPathBase, fileBase + "_1.mdl"), mdat.Data1);
                     }
@@ -6441,10 +6457,37 @@ namespace AquaModelTool
                     {
                         File.WriteAllBytes(Path.Combine(outPathBase, fileBase + "_3"), mdat.Data3);
                     }
-                    foreach(var tex in mdat.Textures)
+                    foreach (var tex in mdat.Textures)
                     {
                         File.WriteAllBytes(Path.Combine(outPathBase, tex.Name), tex.Data);
                     }
+                }
+            }
+        }
+
+        private void readWriteTexTestToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var openFileDialog = new OpenFileDialog()
+            {
+                Title = "Select TPF File",
+                Filter = ".tpf files|*.tpf",
+                FileName = "",
+                Multiselect = true
+            };
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                foreach (var file in openFileDialog.FileNames)
+                {
+                    var a = SoulsFile<TPF>.Read(file);
+                    for(int i = 0; i < a.Textures.Count; i++)
+                    {
+                        var tex = a.Textures[i];
+                        var texturea = Headerizer.Headerize(tex);
+                        var b = new TPF.Texture(tex.Name, tex.Format, tex.Flags1, texturea, TPF.TPFPlatform.PS4);
+                        a.Textures[i] = b;
+                    }
+
+                    File.WriteAllBytes(file + "_testOut.tpf", a.Write());
                 }
             }
         }
