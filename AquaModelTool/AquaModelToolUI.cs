@@ -148,7 +148,6 @@ namespace AquaModelTool
             transformMeshToolStripMenuItem.Checked = smtSetting.transformMesh;
             mSBExtractionExtractUnreferencedModelsAndTexturesToolStripMenuItem.Checked = smtSetting.extractUnreferencedMapData;
             mSBExtractionSeparateExtractionByModelToolStripMenuItem.Checked = smtSetting.separateMSBDumpByModel;
-            doNotAdjustRootRotationrequiresAddedRootNodeToolStripMenuItem.Checked = smtSetting.doNotAdjustRootRotation;
 
             SoulsConvert.game = smtSetting.soulsGame;
             SetSoulsGameToolStripText();
@@ -4308,7 +4307,6 @@ namespace AquaModelTool
             smtSetting.soulsGame = SoulsConvert.game;
             smtSetting.extractUnreferencedMapData = mSBExtractionExtractUnreferencedModelsAndTexturesToolStripMenuItem.Checked;
             smtSetting.separateMSBDumpByModel = mSBExtractionSeparateExtractionByModelToolStripMenuItem.Checked;
-            smtSetting.doNotAdjustRootRotation = doNotAdjustRootRotationrequiresAddedRootNodeToolStripMenuItem.Checked;
 
             string smtSettingText = JsonSerializer.Serialize(smtSetting, jss);
             File.WriteAllText(mainSettingsPath + soulsSettingsFile, smtSettingText);
@@ -4852,7 +4850,6 @@ namespace AquaModelTool
             SoulsConvert.transformMesh = transformMeshToolStripMenuItem.Checked;
             SoulsConvert.extractUnreferencedMapData = extractSoulsMapObjectLayoutFrommsbToolStripMenuItem.Checked;
             SoulsConvert.separateMSBDumpByModel = mSBExtractionSeparateExtractionByModelToolStripMenuItem.Checked;
-            SoulsConvert.doNotAdjustRootRotation = doNotAdjustRootRotationrequiresAddedRootNodeToolStripMenuItem.Checked;
         }
 
         private void readSTGToolStripMenuItem_Click(object sender, EventArgs e)

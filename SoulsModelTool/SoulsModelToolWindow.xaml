@@ -53,13 +53,6 @@
                                   Click="smtSettingSet" />
                         <CheckBox x:Name="transformMeshCB" Content="Transform mesh" IsChecked="True"
                                   Click="smtSettingSet" />
-                        <CheckBox x:Name="addRootNodeCB" Content="Add root node (Like Blender's BBTool SMD import)"
-                                  IsChecked="True"
-                                  Click="smtSettingSet" />
-                        <CheckBox x:Name="doNotAdjustRootRotCB"
-                                  Content="Do not adjust root rotation (Requires &quot;Add root node&quot;)"
-                                  IsChecked="False"
-                                  Click="smtSettingSet" />
                     </StackPanel>
                 </GroupBox>
                 <GroupBox Header="MSB extraction">
