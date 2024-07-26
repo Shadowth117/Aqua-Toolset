@@ -1,6 +1,7 @@
 ﻿using AquaModelLibrary.Core.FromSoft;
 using AquaModelLibrary.Core.ToolUX;
 using AquaModelLibrary.Data.FromSoft;
+using AquaModelLibrary.Data.Utility;
 using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -27,6 +28,7 @@ namespace SoulsModelTool
             toCMDL = 4, //lol
             toObj = 5,
             mcgMCP = 6,
+            toSMD = 7,
         }
 
         private void Application_Startup(object sender, StartupEventArgs e)
@@ -66,7 +68,12 @@ namespace SoulsModelTool
                     switch (argProcessed)
                     {
                         case "-tofbx":
+                            smtSetting.exportFormat = ExportFormat.Fbx;
                             action = SoulsModelAction.toFBX;
+                            break;
+                        case "-tosmd":
+                            smtSetting.exportFormat = ExportFormat.Smd;
+                            action = SoulsModelAction.toSMD;
                             break;
                         case "-toflver":
                             action = SoulsModelAction.toFlver;
@@ -86,13 +93,32 @@ namespace SoulsModelTool
                         case "-toobj":
                             action = SoulsModelAction.toObj;
                             break;
-                        //Removes from soft mirroring, ie we want to mirror the mesh
+                        //Old behavior, applies an automatic rotation to the model in fbx
+                        case "-coordoldaqua":
+                        case "-coordopengl":
+                        case "-y_up":
+                            smtSetting.coordSystem = CoordSystem.OpenGL;
+                            break;
+                        case "-coordbbtool":
+                        case "-coordmax":
+                        case "-z_up":
+                            smtSetting.coordSystem = CoordSystem.Max;
+                            break;
+                        //Removes from soft mirroring
+                        case "-mirrorz":
                         case "-nomirror":
-                            smtSetting.mirrorMesh = true;
+                            smtSetting.mirrorType = AquaModelLibrary.Data.Utility.MirrorType.Z;
+                            break;
+                        case "-mirrory":
+                            smtSetting.mirrorType = AquaModelLibrary.Data.Utility.MirrorType.Y;
+                            break;
+                        case "-mirrorx":
+                            smtSetting.mirrorType = AquaModelLibrary.Data.Utility.MirrorType.X;
                             break;
                         //Leave from soft mirroring, ie don't touch mirroring
+                        case "-fromsoftmirror":
                         case "-mirror":
-                            smtSetting.mirrorMesh = false;
+                            smtSetting.mirrorType = MirrorType.None;
                             break;
                         case "-dontdumpmetadata":
                             smtSetting.useMetaData = false;
@@ -131,6 +157,7 @@ namespace SoulsModelTool
                 switch (action)
                 {
                     case SoulsModelAction.toFBX:
+                    case SoulsModelAction.toSMD:
                         FileHandler.ConvertFileSMT(filePaths.ToArray());
                         break;
                     case SoulsModelAction.toObj:

@@ -1,12 +1,12 @@
 ﻿using AquaModelLibrary.Core.FromSoft;
 using AquaModelLibrary.Core.ToolUX;
 using AquaModelLibrary.Data.FromSoft;
+using AquaModelLibrary.Data.Utility;
 using Microsoft.Win32;
 using Microsoft.WindowsAPICodePack.Dialogs;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -38,13 +38,22 @@ namespace SoulsModelTool
             mainSetting = _mainSetting;
             InitializeComponent();
             useMetaDataCB.IsChecked = smtSetting.useMetaData;
-            mirrorCB.IsChecked = smtSetting.mirrorMesh;
             matNamesToMeshCB.IsChecked = smtSetting.applyMaterialNamesToMesh;
             transformMeshCB.IsChecked = smtSetting.transformMesh;
             extractUnreferencedFilesCB.IsChecked = smtSetting.extractUnreferencedMapData;
             separateModelsCB.IsChecked = smtSetting.separateMSBDumpByModel;
-            doNotAdjustRootRotCB.IsChecked = smtSetting.doNotAdjustRootRotation;
-            doNotAdjustRootRotCB.IsEnabled = (bool)addRootNodeCB.IsChecked;
+            exportFormatCB.Items.Add("Fbx (Default)");
+            exportFormatCB.Items.Add("Smd (Not recommended)");
+            exportFormatCB.ToolTip = "Smd export will not contain vertex colors, more than one uv channel, detailed material names, mesh names, etc. Not recommended, but you can use it!";
+            mirrorTypeCB.Items.Add("No Mirroring");
+            mirrorTypeCB.Items.Add("Mirror Z (Default)");
+            mirrorTypeCB.Items.Add("Mirror Y");
+            mirrorTypeCB.Items.Add("Mirror X");
+            coordSystemCB.Items.Add("OpenGL Y Up (Classic, adds 90 degrees)");
+            coordSystemCB.Items.Add("BB Tool Z Up (Default)");
+            exportFormatCB.SelectedIndex = (int)smtSetting.exportFormat;
+            mirrorTypeCB.SelectedIndex = (int)smtSetting.mirrorType;
+            coordSystemCB.SelectedIndex = (int)smtSetting.coordSystem;
 
             // using var ctx = new Assimp.AssimpContext();
             // var formats = ctx.GetSupportedImportFormats().ToList();
@@ -105,6 +114,21 @@ namespace SoulsModelTool
             {
                 scaleUD.Value = 1;
             }
+        }
+
+        private void smtSettingSet(object sender = null, RoutedEventArgs e = null)
+        {
+            smtSetting.useMetaData = (bool)useMetaDataCB.IsChecked;
+            smtSetting.applyMaterialNamesToMesh = (bool)matNamesToMeshCB.IsChecked;
+            smtSetting.transformMesh = (bool)transformMeshCB.IsChecked;
+            smtSetting.soulsGame = SoulsConvert.game;
+            smtSetting.extractUnreferencedMapData = (bool)extractUnreferencedFilesCB.IsChecked;
+            smtSetting.separateMSBDumpByModel = (bool)separateModelsCB.IsChecked;
+            smtSetting.exportFormat = (ExportFormat)exportFormatCB.SelectedIndex;
+            smtSetting.coordSystem = (CoordSystem)coordSystemCB.SelectedIndex;
+            smtSetting.mirrorType = (MirrorType)mirrorTypeCB.SelectedIndex;
+            string smtSettingText = JsonConvert.SerializeObject(smtSetting, jss);
+            File.WriteAllText(settingsPath + settingsFile, smtSettingText);
         }
 
         private void ConvertModelToFBX(object sender, RoutedEventArgs e)
@@ -200,21 +224,6 @@ namespace SoulsModelTool
                 SoulsGame.DemonsSouls);
         }
 
-        private void smtSettingSet(object sender = null, RoutedEventArgs e = null)
-        {
-            smtSetting.useMetaData = (bool)useMetaDataCB.IsChecked;
-            smtSetting.mirrorMesh = (bool)mirrorCB.IsChecked;
-            smtSetting.applyMaterialNamesToMesh = (bool)matNamesToMeshCB.IsChecked;
-            smtSetting.transformMesh = (bool)transformMeshCB.IsChecked;
-            smtSetting.soulsGame = SoulsConvert.game;
-            smtSetting.extractUnreferencedMapData = (bool)extractUnreferencedFilesCB.IsChecked;
-            smtSetting.separateMSBDumpByModel = (bool)separateModelsCB.IsChecked;
-            smtSetting.doNotAdjustRootRotation = (bool)doNotAdjustRootRotCB.IsChecked;
-            doNotAdjustRootRotCB.IsEnabled = (bool)addRootNodeCB.IsChecked;
-            string smtSettingText = JsonConvert.SerializeObject(smtSetting, jss);
-            File.WriteAllText(settingsPath + settingsFile, smtSettingText);
-        }
-
         private bool MSBGameSet()
         {
             if (SoulsConvert.game == SoulsGame.None)
@@ -280,7 +289,7 @@ namespace SoulsModelTool
             SetGameOption.Header = $"Set Game (For MSB Extraction) | Current Game: {SoulsConvert.game}";
         }
 
-        private void comboBox_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        private void scaleCBSelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
         {
             if (scaleHandlingCB.SelectedIndex == 2)
             {
@@ -295,6 +304,11 @@ namespace SoulsModelTool
         private void scaleUDChanged(object sender, RoutedPropertyChangedEventArgs<object> routedEvent)
         {
             mainSetting.customScaleValue = scaleUD.Value.ToString();
+        }
+
+        private void exportFormatCBChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        {
+            smtSetting.exportFormat = (ExportFormat)exportFormatCB.SelectedIndex;
         }
 
         private void FileDrop(object sender, DragEventArgs e)
@@ -335,6 +349,21 @@ namespace SoulsModelTool
                     MSBModelExtractor.ExtractMSBMapModels(msb);
                 }
             }
+        }
+
+        private void mirrorTypeCB_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        {
+            smtSetting.mirrorType = (MirrorType)mirrorTypeCB.SelectedIndex;
+        }
+
+        private void coordSystemCB_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        {
+            smtSetting.coordSystem = (CoordSystem)coordSystemCB.SelectedIndex;
+        }
+
+        private void exportFormatCB_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        {
+            smtSetting.exportFormat = (ExportFormat)exportFormatCB.SelectedIndex;
         }
     }
 }

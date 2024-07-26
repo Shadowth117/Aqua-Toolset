@@ -62,8 +62,10 @@
             toolStripSeparator4 = new ToolStripSeparator();
             otherGamesToolStripMenuItem = new ToolStripMenuItem();
             convertSoulsflverTofbxToolStripMenuItem = new ToolStripMenuItem();
+            exportFormatCB = new ToolStripComboBox();
+            soulsMirroringCB = new ToolStripComboBox();
+            soulsCoordSystemCB = new ToolStripComboBox();
             exportWithMetadataToolStripMenuItem = new ToolStripMenuItem();
-            fixFromSoftMeshMirroringToolStripMenuItem = new ToolStripMenuItem();
             applyMaterialNamesToMeshToolStripMenuItem = new ToolStripMenuItem();
             transformMeshToolStripMenuItem = new ToolStripMenuItem();
             toolStripSeparator14 = new ToolStripSeparator();
@@ -447,7 +449,7 @@
             // 
             // otherGamesToolStripMenuItem
             // 
-            otherGamesToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { convertSoulsflverTofbxToolStripMenuItem, exportWithMetadataToolStripMenuItem, fixFromSoftMeshMirroringToolStripMenuItem, applyMaterialNamesToMeshToolStripMenuItem, transformMeshToolStripMenuItem, toolStripSeparator14, setSoulsGameToolStripMenuItem, extractSoulsMapObjectLayoutFrommsbToolStripMenuItem, mSBExtractionExtractUnreferencedModelsAndTexturesToolStripMenuItem, mSBExtractionSeparateExtractionByModelToolStripMenuItem, toolStripSeparator15, dumpAllFromSoulsbndToolStripMenuItem, toolStripSeparator16, mWCBNDExtractToolStripMenuItem, otogi12datExtractToolStripMenuItem, mWCBNDPackToolStripMenuItem, metalWolfChaosMMDConvertToolStripMenuItem, metalWolfChaosOTRConvertToolStripMenuItem, metalWolfChaosMDLConvertUnfinishedMostlyWorksToolStripMenuItem, toolStripSeparator12, generateMCGMCPToolStripMenuItem, convertModelToDemonsSoulsflverToolStripMenuItem, toolStripSeparator11, convertDemonsSoulsPS5CmdlToFbxToolStripMenuItem, convertDemonsSoulsPS5ctxrToolStripMenuItem, tryToDecompressShadowOfTheColossusFileToolStripMenuItem, noteShadowOfTheColossusPS4psarcsMUSTHaveTheirContentsPlacedInTheGamesEbootbinDirectoryToolStripMenuItem });
+            otherGamesToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { convertSoulsflverTofbxToolStripMenuItem, exportFormatCB, soulsMirroringCB, soulsCoordSystemCB, exportWithMetadataToolStripMenuItem, applyMaterialNamesToMeshToolStripMenuItem, transformMeshToolStripMenuItem, toolStripSeparator14, setSoulsGameToolStripMenuItem, extractSoulsMapObjectLayoutFrommsbToolStripMenuItem, mSBExtractionExtractUnreferencedModelsAndTexturesToolStripMenuItem, mSBExtractionSeparateExtractionByModelToolStripMenuItem, toolStripSeparator15, dumpAllFromSoulsbndToolStripMenuItem, toolStripSeparator16, mWCBNDExtractToolStripMenuItem, otogi12datExtractToolStripMenuItem, mWCBNDPackToolStripMenuItem, metalWolfChaosMMDConvertToolStripMenuItem, metalWolfChaosOTRConvertToolStripMenuItem, metalWolfChaosMDLConvertUnfinishedMostlyWorksToolStripMenuItem, toolStripSeparator12, generateMCGMCPToolStripMenuItem, convertModelToDemonsSoulsflverToolStripMenuItem, toolStripSeparator11, convertDemonsSoulsPS5CmdlToFbxToolStripMenuItem, convertDemonsSoulsPS5ctxrToolStripMenuItem, tryToDecompressShadowOfTheColossusFileToolStripMenuItem, noteShadowOfTheColossusPS4psarcsMUSTHaveTheirContentsPlacedInTheGamesEbootbinDirectoryToolStripMenuItem });
             otherGamesToolStripMenuItem.Name = "otherGamesToolStripMenuItem";
             otherGamesToolStripMenuItem.Size = new Size(344, 22);
             otherGamesToolStripMenuItem.Text = "Souls And FromSoft/BluePoint Games";
@@ -456,8 +458,28 @@
             // 
             convertSoulsflverTofbxToolStripMenuItem.Name = "convertSoulsflverTofbxToolStripMenuItem";
             convertSoulsflverTofbxToolStripMenuItem.Size = new Size(650, 22);
-            convertSoulsflverTofbxToolStripMenuItem.Text = "Convert From Software .flver/.flv, .mdl to .fbx, dump .tpf. Can be in dcx/*bnd";
+            convertSoulsflverTofbxToolStripMenuItem.Text = "Convert From Software .flver/.flv, .mdl, dump .tpf. Can be in dcx/*bnd";
+            convertSoulsflverTofbxToolStripMenuItem.ToolTipText = "Smd export will not contain vertex colors, more than one uv channel, detailed material names, mesh names, etc. Not recommended, but you can use it!";
             convertSoulsflverTofbxToolStripMenuItem.Click += convertSoulsflverTofbxToolStripMenuItem_Click;
+            // 
+            // exportFormatCB
+            // 
+            exportFormatCB.DropDownWidth = 200;
+            exportFormatCB.Name = "exportFormatCB";
+            exportFormatCB.Size = new Size(250, 23);
+            exportFormatCB.Click += SaveSoulsSettings;
+            // 
+            // soulsMirroringCB
+            // 
+            soulsMirroringCB.Name = "soulsMirroringCB";
+            soulsMirroringCB.Size = new Size(250, 23);
+            soulsMirroringCB.Click += SaveSoulsSettings;
+            // 
+            // soulsCoordSystemCB
+            // 
+            soulsCoordSystemCB.Name = "soulsCoordSystemCB";
+            soulsCoordSystemCB.Size = new Size(250, 23);
+            soulsCoordSystemCB.Click += SaveSoulsSettings;
             // 
             // exportWithMetadataToolStripMenuItem
             // 
@@ -468,16 +490,6 @@
             exportWithMetadataToolStripMenuItem.Size = new Size(650, 22);
             exportWithMetadataToolStripMenuItem.Text = "Convert flver with Metadata";
             exportWithMetadataToolStripMenuItem.Click += SaveSoulsSettings;
-            // 
-            // fixFromSoftMeshMirroringToolStripMenuItem
-            // 
-            fixFromSoftMeshMirroringToolStripMenuItem.Checked = true;
-            fixFromSoftMeshMirroringToolStripMenuItem.CheckOnClick = true;
-            fixFromSoftMeshMirroringToolStripMenuItem.CheckState = CheckState.Checked;
-            fixFromSoftMeshMirroringToolStripMenuItem.Name = "fixFromSoftMeshMirroringToolStripMenuItem";
-            fixFromSoftMeshMirroringToolStripMenuItem.Size = new Size(650, 22);
-            fixFromSoftMeshMirroringToolStripMenuItem.Text = "Fix FromSoft mesh mirroring";
-            fixFromSoftMeshMirroringToolStripMenuItem.Click += SaveSoulsSettings;
             // 
             // applyMaterialNamesToMeshToolStripMenuItem
             // 
@@ -1710,7 +1722,6 @@
         private System.Windows.Forms.ToolStripMenuItem parseDRBToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem applyMaterialNamesToMeshToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator12;
-        private System.Windows.Forms.ToolStripMenuItem fixFromSoftMeshMirroringToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem transformMeshToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem exportLODModelsIfInSameaqpToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem usePCDirectoriesToolStripMenuItem;
@@ -1807,6 +1818,9 @@
         private ToolStripMenuItem readFlverTestToolStripMenuItem;
         private ToolStripMenuItem otogi12datExtractToolStripMenuItem;
         private ToolStripMenuItem readWriteTexTestToolStripMenuItem;
+        private ToolStripComboBox exportFormatCB;
+        private ToolStripComboBox soulsMirroringCB;
+        private ToolStripComboBox soulsCoordSystemCB;
     }
 }
 

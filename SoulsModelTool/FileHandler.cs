@@ -33,13 +33,15 @@ namespace SoulsModelTool
         public static void SetSMTSettings(SMTSetting smtSetting)
         {
             SoulsConvert.useMetaData = smtSetting.useMetaData;
-            SoulsConvert.mirrorMesh = smtSetting.mirrorMesh;
+            SoulsConvert.mirrorType = smtSetting.mirrorType;
             SoulsConvert.applyMaterialNamesToMesh = smtSetting.applyMaterialNamesToMesh;
             SoulsConvert.transformMesh = smtSetting.transformMesh;
             SoulsConvert.extractUnreferencedMapData = smtSetting.extractUnreferencedMapData;
             SoulsConvert.game = smtSetting.soulsGame;
             SoulsConvert.separateMSBDumpByModel = smtSetting.separateMSBDumpByModel;
             SoulsConvert.doNotAdjustRootRotation = smtSetting.doNotAdjustRootRotation;
+            SoulsConvert.exportFormat = smtSetting.exportFormat;
+            SoulsConvert.coordSystem = smtSetting.coordSystem;
         }
 
         public static void ApplyModelImporterSettings(MainSetting mainSetting)

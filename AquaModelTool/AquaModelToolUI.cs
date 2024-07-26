@@ -42,7 +42,6 @@ using SoulsFormats;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Globalization;
-using System.IO;
 using System.Numerics;
 using System.Reflection;
 using System.Text;
@@ -142,8 +141,18 @@ namespace AquaModelTool
             this.Text = GetTitleString();
 
             //Souls Settings
+            exportFormatCB.Items.Add("Fbx (Default)");
+            exportFormatCB.Items.Add("Smd (Not recommended)");
+            soulsMirroringCB.Items.Add("No Mirroring");
+            soulsMirroringCB.Items.Add("Mirror Z (Default)");
+            soulsMirroringCB.Items.Add("Mirror Y");
+            soulsMirroringCB.Items.Add("Mirror X");
+            soulsCoordSystemCB.Items.Add("FBX OpenGL Y Up (Classic, adds 90 degrees)");
+            soulsCoordSystemCB.Items.Add("FBX BB Tool Z Up (Default)");
+            exportFormatCB.SelectedIndex = (int)smtSetting.exportFormat;
+            soulsMirroringCB.SelectedIndex = (int)smtSetting.mirrorType;
+            soulsCoordSystemCB.SelectedIndex = (int)smtSetting.coordSystem;
             exportWithMetadataToolStripMenuItem.Checked = smtSetting.useMetaData;
-            fixFromSoftMeshMirroringToolStripMenuItem.Checked = smtSetting.mirrorMesh;
             applyMaterialNamesToMeshToolStripMenuItem.Checked = smtSetting.applyMaterialNamesToMesh;
             transformMeshToolStripMenuItem.Checked = smtSetting.transformMesh;
             mSBExtractionExtractUnreferencedModelsAndTexturesToolStripMenuItem.Checked = smtSetting.extractUnreferencedMapData;
@@ -151,6 +160,40 @@ namespace AquaModelTool
 
             SoulsConvert.game = smtSetting.soulsGame;
             SetSoulsGameToolStripText();
+        }
+
+        private void SaveSoulsSettings(object sender, EventArgs e)
+        {
+            SaveSoulsSettingsInternal();
+        }
+
+        private void SaveSoulsSettingsInternal()
+        {
+            SMTSetting smtSetting = new SMTSetting();
+            smtSetting.useMetaData = exportWithMetadataToolStripMenuItem.Checked;
+            smtSetting.mirrorType = (MirrorType)soulsMirroringCB.SelectedIndex;
+            smtSetting.coordSystem = (CoordSystem)soulsCoordSystemCB.SelectedIndex;
+            smtSetting.applyMaterialNamesToMesh = applyMaterialNamesToMeshToolStripMenuItem.Checked;
+            smtSetting.transformMesh = transformMeshToolStripMenuItem.Checked;
+            smtSetting.soulsGame = SoulsConvert.game;
+            smtSetting.extractUnreferencedMapData = mSBExtractionExtractUnreferencedModelsAndTexturesToolStripMenuItem.Checked;
+            smtSetting.separateMSBDumpByModel = mSBExtractionSeparateExtractionByModelToolStripMenuItem.Checked;
+            smtSetting.exportFormat = (ExportFormat)exportFormatCB.SelectedIndex;
+
+            string smtSettingText = JsonSerializer.Serialize(smtSetting, jss);
+            File.WriteAllText(mainSettingsPath + soulsSettingsFile, smtSettingText);
+        }
+
+        private void SetSoulsConvertFromForms()
+        {
+            SoulsConvert.useMetaData = exportWithMetadataToolStripMenuItem.Checked;
+            SoulsConvert.applyMaterialNamesToMesh = applyMaterialNamesToMeshToolStripMenuItem.Checked;
+            SoulsConvert.mirrorType = (MirrorType)soulsMirroringCB.SelectedIndex;
+            SoulsConvert.coordSystem = (CoordSystem)soulsCoordSystemCB.SelectedIndex;
+            SoulsConvert.transformMesh = transformMeshToolStripMenuItem.Checked;
+            SoulsConvert.extractUnreferencedMapData = extractSoulsMapObjectLayoutFrommsbToolStripMenuItem.Checked;
+            SoulsConvert.separateMSBDumpByModel = mSBExtractionSeparateExtractionByModelToolStripMenuItem.Checked;
+            SoulsConvert.exportFormat = (ExportFormat)exportFormatCB.SelectedIndex;
         }
 
         public void ApplyModelImporterSettings()
@@ -1352,7 +1395,7 @@ namespace AquaModelTool
                         {
                             name = Path.Combine(Path.GetDirectoryName(name), Path.GetFileNameWithoutExtension(name) + $"_{i}.fbx");
                         }
-                        FbxExporterNative.ExportToFile(model, aqn, aqms, name, aqmFileNames, new List<System.Numerics.Matrix4x4>(), includeMetadata);
+                        FbxExporterNative.ExportToFile(model, aqn, aqms, name, aqmFileNames, new List<System.Numerics.Matrix4x4>(), includeMetadata, (int)CoordSystem.OpenGL);
                     }
                 }
             }
@@ -2141,7 +2184,7 @@ namespace AquaModelTool
                                             {
                                                 name = Path.Combine(dir, set.Key + $"_{i}.fbx");
                                             }
-                                            FbxExporterNative.ExportToFile(model, set.Value.aqn, new List<AquaMotion>(), name, new List<string>(), new List<System.Numerics.Matrix4x4>(), includeMetadataToolStripMenuItem.Checked);
+                                            FbxExporterNative.ExportToFile(model, set.Value.aqn, new List<AquaMotion>(), name, new List<string>(), new List<System.Numerics.Matrix4x4>(), includeMetadataToolStripMenuItem.Checked, (int)CoordSystem.OpenGL);
                                         }
                                     }
                                 }
@@ -3073,7 +3116,7 @@ namespace AquaModelTool
                         aqp.models[0].ConvertToLegacyTypes();
                         aqp.models[0].CreateTrueVertWeights();
 
-                        FbxExporterNative.ExportToFile(aqp.models[0], rel.aqn, new List<AquaMotion>(), Path.ChangeExtension(fname, ".fbx"), new List<string>(), new List<Matrix4x4>(), false);
+                        FbxExporterNative.ExportToFile(aqp.models[0], rel.aqn, new List<AquaMotion>(), Path.ChangeExtension(fname, ".fbx"), new List<string>(), new List<Matrix4x4>(), false, (int)CoordSystem.OpenGL);
                     }
                 }
             }
@@ -3854,7 +3897,7 @@ namespace AquaModelTool
                             {
                                 nom.GetPSO2MotionPSUBody(bones)
                             };
-                            FbxExporterNative.ExportToFile(aqp.models[0], bones, aqms, file.Replace(".nom", ".fbx"), new List<string>() { Path.GetFileName(file) }, new List<Matrix4x4>(), true);
+                            FbxExporterNative.ExportToFile(aqp.models[0], bones, aqms, file.Replace(".nom", ".fbx"), new List<string>() { Path.GetFileName(file) }, new List<Matrix4x4>(), true, (int)CoordSystem.OpenGL);
                         }
                     }
                 }
@@ -4292,26 +4335,6 @@ namespace AquaModelTool
             }
         }
 
-        private void SaveSoulsSettings(object sender, EventArgs e)
-        {
-            SaveSoulsSettingsInternal();
-        }
-
-        private void SaveSoulsSettingsInternal()
-        {
-            SMTSetting smtSetting = new SMTSetting();
-            smtSetting.useMetaData = exportWithMetadataToolStripMenuItem.Checked;
-            smtSetting.mirrorMesh = fixFromSoftMeshMirroringToolStripMenuItem.Checked;
-            smtSetting.applyMaterialNamesToMesh = applyMaterialNamesToMeshToolStripMenuItem.Checked;
-            smtSetting.transformMesh = transformMeshToolStripMenuItem.Checked;
-            smtSetting.soulsGame = SoulsConvert.game;
-            smtSetting.extractUnreferencedMapData = mSBExtractionExtractUnreferencedModelsAndTexturesToolStripMenuItem.Checked;
-            smtSetting.separateMSBDumpByModel = mSBExtractionSeparateExtractionByModelToolStripMenuItem.Checked;
-
-            string smtSettingText = JsonSerializer.Serialize(smtSetting, jss);
-            File.WriteAllText(mainSettingsPath + soulsSettingsFile, smtSettingText);
-        }
-
         private void scanPOS0GapToolStripMenuItem_Click(object sender, EventArgs e)
         {
             CommonOpenFileDialog goodFolderDialog = new CommonOpenFileDialog()
@@ -4696,7 +4719,7 @@ namespace AquaModelTool
 
             }
             var path = fldPath + $"_out.fbx";
-            FbxExporterNative.ExportToFileSets(aqpList, aqnList, modelNames, path, new List<List<Matrix4x4>>(), false);
+            FbxExporterNative.ExportToFileSets(aqpList, aqnList, modelNames, path, new List<List<Matrix4x4>>(), false, (int)CoordSystem.OpenGL);
 
         }
 
@@ -4840,16 +4863,6 @@ namespace AquaModelTool
                     MSBModelExtractor.ExtractMSBMapModels(file);
                 }
             }
-        }
-
-        private void SetSoulsConvertFromForms()
-        {
-            SoulsConvert.useMetaData = exportWithMetadataToolStripMenuItem.Checked;
-            SoulsConvert.applyMaterialNamesToMesh = applyMaterialNamesToMeshToolStripMenuItem.Checked;
-            SoulsConvert.mirrorMesh = fixFromSoftMeshMirroringToolStripMenuItem.Checked;
-            SoulsConvert.transformMesh = transformMeshToolStripMenuItem.Checked;
-            SoulsConvert.extractUnreferencedMapData = extractSoulsMapObjectLayoutFrommsbToolStripMenuItem.Checked;
-            SoulsConvert.separateMSBDumpByModel = mSBExtractionSeparateExtractionByModelToolStripMenuItem.Checked;
         }
 
         private void readSTGToolStripMenuItem_Click(object sender, EventArgs e)
@@ -5060,7 +5073,7 @@ namespace AquaModelTool
                             modelData.aqp.CreateTrueVertWeights();
 
                             var name = motionList.Count > 0 ? Path.Combine(outDir, $"{modelData.name}+animation.fbx") : Path.Combine(outDir, $"{modelData.name}.fbx");
-                            FbxExporterNative.ExportToFile(modelData.aqp, modelData.aqn, motionList, name, motionStrings, new List<Matrix4x4>(), false);
+                            FbxExporterNative.ExportToFile(modelData.aqp, modelData.aqn, motionList, name, motionStrings, new List<Matrix4x4>(), false, (int)CoordSystem.OpenGL);
                         }
                         if (modelData.nightAqp != null)
                         {
@@ -5071,7 +5084,7 @@ namespace AquaModelTool
                                 modelData.nightAqp.ConvertToLegacyTypes();
                                 modelData.nightAqp.CreateTrueVertWeights();
 
-                                FbxExporterNative.ExportToFile(modelData.nightAqp, modelData.aqn, motionList, Path.Combine(outDir, $"{modelData.name}+night.fbx"), motionStrings, new List<Matrix4x4>(), false);
+                                FbxExporterNative.ExportToFile(modelData.nightAqp, modelData.aqn, motionList, Path.Combine(outDir, $"{modelData.name}+night.fbx"), motionStrings, new List<Matrix4x4>(), false, (int)CoordSystem.OpenGL);
                             }
                         }
                         if (modelData.placementAqp != null)
@@ -5083,7 +5096,7 @@ namespace AquaModelTool
                                 modelData.placementAqp.ConvertToLegacyTypes();
                                 modelData.placementAqp.CreateTrueVertWeights();
 
-                                FbxExporterNative.ExportToFile(modelData.placementAqp, modelData.placementAqn, new List<AquaMotion>(), Path.Combine(outDir, $"{modelData.name}+transform.fbx"), new List<string>(), new List<Matrix4x4>(), false);
+                                FbxExporterNative.ExportToFile(modelData.placementAqp, modelData.placementAqn, new List<AquaMotion>(), Path.Combine(outDir, $"{modelData.name}+transform.fbx"), new List<string>(), new List<Matrix4x4>(), false, (int)CoordSystem.OpenGL);
                             }
                         }
                     }
@@ -5338,7 +5351,7 @@ namespace AquaModelTool
                             modelData.aqp.ConvertToLegacyTypes();
                             modelData.aqp.CreateTrueVertWeights();
 
-                            FbxExporterNative.ExportToFile(modelData.aqp, modelData.aqn, motionList, Path.Combine(outDir, Path.GetFileNameWithoutExtension(file) + $"_{modelData.name}.fbx"), motionStrings, new List<Matrix4x4>(), false);
+                            FbxExporterNative.ExportToFile(modelData.aqp, modelData.aqn, motionList, Path.Combine(outDir, Path.GetFileNameWithoutExtension(file) + $"_{modelData.name}.fbx"), motionStrings, new List<Matrix4x4>(), false, (int)CoordSystem.OpenGL);
                         }
                         if (modelData.nightAqp != null)
                         {
@@ -5349,7 +5362,7 @@ namespace AquaModelTool
                                 modelData.nightAqp.ConvertToLegacyTypes();
                                 modelData.nightAqp.CreateTrueVertWeights();
 
-                                FbxExporterNative.ExportToFile(modelData.nightAqp, modelData.aqn, motionList, Path.Combine(outDir, Path.GetFileNameWithoutExtension(file) + $"_{modelData.name}_night.fbx"), motionStrings, new List<Matrix4x4>(), false);
+                                FbxExporterNative.ExportToFile(modelData.nightAqp, modelData.aqn, motionList, Path.Combine(outDir, Path.GetFileNameWithoutExtension(file) + $"_{modelData.name}_night.fbx"), motionStrings, new List<Matrix4x4>(), false, (int)CoordSystem.OpenGL);
                             }
                         }
                     }
@@ -6414,7 +6427,7 @@ namespace AquaModelTool
             };
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
-                foreach(var file in openFileDialog.FileNames)
+                foreach (var file in openFileDialog.FileNames)
                 {
                     var fileData = SoulsFile<TPF>.Read(file);
                     fileData.Compression = DCX.Type.None;
@@ -6476,7 +6489,7 @@ namespace AquaModelTool
                 foreach (var file in openFileDialog.FileNames)
                 {
                     var a = SoulsFile<TPF>.Read(file);
-                    for(int i = 0; i < a.Textures.Count; i++)
+                    for (int i = 0; i < a.Textures.Count; i++)
                     {
                         var tex = a.Textures[i];
                         var texturea = Headerizer.Headerize(tex);

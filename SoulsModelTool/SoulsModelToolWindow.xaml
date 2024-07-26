@@ -47,8 +47,6 @@
                     <StackPanel>
                         <CheckBox x:Name="useMetaDataCB" Content="Convert FLVER with metadata" IsChecked="True"
                                   Click="smtSettingSet" />
-                        <CheckBox x:Name="mirrorCB" Content="Fix FromSoft mesh mirroring" IsChecked="True"
-                                  Click="smtSettingSet" />
                         <CheckBox x:Name="matNamesToMeshCB" Content="Apply material names to mesh"
                                   Click="smtSettingSet" />
                         <CheckBox x:Name="transformMeshCB" Content="Transform mesh" IsChecked="True"
@@ -69,10 +67,16 @@
                 </GroupBox>
             </StackPanel>
             <StackPanel Grid.Column="1" Style="{StaticResource AreaSpacing}">
+                <Label Target="{Binding ElementName=exportFormatCB}" Content="Export Format:" />
+                <ComboBox x:Name="exportFormatCB" Width="160" SelectionChanged="exportFormatCB_SelectionChanged" />
+                <Label Target="{Binding ElementName=mirrorTypeCB}" Content="Mirror Type:" />
+                <ComboBox x:Name="mirrorTypeCB" Width="160" SelectionChanged="mirrorTypeCB_SelectionChanged" />
+                <Label Target="{Binding ElementName=coordSystemCB}" Content="FBX Coordinate System:" />
+                <ComboBox x:Name="coordSystemCB" Width="160" SelectionChanged="coordSystemCB_SelectionChanged" />
                 <Label Target="{Binding ElementName=scaleUD}" Content="Custom Scale:" />
-                <xctk:DoubleUpDown x:Name="scaleUD" Width="120" Value="1" ValueChanged="scaleUDChanged" />
+                <xctk:DoubleUpDown x:Name="scaleUD" Width="160" Value="1" ValueChanged="scaleUDChanged" />
                 <Label Target="{Binding ElementName=scaleHandlingCB}" Content="Scale Handling:" />
-                <ComboBox x:Name="scaleHandlingCB" Width="120" SelectionChanged="comboBox_SelectionChanged" />
+                <ComboBox x:Name="scaleHandlingCB" Width="160" SelectionChanged="scaleCBSelectionChanged" />
             </StackPanel>
         </Grid>
     </StackPanel>
