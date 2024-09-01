@@ -14,6 +14,8 @@ using AquaModelLibrary.Data.BlueDragon;
 using AquaModelLibrary.Data.BluePoint.CAWS;
 using AquaModelLibrary.Data.BluePoint.CMDL;
 using AquaModelLibrary.Data.BluePoint.CTXR;
+using AquaModelLibrary.Data.CustomRoboBattleRevolution;
+using AquaModelLibrary.Data.CustomRoboBattleRevolution.Model;
 using AquaModelLibrary.Data.FromSoft;
 using AquaModelLibrary.Data.Ninja;
 using AquaModelLibrary.Data.Ninja.Model;
@@ -42,6 +44,7 @@ using SoulsFormats;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Globalization;
+using System.Net.Mail;
 using System.Numerics;
 using System.Reflection;
 using System.Text;
@@ -4980,7 +4983,7 @@ namespace AquaModelTool
             {
                 foreach (var file in openFileDialog.FileNames)
                 {
-                    switch (Path.GetExtension(file))
+                    switch (Path.GetExtension(file).ToLower())
                     {
                         case ".dat":
                             MTDATExtract.ExtractDAT(file);
@@ -6498,6 +6501,84 @@ namespace AquaModelTool
                     }
 
                     File.WriteAllBytes(file + "_testOut.tpf", a.Write());
+                }
+            }
+        }
+
+        private void pSOCryptTestToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var openFileDialog = new OpenFileDialog()
+            {
+                Title = "Select Bin File",
+                Filter = ".bin files|*.bin",
+                FileName = "",
+                Multiselect = true
+            };
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                foreach (var file in openFileDialog.FileNames)
+                {
+                    var fileBytes = File.ReadAllBytes(file);
+                    var seed = BitConverter.ToUInt32(fileBytes, 4);
+                    byte[] encryptedBuffer = new byte[fileBytes.Length - 0x8];
+                    Array.Copy(fileBytes, 8, encryptedBuffer, 0, fileBytes.Length - 0x8);
+                    var encrypter = new PlyMotionDataUtil.PSOV2Encryption(seed);
+                    var decryptedBytes = encrypter.Decrypt(encryptedBuffer);
+
+                    File.WriteAllBytes(file + "_decrypt", decryptedBytes);
+                    var decompBytes = PRSHelpers.PRSDecompress(decryptedBytes);
+                    File.WriteAllBytes(file + "_decomp", decompBytes);
+                }
+            }
+        }
+
+        private void customRoboGCSFDDumpToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var openFileDialog = new OpenFileDialog()
+            {
+                Title = "Select Bin File",
+                Filter = ".bin files|*.bin",
+                FileName = "",
+                Multiselect = true
+            };
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                foreach (var file in openFileDialog.FileNames)
+                {
+                    var sfd = new SFD(File.ReadAllBytes(file));
+                    var outDir = file + "_out";
+                    Directory.CreateDirectory(outDir);
+                    for (int i = 0; i < sfd.files.Count; i++)
+                    {
+                        File.WriteAllBytes(Path.Combine(outDir, $"file_{i}"), sfd.files[i]);
+                    }
+                }
+            }
+        }
+
+        private void customRoboPartReadToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+            var openFileDialog = new OpenFileDialog()
+            {
+                Title = "Select Part Model File",
+                FileName = "",
+                Multiselect = true
+            };
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                foreach (var file in openFileDialog.FileNames)
+                {
+                    var mdl = new CRBRPartModel(File.ReadAllBytes(file));
+                    string outDir = file + "_out";
+                    if(mdl.Textures.Count > 0)
+                    {
+                        Directory.CreateDirectory(outDir);
+                        foreach (var pair in mdl.Textures)
+                        {
+                            File.WriteAllBytes(Path.Combine(outDir, pair.Key.ToString("X") + ".tpl"), pair.Value.GetTPL());
+                        }
+                    }
                 }
             }
         }

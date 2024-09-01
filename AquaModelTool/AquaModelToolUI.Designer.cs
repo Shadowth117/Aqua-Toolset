@@ -135,13 +135,15 @@
             parsePSO2TextToolStripMenuItem = new ToolStripMenuItem();
             parsePSO2TextFolderSelectToolStripMenuItem = new ToolStripMenuItem();
             toolStripSeparator6 = new ToolStripSeparator();
-            checkAllShaderExtrasToolStripMenuItem = new ToolStripMenuItem();
             convertNATextToEnPatchToolStripMenuItem = new ToolStripMenuItem();
             generateCharacterFileSheetToolStripMenuItem = new ToolStripMenuItem();
-            parseVTBFToTextToolStripMenuItem = new ToolStripMenuItem();
+            toolStripSeparator19 = new ToolStripSeparator();
             assembleNGSMapToolStripMenuItem = new ToolStripMenuItem();
             convertMapTexturesTopngToolStripMenuItem = new ToolStripMenuItem();
             usePCDirectoriesToolStripMenuItem = new ToolStripMenuItem();
+            toolStripSeparator18 = new ToolStripSeparator();
+            parseVTBFToTextToolStripMenuItem = new ToolStripMenuItem();
+            checkAllShaderExtrasToolStripMenuItem = new ToolStripMenuItem();
             filenameButton = new ToolStripMenuItem();
             debugToolStripMenuItem = new ToolStripMenuItem();
             readBonesToolStripMenuItem = new ToolStripMenuItem();
@@ -223,8 +225,11 @@
             readGEEggToolStripMenuItem = new ToolStripMenuItem();
             readFlverTestToolStripMenuItem = new ToolStripMenuItem();
             readWriteTexTestToolStripMenuItem = new ToolStripMenuItem();
+            pSOCryptTestToolStripMenuItem = new ToolStripMenuItem();
+            customRoboGCSFDDumpToolStripMenuItem = new ToolStripMenuItem();
             filePanel = new Panel();
             splitter1 = new Splitter();
+            customRoboPartReadToolStripMenuItem = new ToolStripMenuItem();
             menuStrip1.SuspendLayout();
             SuspendLayout();
             // 
@@ -430,7 +435,7 @@
             // 
             // toolsToolStripMenuItem
             // 
-            toolsToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { updateClassicPlayerAnimToNGSAnimToolStripMenuItem, toolStripSeparator4, otherGamesToolStripMenuItem, otherGamesToolStripMenuItem1, otherGamesToolStripMenuItem2, otherGamesToolStripMenuItem3, toolStripSeparator5, batchPSO2ToFBXToolStripMenuItem, batchParsePSO2SetToTextToolStripMenuItem, legacyAqp2objObjExportToolStripMenuItem, legacyAqp2objBatchExportToolStripMenuItem, legacyAqp2objObjImportToolStripMenuItem, prmEffectModelExportToolStripMenuItem, prmEffectFromModelToolStripMenuItem, toolStripSeparator3, evtSkitLuaDecompilerToolStripMenuItem, convertTxtToPSO2TextToolStripMenuItem, convertTxtToPSO2TextFolderSelectToolStripMenuItem, parsePSO2TextToolStripMenuItem, parsePSO2TextFolderSelectToolStripMenuItem, toolStripSeparator6, checkAllShaderExtrasToolStripMenuItem, convertNATextToEnPatchToolStripMenuItem, generateCharacterFileSheetToolStripMenuItem, parseVTBFToTextToolStripMenuItem, assembleNGSMapToolStripMenuItem, convertMapTexturesTopngToolStripMenuItem, usePCDirectoriesToolStripMenuItem });
+            toolsToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { updateClassicPlayerAnimToNGSAnimToolStripMenuItem, toolStripSeparator4, otherGamesToolStripMenuItem, otherGamesToolStripMenuItem1, otherGamesToolStripMenuItem2, otherGamesToolStripMenuItem3, toolStripSeparator5, batchPSO2ToFBXToolStripMenuItem, batchParsePSO2SetToTextToolStripMenuItem, legacyAqp2objObjExportToolStripMenuItem, legacyAqp2objBatchExportToolStripMenuItem, legacyAqp2objObjImportToolStripMenuItem, prmEffectModelExportToolStripMenuItem, prmEffectFromModelToolStripMenuItem, toolStripSeparator3, evtSkitLuaDecompilerToolStripMenuItem, convertTxtToPSO2TextToolStripMenuItem, convertTxtToPSO2TextFolderSelectToolStripMenuItem, parsePSO2TextToolStripMenuItem, parsePSO2TextFolderSelectToolStripMenuItem, toolStripSeparator6, convertNATextToEnPatchToolStripMenuItem, generateCharacterFileSheetToolStripMenuItem, toolStripSeparator19, assembleNGSMapToolStripMenuItem, convertMapTexturesTopngToolStripMenuItem, usePCDirectoriesToolStripMenuItem, toolStripSeparator18, parseVTBFToTextToolStripMenuItem, checkAllShaderExtrasToolStripMenuItem });
             toolsToolStripMenuItem.Name = "toolsToolStripMenuItem";
             toolsToolStripMenuItem.Size = new Size(46, 23);
             toolsToolStripMenuItem.Text = "Tools";
@@ -962,13 +967,6 @@
             toolStripSeparator6.Name = "toolStripSeparator6";
             toolStripSeparator6.Size = new Size(341, 6);
             // 
-            // checkAllShaderExtrasToolStripMenuItem
-            // 
-            checkAllShaderExtrasToolStripMenuItem.Name = "checkAllShaderExtrasToolStripMenuItem";
-            checkAllShaderExtrasToolStripMenuItem.Size = new Size(344, 22);
-            checkAllShaderExtrasToolStripMenuItem.Text = "Check All Shader Extras";
-            checkAllShaderExtrasToolStripMenuItem.Click += checkAllShaderExtrasToolStripMenuItem_Click;
-            // 
             // convertNATextToEnPatchToolStripMenuItem
             // 
             convertNATextToEnPatchToolStripMenuItem.Name = "convertNATextToEnPatchToolStripMenuItem";
@@ -983,12 +981,10 @@
             generateCharacterFileSheetToolStripMenuItem.Text = "Generate File Reference Sheets";
             generateCharacterFileSheetToolStripMenuItem.Click += generateFileReferenceSheetsToolStripMenuItem_Click_1;
             // 
-            // parseVTBFToTextToolStripMenuItem
+            // toolStripSeparator19
             // 
-            parseVTBFToTextToolStripMenuItem.Name = "parseVTBFToTextToolStripMenuItem";
-            parseVTBFToTextToolStripMenuItem.Size = new Size(344, 22);
-            parseVTBFToTextToolStripMenuItem.Text = "Parse VTBF To Text";
-            parseVTBFToTextToolStripMenuItem.Click += parseVTBFToTextToolStripMenuItem_Click;
+            toolStripSeparator19.Name = "toolStripSeparator19";
+            toolStripSeparator19.Size = new Size(341, 6);
             // 
             // assembleNGSMapToolStripMenuItem
             // 
@@ -1015,6 +1011,25 @@
             usePCDirectoriesToolStripMenuItem.Size = new Size(344, 22);
             usePCDirectoriesToolStripMenuItem.Text = "Use PC Directories";
             usePCDirectoriesToolStripMenuItem.Click += usePCDirectoriesToolStripMenuItem_Click;
+            // 
+            // toolStripSeparator18
+            // 
+            toolStripSeparator18.Name = "toolStripSeparator18";
+            toolStripSeparator18.Size = new Size(341, 6);
+            // 
+            // parseVTBFToTextToolStripMenuItem
+            // 
+            parseVTBFToTextToolStripMenuItem.Name = "parseVTBFToTextToolStripMenuItem";
+            parseVTBFToTextToolStripMenuItem.Size = new Size(344, 22);
+            parseVTBFToTextToolStripMenuItem.Text = "Parse VTBF To Text";
+            parseVTBFToTextToolStripMenuItem.Click += parseVTBFToTextToolStripMenuItem_Click;
+            // 
+            // checkAllShaderExtrasToolStripMenuItem
+            // 
+            checkAllShaderExtrasToolStripMenuItem.Name = "checkAllShaderExtrasToolStripMenuItem";
+            checkAllShaderExtrasToolStripMenuItem.Size = new Size(344, 22);
+            checkAllShaderExtrasToolStripMenuItem.Text = "Check All Shader Extras";
+            checkAllShaderExtrasToolStripMenuItem.Click += checkAllShaderExtrasToolStripMenuItem_Click;
             // 
             // filenameButton
             // 
@@ -1403,7 +1418,7 @@
             // 
             // debug3ToolStripMenuItem
             // 
-            debug3ToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { readPATHToolStripMenuItem, oldBillyMC2ConvertToolStripMenuItem, readPOF0ToolStripMenuItem, readStageDefToolStripMenuItem, readGrassToolStripMenuItem, readMRPRoomGoodsToolStripMenuItem, decryptINCToolStripMenuItem, readARCToolStripMenuItem, dumpBillyArcPof0ToolStripMenuItem, dumpExtremeAnimsToolStripMenuItem, readGEPlayerToolStripMenuItem, readAniModelToolStripMenuItem, readLibModelToolStripMenuItem, protoThingToItemModelToolStripMenuItem, readGalleryEggToolStripMenuItem, readCMDLToolStripMenuItem, checkToolStripMenuItem, checkAllcmshToolStripMenuItem, deswizzleTestToolStripMenuItem, checkAllBillySetObjToolStripMenuItem, ps3DdsTestToolStripMenuItem, testReadOldCMDLToolStripMenuItem, readGEEggToolStripMenuItem, readFlverTestToolStripMenuItem, readWriteTexTestToolStripMenuItem });
+            debug3ToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { readPATHToolStripMenuItem, oldBillyMC2ConvertToolStripMenuItem, readPOF0ToolStripMenuItem, readStageDefToolStripMenuItem, readGrassToolStripMenuItem, readMRPRoomGoodsToolStripMenuItem, decryptINCToolStripMenuItem, readARCToolStripMenuItem, dumpBillyArcPof0ToolStripMenuItem, dumpExtremeAnimsToolStripMenuItem, readGEPlayerToolStripMenuItem, readAniModelToolStripMenuItem, readLibModelToolStripMenuItem, protoThingToItemModelToolStripMenuItem, readGalleryEggToolStripMenuItem, readCMDLToolStripMenuItem, checkToolStripMenuItem, checkAllcmshToolStripMenuItem, deswizzleTestToolStripMenuItem, checkAllBillySetObjToolStripMenuItem, ps3DdsTestToolStripMenuItem, testReadOldCMDLToolStripMenuItem, readGEEggToolStripMenuItem, readFlverTestToolStripMenuItem, readWriteTexTestToolStripMenuItem, pSOCryptTestToolStripMenuItem, customRoboGCSFDDumpToolStripMenuItem, customRoboPartReadToolStripMenuItem });
             debug3ToolStripMenuItem.Name = "debug3ToolStripMenuItem";
             debug3ToolStripMenuItem.Size = new Size(60, 23);
             debug3ToolStripMenuItem.Text = "Debug3";
@@ -1411,177 +1426,191 @@
             // readPATHToolStripMenuItem
             // 
             readPATHToolStripMenuItem.Name = "readPATHToolStripMenuItem";
-            readPATHToolStripMenuItem.Size = new Size(203, 22);
+            readPATHToolStripMenuItem.Size = new Size(213, 22);
             readPATHToolStripMenuItem.Text = "ReadPATH";
             readPATHToolStripMenuItem.Click += readPATHToolStripMenuItem_Click;
             // 
             // oldBillyMC2ConvertToolStripMenuItem
             // 
             oldBillyMC2ConvertToolStripMenuItem.Name = "oldBillyMC2ConvertToolStripMenuItem";
-            oldBillyMC2ConvertToolStripMenuItem.Size = new Size(203, 22);
+            oldBillyMC2ConvertToolStripMenuItem.Size = new Size(213, 22);
             oldBillyMC2ConvertToolStripMenuItem.Text = "Old Billy MC2 convert";
             oldBillyMC2ConvertToolStripMenuItem.Click += oldBillyMC2ConvertToolStripMenuItem_Click;
             // 
             // readPOF0ToolStripMenuItem
             // 
             readPOF0ToolStripMenuItem.Name = "readPOF0ToolStripMenuItem";
-            readPOF0ToolStripMenuItem.Size = new Size(203, 22);
+            readPOF0ToolStripMenuItem.Size = new Size(213, 22);
             readPOF0ToolStripMenuItem.Text = "ReadPOF0";
             readPOF0ToolStripMenuItem.Click += readPOF0ToolStripMenuItem_Click;
             // 
             // readStageDefToolStripMenuItem
             // 
             readStageDefToolStripMenuItem.Name = "readStageDefToolStripMenuItem";
-            readStageDefToolStripMenuItem.Size = new Size(203, 22);
+            readStageDefToolStripMenuItem.Size = new Size(213, 22);
             readStageDefToolStripMenuItem.Text = "ReadStageDef";
             readStageDefToolStripMenuItem.Click += readStageDefToolStripMenuItem_Click;
             // 
             // readGrassToolStripMenuItem
             // 
             readGrassToolStripMenuItem.Name = "readGrassToolStripMenuItem";
-            readGrassToolStripMenuItem.Size = new Size(203, 22);
+            readGrassToolStripMenuItem.Size = new Size(213, 22);
             readGrassToolStripMenuItem.Text = "ReadGrass";
             readGrassToolStripMenuItem.Click += readGrassToolStripMenuItem_Click;
             // 
             // readMRPRoomGoodsToolStripMenuItem
             // 
             readMRPRoomGoodsToolStripMenuItem.Name = "readMRPRoomGoodsToolStripMenuItem";
-            readMRPRoomGoodsToolStripMenuItem.Size = new Size(203, 22);
+            readMRPRoomGoodsToolStripMenuItem.Size = new Size(213, 22);
             readMRPRoomGoodsToolStripMenuItem.Text = "ReadMRPRoomGoods";
             readMRPRoomGoodsToolStripMenuItem.Click += readMRPRoomGoodsToolStripMenuItem_Click;
             // 
             // decryptINCToolStripMenuItem
             // 
             decryptINCToolStripMenuItem.Name = "decryptINCToolStripMenuItem";
-            decryptINCToolStripMenuItem.Size = new Size(203, 22);
+            decryptINCToolStripMenuItem.Size = new Size(213, 22);
             decryptINCToolStripMenuItem.Text = "DecryptINC";
             decryptINCToolStripMenuItem.Click += decryptINCToolStripMenuItem_Click;
             // 
             // readARCToolStripMenuItem
             // 
             readARCToolStripMenuItem.Name = "readARCToolStripMenuItem";
-            readARCToolStripMenuItem.Size = new Size(203, 22);
+            readARCToolStripMenuItem.Size = new Size(213, 22);
             readARCToolStripMenuItem.Text = "ReadARC";
             readARCToolStripMenuItem.Click += readARCToolStripMenuItem_Click;
             // 
             // dumpBillyArcPof0ToolStripMenuItem
             // 
             dumpBillyArcPof0ToolStripMenuItem.Name = "dumpBillyArcPof0ToolStripMenuItem";
-            dumpBillyArcPof0ToolStripMenuItem.Size = new Size(203, 22);
+            dumpBillyArcPof0ToolStripMenuItem.Size = new Size(213, 22);
             dumpBillyArcPof0ToolStripMenuItem.Text = "DumpBillyArcPof0";
             dumpBillyArcPof0ToolStripMenuItem.Click += dumpBillyArcPof0ToolStripMenuItem_Click;
             // 
             // dumpExtremeAnimsToolStripMenuItem
             // 
             dumpExtremeAnimsToolStripMenuItem.Name = "dumpExtremeAnimsToolStripMenuItem";
-            dumpExtremeAnimsToolStripMenuItem.Size = new Size(203, 22);
+            dumpExtremeAnimsToolStripMenuItem.Size = new Size(213, 22);
             dumpExtremeAnimsToolStripMenuItem.Text = "DumpExtremeAnims";
             dumpExtremeAnimsToolStripMenuItem.Click += dumpExtremeAnimsToolStripMenuItem_Click;
             // 
             // readGEPlayerToolStripMenuItem
             // 
             readGEPlayerToolStripMenuItem.Name = "readGEPlayerToolStripMenuItem";
-            readGEPlayerToolStripMenuItem.Size = new Size(203, 22);
+            readGEPlayerToolStripMenuItem.Size = new Size(213, 22);
             readGEPlayerToolStripMenuItem.Text = "ReadGEPlayer";
             readGEPlayerToolStripMenuItem.Click += readGEPlayerToolStripMenuItem_Click;
             // 
             // readAniModelToolStripMenuItem
             // 
             readAniModelToolStripMenuItem.Name = "readAniModelToolStripMenuItem";
-            readAniModelToolStripMenuItem.Size = new Size(203, 22);
+            readAniModelToolStripMenuItem.Size = new Size(213, 22);
             readAniModelToolStripMenuItem.Text = "ReadAniModel";
             readAniModelToolStripMenuItem.Click += readAniModelToolStripMenuItem_Click;
             // 
             // readLibModelToolStripMenuItem
             // 
             readLibModelToolStripMenuItem.Name = "readLibModelToolStripMenuItem";
-            readLibModelToolStripMenuItem.Size = new Size(203, 22);
+            readLibModelToolStripMenuItem.Size = new Size(213, 22);
             readLibModelToolStripMenuItem.Text = "ReadLibModel";
             readLibModelToolStripMenuItem.Click += readLibModelToolStripMenuItem_Click;
             // 
             // protoThingToItemModelToolStripMenuItem
             // 
             protoThingToItemModelToolStripMenuItem.Name = "protoThingToItemModelToolStripMenuItem";
-            protoThingToItemModelToolStripMenuItem.Size = new Size(203, 22);
+            protoThingToItemModelToolStripMenuItem.Size = new Size(213, 22);
             protoThingToItemModelToolStripMenuItem.Text = "ProtoThingToItemModel";
             protoThingToItemModelToolStripMenuItem.Click += protoThingToItemModelToolStripMenuItem_Click;
             // 
             // readGalleryEggToolStripMenuItem
             // 
             readGalleryEggToolStripMenuItem.Name = "readGalleryEggToolStripMenuItem";
-            readGalleryEggToolStripMenuItem.Size = new Size(203, 22);
+            readGalleryEggToolStripMenuItem.Size = new Size(213, 22);
             readGalleryEggToolStripMenuItem.Text = "ReadGalleryEgg";
             readGalleryEggToolStripMenuItem.Click += readGalleryEggToolStripMenuItem_Click;
             // 
             // readCMDLToolStripMenuItem
             // 
             readCMDLToolStripMenuItem.Name = "readCMDLToolStripMenuItem";
-            readCMDLToolStripMenuItem.Size = new Size(203, 22);
+            readCMDLToolStripMenuItem.Size = new Size(213, 22);
             readCMDLToolStripMenuItem.Text = "ReadCMDL";
             readCMDLToolStripMenuItem.Click += readCMDLToolStripMenuItem_Click;
             // 
             // checkToolStripMenuItem
             // 
             checkToolStripMenuItem.Name = "checkToolStripMenuItem";
-            checkToolStripMenuItem.Size = new Size(203, 22);
+            checkToolStripMenuItem.Size = new Size(213, 22);
             checkToolStripMenuItem.Text = "Check all *.ctxr";
             checkToolStripMenuItem.Click += checkToolStripMenuItem_Click;
             // 
             // checkAllcmshToolStripMenuItem
             // 
             checkAllcmshToolStripMenuItem.Name = "checkAllcmshToolStripMenuItem";
-            checkAllcmshToolStripMenuItem.Size = new Size(203, 22);
+            checkAllcmshToolStripMenuItem.Size = new Size(213, 22);
             checkAllcmshToolStripMenuItem.Text = "Check all *.cmsh";
             checkAllcmshToolStripMenuItem.Click += checkAllcmshToolStripMenuItem_Click;
             // 
             // deswizzleTestToolStripMenuItem
             // 
             deswizzleTestToolStripMenuItem.Name = "deswizzleTestToolStripMenuItem";
-            deswizzleTestToolStripMenuItem.Size = new Size(203, 22);
+            deswizzleTestToolStripMenuItem.Size = new Size(213, 22);
             deswizzleTestToolStripMenuItem.Text = "Blue Dragon dds test";
             deswizzleTestToolStripMenuItem.Click += deswizzleTestToolStripMenuItem_Click;
             // 
             // checkAllBillySetObjToolStripMenuItem
             // 
             checkAllBillySetObjToolStripMenuItem.Name = "checkAllBillySetObjToolStripMenuItem";
-            checkAllBillySetObjToolStripMenuItem.Size = new Size(203, 22);
+            checkAllBillySetObjToolStripMenuItem.Size = new Size(213, 22);
             checkAllBillySetObjToolStripMenuItem.Text = "Check all billy setObj";
             checkAllBillySetObjToolStripMenuItem.Click += checkAllBillySetObjToolStripMenuItem_Click;
             // 
             // ps3DdsTestToolStripMenuItem
             // 
             ps3DdsTestToolStripMenuItem.Name = "ps3DdsTestToolStripMenuItem";
-            ps3DdsTestToolStripMenuItem.Size = new Size(203, 22);
+            ps3DdsTestToolStripMenuItem.Size = new Size(213, 22);
             ps3DdsTestToolStripMenuItem.Text = "ps3 dds test";
             ps3DdsTestToolStripMenuItem.Click += ps3DdsTestToolStripMenuItem_Click;
             // 
             // testReadOldCMDLToolStripMenuItem
             // 
             testReadOldCMDLToolStripMenuItem.Name = "testReadOldCMDLToolStripMenuItem";
-            testReadOldCMDLToolStripMenuItem.Size = new Size(203, 22);
+            testReadOldCMDLToolStripMenuItem.Size = new Size(213, 22);
             testReadOldCMDLToolStripMenuItem.Text = "Test Read Old CMDL";
             testReadOldCMDLToolStripMenuItem.Click += testReadOldCMDLToolStripMenuItem_Click;
             // 
             // readGEEggToolStripMenuItem
             // 
             readGEEggToolStripMenuItem.Name = "readGEEggToolStripMenuItem";
-            readGEEggToolStripMenuItem.Size = new Size(203, 22);
+            readGEEggToolStripMenuItem.Size = new Size(213, 22);
             readGEEggToolStripMenuItem.Text = "ReadGEEgg";
             readGEEggToolStripMenuItem.Click += readGEEggToolStripMenuItem_Click;
             // 
             // readFlverTestToolStripMenuItem
             // 
             readFlverTestToolStripMenuItem.Name = "readFlverTestToolStripMenuItem";
-            readFlverTestToolStripMenuItem.Size = new Size(203, 22);
+            readFlverTestToolStripMenuItem.Size = new Size(213, 22);
             readFlverTestToolStripMenuItem.Text = "DecompressSoulsFile";
             readFlverTestToolStripMenuItem.Click += readFlverTestToolStripMenuItem_Click;
             // 
             // readWriteTexTestToolStripMenuItem
             // 
             readWriteTexTestToolStripMenuItem.Name = "readWriteTexTestToolStripMenuItem";
-            readWriteTexTestToolStripMenuItem.Size = new Size(203, 22);
+            readWriteTexTestToolStripMenuItem.Size = new Size(213, 22);
             readWriteTexTestToolStripMenuItem.Text = "ReadWriteTexTest";
             readWriteTexTestToolStripMenuItem.Click += readWriteTexTestToolStripMenuItem_Click;
+            // 
+            // pSOCryptTestToolStripMenuItem
+            // 
+            pSOCryptTestToolStripMenuItem.Name = "pSOCryptTestToolStripMenuItem";
+            pSOCryptTestToolStripMenuItem.Size = new Size(213, 22);
+            pSOCryptTestToolStripMenuItem.Text = "PSOCryptTest";
+            pSOCryptTestToolStripMenuItem.Click += pSOCryptTestToolStripMenuItem_Click;
+            // 
+            // customRoboGCSFDDumpToolStripMenuItem
+            // 
+            customRoboGCSFDDumpToolStripMenuItem.Name = "customRoboGCSFDDumpToolStripMenuItem";
+            customRoboGCSFDDumpToolStripMenuItem.Size = new Size(213, 22);
+            customRoboGCSFDDumpToolStripMenuItem.Text = "CustomRoboGCSFDDump";
+            customRoboGCSFDDumpToolStripMenuItem.Click += customRoboGCSFDDumpToolStripMenuItem_Click;
             // 
             // filePanel
             // 
@@ -1602,6 +1631,13 @@
             splitter1.Size = new Size(4, 296);
             splitter1.TabIndex = 2;
             splitter1.TabStop = false;
+            // 
+            // customRoboPartReadToolStripMenuItem
+            // 
+            customRoboPartReadToolStripMenuItem.Name = "customRoboPartReadToolStripMenuItem";
+            customRoboPartReadToolStripMenuItem.Size = new Size(213, 22);
+            customRoboPartReadToolStripMenuItem.Text = "CustomRoboPartRead";
+            customRoboPartReadToolStripMenuItem.Click += customRoboPartReadToolStripMenuItem_Click;
             // 
             // AquaModelTool
             // 
@@ -1821,6 +1857,11 @@
         private ToolStripComboBox exportFormatCB;
         private ToolStripComboBox soulsMirroringCB;
         private ToolStripComboBox soulsCoordSystemCB;
+        private ToolStripSeparator toolStripSeparator19;
+        private ToolStripSeparator toolStripSeparator18;
+        private ToolStripMenuItem pSOCryptTestToolStripMenuItem;
+        private ToolStripMenuItem customRoboGCSFDDumpToolStripMenuItem;
+        private ToolStripMenuItem customRoboPartReadToolStripMenuItem;
     }
 }
 
