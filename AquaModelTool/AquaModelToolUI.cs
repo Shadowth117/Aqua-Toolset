@@ -44,7 +44,6 @@ using SoulsFormats;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Globalization;
-using System.Net.Mail;
 using System.Numerics;
 using System.Reflection;
 using System.Text;
@@ -4620,8 +4619,8 @@ namespace AquaModelTool
             mainSetting.BBPS4BonePath = borderBreakPS4BonePath;
             mainSetting.customScaleValue = customScaleBox.Text;
             mainSetting.customScaleSelection = $"{importScaleTypeCB.SelectedIndex}";
-
-            string mainSettingText = JsonSerializer.Serialize(mainSetting, jss);
+            
+            string mainSettingText = JsonSerializer.Serialize(mainSetting);
             File.WriteAllText(mainSettingsPath + mainSettingsFile, mainSettingText);
         }
 
@@ -5529,6 +5528,7 @@ namespace AquaModelTool
             {
                 customScaleBox.Enabled = false;
             }
+            SaveMainSettings();
         }
 
         private void readMRPRoomGoodsToolStripMenuItem_Click(object sender, EventArgs e)
@@ -6571,7 +6571,7 @@ namespace AquaModelTool
                 {
                     var mdl = new CRBRPartModel(File.ReadAllBytes(file));
                     string outDir = file + "_out";
-                    if(mdl.Textures.Count > 0)
+                    if (mdl.Textures.Count > 0)
                     {
                         Directory.CreateDirectory(outDir);
                         foreach (var pair in mdl.Textures)
@@ -6581,6 +6581,11 @@ namespace AquaModelTool
                     }
                 }
             }
+        }
+
+        private void importScaleTypeCB_Click(object sender, EventArgs e)
+        {
+            SaveMainSettings();
         }
     }
 }

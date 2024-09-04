@@ -48,8 +48,6 @@
             importScaleTypeCB = new ToolStripComboBox();
             customScaleBox = new ToolStripTextBox();
             toolStripSeparator10 = new ToolStripSeparator();
-            convertPSO2FileTojsonToolStripMenuItem = new ToolStripMenuItem();
-            convertPSO2FilejsonToPSO2FileToolStripMenuItem = new ToolStripMenuItem();
             extraToolStripMenuItem = new ToolStripMenuItem();
             averageNormalsOnSharedPositionVerticesToolStripMenuItem = new ToolStripMenuItem();
             toolStripSeparator1 = new ToolStripSeparator();
@@ -227,9 +225,9 @@
             readWriteTexTestToolStripMenuItem = new ToolStripMenuItem();
             pSOCryptTestToolStripMenuItem = new ToolStripMenuItem();
             customRoboGCSFDDumpToolStripMenuItem = new ToolStripMenuItem();
+            customRoboPartReadToolStripMenuItem = new ToolStripMenuItem();
             filePanel = new Panel();
             splitter1 = new Splitter();
-            customRoboPartReadToolStripMenuItem = new ToolStripMenuItem();
             menuStrip1.SuspendLayout();
             SuspendLayout();
             // 
@@ -245,7 +243,7 @@
             // 
             // fileToolStripMenuItem
             // 
-            fileToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { openToolStripMenuItem, importModelToolStripMenuItem, convertAnimationToAQMToolStripMenuItem, exportModelToolStripMenuItem, saveToolStripMenuItem, saveAsToolStripMenuItem, quitToolStripMenuItem, toolStripSeparator13, importScaleTypeToolStripMenuItem, importScaleTypeCB, customScaleBox, toolStripSeparator10, convertPSO2FileTojsonToolStripMenuItem, convertPSO2FilejsonToPSO2FileToolStripMenuItem });
+            fileToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { openToolStripMenuItem, importModelToolStripMenuItem, convertAnimationToAQMToolStripMenuItem, exportModelToolStripMenuItem, saveToolStripMenuItem, saveAsToolStripMenuItem, quitToolStripMenuItem, toolStripSeparator13, importScaleTypeToolStripMenuItem, importScaleTypeCB, customScaleBox, toolStripSeparator10 });
             fileToolStripMenuItem.Name = "fileToolStripMenuItem";
             fileToolStripMenuItem.Size = new Size(37, 23);
             fileToolStripMenuItem.Text = "File";
@@ -253,14 +251,14 @@
             // openToolStripMenuItem
             // 
             openToolStripMenuItem.Name = "openToolStripMenuItem";
-            openToolStripMenuItem.Size = new Size(260, 22);
+            openToolStripMenuItem.Size = new Size(206, 22);
             openToolStripMenuItem.Text = "Open";
             openToolStripMenuItem.Click += openToolStripMenuItem_Click;
             // 
             // importModelToolStripMenuItem
             // 
             importModelToolStripMenuItem.Name = "importModelToolStripMenuItem";
-            importModelToolStripMenuItem.Size = new Size(260, 22);
+            importModelToolStripMenuItem.Size = new Size(206, 22);
             importModelToolStripMenuItem.Text = "Import Model";
             importModelToolStripMenuItem.Click += importModelToolStripMenuItem_Click_1;
             // 
@@ -268,7 +266,7 @@
             // 
             convertAnimationToAQMToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { convertAnimToolStripMenuItem, forceNoCharacterMetadataCheckBox, useScaleKeysToolStripMenuItem });
             convertAnimationToAQMToolStripMenuItem.Name = "convertAnimationToAQMToolStripMenuItem";
-            convertAnimationToAQMToolStripMenuItem.Size = new Size(260, 22);
+            convertAnimationToAQMToolStripMenuItem.Size = new Size(206, 22);
             convertAnimationToAQMToolStripMenuItem.Text = "Convert Anim(s) to AQM";
             // 
             // convertAnimToolStripMenuItem
@@ -298,7 +296,7 @@
             // 
             exportModelToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { exportFBXToolStripMenuItem, includeMetadataToolStripMenuItem, exportLODModelsIfInSameaqpToolStripMenuItem });
             exportModelToolStripMenuItem.Name = "exportModelToolStripMenuItem";
-            exportModelToolStripMenuItem.Size = new Size(260, 22);
+            exportModelToolStripMenuItem.Size = new Size(206, 22);
             exportModelToolStripMenuItem.Text = "Export Model";
             // 
             // exportFBXToolStripMenuItem
@@ -328,34 +326,34 @@
             // saveToolStripMenuItem
             // 
             saveToolStripMenuItem.Name = "saveToolStripMenuItem";
-            saveToolStripMenuItem.Size = new Size(260, 22);
+            saveToolStripMenuItem.Size = new Size(206, 22);
             saveToolStripMenuItem.Text = "Save";
             saveToolStripMenuItem.Click += saveToolStripMenuItem_Click;
             // 
             // saveAsToolStripMenuItem
             // 
             saveAsToolStripMenuItem.Name = "saveAsToolStripMenuItem";
-            saveAsToolStripMenuItem.Size = new Size(260, 22);
+            saveAsToolStripMenuItem.Size = new Size(206, 22);
             saveAsToolStripMenuItem.Text = "Save As";
             saveAsToolStripMenuItem.Click += saveAsToolStripMenuItem_Click;
             // 
             // quitToolStripMenuItem
             // 
             quitToolStripMenuItem.Name = "quitToolStripMenuItem";
-            quitToolStripMenuItem.Size = new Size(260, 22);
+            quitToolStripMenuItem.Size = new Size(206, 22);
             quitToolStripMenuItem.Text = "Quit";
             quitToolStripMenuItem.Click += quitToolStripMenuItem_Click;
             // 
             // toolStripSeparator13
             // 
             toolStripSeparator13.Name = "toolStripSeparator13";
-            toolStripSeparator13.Size = new Size(257, 6);
+            toolStripSeparator13.Size = new Size(203, 6);
             // 
             // importScaleTypeToolStripMenuItem
             // 
             importScaleTypeToolStripMenuItem.Enabled = false;
             importScaleTypeToolStripMenuItem.Name = "importScaleTypeToolStripMenuItem";
-            importScaleTypeToolStripMenuItem.Size = new Size(260, 22);
+            importScaleTypeToolStripMenuItem.Size = new Size(206, 22);
             importScaleTypeToolStripMenuItem.Text = "Import Scale Type";
             // 
             // importScaleTypeCB
@@ -363,6 +361,7 @@
             importScaleTypeCB.Name = "importScaleTypeCB";
             importScaleTypeCB.Size = new Size(121, 23);
             importScaleTypeCB.SelectedIndexChanged += ImportScaleCBSelectionChanged;
+            importScaleTypeCB.Click += importScaleTypeCB_Click;
             // 
             // customScaleBox
             // 
@@ -374,21 +373,7 @@
             // toolStripSeparator10
             // 
             toolStripSeparator10.Name = "toolStripSeparator10";
-            toolStripSeparator10.Size = new Size(257, 6);
-            // 
-            // convertPSO2FileTojsonToolStripMenuItem
-            // 
-            convertPSO2FileTojsonToolStripMenuItem.Name = "convertPSO2FileTojsonToolStripMenuItem";
-            convertPSO2FileTojsonToolStripMenuItem.Size = new Size(260, 22);
-            convertPSO2FileTojsonToolStripMenuItem.Text = "Convert PSO2 file to .json";
-            convertPSO2FileTojsonToolStripMenuItem.Click += convertPSO2FileTojsonToolStripMenuItem_Click_1;
-            // 
-            // convertPSO2FilejsonToPSO2FileToolStripMenuItem
-            // 
-            convertPSO2FilejsonToPSO2FileToolStripMenuItem.Name = "convertPSO2FilejsonToPSO2FileToolStripMenuItem";
-            convertPSO2FilejsonToPSO2FileToolStripMenuItem.Size = new Size(260, 22);
-            convertPSO2FilejsonToPSO2FileToolStripMenuItem.Text = "Convert PSO2 file .json to PSO2 File";
-            convertPSO2FilejsonToPSO2FileToolStripMenuItem.Click += convertPSO2FilejsonToPSO2FileToolStripMenuItem_Click_1;
+            toolStripSeparator10.Size = new Size(203, 6);
             // 
             // extraToolStripMenuItem
             // 
@@ -1612,6 +1597,13 @@
             customRoboGCSFDDumpToolStripMenuItem.Text = "CustomRoboGCSFDDump";
             customRoboGCSFDDumpToolStripMenuItem.Click += customRoboGCSFDDumpToolStripMenuItem_Click;
             // 
+            // customRoboPartReadToolStripMenuItem
+            // 
+            customRoboPartReadToolStripMenuItem.Name = "customRoboPartReadToolStripMenuItem";
+            customRoboPartReadToolStripMenuItem.Size = new Size(213, 22);
+            customRoboPartReadToolStripMenuItem.Text = "CustomRoboPartRead";
+            customRoboPartReadToolStripMenuItem.Click += customRoboPartReadToolStripMenuItem_Click;
+            // 
             // filePanel
             // 
             filePanel.AutoSize = true;
@@ -1631,13 +1623,6 @@
             splitter1.Size = new Size(4, 296);
             splitter1.TabIndex = 2;
             splitter1.TabStop = false;
-            // 
-            // customRoboPartReadToolStripMenuItem
-            // 
-            customRoboPartReadToolStripMenuItem.Name = "customRoboPartReadToolStripMenuItem";
-            customRoboPartReadToolStripMenuItem.Size = new Size(213, 22);
-            customRoboPartReadToolStripMenuItem.Text = "CustomRoboPartRead";
-            customRoboPartReadToolStripMenuItem.Click += customRoboPartReadToolStripMenuItem_Click;
             // 
             // AquaModelTool
             // 
@@ -1749,8 +1734,6 @@
         private System.Windows.Forms.ToolStripMenuItem exportWithMetadataToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem spirefierToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator10;
-        private System.Windows.Forms.ToolStripMenuItem convertPSO2FileTojsonToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem convertPSO2FilejsonToPSO2FileToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem readMSBToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem generateMCGMCPToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator11;
