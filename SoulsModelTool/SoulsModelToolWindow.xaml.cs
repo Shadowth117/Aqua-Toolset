@@ -7,6 +7,7 @@ using Microsoft.WindowsAPICodePack.Dialogs;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -25,12 +26,39 @@ namespace SoulsModelTool
 
         public string settingsFile = "SoulsSettings.json";
         public string mainSettingsFile = "Settings.json";
+        public DateTime buildDate = GetBuildDate();
         public SMTSetting smtSetting = new SMTSetting();
         public MainSetting mainSetting = new MainSetting();
         public string[] importFormats;
         public string[] convertFormats;
 
         JsonSerializerSettings jss = new JsonSerializerSettings() { Formatting = Formatting.Indented };
+        public string GetTitleString()
+        {
+            return $"Souls Model Tool {buildDate.ToString("yyyy-MM-dd h:mm tt")}";
+        }
+        private static DateTime GetBuildDate()
+        {
+            Assembly assembly = System.Reflection.Assembly.GetExecutingAssembly();
+            const string BuildVersionMetadataPrefix = "+build";
+
+            var attribute = assembly.GetCustomAttribute<AssemblyInformationalVersionAttribute>();
+            if (attribute?.InformationalVersion != null)
+            {
+                var value = attribute.InformationalVersion;
+                var index = value.IndexOf(BuildVersionMetadataPrefix);
+                if (index > 0)
+                {
+                    value = value.Substring(index + BuildVersionMetadataPrefix.Length);
+                    if (DateTime.TryParseExact(value, "yyyyMMddHHmmss", CultureInfo.InvariantCulture, DateTimeStyles.None, out var result))
+                    {
+                        return result;
+                    }
+                }
+            }
+
+            return default;
+        }
 
         public SoulsModelToolWindow(List<string> paths, SMTSetting _smtSetting, MainSetting _mainSetting)
         {
@@ -114,6 +142,7 @@ namespace SoulsModelTool
             {
                 scaleUD.Value = 1;
             }
+            this.Title = GetTitleString();
         }
 
         private void smtSettingSet(object sender = null, RoutedEventArgs e = null)

@@ -6,6 +6,7 @@
     <UseWPF>true</UseWPF>
     <Configurations>Debug;Release</Configurations>
     <Nullable>enable</Nullable>
+	<SourceRevisionId>build$([System.DateTime]::UtcNow.ToString("yyyyMMddHHmmss"))</SourceRevisionId>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
