@@ -99,6 +99,7 @@
             convertPSOnrelTotrpToolStripMenuItem = new ToolStripMenuItem();
             convertPSOxvrToolStripMenuItem = new ToolStripMenuItem();
             dumpPSOxvmToolStripMenuItem = new ToolStripMenuItem();
+            convertPSOxjToolStripMenuItem = new ToolStripMenuItem();
             otherGamesToolStripMenuItem2 = new ToolStripMenuItem();
             extractBorderBreakPS4FARCToolStripMenuItem = new ToolStripMenuItem();
             setMOTBONEbinPathToolStripMenuItem = new ToolStripMenuItem();
@@ -226,6 +227,7 @@
             pSOCryptTestToolStripMenuItem = new ToolStripMenuItem();
             customRoboGCSFDDumpToolStripMenuItem = new ToolStripMenuItem();
             customRoboPartReadToolStripMenuItem = new ToolStripMenuItem();
+            soulReverseTestToolStripMenuItem = new ToolStripMenuItem();
             filePanel = new Panel();
             splitter1 = new Splitter();
             menuStrip1.SuspendLayout();
@@ -652,7 +654,7 @@
             // 
             // otherGamesToolStripMenuItem1
             // 
-            otherGamesToolStripMenuItem1.DropDownItems.AddRange(new ToolStripItem[] { cToolStripMenuItem, convertPSPortableunjToolStripMenuItem1, convertPSUxnjOrModelxnrToolStripMenuItem, convertPSUnomTofbxToolStripMenuItem, convertAnimsTonomToolStripMenuItem, convertPSO2PlayeraqmToPSUnomToolStripMenuItem, toolStripSeparator9, convertPSOnrelTotrpToolStripMenuItem, convertPSOxvrToolStripMenuItem, dumpPSOxvmToolStripMenuItem });
+            otherGamesToolStripMenuItem1.DropDownItems.AddRange(new ToolStripItem[] { cToolStripMenuItem, convertPSPortableunjToolStripMenuItem1, convertPSUxnjOrModelxnrToolStripMenuItem, convertPSUnomTofbxToolStripMenuItem, convertAnimsTonomToolStripMenuItem, convertPSO2PlayeraqmToPSUnomToolStripMenuItem, toolStripSeparator9, convertPSOnrelTotrpToolStripMenuItem, convertPSOxvrToolStripMenuItem, dumpPSOxvmToolStripMenuItem, convertPSOxjToolStripMenuItem });
             otherGamesToolStripMenuItem1.Name = "otherGamesToolStripMenuItem1";
             otherGamesToolStripMenuItem1.Size = new Size(344, 22);
             otherGamesToolStripMenuItem1.Text = "Other Phantasy Star Games";
@@ -723,6 +725,13 @@
             dumpPSOxvmToolStripMenuItem.Name = "dumpPSOxvmToolStripMenuItem";
             dumpPSOxvmToolStripMenuItem.Size = new Size(281, 22);
             dumpPSOxvmToolStripMenuItem.Text = "Dump PSO .xvm";
+            // 
+            // convertPSOxjToolStripMenuItem
+            // 
+            convertPSOxjToolStripMenuItem.Name = "convertPSOxjToolStripMenuItem";
+            convertPSOxjToolStripMenuItem.Size = new Size(281, 22);
+            convertPSOxjToolStripMenuItem.Text = "Convert PSO .xj";
+            convertPSOxjToolStripMenuItem.Click += convertPSOxjToolStripMenuItem_Click;
             // 
             // otherGamesToolStripMenuItem2
             // 
@@ -1403,7 +1412,7 @@
             // 
             // debug3ToolStripMenuItem
             // 
-            debug3ToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { readPATHToolStripMenuItem, oldBillyMC2ConvertToolStripMenuItem, readPOF0ToolStripMenuItem, readStageDefToolStripMenuItem, readGrassToolStripMenuItem, readMRPRoomGoodsToolStripMenuItem, decryptINCToolStripMenuItem, readARCToolStripMenuItem, dumpBillyArcPof0ToolStripMenuItem, dumpExtremeAnimsToolStripMenuItem, readGEPlayerToolStripMenuItem, readAniModelToolStripMenuItem, readLibModelToolStripMenuItem, protoThingToItemModelToolStripMenuItem, readGalleryEggToolStripMenuItem, readCMDLToolStripMenuItem, checkToolStripMenuItem, checkAllcmshToolStripMenuItem, deswizzleTestToolStripMenuItem, checkAllBillySetObjToolStripMenuItem, ps3DdsTestToolStripMenuItem, testReadOldCMDLToolStripMenuItem, readGEEggToolStripMenuItem, readFlverTestToolStripMenuItem, readWriteTexTestToolStripMenuItem, pSOCryptTestToolStripMenuItem, customRoboGCSFDDumpToolStripMenuItem, customRoboPartReadToolStripMenuItem });
+            debug3ToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { readPATHToolStripMenuItem, oldBillyMC2ConvertToolStripMenuItem, readPOF0ToolStripMenuItem, readStageDefToolStripMenuItem, readGrassToolStripMenuItem, readMRPRoomGoodsToolStripMenuItem, decryptINCToolStripMenuItem, readARCToolStripMenuItem, dumpBillyArcPof0ToolStripMenuItem, dumpExtremeAnimsToolStripMenuItem, readGEPlayerToolStripMenuItem, readAniModelToolStripMenuItem, readLibModelToolStripMenuItem, protoThingToItemModelToolStripMenuItem, readGalleryEggToolStripMenuItem, readCMDLToolStripMenuItem, checkToolStripMenuItem, checkAllcmshToolStripMenuItem, deswizzleTestToolStripMenuItem, checkAllBillySetObjToolStripMenuItem, ps3DdsTestToolStripMenuItem, testReadOldCMDLToolStripMenuItem, readGEEggToolStripMenuItem, readFlverTestToolStripMenuItem, readWriteTexTestToolStripMenuItem, pSOCryptTestToolStripMenuItem, customRoboGCSFDDumpToolStripMenuItem, customRoboPartReadToolStripMenuItem, soulReverseTestToolStripMenuItem });
             debug3ToolStripMenuItem.Name = "debug3ToolStripMenuItem";
             debug3ToolStripMenuItem.Size = new Size(60, 23);
             debug3ToolStripMenuItem.Text = "Debug3";
@@ -1603,6 +1612,13 @@
             customRoboPartReadToolStripMenuItem.Size = new Size(213, 22);
             customRoboPartReadToolStripMenuItem.Text = "CustomRoboPartRead";
             customRoboPartReadToolStripMenuItem.Click += customRoboPartReadToolStripMenuItem_Click;
+            // 
+            // soulReverseTestToolStripMenuItem
+            // 
+            soulReverseTestToolStripMenuItem.Name = "soulReverseTestToolStripMenuItem";
+            soulReverseTestToolStripMenuItem.Size = new Size(213, 22);
+            soulReverseTestToolStripMenuItem.Text = "SoulReverseTest";
+            soulReverseTestToolStripMenuItem.Click += soulReverseTestToolStripMenuItem_Click;
             // 
             // filePanel
             // 
@@ -1845,6 +1861,8 @@
         private ToolStripMenuItem pSOCryptTestToolStripMenuItem;
         private ToolStripMenuItem customRoboGCSFDDumpToolStripMenuItem;
         private ToolStripMenuItem customRoboPartReadToolStripMenuItem;
+        private ToolStripMenuItem soulReverseTestToolStripMenuItem;
+        private ToolStripMenuItem convertPSOxjToolStripMenuItem;
     }
 }
 

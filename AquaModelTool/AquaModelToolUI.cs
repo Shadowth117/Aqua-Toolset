@@ -3815,7 +3815,7 @@ namespace AquaModelTool
                     BluePointConvert.ConvertCMDLCMSH(file);
 #if !DEBUG
                     }
-                    catch(Exception ex)
+                    catch (Exception ex)
                     {
                         cmshErrors.Add(ex.Message);
                     }
@@ -4619,7 +4619,7 @@ namespace AquaModelTool
             mainSetting.BBPS4BonePath = borderBreakPS4BonePath;
             mainSetting.customScaleValue = customScaleBox.Text;
             mainSetting.customScaleSelection = $"{importScaleTypeCB.SelectedIndex}";
-            
+
             string mainSettingText = JsonSerializer.Serialize(mainSetting);
             File.WriteAllText(mainSettingsPath + mainSettingsFile, mainSettingText);
         }
@@ -6586,6 +6586,57 @@ namespace AquaModelTool
         private void importScaleTypeCB_Click(object sender, EventArgs e)
         {
             SaveMainSettings();
+        }
+
+        private void soulReverseTestToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var openFileDialog = new OpenFileDialog()
+            {
+                Title = "Select File",
+                Filter = "files|*",
+                FileName = "",
+                Multiselect = true
+            };
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                foreach (var file in openFileDialog.FileNames)
+                {
+                    var fileBytes = File.ReadAllBytes(file);
+                    File.WriteAllBytes(file + ".zlibdecomp", PRSHelpers.PRSDecompress(fileBytes));
+
+                }
+            }
+        }
+
+        private void xJTestToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void convertPSOxjToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var openFileDialog = new OpenFileDialog()
+            {
+                Title = "Select Xbox/PC Ninja File",
+                Filter = "Xbox/PC Ninja *.xj files|*.xj",
+                FileName = "",
+                Multiselect = true
+            };
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                foreach (var file in openFileDialog.FileNames)
+                {
+                    var aqp = NinjaModelConvert.XjConvert(file, out var aqn);
+                    if (aqp != null && aqp.vtxlList.Count > 0 || aqp.tempTris[0].faceVerts.Count > 0)
+                    {
+                        aqp.ConvertToPSO2Model(true, false, false, true, false, false, false, true);
+                        aqp.ConvertToLegacyTypes();
+                        aqp.CreateTrueVertWeights();
+
+                        FbxExporterNative.ExportToFile(aqp, aqn, new List<AquaMotion>(), Path.ChangeExtension(file, ".fbx"), new List<string>(), new List<Matrix4x4>(), false);
+                    }
+                }
+            }
         }
     }
 }
