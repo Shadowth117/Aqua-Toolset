@@ -1,4 +1,4 @@
-﻿namespace AquaModelTool
+namespace AquaModelTool
 {
     partial class AquaModelTool
     {
@@ -230,6 +230,7 @@
             soulReverseTestToolStripMenuItem = new ToolStripMenuItem();
             filePanel = new Panel();
             splitter1 = new Splitter();
+            customRoboPartReadToolStripMenuItem = new ToolStripMenuItem();
             menuStrip1.SuspendLayout();
             SuspendLayout();
             // 
@@ -1639,6 +1640,13 @@
             splitter1.Size = new Size(4, 296);
             splitter1.TabIndex = 2;
             splitter1.TabStop = false;
+            // 
+            // customRoboPartReadToolStripMenuItem
+            // 
+            customRoboPartReadToolStripMenuItem.Name = "customRoboPartReadToolStripMenuItem";
+            customRoboPartReadToolStripMenuItem.Size = new Size(213, 22);
+            customRoboPartReadToolStripMenuItem.Text = "CustomRoboPartRead";
+            customRoboPartReadToolStripMenuItem.Click += customRoboPartReadToolStripMenuItem_Click;
             // 
             // AquaModelTool
             // 

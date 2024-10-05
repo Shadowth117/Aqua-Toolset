@@ -1,4 +1,4 @@
-﻿using AquaModelLibrary;
+using AquaModelLibrary;
 using AquaModelLibrary.Core.AM2;
 using AquaModelLibrary.Core.BluePoint;
 using AquaModelLibrary.Core.FromSoft;
