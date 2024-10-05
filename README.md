@@ -18,6 +18,7 @@ PSO2:
 -File Reference Sheet Generator  
     
 Phantasy Star Online (PSO1):   
+-PC/Xbox .xj to .fbx
 -PC *n.rel (Map model) to .fbx  
 -.xvm and .xvr texture conversion - Some may look incorrect, but this is due to bad initial conversions on the PC version by Sega.  
     
