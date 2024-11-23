@@ -10,6 +10,7 @@ using AquaModelLibrary.Core.ToolUX;
 using AquaModelLibrary.Data.AM2.BorderBreakPS4;
 using AquaModelLibrary.Data.BillyHatcher;
 using AquaModelLibrary.Data.BillyHatcher.ARCData;
+using AquaModelLibrary.Data.BillyHatcher.SetData;
 using AquaModelLibrary.Data.BlueDragon;
 using AquaModelLibrary.Data.BluePoint.CAWS;
 using AquaModelLibrary.Data.BluePoint.CMDL;
@@ -17,6 +18,7 @@ using AquaModelLibrary.Data.BluePoint.CTXR;
 using AquaModelLibrary.Data.CustomRoboBattleRevolution;
 using AquaModelLibrary.Data.CustomRoboBattleRevolution.Model;
 using AquaModelLibrary.Data.FromSoft;
+using AquaModelLibrary.Data.Ikaruga._360;
 using AquaModelLibrary.Data.Ninja;
 using AquaModelLibrary.Data.Ninja.Model;
 using AquaModelLibrary.Data.Ninja.Motion;
@@ -24,7 +26,9 @@ using AquaModelLibrary.Data.NNStructs;
 using AquaModelLibrary.Data.Nova;
 using AquaModelLibrary.Data.PSO;
 using AquaModelLibrary.Data.PSO2.Aqua;
+using AquaModelLibrary.Data.PSO2.Aqua.AquaCommonData;
 using AquaModelLibrary.Data.PSO2.Aqua.AquaObjectData;
+using AquaModelLibrary.Data.PSO2.Aqua.CharacterMakingIndexData;
 using AquaModelLibrary.Data.PSO2.Aqua.Presets;
 using AquaModelLibrary.Data.PSO2.Constants;
 using AquaModelLibrary.Data.PSO2.MiscPSO2Structs;
@@ -41,9 +45,11 @@ using AquaModelLibrary.ToolUX.CommonForms;
 using ArchiveLib;
 using Microsoft.WindowsAPICodePack.Dialogs;
 using SoulsFormats;
+using System;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Globalization;
+using System.Net.Mail;
 using System.Numerics;
 using System.Reflection;
 using System.Text;
@@ -159,6 +165,7 @@ namespace AquaModelTool
             transformMeshToolStripMenuItem.Checked = smtSetting.transformMesh;
             mSBExtractionExtractUnreferencedModelsAndTexturesToolStripMenuItem.Checked = smtSetting.extractUnreferencedMapData;
             mSBExtractionSeparateExtractionByModelToolStripMenuItem.Checked = smtSetting.separateMSBDumpByModel;
+            addFBXRootNodeFixesBlenderSkinningIssuesTdToolStripMenuItem.Checked = smtSetting.addFBXRootNode;
 
             SoulsConvert.game = smtSetting.soulsGame;
             SetSoulsGameToolStripText();
@@ -181,6 +188,7 @@ namespace AquaModelTool
             smtSetting.extractUnreferencedMapData = mSBExtractionExtractUnreferencedModelsAndTexturesToolStripMenuItem.Checked;
             smtSetting.separateMSBDumpByModel = mSBExtractionSeparateExtractionByModelToolStripMenuItem.Checked;
             smtSetting.exportFormat = (ExportFormat)exportFormatCB.SelectedIndex;
+            smtSetting.addFBXRootNode = addFBXRootNodeFixesBlenderSkinningIssuesTdToolStripMenuItem.Checked;
 
             string smtSettingText = JsonSerializer.Serialize(smtSetting, jss);
             File.WriteAllText(mainSettingsPath + soulsSettingsFile, smtSettingText);
@@ -196,6 +204,7 @@ namespace AquaModelTool
             SoulsConvert.extractUnreferencedMapData = extractSoulsMapObjectLayoutFrommsbToolStripMenuItem.Checked;
             SoulsConvert.separateMSBDumpByModel = mSBExtractionSeparateExtractionByModelToolStripMenuItem.Checked;
             SoulsConvert.exportFormat = (ExportFormat)exportFormatCB.SelectedIndex;
+            SoulsConvert.addFBXRootNode = addFBXRootNodeFixesBlenderSkinningIssuesTdToolStripMenuItem.Checked;
         }
 
         public void ApplyModelImporterSettings()
@@ -5470,6 +5479,15 @@ namespace AquaModelTool
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
                 var pof0Data = POF0.GetPof0Offsets(File.ReadAllBytes(openFileDialog.FileName));
+                var openFileDialog2 = new OpenFileDialog()
+                {
+                    Title = "Select a file",
+                    FileName = "",
+                };
+                if (openFileDialog2.ShowDialog() == DialogResult.OK)
+                {
+                    POF0.DumpPOF0(File.ReadAllBytes(openFileDialog2.FileName), File.ReadAllBytes(openFileDialog.FileName), openFileDialog2.FileName, 0x20, true);
+                }
             }
         }
 
@@ -6579,6 +6597,20 @@ namespace AquaModelTool
                             File.WriteAllBytes(Path.Combine(outDir, pair.Key.ToString("X") + ".tpl"), pair.Value.GetTPL());
                         }
                     }
+                    var aqpList = CRBRModelConvert.ModelConvert(mdl, out var aqnList);
+                    for (int i = 0; i < aqpList.Count; i++)
+                    {
+                        var aqp = aqpList[i];
+                        var aqn = aqnList[i];
+                        if (aqp != null && aqp.vtxlList.Count > 0 || aqp.tempTris[0].faceVerts.Count > 0)
+                        {
+                            aqp.ConvertToPSO2Model(true, false, false, true, false, false, false, true);
+                            aqp.ConvertToLegacyTypes();
+                            aqp.CreateTrueVertWeights();
+
+                            FbxExporterNative.ExportToFile(aqp, aqn, new List<AquaMotion>(), Path.Combine(outDir, Path.GetFileNameWithoutExtension(file) + $"_{i}.fbx"), new List<string>(), new List<Matrix4x4>(), false);
+                        }
+                    }
                 }
             }
         }
@@ -6636,6 +6668,86 @@ namespace AquaModelTool
                         FbxExporterNative.ExportToFile(aqp, aqn, new List<AquaMotion>(), Path.ChangeExtension(file, ".fbx"), new List<string>(), new List<Matrix4x4>(), false);
                     }
                 }
+            }
+        }
+
+        private void ikarugaarcExtractToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var openFileDialog = new OpenFileDialog()
+            {
+                Title = "Select Ikaruga arc File",
+                Filter = "Ikaruga *.arc files|*.arc",
+                FileName = "",
+                Multiselect = true
+            };
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                foreach (var file in openFileDialog.FileNames)
+                {
+                    var arc = new Arc(File.ReadAllBytes(file));
+                    var outDir = file + "_out";
+                    Directory.CreateDirectory(outDir);
+                    foreach (var fileEntry in arc.files)
+                    {
+                        File.WriteAllBytes(Path.Combine(outDir, fileEntry.filename + fileEntry.GetExtension()), fileEntry.data);
+                    }
+                }
+            }
+        }
+
+        private void billyLightTestToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var openFileDialog = new OpenFileDialog()
+            {
+                Title = "Select set_light_param.bin",
+                Filter = "set_light_param.bin files|set_light_param.bin",
+                FileName = "",
+            };
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                var lights = new SetLightParam(File.ReadAllBytes(openFileDialog.FileName));
+                byte[] blank = { 0x0, 0x0, 0x0, 0x0 };
+                byte[][] testColors = {
+                    new byte[] { 0xFF, 0x0, 0x0, 0xFF},
+                    new byte[] { 0x0, 0xFF, 0x0, 0xFF},
+                    new byte[] { 0x0, 0x0, 0xFF, 0xFF},
+                    new byte[] { 0xFF, 0xFF, 0x0, 0xFF},
+                    new byte[] { 0xFF, 0x0, 0xFF, 0xFF},
+                    new byte[] { 0x0, 0xFF, 0xFF, 0xFF},
+                    new byte[] { 0xFF, 0xFF, 0xFF, 0xFF},
+                };
+                byte[][] testColors2 = {
+                    new byte[] { 0xFF, 0x0, 0x0, 0xFF},
+                    new byte[] { 0x0, 0xFF, 0x0, 0xFF},
+                    new byte[] { 0x0, 0x0, 0xFF, 0xFF},
+                    new byte[] { 0xFF, 0xFF, 0x0, 0xFF},
+                    new byte[] { 0xFF, 0x0, 0xFF, 0xFF},
+                    new byte[] { 0x0, 0xFF, 0xFF, 0xFF},
+                    new byte[] { 0xFF, 0xFF, 0xFF, 0xFF},
+                };
+                for (int i = 0; i < lights.lightParams.Length; i++)
+                {
+                    var light = lights.lightParams[i];
+                    Debug.WriteLine($"{i:D} Light directional: {light.directionalLightingColor[0]} {light.directionalLightingColor[1]} {light.directionalLightingColor[2]} {light.directionalLightingColor[3]} " +
+                        $"ambient: {light.ambientLightingColor[0]}  {light.ambientLightingColor[1]}  {light.ambientLightingColor[2]}  {light.ambientLightingColor[3]}");
+                    light.lightDirection = lights.lightParams[0].lightDirection;
+
+                    int set = i / testColors.Length;
+                    if (set == 0)
+                    {
+                        light.directionalLightingColor = testColors[i % testColors.Length];
+                        light.ambientLightingColor = testColors2[i % testColors2.Length];
+                    }
+                    else
+                    {
+                        light.directionalLightingColor = blank;
+                        light.ambientLightingColor = blank;
+
+                    }
+
+                    lights.lightParams[i] = light;
+                }
+                File.WriteAllBytes(openFileDialog.FileName, lights.GetBytes());
             }
         }
     }

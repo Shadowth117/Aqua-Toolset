@@ -82,6 +82,7 @@ namespace SoulsModelTool
             exportFormatCB.SelectedIndex = (int)smtSetting.exportFormat;
             mirrorTypeCB.SelectedIndex = (int)smtSetting.mirrorType;
             coordSystemCB.SelectedIndex = (int)smtSetting.coordSystem;
+            addFBXRootNodeCB.IsChecked = smtSetting.addFBXRootNode;
 
             // using var ctx = new Assimp.AssimpContext();
             // var formats = ctx.GetSupportedImportFormats().ToList();
@@ -156,6 +157,7 @@ namespace SoulsModelTool
             smtSetting.exportFormat = (ExportFormat)exportFormatCB.SelectedIndex;
             smtSetting.coordSystem = (CoordSystem)coordSystemCB.SelectedIndex;
             smtSetting.mirrorType = (MirrorType)mirrorTypeCB.SelectedIndex;
+            smtSetting.addFBXRootNode = (bool)addFBXRootNodeCB.IsChecked;
             string smtSettingText = JsonConvert.SerializeObject(smtSetting, jss);
             File.WriteAllText(settingsPath + settingsFile, smtSettingText);
         }

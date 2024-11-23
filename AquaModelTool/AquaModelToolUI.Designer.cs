@@ -96,10 +96,10 @@ namespace AquaModelTool
             convertAnimsTonomToolStripMenuItem = new ToolStripMenuItem();
             convertPSO2PlayeraqmToPSUnomToolStripMenuItem = new ToolStripMenuItem();
             toolStripSeparator9 = new ToolStripSeparator();
+            convertPSOxjToolStripMenuItem = new ToolStripMenuItem();
             convertPSOnrelTotrpToolStripMenuItem = new ToolStripMenuItem();
             convertPSOxvrToolStripMenuItem = new ToolStripMenuItem();
             dumpPSOxvmToolStripMenuItem = new ToolStripMenuItem();
-            convertPSOxjToolStripMenuItem = new ToolStripMenuItem();
             otherGamesToolStripMenuItem2 = new ToolStripMenuItem();
             extractBorderBreakPS4FARCToolStripMenuItem = new ToolStripMenuItem();
             setMOTBONEbinPathToolStripMenuItem = new ToolStripMenuItem();
@@ -119,6 +119,7 @@ namespace AquaModelTool
             toolStripSeparator17 = new ToolStripSeparator();
             otherGamesToolStripMenuItem3 = new ToolStripMenuItem();
             blueDragonipkExtractToolStripMenuItem = new ToolStripMenuItem();
+            ikarugaarcExtractToolStripMenuItem = new ToolStripMenuItem();
             toolStripSeparator5 = new ToolStripSeparator();
             batchPSO2ToFBXToolStripMenuItem = new ToolStripMenuItem();
             batchParsePSO2SetToTextToolStripMenuItem = new ToolStripMenuItem();
@@ -228,9 +229,10 @@ namespace AquaModelTool
             customRoboGCSFDDumpToolStripMenuItem = new ToolStripMenuItem();
             customRoboPartReadToolStripMenuItem = new ToolStripMenuItem();
             soulReverseTestToolStripMenuItem = new ToolStripMenuItem();
+            billyLightTestToolStripMenuItem = new ToolStripMenuItem();
             filePanel = new Panel();
             splitter1 = new Splitter();
-            customRoboPartReadToolStripMenuItem = new ToolStripMenuItem();
+            addFBXRootNodeFixesBlenderSkinningIssuesTdToolStripMenuItem = new ToolStripMenuItem();
             menuStrip1.SuspendLayout();
             SuspendLayout();
             // 
@@ -442,7 +444,7 @@ namespace AquaModelTool
             // 
             // otherGamesToolStripMenuItem
             // 
-            otherGamesToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { convertSoulsflverTofbxToolStripMenuItem, exportFormatCB, soulsMirroringCB, soulsCoordSystemCB, exportWithMetadataToolStripMenuItem, applyMaterialNamesToMeshToolStripMenuItem, transformMeshToolStripMenuItem, toolStripSeparator14, setSoulsGameToolStripMenuItem, extractSoulsMapObjectLayoutFrommsbToolStripMenuItem, mSBExtractionExtractUnreferencedModelsAndTexturesToolStripMenuItem, mSBExtractionSeparateExtractionByModelToolStripMenuItem, toolStripSeparator15, dumpAllFromSoulsbndToolStripMenuItem, toolStripSeparator16, mWCBNDExtractToolStripMenuItem, otogi12datExtractToolStripMenuItem, mWCBNDPackToolStripMenuItem, metalWolfChaosMMDConvertToolStripMenuItem, metalWolfChaosOTRConvertToolStripMenuItem, metalWolfChaosMDLConvertUnfinishedMostlyWorksToolStripMenuItem, toolStripSeparator12, generateMCGMCPToolStripMenuItem, convertModelToDemonsSoulsflverToolStripMenuItem, toolStripSeparator11, convertDemonsSoulsPS5CmdlToFbxToolStripMenuItem, convertDemonsSoulsPS5ctxrToolStripMenuItem, tryToDecompressShadowOfTheColossusFileToolStripMenuItem, noteShadowOfTheColossusPS4psarcsMUSTHaveTheirContentsPlacedInTheGamesEbootbinDirectoryToolStripMenuItem });
+            otherGamesToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { convertSoulsflverTofbxToolStripMenuItem, exportFormatCB, soulsMirroringCB, soulsCoordSystemCB, exportWithMetadataToolStripMenuItem, applyMaterialNamesToMeshToolStripMenuItem, transformMeshToolStripMenuItem, addFBXRootNodeFixesBlenderSkinningIssuesTdToolStripMenuItem, toolStripSeparator14, setSoulsGameToolStripMenuItem, extractSoulsMapObjectLayoutFrommsbToolStripMenuItem, mSBExtractionExtractUnreferencedModelsAndTexturesToolStripMenuItem, mSBExtractionSeparateExtractionByModelToolStripMenuItem, toolStripSeparator15, dumpAllFromSoulsbndToolStripMenuItem, toolStripSeparator16, mWCBNDExtractToolStripMenuItem, otogi12datExtractToolStripMenuItem, mWCBNDPackToolStripMenuItem, metalWolfChaosMMDConvertToolStripMenuItem, metalWolfChaosOTRConvertToolStripMenuItem, metalWolfChaosMDLConvertUnfinishedMostlyWorksToolStripMenuItem, toolStripSeparator12, generateMCGMCPToolStripMenuItem, convertModelToDemonsSoulsflverToolStripMenuItem, toolStripSeparator11, convertDemonsSoulsPS5CmdlToFbxToolStripMenuItem, convertDemonsSoulsPS5ctxrToolStripMenuItem, tryToDecompressShadowOfTheColossusFileToolStripMenuItem, noteShadowOfTheColossusPS4psarcsMUSTHaveTheirContentsPlacedInTheGamesEbootbinDirectoryToolStripMenuItem });
             otherGamesToolStripMenuItem.Name = "otherGamesToolStripMenuItem";
             otherGamesToolStripMenuItem.Size = new Size(344, 22);
             otherGamesToolStripMenuItem.Text = "Souls And FromSoft/BluePoint Games";
@@ -707,6 +709,13 @@ namespace AquaModelTool
             toolStripSeparator9.Name = "toolStripSeparator9";
             toolStripSeparator9.Size = new Size(278, 6);
             // 
+            // convertPSOxjToolStripMenuItem
+            // 
+            convertPSOxjToolStripMenuItem.Name = "convertPSOxjToolStripMenuItem";
+            convertPSOxjToolStripMenuItem.Size = new Size(281, 22);
+            convertPSOxjToolStripMenuItem.Text = "Convert PSO .xj";
+            convertPSOxjToolStripMenuItem.Click += convertPSOxjToolStripMenuItem_Click;
+            // 
             // convertPSOnrelTotrpToolStripMenuItem
             // 
             convertPSOnrelTotrpToolStripMenuItem.Name = "convertPSOnrelTotrpToolStripMenuItem";
@@ -726,13 +735,6 @@ namespace AquaModelTool
             dumpPSOxvmToolStripMenuItem.Name = "dumpPSOxvmToolStripMenuItem";
             dumpPSOxvmToolStripMenuItem.Size = new Size(281, 22);
             dumpPSOxvmToolStripMenuItem.Text = "Dump PSO .xvm";
-            // 
-            // convertPSOxjToolStripMenuItem
-            // 
-            convertPSOxjToolStripMenuItem.Name = "convertPSOxjToolStripMenuItem";
-            convertPSOxjToolStripMenuItem.Size = new Size(281, 22);
-            convertPSOxjToolStripMenuItem.Text = "Convert PSO .xj";
-            convertPSOxjToolStripMenuItem.Click += convertPSOxjToolStripMenuItem_Click;
             // 
             // otherGamesToolStripMenuItem2
             // 
@@ -851,7 +853,7 @@ namespace AquaModelTool
             // 
             // otherGamesToolStripMenuItem3
             // 
-            otherGamesToolStripMenuItem3.DropDownItems.AddRange(new ToolStripItem[] { blueDragonipkExtractToolStripMenuItem });
+            otherGamesToolStripMenuItem3.DropDownItems.AddRange(new ToolStripItem[] { blueDragonipkExtractToolStripMenuItem, ikarugaarcExtractToolStripMenuItem });
             otherGamesToolStripMenuItem3.Name = "otherGamesToolStripMenuItem3";
             otherGamesToolStripMenuItem3.Size = new Size(344, 22);
             otherGamesToolStripMenuItem3.Text = "Other Games";
@@ -862,6 +864,13 @@ namespace AquaModelTool
             blueDragonipkExtractToolStripMenuItem.Size = new Size(246, 22);
             blueDragonipkExtractToolStripMenuItem.Text = "Blue Dragon *.ipk, *.mpk Extract ";
             blueDragonipkExtractToolStripMenuItem.Click += blueDragonipkExtractToolStripMenuItem_Click;
+            // 
+            // ikarugaarcExtractToolStripMenuItem
+            // 
+            ikarugaarcExtractToolStripMenuItem.Name = "ikarugaarcExtractToolStripMenuItem";
+            ikarugaarcExtractToolStripMenuItem.Size = new Size(246, 22);
+            ikarugaarcExtractToolStripMenuItem.Text = "Ikaruga *.arc Extract";
+            ikarugaarcExtractToolStripMenuItem.Click += ikarugaarcExtractToolStripMenuItem_Click;
             // 
             // toolStripSeparator5
             // 
@@ -1413,7 +1422,7 @@ namespace AquaModelTool
             // 
             // debug3ToolStripMenuItem
             // 
-            debug3ToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { readPATHToolStripMenuItem, oldBillyMC2ConvertToolStripMenuItem, readPOF0ToolStripMenuItem, readStageDefToolStripMenuItem, readGrassToolStripMenuItem, readMRPRoomGoodsToolStripMenuItem, decryptINCToolStripMenuItem, readARCToolStripMenuItem, dumpBillyArcPof0ToolStripMenuItem, dumpExtremeAnimsToolStripMenuItem, readGEPlayerToolStripMenuItem, readAniModelToolStripMenuItem, readLibModelToolStripMenuItem, protoThingToItemModelToolStripMenuItem, readGalleryEggToolStripMenuItem, readCMDLToolStripMenuItem, checkToolStripMenuItem, checkAllcmshToolStripMenuItem, deswizzleTestToolStripMenuItem, checkAllBillySetObjToolStripMenuItem, ps3DdsTestToolStripMenuItem, testReadOldCMDLToolStripMenuItem, readGEEggToolStripMenuItem, readFlverTestToolStripMenuItem, readWriteTexTestToolStripMenuItem, pSOCryptTestToolStripMenuItem, customRoboGCSFDDumpToolStripMenuItem, customRoboPartReadToolStripMenuItem, soulReverseTestToolStripMenuItem });
+            debug3ToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { readPATHToolStripMenuItem, oldBillyMC2ConvertToolStripMenuItem, readPOF0ToolStripMenuItem, readStageDefToolStripMenuItem, readGrassToolStripMenuItem, readMRPRoomGoodsToolStripMenuItem, decryptINCToolStripMenuItem, readARCToolStripMenuItem, dumpBillyArcPof0ToolStripMenuItem, dumpExtremeAnimsToolStripMenuItem, readGEPlayerToolStripMenuItem, readAniModelToolStripMenuItem, readLibModelToolStripMenuItem, protoThingToItemModelToolStripMenuItem, readGalleryEggToolStripMenuItem, readCMDLToolStripMenuItem, checkToolStripMenuItem, checkAllcmshToolStripMenuItem, deswizzleTestToolStripMenuItem, checkAllBillySetObjToolStripMenuItem, ps3DdsTestToolStripMenuItem, testReadOldCMDLToolStripMenuItem, readGEEggToolStripMenuItem, readFlverTestToolStripMenuItem, readWriteTexTestToolStripMenuItem, pSOCryptTestToolStripMenuItem, customRoboGCSFDDumpToolStripMenuItem, customRoboPartReadToolStripMenuItem, soulReverseTestToolStripMenuItem, billyLightTestToolStripMenuItem });
             debug3ToolStripMenuItem.Name = "debug3ToolStripMenuItem";
             debug3ToolStripMenuItem.Size = new Size(60, 23);
             debug3ToolStripMenuItem.Text = "Debug3";
@@ -1621,6 +1630,13 @@ namespace AquaModelTool
             soulReverseTestToolStripMenuItem.Text = "SoulReverseTest";
             soulReverseTestToolStripMenuItem.Click += soulReverseTestToolStripMenuItem_Click;
             // 
+            // billyLightTestToolStripMenuItem
+            // 
+            billyLightTestToolStripMenuItem.Name = "billyLightTestToolStripMenuItem";
+            billyLightTestToolStripMenuItem.Size = new Size(213, 22);
+            billyLightTestToolStripMenuItem.Text = "BillyLightTest";
+            billyLightTestToolStripMenuItem.Click += billyLightTestToolStripMenuItem_Click;
+            // 
             // filePanel
             // 
             filePanel.AutoSize = true;
@@ -1641,12 +1657,13 @@ namespace AquaModelTool
             splitter1.TabIndex = 2;
             splitter1.TabStop = false;
             // 
-            // customRoboPartReadToolStripMenuItem
+            // addFBXRootNodeFixesBlenderSkinningIssuesTdToolStripMenuItem
             // 
-            customRoboPartReadToolStripMenuItem.Name = "customRoboPartReadToolStripMenuItem";
-            customRoboPartReadToolStripMenuItem.Size = new Size(213, 22);
-            customRoboPartReadToolStripMenuItem.Text = "CustomRoboPartRead";
-            customRoboPartReadToolStripMenuItem.Click += customRoboPartReadToolStripMenuItem_Click;
+            addFBXRootNodeFixesBlenderSkinningIssuesTdToolStripMenuItem.CheckOnClick = true;
+            addFBXRootNodeFixesBlenderSkinningIssuesTdToolStripMenuItem.Name = "addFBXRootNodeFixesBlenderSkinningIssuesTdToolStripMenuItem";
+            addFBXRootNodeFixesBlenderSkinningIssuesTdToolStripMenuItem.Size = new Size(650, 22);
+            addFBXRootNodeFixesBlenderSkinningIssuesTdToolStripMenuItem.Text = "Add FBX Root Node (Fixes Blender skinning issues due to its faulty fbx plugin)";
+            addFBXRootNodeFixesBlenderSkinningIssuesTdToolStripMenuItem.Click += SaveSoulsSettings;
             // 
             // AquaModelTool
             // 
@@ -1871,6 +1888,9 @@ namespace AquaModelTool
         private ToolStripMenuItem customRoboPartReadToolStripMenuItem;
         private ToolStripMenuItem soulReverseTestToolStripMenuItem;
         private ToolStripMenuItem convertPSOxjToolStripMenuItem;
+        private ToolStripMenuItem ikarugaarcExtractToolStripMenuItem;
+        private ToolStripMenuItem billyLightTestToolStripMenuItem;
+        private ToolStripMenuItem addFBXRootNodeFixesBlenderSkinningIssuesTdToolStripMenuItem;
     }
 }
 

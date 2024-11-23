@@ -141,11 +141,11 @@ namespace SoulsModelTool
                         case "-launch":
                             launchUi = true;
                             break;
-                        case "-adjustrootnode":
-                            smtSetting.doNotAdjustRootRotation = false;
+                        case "-addrootnode":
+                            smtSetting.addFBXRootNode = true;
                             break;
-                        case "-dontadjustrootnode":
-                            smtSetting.doNotAdjustRootRotation = true;
+                        case "-dontaddrootnode":
+                            smtSetting.addFBXRootNode = false;
                             break;
                         default:
                             filePaths.Add(arg);

@@ -51,6 +51,8 @@
                                   Click="smtSettingSet" />
                         <CheckBox x:Name="transformMeshCB" Content="Transform mesh" IsChecked="True"
                                   Click="smtSettingSet" />
+                        <CheckBox x:Name="addFBXRootNodeCB" Content="Add FBX Root Node (Fixes Blender skinning issues due to its faulty fbx plugin)" IsChecked="True"
+                                  Click="smtSettingSet" />
                     </StackPanel>
                 </GroupBox>
                 <GroupBox Header="MSB extraction">
