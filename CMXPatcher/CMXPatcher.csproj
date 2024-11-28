@@ -20,6 +20,7 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft-WindowsAPICodePack-ShellExtensions" Version="1.1.5" />
+    <PackageReference Include="Reloaded.Memory" Version="9.4.2" />
   </ItemGroup>
 
   <ItemGroup>

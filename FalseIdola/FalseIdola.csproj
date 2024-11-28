@@ -10,7 +10,7 @@
 
   <ItemGroup>
     <PackageReference Include="NAudio" Version="2.2.0" />
-    <PackageReference Include="Reloaded.Memory" Version="9.3.2" />
+    <PackageReference Include="Reloaded.Memory" Version="9.4.2" />
   </ItemGroup>
 
   <ItemGroup>

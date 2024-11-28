@@ -14,6 +14,10 @@
   </Target>
 
   <ItemGroup>
+    <PackageReference Include="Reloaded.Memory" Version="9.4.2" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\PSO2-Aqua-Library\AquaModelLibrary.Core\AquaModelLibrary.Core.csproj" />
   </ItemGroup>
 
