@@ -66,6 +66,7 @@ namespace AquaModelTool
             exportWithMetadataToolStripMenuItem = new ToolStripMenuItem();
             applyMaterialNamesToMeshToolStripMenuItem = new ToolStripMenuItem();
             transformMeshToolStripMenuItem = new ToolStripMenuItem();
+            addFBXRootNodeFixesBlenderSkinningIssuesTdToolStripMenuItem = new ToolStripMenuItem();
             toolStripSeparator14 = new ToolStripSeparator();
             setSoulsGameToolStripMenuItem = new ToolStripMenuItem();
             extractSoulsMapObjectLayoutFrommsbToolStripMenuItem = new ToolStripMenuItem();
@@ -232,7 +233,7 @@ namespace AquaModelTool
             billyLightTestToolStripMenuItem = new ToolStripMenuItem();
             filePanel = new Panel();
             splitter1 = new Splitter();
-            addFBXRootNodeFixesBlenderSkinningIssuesTdToolStripMenuItem = new ToolStripMenuItem();
+            geoObjStageReadToolStripMenuItem = new ToolStripMenuItem();
             menuStrip1.SuspendLayout();
             SuspendLayout();
             // 
@@ -503,6 +504,14 @@ namespace AquaModelTool
             transformMeshToolStripMenuItem.Size = new Size(650, 22);
             transformMeshToolStripMenuItem.Text = "Transform Mesh";
             transformMeshToolStripMenuItem.Click += SaveSoulsSettings;
+            // 
+            // addFBXRootNodeFixesBlenderSkinningIssuesTdToolStripMenuItem
+            // 
+            addFBXRootNodeFixesBlenderSkinningIssuesTdToolStripMenuItem.CheckOnClick = true;
+            addFBXRootNodeFixesBlenderSkinningIssuesTdToolStripMenuItem.Name = "addFBXRootNodeFixesBlenderSkinningIssuesTdToolStripMenuItem";
+            addFBXRootNodeFixesBlenderSkinningIssuesTdToolStripMenuItem.Size = new Size(650, 22);
+            addFBXRootNodeFixesBlenderSkinningIssuesTdToolStripMenuItem.Text = "Add FBX Root Node (Fixes Blender skinning issues due to its faulty fbx plugin)";
+            addFBXRootNodeFixesBlenderSkinningIssuesTdToolStripMenuItem.Click += SaveSoulsSettings;
             // 
             // toolStripSeparator14
             // 
@@ -1422,7 +1431,7 @@ namespace AquaModelTool
             // 
             // debug3ToolStripMenuItem
             // 
-            debug3ToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { readPATHToolStripMenuItem, oldBillyMC2ConvertToolStripMenuItem, readPOF0ToolStripMenuItem, readStageDefToolStripMenuItem, readGrassToolStripMenuItem, readMRPRoomGoodsToolStripMenuItem, decryptINCToolStripMenuItem, readARCToolStripMenuItem, dumpBillyArcPof0ToolStripMenuItem, dumpExtremeAnimsToolStripMenuItem, readGEPlayerToolStripMenuItem, readAniModelToolStripMenuItem, readLibModelToolStripMenuItem, protoThingToItemModelToolStripMenuItem, readGalleryEggToolStripMenuItem, readCMDLToolStripMenuItem, checkToolStripMenuItem, checkAllcmshToolStripMenuItem, deswizzleTestToolStripMenuItem, checkAllBillySetObjToolStripMenuItem, ps3DdsTestToolStripMenuItem, testReadOldCMDLToolStripMenuItem, readGEEggToolStripMenuItem, readFlverTestToolStripMenuItem, readWriteTexTestToolStripMenuItem, pSOCryptTestToolStripMenuItem, customRoboGCSFDDumpToolStripMenuItem, customRoboPartReadToolStripMenuItem, soulReverseTestToolStripMenuItem, billyLightTestToolStripMenuItem });
+            debug3ToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { readPATHToolStripMenuItem, oldBillyMC2ConvertToolStripMenuItem, readPOF0ToolStripMenuItem, readStageDefToolStripMenuItem, readGrassToolStripMenuItem, readMRPRoomGoodsToolStripMenuItem, decryptINCToolStripMenuItem, readARCToolStripMenuItem, dumpBillyArcPof0ToolStripMenuItem, dumpExtremeAnimsToolStripMenuItem, readGEPlayerToolStripMenuItem, readAniModelToolStripMenuItem, readLibModelToolStripMenuItem, protoThingToItemModelToolStripMenuItem, readGalleryEggToolStripMenuItem, readCMDLToolStripMenuItem, checkToolStripMenuItem, checkAllcmshToolStripMenuItem, deswizzleTestToolStripMenuItem, checkAllBillySetObjToolStripMenuItem, ps3DdsTestToolStripMenuItem, testReadOldCMDLToolStripMenuItem, readGEEggToolStripMenuItem, readFlverTestToolStripMenuItem, readWriteTexTestToolStripMenuItem, pSOCryptTestToolStripMenuItem, customRoboGCSFDDumpToolStripMenuItem, customRoboPartReadToolStripMenuItem, soulReverseTestToolStripMenuItem, billyLightTestToolStripMenuItem, geoObjStageReadToolStripMenuItem });
             debug3ToolStripMenuItem.Name = "debug3ToolStripMenuItem";
             debug3ToolStripMenuItem.Size = new Size(60, 23);
             debug3ToolStripMenuItem.Text = "Debug3";
@@ -1657,13 +1666,12 @@ namespace AquaModelTool
             splitter1.TabIndex = 2;
             splitter1.TabStop = false;
             // 
-            // addFBXRootNodeFixesBlenderSkinningIssuesTdToolStripMenuItem
+            // geoObjStageReadToolStripMenuItem
             // 
-            addFBXRootNodeFixesBlenderSkinningIssuesTdToolStripMenuItem.CheckOnClick = true;
-            addFBXRootNodeFixesBlenderSkinningIssuesTdToolStripMenuItem.Name = "addFBXRootNodeFixesBlenderSkinningIssuesTdToolStripMenuItem";
-            addFBXRootNodeFixesBlenderSkinningIssuesTdToolStripMenuItem.Size = new Size(650, 22);
-            addFBXRootNodeFixesBlenderSkinningIssuesTdToolStripMenuItem.Text = "Add FBX Root Node (Fixes Blender skinning issues due to its faulty fbx plugin)";
-            addFBXRootNodeFixesBlenderSkinningIssuesTdToolStripMenuItem.Click += SaveSoulsSettings;
+            geoObjStageReadToolStripMenuItem.Name = "geoObjStageReadToolStripMenuItem";
+            geoObjStageReadToolStripMenuItem.Size = new Size(213, 22);
+            geoObjStageReadToolStripMenuItem.Text = "GeoObjStage Read";
+            geoObjStageReadToolStripMenuItem.Click += geoObjStageReadToolStripMenuItem_Click;
             // 
             // AquaModelTool
             // 
@@ -1891,6 +1899,7 @@ namespace AquaModelTool
         private ToolStripMenuItem ikarugaarcExtractToolStripMenuItem;
         private ToolStripMenuItem billyLightTestToolStripMenuItem;
         private ToolStripMenuItem addFBXRootNodeFixesBlenderSkinningIssuesTdToolStripMenuItem;
+        private ToolStripMenuItem geoObjStageReadToolStripMenuItem;
     }
 }
 

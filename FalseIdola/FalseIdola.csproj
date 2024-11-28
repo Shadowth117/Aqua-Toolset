@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
@@ -9,7 +9,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="NAudio" Version="2.2.0" />
+    <PackageReference Include="NAudio" Version="2.2.1" />
     <PackageReference Include="Reloaded.Memory" Version="9.4.2" />
   </ItemGroup>
 
