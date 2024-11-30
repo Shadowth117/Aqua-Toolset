@@ -6753,7 +6753,6 @@ namespace AquaModelTool
 
         private void geoObjStageReadToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
             var openFileDialog = new OpenFileDialog()
             {
                 Title = "Select Billy Hatcher geobj_*.arc File",
@@ -6769,7 +6768,7 @@ namespace AquaModelTool
 
                     var outDir = file + "_out";
                     Directory.CreateDirectory(outDir);
-                    foreach(var pair in arc.models)
+                    foreach (var pair in arc.models)
                     {
                         var model = pair.Value;
                         if (model != null)
@@ -6783,6 +6782,36 @@ namespace AquaModelTool
                                 aqp.CreateTrueVertWeights();
 
                                 FbxExporterNative.ExportToFile(aqp, aqn, new List<AquaMotion>(), outPath, new List<string>(), new List<Matrix4x4>(), false);
+                            }
+                        }
+                    }
+                    foreach (var pair in arc.colModels)
+                    {
+                        var model = pair.Value;
+                        if (model != null)
+                        {
+                            var aqpList = model.ConvertToAquaObject();
+                            var aqn = AquaNode.GenerateBasicAQN();
+                            for (int i = 0; i < aqpList.Count; i++)
+                            {
+                                var aqp = aqpList[i];
+                                string outPath;
+                                if (i == 0 && aqpList.Count == 1)
+                                {
+                                    outPath = Path.Combine(outDir, $"{pair.Key}.fbx");
+                                }
+                                else
+                                {
+                                    outPath = Path.Combine(outDir, $"{pair.Key}_{i}.fbx");
+                                }
+
+                                if (aqp != null && aqp.vtxlList.Count > 0 || aqp.tempTris[0].faceVerts.Count > 0)
+                                {
+                                    aqp.ConvertToLegacyTypes();
+                                    aqp.CreateTrueVertWeights();
+
+                                    FbxExporterNative.ExportToFile(aqp, aqn, new List<AquaMotion>(), outPath, new List<string>(), new List<Matrix4x4>(), false);
+                                }
                             }
                         }
                     }
@@ -6803,9 +6832,129 @@ namespace AquaModelTool
                             }
                         }
                     }
+                    foreach (var pair in arc.colModel2s)
+                    {
+                        var model = pair.Value;
+                        if (model != null)
+                        {
+                            var aqpList = model.ConvertToAquaObject();
+                            var aqn = AquaNode.GenerateBasicAQN();
+                            for (int i = 0; i < aqpList.Count; i++)
+                            {
+                                var aqp = aqpList[i];
+                                string outPath;
+                                if (i == 0 && aqpList.Count == 1)
+                                {
+                                    outPath = Path.Combine(outDir, $"{pair.Key}.fbx");
+                                }
+                                else
+                                {
+                                    outPath = Path.Combine(outDir, $"{pair.Key}_{i}.fbx");
+                                }
+
+                                if (aqp != null && aqp.vtxlList.Count > 0 || aqp.tempTris[0].faceVerts.Count > 0)
+                                {
+                                    aqp.ConvertToLegacyTypes();
+                                    aqp.CreateTrueVertWeights();
+
+                                    FbxExporterNative.ExportToFile(aqp, aqn, new List<AquaMotion>(), outPath, new List<string>(), new List<Matrix4x4>(), false);
+                                }
+                            }
+                        }
+                    }
                     if (arc.gvm != null)
                     {
                         arc.gvm.Save(Path.Combine(outDir, "textures.gvm"));
+                    }
+                }
+            }
+        }
+
+        private void objCollisionReadToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var openFileDialog = new OpenFileDialog()
+            {
+                Title = "Select Billy Hatcher obj*.bin, *.dml File",
+                Filter = "Billy Hatcher obj*.bin, *.dml files|obj*.bin;*.dml",
+                FileName = "",
+                Multiselect = true
+            };
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                foreach (var file in openFileDialog.FileNames)
+                {
+                    var fileName = Path.GetFileNameWithoutExtension(file);
+                    var model = new CSDY(File.ReadAllBytes(file), true, 0);
+                    var outDir = file + "_out";
+                    Directory.CreateDirectory(outDir);
+                    if (model != null)
+                    {
+                        var aqpList = model.ConvertToAquaObject();
+                        var aqn = AquaNode.GenerateBasicAQN();
+                        for (int i = 0; i < aqpList.Count; i++)
+                        {
+                            var aqp = aqpList[i];
+                            string outPath;
+                            if (i == 0 && aqpList.Count == 1)
+                            {
+                                outPath = Path.Combine(outDir, $"{fileName}.fbx");
+                            }
+                            else
+                            {
+                                outPath = Path.Combine(outDir, $"{fileName}_{i}.fbx");
+                            }
+
+                            if (aqp != null && aqp.vtxlList.Count > 0 || aqp.tempTris[0].faceVerts.Count > 0)
+                            {
+                                aqp.ConvertToLegacyTypes();
+                                aqp.CreateTrueVertWeights();
+
+                                FbxExporterNative.ExportToFile(aqp, aqn, new List<AquaMotion>(), outPath, new List<string>(), new List<Matrix4x4>(), false);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        private void arEnemyReadToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var openFileDialog = new OpenFileDialog()
+            {
+                Title = "Select Billy Hatcher ar_ene_*.arc Files that aren't param",
+                Filter = "Billy Hatcher ar_ene_*.arc (Except Param!) files|ar_ene_*.arc",
+                FileName = "",
+                Multiselect = true
+            };
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                foreach (var file in openFileDialog.FileNames)
+                {
+                    var arc = new ArEnemy(File.ReadAllBytes(file));
+
+                    var outDir = file + "_out";
+                    Directory.CreateDirectory(outDir);
+                    for(int i = 0; i < arc.models.Count; i++)
+                    {
+                        var model = arc.models[i];
+                        if (model != null)
+                        {
+                            List<string> texList = null;
+                            if(arc.texList.Count != 0)
+                            {
+                                texList = arc.texList[0].texNames;
+                            }
+                            var outPath = Path.Combine(outDir, $"model_{i}.fbx");
+                            var aqp = NinjaModelConvert.NinjaToAqua(model, out var aqn, texList);
+                            if (aqp != null && aqp.vtxlList.Count > 0 || aqp.tempTris[0].faceVerts.Count > 0)
+                            {
+                                aqp.ConvertToPSO2Model(true, false, false, true, false, false, false, true);
+                                aqp.ConvertToLegacyTypes();
+                                aqp.CreateTrueVertWeights();
+
+                                FbxExporterNative.ExportToFile(aqp, aqn, new List<AquaMotion>(), outPath, new List<string>(), new List<Matrix4x4>(), false);
+                            }
+                        }
                     }
                 }
             }
