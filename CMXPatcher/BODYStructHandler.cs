@@ -1,5 +1,6 @@
 ﻿using AquaModelLibrary.Data.PSO2.Aqua.CharacterMakingIndexData;
 using AquaModelLibrary.Helpers;
+using AquaModelLibrary.Helpers.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -17,7 +18,7 @@ namespace CMXPatcher
 
             outText.AppendLine(type + " : " + body.body.id.ToString(new CultureInfo("en-US")));
 
-            outText.AppendLine("int_20 = " + body.body.int_20.ToString(new CultureInfo("en-US")));
+            outText.AppendLine("int_20 = " + body.body.string7Ptr.ToString(new CultureInfo("en-US")));
             outText.AppendLine("int_24_0x9_0x9 = " + body.body2.int_24_0x9_0x9.ToString(new CultureInfo("en-US")));
             outText.AppendLine("int_28 = " + body.body2.int_28.ToString(new CultureInfo("en-US")));
             outText.AppendLine("int_2C = " + body.body2.int_2C.ToString(new CultureInfo("en-US")));
@@ -80,7 +81,7 @@ namespace CMXPatcher
                 switch (contents[0])
                 {
                     case "int_20":
-                        body.body.int_20 = Int32.Parse(contents[1], new CultureInfo("en-US"));
+                        body.body.string7Ptr = Int32.Parse(contents[1], new CultureInfo("en-US"));
                         break;
                     case "int_24_0x9_0x9":
                         body.body2.int_24_0x9_0x9 = Int32.Parse(contents[1], new CultureInfo("en-US"));
@@ -163,6 +164,7 @@ namespace CMXPatcher
             bodyBytes.AddRange(DataHelpers.ConvertStruct(body.body));
             if (postRetem)
             {
+                bodyBytes.AddValue(body.string8Ptr);
                 bodyBytes.AddRange(DataHelpers.ConvertStruct(body.bodyMaskColorMapping));
             }
             bodyBytes.AddRange(DataHelpers.ConvertStruct(body.body2));

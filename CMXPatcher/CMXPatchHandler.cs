@@ -425,7 +425,9 @@ namespace CMXPatcher
             cmtOut.AddRange(cmt.GetBytesNIFL());
             cmtOut.InsertRange(0, (new IceHeaderStructures.IceFileHeader(CharacterMakingStatic.cmtName, (uint)cmtOut.Count)).GetBytes());
             cmx.WriteMode = 0;
-            cmxOut.AddRange(cmx.GetBytesNIFL());
+            var cmxBytes = cmx.GetBytesNIFL();
+            File.WriteAllBytes("C:\\junk\\testBenchMarkcmx.cmx", cmxBytes);
+            cmxOut.AddRange(cmxBytes);
             cmxOut.InsertRange(0, (new IceHeaderStructures.IceFileHeader(CharacterMakingStatic.cmxName, (uint)cmxOut.Count)).GetBytes());
 
             if (File.Exists(collectPath))
