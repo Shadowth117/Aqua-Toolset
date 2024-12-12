@@ -225,13 +225,15 @@ namespace AquaModelTool
             pSOCryptTestToolStripMenuItem = new ToolStripMenuItem();
             customRoboGCSFDDumpToolStripMenuItem = new ToolStripMenuItem();
             customRoboPartReadToolStripMenuItem = new ToolStripMenuItem();
-            soulReverseTestToolStripMenuItem = new ToolStripMenuItem();
             billyLightTestToolStripMenuItem = new ToolStripMenuItem();
             geoObjStageReadToolStripMenuItem = new ToolStripMenuItem();
             objCollisionReadToolStripMenuItem = new ToolStripMenuItem();
+            arEnemyReadToolStripMenuItem = new ToolStripMenuItem();
+            decompPOE2ToolStripMenuItem = new ToolStripMenuItem();
+            comptestToolStripMenuItem = new ToolStripMenuItem();
             filePanel = new Panel();
             splitter1 = new Splitter();
-            arEnemyReadToolStripMenuItem = new ToolStripMenuItem();
+            pOE2MDLReadToolStripMenuItem = new ToolStripMenuItem();
             menuStrip1.SuspendLayout();
             SuspendLayout();
             // 
@@ -1429,7 +1431,7 @@ namespace AquaModelTool
             // 
             // debug3ToolStripMenuItem
             // 
-            debug3ToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { readPATHToolStripMenuItem, readPOF0ToolStripMenuItem, readStageDefToolStripMenuItem, decryptINCToolStripMenuItem, readARCToolStripMenuItem, dumpBillyArcPof0ToolStripMenuItem, dumpExtremeAnimsToolStripMenuItem, readGEPlayerToolStripMenuItem, readAniModelToolStripMenuItem, readLibModelToolStripMenuItem, protoThingToItemModelToolStripMenuItem, readGalleryEggToolStripMenuItem, readCMDLToolStripMenuItem, checkToolStripMenuItem, checkAllcmshToolStripMenuItem, deswizzleTestToolStripMenuItem, checkAllBillySetObjToolStripMenuItem, testReadOldCMDLToolStripMenuItem, readGEEggToolStripMenuItem, readFlverTestToolStripMenuItem, readWriteTexTestToolStripMenuItem, pSOCryptTestToolStripMenuItem, customRoboGCSFDDumpToolStripMenuItem, customRoboPartReadToolStripMenuItem, soulReverseTestToolStripMenuItem, billyLightTestToolStripMenuItem, geoObjStageReadToolStripMenuItem, objCollisionReadToolStripMenuItem, arEnemyReadToolStripMenuItem });
+            debug3ToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { readPATHToolStripMenuItem, readPOF0ToolStripMenuItem, readStageDefToolStripMenuItem, decryptINCToolStripMenuItem, readARCToolStripMenuItem, dumpBillyArcPof0ToolStripMenuItem, dumpExtremeAnimsToolStripMenuItem, readGEPlayerToolStripMenuItem, readAniModelToolStripMenuItem, readLibModelToolStripMenuItem, protoThingToItemModelToolStripMenuItem, readGalleryEggToolStripMenuItem, readCMDLToolStripMenuItem, checkToolStripMenuItem, checkAllcmshToolStripMenuItem, deswizzleTestToolStripMenuItem, checkAllBillySetObjToolStripMenuItem, testReadOldCMDLToolStripMenuItem, readGEEggToolStripMenuItem, readFlverTestToolStripMenuItem, readWriteTexTestToolStripMenuItem, pSOCryptTestToolStripMenuItem, customRoboGCSFDDumpToolStripMenuItem, customRoboPartReadToolStripMenuItem, billyLightTestToolStripMenuItem, geoObjStageReadToolStripMenuItem, objCollisionReadToolStripMenuItem, arEnemyReadToolStripMenuItem, decompPOE2ToolStripMenuItem, comptestToolStripMenuItem, pOE2MDLReadToolStripMenuItem });
             debug3ToolStripMenuItem.Name = "debug3ToolStripMenuItem";
             debug3ToolStripMenuItem.Size = new Size(60, 23);
             debug3ToolStripMenuItem.Text = "Debug3";
@@ -1602,13 +1604,6 @@ namespace AquaModelTool
             customRoboPartReadToolStripMenuItem.Text = "CustomRoboPartRead";
             customRoboPartReadToolStripMenuItem.Click += customRoboPartReadToolStripMenuItem_Click;
             // 
-            // soulReverseTestToolStripMenuItem
-            // 
-            soulReverseTestToolStripMenuItem.Name = "soulReverseTestToolStripMenuItem";
-            soulReverseTestToolStripMenuItem.Size = new Size(213, 22);
-            soulReverseTestToolStripMenuItem.Text = "SoulReverseTest";
-            soulReverseTestToolStripMenuItem.Click += soulReverseTestToolStripMenuItem_Click;
-            // 
             // billyLightTestToolStripMenuItem
             // 
             billyLightTestToolStripMenuItem.Name = "billyLightTestToolStripMenuItem";
@@ -1630,6 +1625,27 @@ namespace AquaModelTool
             objCollisionReadToolStripMenuItem.Text = "ObjCollision Read";
             objCollisionReadToolStripMenuItem.Click += objCollisionReadToolStripMenuItem_Click;
             // 
+            // arEnemyReadToolStripMenuItem
+            // 
+            arEnemyReadToolStripMenuItem.Name = "arEnemyReadToolStripMenuItem";
+            arEnemyReadToolStripMenuItem.Size = new Size(213, 22);
+            arEnemyReadToolStripMenuItem.Text = "ArEnemy Read";
+            arEnemyReadToolStripMenuItem.Click += arEnemyReadToolStripMenuItem_Click;
+            // 
+            // decompPOE2ToolStripMenuItem
+            // 
+            decompPOE2ToolStripMenuItem.Name = "decompPOE2ToolStripMenuItem";
+            decompPOE2ToolStripMenuItem.Size = new Size(213, 22);
+            decompPOE2ToolStripMenuItem.Text = "DecompPOE2";
+            decompPOE2ToolStripMenuItem.Click += decompPOE2ToolStripMenuItem_Click;
+            // 
+            // comptestToolStripMenuItem
+            // 
+            comptestToolStripMenuItem.Name = "comptestToolStripMenuItem";
+            comptestToolStripMenuItem.Size = new Size(213, 22);
+            comptestToolStripMenuItem.Text = "Comptest";
+            comptestToolStripMenuItem.Click += comptestToolStripMenuItem_Click;
+            // 
             // filePanel
             // 
             filePanel.AutoSize = true;
@@ -1650,12 +1666,12 @@ namespace AquaModelTool
             splitter1.TabIndex = 2;
             splitter1.TabStop = false;
             // 
-            // arEnemyReadToolStripMenuItem
+            // pOE2MDLReadToolStripMenuItem
             // 
-            arEnemyReadToolStripMenuItem.Name = "arEnemyReadToolStripMenuItem";
-            arEnemyReadToolStripMenuItem.Size = new Size(213, 22);
-            arEnemyReadToolStripMenuItem.Text = "ArEnemy Read";
-            arEnemyReadToolStripMenuItem.Click += arEnemyReadToolStripMenuItem_Click;
+            pOE2MDLReadToolStripMenuItem.Name = "pOE2MDLReadToolStripMenuItem";
+            pOE2MDLReadToolStripMenuItem.Size = new Size(213, 22);
+            pOE2MDLReadToolStripMenuItem.Text = "POE2MDLRead";
+            pOE2MDLReadToolStripMenuItem.Click += pOE2MDLReadToolStripMenuItem_Click;
             // 
             // AquaModelTool
             // 
@@ -1874,7 +1890,6 @@ namespace AquaModelTool
         private ToolStripMenuItem pSOCryptTestToolStripMenuItem;
         private ToolStripMenuItem customRoboGCSFDDumpToolStripMenuItem;
         private ToolStripMenuItem customRoboPartReadToolStripMenuItem;
-        private ToolStripMenuItem soulReverseTestToolStripMenuItem;
         private ToolStripMenuItem convertPSOxjToolStripMenuItem;
         private ToolStripMenuItem ikarugaarcExtractToolStripMenuItem;
         private ToolStripMenuItem billyLightTestToolStripMenuItem;
@@ -1882,6 +1897,9 @@ namespace AquaModelTool
         private ToolStripMenuItem geoObjStageReadToolStripMenuItem;
         private ToolStripMenuItem objCollisionReadToolStripMenuItem;
         private ToolStripMenuItem arEnemyReadToolStripMenuItem;
+        private ToolStripMenuItem decompPOE2ToolStripMenuItem;
+        private ToolStripMenuItem comptestToolStripMenuItem;
+        private ToolStripMenuItem pOE2MDLReadToolStripMenuItem;
     }
 }
 
