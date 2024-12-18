@@ -50,10 +50,10 @@ Billy Hatcher and the Giant Egg:
 -.gj to fbx. Also works on other .gj files such as for Phantasy Star Online Episode III: C.A.R.D. Revolution    
 -.lnd and .mc2 to and from .fbx  
 -Extraction and packing for .prd, .nrc, .gpl, and .glk archives  
--Conversion to and from Billy Hatcher .bin text (Cyrillic variant requires a matching ingame font to show ingame)
-Path of Exile 2:
--Archive Extraction
--Model and Animation Conversion
+-Conversion to and from Billy Hatcher .bin text (Cyrillic variant requires a matching ingame font to show ingame)  
+Path of Exile 2:  
+-Archive Extraction  
+-Model and Animation Conversion  
 
 Other Games:  
 Blue Dragon:  
