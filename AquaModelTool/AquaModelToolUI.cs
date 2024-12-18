@@ -54,6 +54,7 @@ using System.IO.Compression;
 using System.Net.Mail;
 using System.Numerics;
 using System.Reflection;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Text.Json;
 using Zamboni;
@@ -7005,13 +7006,46 @@ namespace AquaModelTool
             };
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
+                bool errorDisplayed = false;
                 foreach (var file in openFileDialog.FileNames)
                 {
                     byte[] bytes = File.ReadAllBytes(file);
-                    var files = POE2ArchiveUtility.DecompressArchive(bytes);
-                    File.WriteAllBytes(file + "_decomp", files[0].file);
+                    POE2Index index = null;
+                    string filePath = file;
+                    if (file.Contains("Bundles2"))
+                    {
+                        var bundlesPathStart = file.IndexOf("Bundles2") + 9;
+                        filePath = Path.ChangeExtension(file.Substring(bundlesPathStart).Replace("\\", "/"), "");
+                        filePath = filePath.Substring(0, filePath.Length - 1);
+                        filePath = Path.ChangeExtension(filePath, "");
+                        filePath = filePath.Substring(0, filePath.Length - 1);
+                        var indexPath = Path.Combine(file.Substring(0, bundlesPathStart), "_.index.bin");
+                        index = new POE2Index(POE2ArchiveUtility.DecompressArchive(File.ReadAllBytes(indexPath))[0].file);
+                    }
+                    else
+                    {
+                        if (errorDisplayed == false)
+                        {
+                            MessageBox.Show("File does not appear to be in original install location. The file(s) can only be extracted as a single chunk.");
+                            errorDisplayed = true;
+                        }
+                    }
+                    var files = POE2ArchiveUtility.DecompressArchive(bytes, index, filePath);
+
+                    var outPath = file + "_";
+                    Directory.CreateDirectory(outPath);
+                    foreach (var fileData in files)
+                    {
+                        File.WriteAllBytes(Path.Combine(outPath, fileData.name), fileData.file);
+                    }
                 }
             }
+        }
+
+        private static bool DumpPOE2Blob(bool errorDisplayed, string? file, List<POE2ArchiveUtility.ArchiveFile> files)
+        {
+            File.WriteAllBytes(file + "_decomp", files[0].file);
+            return errorDisplayed;
         }
 
         private void comptestToolStripMenuItem_Click(object sender, EventArgs e)
@@ -7027,13 +7061,8 @@ namespace AquaModelTool
                 foreach (var file in openFileDialog.FileNames)
                 {
                     byte[] bytes = File.ReadAllBytes(file);
-                    MemoryStream memoryStream = new MemoryStream(bytes);
-                    using (BrotliStream brotliStream = new BrotliStream(memoryStream, CompressionLevel.NoCompression, true))
-                    {
-                        brotliStream.Write(bytes, 0, bytes.Length);
-                    }
-                    File.WriteAllBytes("C:\\a_c.test", memoryStream.ToArray());
-                    memoryStream.Dispose();
+                    bytes = Zamboni.Oodle.OodleCompress(bytes, Zamboni.Oodle.CompressorLevel.SuperFast);
+                    File.WriteAllBytes("C:\\a_c.test", bytes);
                 }
             }
         }
@@ -7051,37 +7080,255 @@ namespace AquaModelTool
                 foreach (var file in openFileDialog.FileNames)
                 {
                     var fileName = Path.GetFileNameWithoutExtension(file);
-                    var model = new POE2Mdl(File.ReadAllBytes(file));
-                    var outDir = file + "_out";
-                    Directory.CreateDirectory(outDir);
+                    var model = new POE2SMD(File.ReadAllBytes(file));
+                    var outDir = Path.GetDirectoryName(file);
                     if (model != null)
                     {
-                        var aqpList = model.ConvertToAquaObject();
+                        var aqpListList = model.ConvertToAquaObject();
                         var aqn = AquaNode.GenerateBasicAQN();
-                        for (int i = 0; i < aqpList.Count; i++)
+                        for (int mdl = 0; mdl < aqpListList.Count; mdl++)
                         {
-                            var aqp = aqpList[i];
-                            string outPath;
-                            if (i == 0 && aqpList.Count == 1)
+                            var aqpList = aqpListList[mdl];
+                            for (int i = 0; i < aqpList.Count; i++)
                             {
-                                outPath = Path.Combine(outDir, $"{fileName}.fbx");
-                            }
-                            else
-                            {
-                                outPath = Path.Combine(outDir, $"{fileName}_{i}.fbx");
-                            }
+                                var aqp = aqpList[i];
+                                string outPath;
+                                if (i == 0 && aqpList.Count == 1 && aqpListList.Count == 1)
+                                {
+                                    outPath = Path.Combine(outDir, $"{fileName}.fbx");
+                                }
+                                else
+                                {
+                                    outPath = Path.Combine(outDir, $"{fileName}_{mdl}_{i}.fbx");
+                                }
 
-                            if (aqp != null && aqp.vtxlList.Count > 0 || aqp.tempTris[0].faceVerts.Count > 0)
-                            {
-                                aqp.ConvertToLegacyTypes();
-                                aqp.CreateTrueVertWeights();
+                                if (aqp != null && aqp.vtxlList.Count > 0 || aqp.tempTris[0].faceVerts.Count > 0)
+                                {
+                                    aqp.ConvertToLegacyTypes();
+                                    aqp.CreateTrueVertWeights();
 
-                                FbxExporterNative.ExportToFile(aqp, aqn, new List<AquaMotion>(), outPath, new List<string>(), new List<Matrix4x4>(), false);
+                                    FbxExporterNative.ExportToFile(aqp, aqn, new List<AquaMotion>(), outPath, new List<string>(), new List<Matrix4x4>(), false, 3);
+                                }
                             }
                         }
                     }
                 }
             }
+        }
+
+        private void pOE2IndexReadToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var openFileDialog = new OpenFileDialog()
+            {
+                Title = "Select Index file",
+                FileName = "",
+                Multiselect = true
+            };
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                foreach (var file in openFileDialog.FileNames)
+                {
+                    byte[] bytes = File.ReadAllBytes(file);
+                    var index = new POE2Index(bytes);
+                }
+            }
+        }
+
+        private void pOE2ArmatureReadToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            bool exportMotions = true;
+
+            ConvertModelAndActions(exportMotions);
+        }
+
+        private static void ConvertModelAndActions(bool exportMotions)
+        {
+            POE2Action armature = null;
+            var openFileDialog1 = new OpenFileDialog()
+            {
+                Title = "Select Action file",
+                FileName = "",
+                Filter = "POE2 Action files (*.action)|*.action",
+            };
+            if (openFileDialog1.ShowDialog() == DialogResult.OK)
+            {
+                foreach (var file in openFileDialog1.FileNames)
+                {
+                    byte[] bytes = File.ReadAllBytes(file);
+                    armature = new POE2Action(bytes);
+                }
+            } else
+            {
+                return;
+            }
+
+            var openFileDialog = new OpenFileDialog()
+            {
+                Title = "Select POE2 Model file",
+                FileName = "",
+                Filter = "POE2 Model files (*.smd, *.tmd)|*.smd;*.tmd",
+            };
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                foreach (var file in openFileDialog.FileNames)
+                {
+                    var fileName = Path.GetFileNameWithoutExtension(file);
+                    var model = new POE2SMD(File.ReadAllBytes(file));
+                    var outDir = Path.GetDirectoryName(file);
+                    if (model != null)
+                    {
+                        AquaNode aqn = null;
+                        List<AquaMotion> motions = new List<AquaMotion>();
+                        List<string> motionNames = new List<string>();
+                        if (armature != null)
+                        {
+                            aqn = armature.ToAqn();
+                            if (exportMotions == true)
+                            {
+                                armature.ToAqm(out motions, out motionNames);
+                            }
+                        }
+                        else
+                        {
+                            aqn = AquaNode.GenerateBasicAQN();
+                        }
+
+                        var aqpListList = model.ConvertToAquaObject(aqn);
+                        for (int mdl = 0; mdl < aqpListList.Count; mdl++)
+                        {
+                            var aqpList = aqpListList[mdl];
+                            for (int i = 0; i < aqpList.Count; i++)
+                            {
+                                var aqp = aqpList[i];
+                                string outPath;
+                                if (i == 0 && aqpList.Count == 1 && aqpListList.Count == 1)
+                                {
+                                    outPath = Path.Combine(outDir, $"{fileName}.fbx");
+                                }
+                                else
+                                {
+                                    outPath = Path.Combine(outDir, $"{fileName}_{mdl}_{i}.fbx");
+                                }
+
+                                if (aqp != null && aqp.vtxlList.Count > 0 || aqp.tempTris[0].faceVerts.Count > 0)
+                                {
+                                    aqp.ConvertToLegacyTypes();
+                                    aqp.CreateTrueVertWeights();
+
+                                    FbxExporterNative.ExportToFile(aqp, aqn, motions, outPath, motionNames, new List<Matrix4x4>(), false, 3);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        private void pathOfExile2ArchiveExtractToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var openFileDialog = new OpenFileDialog()
+            {
+                Title = "Select Compressed POE2 file",
+                FileName = "",
+                Filter = "POE2 Archive (*.bundle.bin)|*.bundle.bin",
+                Multiselect = true
+            };
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                bool errorDisplayed = false;
+                foreach (var file in openFileDialog.FileNames)
+                {
+                    byte[] bytes = File.ReadAllBytes(file);
+                    POE2Index index = null;
+                    string filePath = file;
+                    if (file.Contains("Bundles2"))
+                    {
+                        var bundlesPathStart = file.IndexOf("Bundles2") + 9;
+                        filePath = Path.ChangeExtension(file.Substring(bundlesPathStart).Replace("\\", "/"), "");
+                        filePath = filePath.Substring(0, filePath.Length - 1);
+                        filePath = Path.ChangeExtension(filePath, "");
+                        filePath = filePath.Substring(0, filePath.Length - 1);
+                        var indexPath = Path.Combine(file.Substring(0, bundlesPathStart), "_.index.bin");
+                        index = new POE2Index(POE2ArchiveUtility.DecompressArchive(File.ReadAllBytes(indexPath))[0].file);
+                    }
+                    else
+                    {
+                        if (errorDisplayed == false)
+                        {
+                            MessageBox.Show("File does not appear to be in original install location. The file(s) can only be extracted as a single chunk.");
+                            errorDisplayed = true;
+                        }
+                    }
+                    var files = POE2ArchiveUtility.DecompressArchive(bytes, index, filePath);
+
+                    var outPath = file + "_";
+                    Directory.CreateDirectory(outPath);
+                    foreach (var fileData in files)
+                    {
+                        File.WriteAllBytes(Path.Combine(outPath, fileData.name), fileData.file);
+                    }
+                }
+            }
+        }
+
+        private void pathOfExile2BatchModelConvertToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var openFileDialog = new OpenFileDialog()
+            {
+                Title = "Select POE2 Model file(s)",
+                FileName = "",
+                Filter = "POE2 Model files (*.smd, *.tmd)|*.smd;*.tmd",
+                Multiselect = true
+            };
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                foreach (var file in openFileDialog.FileNames)
+                {
+                    var fileName = Path.GetFileNameWithoutExtension(file);
+                    var model = new POE2SMD(File.ReadAllBytes(file));
+                    var outDir = Path.GetDirectoryName(file);
+                    if (model != null)
+                    {
+                        var aqpListList = model.ConvertToAquaObject();
+                        var aqn = AquaNode.GenerateBasicAQN();
+                        for (int mdl = 0; mdl < aqpListList.Count; mdl++)
+                        {
+                            var aqpList = aqpListList[mdl];
+                            for (int i = 0; i < aqpList.Count; i++)
+                            {
+                                var aqp = aqpList[i];
+                                string outPath;
+                                if (i == 0 && aqpList.Count == 1 && aqpListList.Count == 1)
+                                {
+                                    outPath = Path.Combine(outDir, $"{fileName}.fbx");
+                                }
+                                else
+                                {
+                                    outPath = Path.Combine(outDir, $"{fileName}_{mdl}_{i}.fbx");
+                                }
+
+                                if (aqp != null && aqp.vtxlList.Count > 0 || aqp.tempTris[0].faceVerts.Count > 0)
+                                {
+                                    aqp.ConvertToLegacyTypes();
+                                    aqp.CreateTrueVertWeights();
+
+                                    FbxExporterNative.ExportToFile(aqp, aqn, new List<AquaMotion>(), outPath, new List<string>(), new List<Matrix4x4>(), false, 3);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        private void pathOfExile2RiggedModelConvertToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ConvertModelAndActions(false);
+        }
+
+        private void pathOfExile2RiggedModelAnimationConvertToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ConvertModelAndActions(true);
         }
     }
 }

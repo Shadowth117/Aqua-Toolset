@@ -121,6 +121,11 @@ namespace AquaModelTool
             otherGamesToolStripMenuItem3 = new ToolStripMenuItem();
             blueDragonipkExtractToolStripMenuItem = new ToolStripMenuItem();
             ikarugaarcExtractToolStripMenuItem = new ToolStripMenuItem();
+            toolStripSeparator20 = new ToolStripSeparator();
+            pathOfExile2ToolStripMenuItem = new ToolStripMenuItem();
+            pathOfExile2BatchModelConvertToolStripMenuItem = new ToolStripMenuItem();
+            pathOfExile2MToolStripMenuItem = new ToolStripMenuItem();
+            pathOfExile2RiggedModelAnimationConvertToolStripMenuItem = new ToolStripMenuItem();
             toolStripSeparator5 = new ToolStripSeparator();
             batchPSO2ToFBXToolStripMenuItem = new ToolStripMenuItem();
             batchParsePSO2SetToTextToolStripMenuItem = new ToolStripMenuItem();
@@ -229,11 +234,9 @@ namespace AquaModelTool
             geoObjStageReadToolStripMenuItem = new ToolStripMenuItem();
             objCollisionReadToolStripMenuItem = new ToolStripMenuItem();
             arEnemyReadToolStripMenuItem = new ToolStripMenuItem();
-            decompPOE2ToolStripMenuItem = new ToolStripMenuItem();
-            comptestToolStripMenuItem = new ToolStripMenuItem();
+            pOE2IndexReadToolStripMenuItem = new ToolStripMenuItem();
             filePanel = new Panel();
             splitter1 = new Splitter();
-            pOE2MDLReadToolStripMenuItem = new ToolStripMenuItem();
             menuStrip1.SuspendLayout();
             SuspendLayout();
             // 
@@ -862,7 +865,7 @@ namespace AquaModelTool
             // 
             // otherGamesToolStripMenuItem3
             // 
-            otherGamesToolStripMenuItem3.DropDownItems.AddRange(new ToolStripItem[] { blueDragonipkExtractToolStripMenuItem, ikarugaarcExtractToolStripMenuItem });
+            otherGamesToolStripMenuItem3.DropDownItems.AddRange(new ToolStripItem[] { blueDragonipkExtractToolStripMenuItem, ikarugaarcExtractToolStripMenuItem, toolStripSeparator20, pathOfExile2ToolStripMenuItem, pathOfExile2BatchModelConvertToolStripMenuItem, pathOfExile2MToolStripMenuItem, pathOfExile2RiggedModelAnimationConvertToolStripMenuItem });
             otherGamesToolStripMenuItem3.Name = "otherGamesToolStripMenuItem3";
             otherGamesToolStripMenuItem3.Size = new Size(344, 22);
             otherGamesToolStripMenuItem3.Text = "Other Games";
@@ -870,16 +873,49 @@ namespace AquaModelTool
             // blueDragonipkExtractToolStripMenuItem
             // 
             blueDragonipkExtractToolStripMenuItem.Name = "blueDragonipkExtractToolStripMenuItem";
-            blueDragonipkExtractToolStripMenuItem.Size = new Size(246, 22);
+            blueDragonipkExtractToolStripMenuItem.Size = new Size(376, 22);
             blueDragonipkExtractToolStripMenuItem.Text = "Blue Dragon *.ipk, *.mpk Extract ";
             blueDragonipkExtractToolStripMenuItem.Click += blueDragonipkExtractToolStripMenuItem_Click;
             // 
             // ikarugaarcExtractToolStripMenuItem
             // 
             ikarugaarcExtractToolStripMenuItem.Name = "ikarugaarcExtractToolStripMenuItem";
-            ikarugaarcExtractToolStripMenuItem.Size = new Size(246, 22);
+            ikarugaarcExtractToolStripMenuItem.Size = new Size(376, 22);
             ikarugaarcExtractToolStripMenuItem.Text = "Ikaruga *.arc Extract";
             ikarugaarcExtractToolStripMenuItem.Click += ikarugaarcExtractToolStripMenuItem_Click;
+            // 
+            // toolStripSeparator20
+            // 
+            toolStripSeparator20.Name = "toolStripSeparator20";
+            toolStripSeparator20.Size = new Size(373, 6);
+            // 
+            // pathOfExile2ToolStripMenuItem
+            // 
+            pathOfExile2ToolStripMenuItem.Name = "pathOfExile2ToolStripMenuItem";
+            pathOfExile2ToolStripMenuItem.Size = new Size(376, 22);
+            pathOfExile2ToolStripMenuItem.Text = "Path of Exile 2 Archive Extract";
+            pathOfExile2ToolStripMenuItem.Click += pathOfExile2ArchiveExtractToolStripMenuItem_Click;
+            // 
+            // pathOfExile2BatchModelConvertToolStripMenuItem
+            // 
+            pathOfExile2BatchModelConvertToolStripMenuItem.Name = "pathOfExile2BatchModelConvertToolStripMenuItem";
+            pathOfExile2BatchModelConvertToolStripMenuItem.Size = new Size(376, 22);
+            pathOfExile2BatchModelConvertToolStripMenuItem.Text = "Path of Exile 2 Batch Model Convert (No model rigging)";
+            pathOfExile2BatchModelConvertToolStripMenuItem.Click += pathOfExile2BatchModelConvertToolStripMenuItem_Click;
+            // 
+            // pathOfExile2MToolStripMenuItem
+            // 
+            pathOfExile2MToolStripMenuItem.Name = "pathOfExile2MToolStripMenuItem";
+            pathOfExile2MToolStripMenuItem.Size = new Size(376, 22);
+            pathOfExile2MToolStripMenuItem.Text = "Path of Exile 2 Rigged Model Convert";
+            pathOfExile2MToolStripMenuItem.Click += pathOfExile2RiggedModelConvertToolStripMenuItem_Click;
+            // 
+            // pathOfExile2RiggedModelAnimationConvertToolStripMenuItem
+            // 
+            pathOfExile2RiggedModelAnimationConvertToolStripMenuItem.Name = "pathOfExile2RiggedModelAnimationConvertToolStripMenuItem";
+            pathOfExile2RiggedModelAnimationConvertToolStripMenuItem.Size = new Size(376, 22);
+            pathOfExile2RiggedModelAnimationConvertToolStripMenuItem.Text = "Path of Exile 2 Rigged Model + Animation Convert (Slow)";
+            pathOfExile2RiggedModelAnimationConvertToolStripMenuItem.Click += pathOfExile2RiggedModelAnimationConvertToolStripMenuItem_Click;
             // 
             // toolStripSeparator5
             // 
@@ -1431,7 +1467,7 @@ namespace AquaModelTool
             // 
             // debug3ToolStripMenuItem
             // 
-            debug3ToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { readPATHToolStripMenuItem, readPOF0ToolStripMenuItem, readStageDefToolStripMenuItem, decryptINCToolStripMenuItem, readARCToolStripMenuItem, dumpBillyArcPof0ToolStripMenuItem, dumpExtremeAnimsToolStripMenuItem, readGEPlayerToolStripMenuItem, readAniModelToolStripMenuItem, readLibModelToolStripMenuItem, protoThingToItemModelToolStripMenuItem, readGalleryEggToolStripMenuItem, readCMDLToolStripMenuItem, checkToolStripMenuItem, checkAllcmshToolStripMenuItem, deswizzleTestToolStripMenuItem, checkAllBillySetObjToolStripMenuItem, testReadOldCMDLToolStripMenuItem, readGEEggToolStripMenuItem, readFlverTestToolStripMenuItem, readWriteTexTestToolStripMenuItem, pSOCryptTestToolStripMenuItem, customRoboGCSFDDumpToolStripMenuItem, customRoboPartReadToolStripMenuItem, billyLightTestToolStripMenuItem, geoObjStageReadToolStripMenuItem, objCollisionReadToolStripMenuItem, arEnemyReadToolStripMenuItem, decompPOE2ToolStripMenuItem, comptestToolStripMenuItem, pOE2MDLReadToolStripMenuItem });
+            debug3ToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { readPATHToolStripMenuItem, readPOF0ToolStripMenuItem, readStageDefToolStripMenuItem, decryptINCToolStripMenuItem, readARCToolStripMenuItem, dumpBillyArcPof0ToolStripMenuItem, dumpExtremeAnimsToolStripMenuItem, readGEPlayerToolStripMenuItem, readAniModelToolStripMenuItem, readLibModelToolStripMenuItem, protoThingToItemModelToolStripMenuItem, readGalleryEggToolStripMenuItem, readCMDLToolStripMenuItem, checkToolStripMenuItem, checkAllcmshToolStripMenuItem, deswizzleTestToolStripMenuItem, checkAllBillySetObjToolStripMenuItem, testReadOldCMDLToolStripMenuItem, readGEEggToolStripMenuItem, readFlverTestToolStripMenuItem, readWriteTexTestToolStripMenuItem, pSOCryptTestToolStripMenuItem, customRoboGCSFDDumpToolStripMenuItem, customRoboPartReadToolStripMenuItem, billyLightTestToolStripMenuItem, geoObjStageReadToolStripMenuItem, objCollisionReadToolStripMenuItem, arEnemyReadToolStripMenuItem, pOE2IndexReadToolStripMenuItem });
             debug3ToolStripMenuItem.Name = "debug3ToolStripMenuItem";
             debug3ToolStripMenuItem.Size = new Size(60, 23);
             debug3ToolStripMenuItem.Text = "Debug3";
@@ -1632,19 +1668,12 @@ namespace AquaModelTool
             arEnemyReadToolStripMenuItem.Text = "ArEnemy Read";
             arEnemyReadToolStripMenuItem.Click += arEnemyReadToolStripMenuItem_Click;
             // 
-            // decompPOE2ToolStripMenuItem
+            // pOE2IndexReadToolStripMenuItem
             // 
-            decompPOE2ToolStripMenuItem.Name = "decompPOE2ToolStripMenuItem";
-            decompPOE2ToolStripMenuItem.Size = new Size(213, 22);
-            decompPOE2ToolStripMenuItem.Text = "DecompPOE2";
-            decompPOE2ToolStripMenuItem.Click += decompPOE2ToolStripMenuItem_Click;
-            // 
-            // comptestToolStripMenuItem
-            // 
-            comptestToolStripMenuItem.Name = "comptestToolStripMenuItem";
-            comptestToolStripMenuItem.Size = new Size(213, 22);
-            comptestToolStripMenuItem.Text = "Comptest";
-            comptestToolStripMenuItem.Click += comptestToolStripMenuItem_Click;
+            pOE2IndexReadToolStripMenuItem.Name = "pOE2IndexReadToolStripMenuItem";
+            pOE2IndexReadToolStripMenuItem.Size = new Size(213, 22);
+            pOE2IndexReadToolStripMenuItem.Text = "POE2IndexRead";
+            pOE2IndexReadToolStripMenuItem.Click += pOE2IndexReadToolStripMenuItem_Click;
             // 
             // filePanel
             // 
@@ -1665,13 +1694,6 @@ namespace AquaModelTool
             splitter1.Size = new Size(4, 296);
             splitter1.TabIndex = 2;
             splitter1.TabStop = false;
-            // 
-            // pOE2MDLReadToolStripMenuItem
-            // 
-            pOE2MDLReadToolStripMenuItem.Name = "pOE2MDLReadToolStripMenuItem";
-            pOE2MDLReadToolStripMenuItem.Size = new Size(213, 22);
-            pOE2MDLReadToolStripMenuItem.Text = "POE2MDLRead";
-            pOE2MDLReadToolStripMenuItem.Click += pOE2MDLReadToolStripMenuItem_Click;
             // 
             // AquaModelTool
             // 
@@ -1897,9 +1919,12 @@ namespace AquaModelTool
         private ToolStripMenuItem geoObjStageReadToolStripMenuItem;
         private ToolStripMenuItem objCollisionReadToolStripMenuItem;
         private ToolStripMenuItem arEnemyReadToolStripMenuItem;
-        private ToolStripMenuItem decompPOE2ToolStripMenuItem;
-        private ToolStripMenuItem comptestToolStripMenuItem;
-        private ToolStripMenuItem pOE2MDLReadToolStripMenuItem;
+        private ToolStripMenuItem pOE2IndexReadToolStripMenuItem;
+        private ToolStripSeparator toolStripSeparator20;
+        private ToolStripMenuItem pathOfExile2ToolStripMenuItem;
+        private ToolStripMenuItem pathOfExile2BatchModelConvertToolStripMenuItem;
+        private ToolStripMenuItem pathOfExile2MToolStripMenuItem;
+        private ToolStripMenuItem pathOfExile2RiggedModelAnimationConvertToolStripMenuItem;
     }
 }
 
