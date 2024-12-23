@@ -221,7 +221,6 @@ namespace AquaModelTool
             readCMDLToolStripMenuItem = new ToolStripMenuItem();
             checkToolStripMenuItem = new ToolStripMenuItem();
             checkAllcmshToolStripMenuItem = new ToolStripMenuItem();
-            deswizzleTestToolStripMenuItem = new ToolStripMenuItem();
             checkAllBillySetObjToolStripMenuItem = new ToolStripMenuItem();
             testReadOldCMDLToolStripMenuItem = new ToolStripMenuItem();
             readGEEggToolStripMenuItem = new ToolStripMenuItem();
@@ -237,6 +236,8 @@ namespace AquaModelTool
             pOE2IndexReadToolStripMenuItem = new ToolStripMenuItem();
             filePanel = new Panel();
             splitter1 = new Splitter();
+            setEnemyReadToolStripMenuItem = new ToolStripMenuItem();
+            setCameraReadToolStripMenuItem = new ToolStripMenuItem();
             menuStrip1.SuspendLayout();
             SuspendLayout();
             // 
@@ -1467,7 +1468,7 @@ namespace AquaModelTool
             // 
             // debug3ToolStripMenuItem
             // 
-            debug3ToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { readPATHToolStripMenuItem, readPOF0ToolStripMenuItem, readStageDefToolStripMenuItem, decryptINCToolStripMenuItem, readARCToolStripMenuItem, dumpBillyArcPof0ToolStripMenuItem, dumpExtremeAnimsToolStripMenuItem, readGEPlayerToolStripMenuItem, readAniModelToolStripMenuItem, readLibModelToolStripMenuItem, protoThingToItemModelToolStripMenuItem, readGalleryEggToolStripMenuItem, readCMDLToolStripMenuItem, checkToolStripMenuItem, checkAllcmshToolStripMenuItem, deswizzleTestToolStripMenuItem, checkAllBillySetObjToolStripMenuItem, testReadOldCMDLToolStripMenuItem, readGEEggToolStripMenuItem, readFlverTestToolStripMenuItem, readWriteTexTestToolStripMenuItem, pSOCryptTestToolStripMenuItem, customRoboGCSFDDumpToolStripMenuItem, customRoboPartReadToolStripMenuItem, billyLightTestToolStripMenuItem, geoObjStageReadToolStripMenuItem, objCollisionReadToolStripMenuItem, arEnemyReadToolStripMenuItem, pOE2IndexReadToolStripMenuItem });
+            debug3ToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { readPATHToolStripMenuItem, readPOF0ToolStripMenuItem, readStageDefToolStripMenuItem, decryptINCToolStripMenuItem, readARCToolStripMenuItem, dumpBillyArcPof0ToolStripMenuItem, dumpExtremeAnimsToolStripMenuItem, readGEPlayerToolStripMenuItem, readAniModelToolStripMenuItem, readLibModelToolStripMenuItem, protoThingToItemModelToolStripMenuItem, readGalleryEggToolStripMenuItem, readCMDLToolStripMenuItem, checkToolStripMenuItem, checkAllcmshToolStripMenuItem, checkAllBillySetObjToolStripMenuItem, testReadOldCMDLToolStripMenuItem, readGEEggToolStripMenuItem, readFlverTestToolStripMenuItem, readWriteTexTestToolStripMenuItem, pSOCryptTestToolStripMenuItem, customRoboGCSFDDumpToolStripMenuItem, customRoboPartReadToolStripMenuItem, billyLightTestToolStripMenuItem, geoObjStageReadToolStripMenuItem, objCollisionReadToolStripMenuItem, arEnemyReadToolStripMenuItem, pOE2IndexReadToolStripMenuItem, setEnemyReadToolStripMenuItem, setCameraReadToolStripMenuItem });
             debug3ToolStripMenuItem.Name = "debug3ToolStripMenuItem";
             debug3ToolStripMenuItem.Size = new Size(60, 23);
             debug3ToolStripMenuItem.Text = "Debug3";
@@ -1576,13 +1577,6 @@ namespace AquaModelTool
             checkAllcmshToolStripMenuItem.Size = new Size(213, 22);
             checkAllcmshToolStripMenuItem.Text = "Check all *.cmsh";
             checkAllcmshToolStripMenuItem.Click += checkAllcmshToolStripMenuItem_Click;
-            // 
-            // deswizzleTestToolStripMenuItem
-            // 
-            deswizzleTestToolStripMenuItem.Name = "deswizzleTestToolStripMenuItem";
-            deswizzleTestToolStripMenuItem.Size = new Size(213, 22);
-            deswizzleTestToolStripMenuItem.Text = "Blue Dragon dds test";
-            deswizzleTestToolStripMenuItem.Click += deswizzleTestToolStripMenuItem_Click;
             // 
             // checkAllBillySetObjToolStripMenuItem
             // 
@@ -1694,6 +1688,20 @@ namespace AquaModelTool
             splitter1.Size = new Size(4, 296);
             splitter1.TabIndex = 2;
             splitter1.TabStop = false;
+            // 
+            // setEnemyReadToolStripMenuItem
+            // 
+            setEnemyReadToolStripMenuItem.Name = "setEnemyReadToolStripMenuItem";
+            setEnemyReadToolStripMenuItem.Size = new Size(213, 22);
+            setEnemyReadToolStripMenuItem.Text = "SetEnemyRead";
+            setEnemyReadToolStripMenuItem.Click += setEnemyReadToolStripMenuItem_Click;
+            // 
+            // setCameraReadToolStripMenuItem
+            // 
+            setCameraReadToolStripMenuItem.Name = "setCameraReadToolStripMenuItem";
+            setCameraReadToolStripMenuItem.Size = new Size(213, 22);
+            setCameraReadToolStripMenuItem.Text = "SetCameraRead";
+            setCameraReadToolStripMenuItem.Click += setCameraReadToolStripMenuItem_Click;
             // 
             // AquaModelTool
             // 
@@ -1897,7 +1905,6 @@ namespace AquaModelTool
         private ToolStripMenuItem noteShadowOfTheColossusPS4psarcsMUSTHaveTheirContentsPlacedInTheGamesEbootbinDirectoryToolStripMenuItem;
         private ToolStripMenuItem otherGamesToolStripMenuItem3;
         private ToolStripMenuItem blueDragonipkExtractToolStripMenuItem;
-        private ToolStripMenuItem deswizzleTestToolStripMenuItem;
         private ToolStripMenuItem checkAllBillySetObjToolStripMenuItem;
         private ToolStripMenuItem testReadOldCMDLToolStripMenuItem;
         private ToolStripMenuItem readGEEggToolStripMenuItem;
@@ -1925,6 +1932,8 @@ namespace AquaModelTool
         private ToolStripMenuItem pathOfExile2BatchModelConvertToolStripMenuItem;
         private ToolStripMenuItem pathOfExile2MToolStripMenuItem;
         private ToolStripMenuItem pathOfExile2RiggedModelAnimationConvertToolStripMenuItem;
+        private ToolStripMenuItem setEnemyReadToolStripMenuItem;
+        private ToolStripMenuItem setCameraReadToolStripMenuItem;
     }
 }
 

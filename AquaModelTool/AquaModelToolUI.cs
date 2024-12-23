@@ -6270,28 +6270,6 @@ namespace AquaModelTool
             }
         }
 
-        private void deswizzleTestToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            OpenFileDialog openFileDialog = new OpenFileDialog()
-            {
-                Title = "Select Blue Dragon dds",
-                Filter = "All Files (*.*)|*",
-                Multiselect = true
-            };
-            if (openFileDialog.ShowDialog() == DialogResult.OK)
-            {
-                Parallel.ForEach(openFileDialog.FileNames, file =>
-                {
-                    var bddds = new BDDDS(File.ReadAllBytes(file));
-                    bddds.GetResolution(out int width, out int height);
-                    var newDds = bddds.GenerateDDSHeader(bddds.GetPixelFormat(), width, height, 1, 1);
-                    newDds.AddRange(AquaModelLibrary.Helpers.DeSwizzler.Xbox360DeSwizzle(bddds.buffer, width, height, bddds.GetPixelFormat()));
-
-                    File.WriteAllBytes(file + "_out.dds", newDds.ToArray());
-                });
-            }
-        }
-
         private void checkAllBillySetObjToolStripMenuItem_Click(object sender, EventArgs e)
         {
             var openFileDialog = new CommonOpenFileDialog()
@@ -7157,7 +7135,8 @@ namespace AquaModelTool
                     byte[] bytes = File.ReadAllBytes(file);
                     armature = new POE2Action(bytes);
                 }
-            } else
+            }
+            else
             {
                 return;
             }
@@ -7329,6 +7308,44 @@ namespace AquaModelTool
         private void pathOfExile2RiggedModelAnimationConvertToolStripMenuItem_Click(object sender, EventArgs e)
         {
             ConvertModelAndActions(true);
+        }
+
+        private void setEnemyReadToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var openFileDialog = new OpenFileDialog()
+            {
+                Title = "Select set_ene file",
+                Filter = "set_ene files|set_ene*.bin",
+                FileName = "",
+                Multiselect = true
+            };
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                foreach (var file in openFileDialog.FileNames)
+                {
+                    byte[] bytes = File.ReadAllBytes(file);
+                    var ene = new SetEnemyList(bytes);
+                }
+            }
+        }
+
+        private void setCameraReadToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var openFileDialog = new OpenFileDialog()
+            {
+                Title = "Select set_cam file",
+                Filter = "set_cam files|set_cam*.bin",
+                FileName = "",
+                Multiselect = true
+            };
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                foreach (var file in openFileDialog.FileNames)
+                {
+                    byte[] bytes = File.ReadAllBytes(file);
+                    var cam = new SetCameraList(bytes);
+                }
+            }
         }
     }
 }
