@@ -118,6 +118,8 @@ namespace AquaModelTool
             billyHatcherCyrillicbinTextTotxtToolStripMenuItem = new ToolStripMenuItem();
             billyHatcherCyrillictxtTobinToolStripMenuItem = new ToolStripMenuItem();
             toolStripSeparator17 = new ToolStripSeparator();
+            stageGeobjExtractToolStripMenuItem = new ToolStripMenuItem();
+            toolStripSeparator21 = new ToolStripSeparator();
             otherGamesToolStripMenuItem3 = new ToolStripMenuItem();
             blueDragonipkExtractToolStripMenuItem = new ToolStripMenuItem();
             ikarugaarcExtractToolStripMenuItem = new ToolStripMenuItem();
@@ -234,10 +236,11 @@ namespace AquaModelTool
             objCollisionReadToolStripMenuItem = new ToolStripMenuItem();
             arEnemyReadToolStripMenuItem = new ToolStripMenuItem();
             pOE2IndexReadToolStripMenuItem = new ToolStripMenuItem();
-            filePanel = new Panel();
-            splitter1 = new Splitter();
             setEnemyReadToolStripMenuItem = new ToolStripMenuItem();
             setCameraReadToolStripMenuItem = new ToolStripMenuItem();
+            filePanel = new Panel();
+            splitter1 = new Splitter();
+            pathOfExile1ModelSupportIsIncompleteAndMayFailOnSomeFilesToolStripMenuItem = new ToolStripMenuItem();
             menuStrip1.SuspendLayout();
             SuspendLayout();
             // 
@@ -751,7 +754,7 @@ namespace AquaModelTool
             // 
             // otherGamesToolStripMenuItem2
             // 
-            otherGamesToolStripMenuItem2.DropDownItems.AddRange(new ToolStripItem[] { extractBorderBreakPS4FARCToolStripMenuItem, setMOTBONEbinPathToolStripMenuItem, toolStripSeparator7, billyHatcherGinjaTofbxToolStripMenuItem, readBillyHatchermc2TofbxToolStripMenuItem, fbxSetToBillyHatcherlndToolStripMenuItem, fbxToBillyHatchermc2ToolStripMenuItem, billyHatcherprdArchiveExtractToolStripMenuItem, packBillyHatcherprdToolStripMenuItem, packBillyHatchernrcToolStripMenuItem, packBillyHatchergplToolStripMenuItem, billyHatcherbinTextTotxtToolStripMenuItem, billyHatcherbintxtBackTobinToolStripMenuItem, billyHatcherCyrillicbinTextTotxtToolStripMenuItem, billyHatcherCyrillictxtTobinToolStripMenuItem, toolStripSeparator17 });
+            otherGamesToolStripMenuItem2.DropDownItems.AddRange(new ToolStripItem[] { extractBorderBreakPS4FARCToolStripMenuItem, setMOTBONEbinPathToolStripMenuItem, toolStripSeparator7, billyHatcherGinjaTofbxToolStripMenuItem, readBillyHatchermc2TofbxToolStripMenuItem, fbxSetToBillyHatcherlndToolStripMenuItem, fbxToBillyHatchermc2ToolStripMenuItem, billyHatcherprdArchiveExtractToolStripMenuItem, packBillyHatcherprdToolStripMenuItem, packBillyHatchernrcToolStripMenuItem, packBillyHatchergplToolStripMenuItem, billyHatcherbinTextTotxtToolStripMenuItem, billyHatcherbintxtBackTobinToolStripMenuItem, billyHatcherCyrillicbinTextTotxtToolStripMenuItem, billyHatcherCyrillictxtTobinToolStripMenuItem, toolStripSeparator17, stageGeobjExtractToolStripMenuItem, toolStripSeparator21 });
             otherGamesToolStripMenuItem2.Name = "otherGamesToolStripMenuItem2";
             otherGamesToolStripMenuItem2.Size = new Size(344, 22);
             otherGamesToolStripMenuItem2.Text = "Other Sega Games";
@@ -864,9 +867,21 @@ namespace AquaModelTool
             toolStripSeparator17.Name = "toolStripSeparator17";
             toolStripSeparator17.Size = new Size(424, 6);
             // 
+            // stageGeobjExtractToolStripMenuItem
+            // 
+            stageGeobjExtractToolStripMenuItem.Name = "stageGeobjExtractToolStripMenuItem";
+            stageGeobjExtractToolStripMenuItem.Size = new Size(427, 22);
+            stageGeobjExtractToolStripMenuItem.Text = "Billy Hatcher Stage geobj arc extract";
+            stageGeobjExtractToolStripMenuItem.Click += stageGeobjExtractToolStripMenuItem_Click;
+            // 
+            // toolStripSeparator21
+            // 
+            toolStripSeparator21.Name = "toolStripSeparator21";
+            toolStripSeparator21.Size = new Size(424, 6);
+            // 
             // otherGamesToolStripMenuItem3
             // 
-            otherGamesToolStripMenuItem3.DropDownItems.AddRange(new ToolStripItem[] { blueDragonipkExtractToolStripMenuItem, ikarugaarcExtractToolStripMenuItem, toolStripSeparator20, pathOfExile2ToolStripMenuItem, pathOfExile2BatchModelConvertToolStripMenuItem, pathOfExile2MToolStripMenuItem, pathOfExile2RiggedModelAnimationConvertToolStripMenuItem });
+            otherGamesToolStripMenuItem3.DropDownItems.AddRange(new ToolStripItem[] { blueDragonipkExtractToolStripMenuItem, ikarugaarcExtractToolStripMenuItem, toolStripSeparator20, pathOfExile2ToolStripMenuItem, pathOfExile2BatchModelConvertToolStripMenuItem, pathOfExile2MToolStripMenuItem, pathOfExile2RiggedModelAnimationConvertToolStripMenuItem, pathOfExile1ModelSupportIsIncompleteAndMayFailOnSomeFilesToolStripMenuItem });
             otherGamesToolStripMenuItem3.Name = "otherGamesToolStripMenuItem3";
             otherGamesToolStripMenuItem3.Size = new Size(344, 22);
             otherGamesToolStripMenuItem3.Text = "Other Games";
@@ -894,28 +909,28 @@ namespace AquaModelTool
             // 
             pathOfExile2ToolStripMenuItem.Name = "pathOfExile2ToolStripMenuItem";
             pathOfExile2ToolStripMenuItem.Size = new Size(376, 22);
-            pathOfExile2ToolStripMenuItem.Text = "Path of Exile 2 Archive Extract";
+            pathOfExile2ToolStripMenuItem.Text = "Path of Exile 1 and 2 Archive Extract";
             pathOfExile2ToolStripMenuItem.Click += pathOfExile2ArchiveExtractToolStripMenuItem_Click;
             // 
             // pathOfExile2BatchModelConvertToolStripMenuItem
             // 
             pathOfExile2BatchModelConvertToolStripMenuItem.Name = "pathOfExile2BatchModelConvertToolStripMenuItem";
-            pathOfExile2BatchModelConvertToolStripMenuItem.Size = new Size(376, 22);
-            pathOfExile2BatchModelConvertToolStripMenuItem.Text = "Path of Exile 2 Batch Model Convert (No model rigging)";
+            pathOfExile2BatchModelConvertToolStripMenuItem.Size = new Size(444, 22);
+            pathOfExile2BatchModelConvertToolStripMenuItem.Text = "Path of Exile 1 and 2 Batch Model Convert (No model rigging)";
             pathOfExile2BatchModelConvertToolStripMenuItem.Click += pathOfExile2BatchModelConvertToolStripMenuItem_Click;
             // 
             // pathOfExile2MToolStripMenuItem
             // 
             pathOfExile2MToolStripMenuItem.Name = "pathOfExile2MToolStripMenuItem";
-            pathOfExile2MToolStripMenuItem.Size = new Size(376, 22);
-            pathOfExile2MToolStripMenuItem.Text = "Path of Exile 2 Rigged Model Convert";
+            pathOfExile2MToolStripMenuItem.Size = new Size(444, 22);
+            pathOfExile2MToolStripMenuItem.Text = "Path of Exile 1 and 2 Rigged Model Convert";
             pathOfExile2MToolStripMenuItem.Click += pathOfExile2RiggedModelConvertToolStripMenuItem_Click;
             // 
             // pathOfExile2RiggedModelAnimationConvertToolStripMenuItem
             // 
             pathOfExile2RiggedModelAnimationConvertToolStripMenuItem.Name = "pathOfExile2RiggedModelAnimationConvertToolStripMenuItem";
-            pathOfExile2RiggedModelAnimationConvertToolStripMenuItem.Size = new Size(376, 22);
-            pathOfExile2RiggedModelAnimationConvertToolStripMenuItem.Text = "Path of Exile 2 Rigged Model + Animation Convert (Slow)";
+            pathOfExile2RiggedModelAnimationConvertToolStripMenuItem.Size = new Size(444, 22);
+            pathOfExile2RiggedModelAnimationConvertToolStripMenuItem.Text = "Path of Exile 1 and 2 Rigged Model + Animation Convert (Slow)";
             pathOfExile2RiggedModelAnimationConvertToolStripMenuItem.Click += pathOfExile2RiggedModelAnimationConvertToolStripMenuItem_Click;
             // 
             // toolStripSeparator5
@@ -1669,6 +1684,20 @@ namespace AquaModelTool
             pOE2IndexReadToolStripMenuItem.Text = "POE2IndexRead";
             pOE2IndexReadToolStripMenuItem.Click += pOE2IndexReadToolStripMenuItem_Click;
             // 
+            // setEnemyReadToolStripMenuItem
+            // 
+            setEnemyReadToolStripMenuItem.Name = "setEnemyReadToolStripMenuItem";
+            setEnemyReadToolStripMenuItem.Size = new Size(213, 22);
+            setEnemyReadToolStripMenuItem.Text = "SetEnemyRead";
+            setEnemyReadToolStripMenuItem.Click += setEnemyReadToolStripMenuItem_Click;
+            // 
+            // setCameraReadToolStripMenuItem
+            // 
+            setCameraReadToolStripMenuItem.Name = "setCameraReadToolStripMenuItem";
+            setCameraReadToolStripMenuItem.Size = new Size(213, 22);
+            setCameraReadToolStripMenuItem.Text = "SetCameraRead";
+            setCameraReadToolStripMenuItem.Click += setCameraReadToolStripMenuItem_Click;
+            // 
             // filePanel
             // 
             filePanel.AutoSize = true;
@@ -1689,19 +1718,12 @@ namespace AquaModelTool
             splitter1.TabIndex = 2;
             splitter1.TabStop = false;
             // 
-            // setEnemyReadToolStripMenuItem
+            // pathOfExile1ModelSupportIsIncompleteAndMayFailOnSomeFilesToolStripMenuItem
             // 
-            setEnemyReadToolStripMenuItem.Name = "setEnemyReadToolStripMenuItem";
-            setEnemyReadToolStripMenuItem.Size = new Size(213, 22);
-            setEnemyReadToolStripMenuItem.Text = "SetEnemyRead";
-            setEnemyReadToolStripMenuItem.Click += setEnemyReadToolStripMenuItem_Click;
-            // 
-            // setCameraReadToolStripMenuItem
-            // 
-            setCameraReadToolStripMenuItem.Name = "setCameraReadToolStripMenuItem";
-            setCameraReadToolStripMenuItem.Size = new Size(213, 22);
-            setCameraReadToolStripMenuItem.Text = "SetCameraRead";
-            setCameraReadToolStripMenuItem.Click += setCameraReadToolStripMenuItem_Click;
+            pathOfExile1ModelSupportIsIncompleteAndMayFailOnSomeFilesToolStripMenuItem.Enabled = false;
+            pathOfExile1ModelSupportIsIncompleteAndMayFailOnSomeFilesToolStripMenuItem.Name = "pathOfExile1ModelSupportIsIncompleteAndMayFailOnSomeFilesToolStripMenuItem";
+            pathOfExile1ModelSupportIsIncompleteAndMayFailOnSomeFilesToolStripMenuItem.Size = new Size(444, 22);
+            pathOfExile1ModelSupportIsIncompleteAndMayFailOnSomeFilesToolStripMenuItem.Text = "Path of Exile 1 model support is incomplete and may fail on some files";
             // 
             // AquaModelTool
             // 
@@ -1934,6 +1956,9 @@ namespace AquaModelTool
         private ToolStripMenuItem pathOfExile2RiggedModelAnimationConvertToolStripMenuItem;
         private ToolStripMenuItem setEnemyReadToolStripMenuItem;
         private ToolStripMenuItem setCameraReadToolStripMenuItem;
+        private ToolStripMenuItem stageGeobjExtractToolStripMenuItem;
+        private ToolStripSeparator toolStripSeparator21;
+        private ToolStripMenuItem pathOfExile1ModelSupportIsIncompleteAndMayFailOnSomeFilesToolStripMenuItem;
     }
 }
 

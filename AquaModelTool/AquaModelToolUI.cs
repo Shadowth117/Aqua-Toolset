@@ -13,6 +13,7 @@ using AquaModelLibrary.Data.BillyHatcher.ARCData;
 using AquaModelLibrary.Data.BillyHatcher.SetData;
 using AquaModelLibrary.Data.BlueDragon;
 using AquaModelLibrary.Data.BluePoint.CAWS;
+using AquaModelLibrary.Data.BluePoint.CGPR;
 using AquaModelLibrary.Data.BluePoint.CMDL;
 using AquaModelLibrary.Data.BluePoint.CTXR;
 using AquaModelLibrary.Data.CustomRoboBattleRevolution;
@@ -7106,8 +7107,7 @@ namespace AquaModelTool
             {
                 foreach (var file in openFileDialog.FileNames)
                 {
-                    byte[] bytes = File.ReadAllBytes(file);
-                    var index = new POE2Index(bytes);
+                    var index = new POE2Index(POE2ArchiveUtility.DecompressArchive(File.ReadAllBytes(file))[0].file);
                 }
             }
         }
@@ -7124,9 +7124,9 @@ namespace AquaModelTool
             POE2Action armature = null;
             var openFileDialog1 = new OpenFileDialog()
             {
-                Title = "Select Action file",
+                Title = "Select Rig file",
                 FileName = "",
-                Filter = "POE2 Action files (*.action)|*.action",
+                Filter = "POE2 Rig files (*.ast, *.action)|*.ast;*.action",
             };
             if (openFileDialog1.ShowDialog() == DialogResult.OK)
             {
@@ -7215,20 +7215,29 @@ namespace AquaModelTool
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
                 bool errorDisplayed = false;
+                string currentIndexDirectory = "";
+                POE2Index index = null;
                 foreach (var file in openFileDialog.FileNames)
                 {
                     byte[] bytes = File.ReadAllBytes(file);
-                    POE2Index index = null;
                     string filePath = file;
                     if (file.Contains("Bundles2"))
                     {
                         var bundlesPathStart = file.IndexOf("Bundles2") + 9;
+                        var newIndexDirectory = file.Substring(0, bundlesPathStart);
+
                         filePath = Path.ChangeExtension(file.Substring(bundlesPathStart).Replace("\\", "/"), "");
                         filePath = filePath.Substring(0, filePath.Length - 1);
                         filePath = Path.ChangeExtension(filePath, "");
                         filePath = filePath.Substring(0, filePath.Length - 1);
-                        var indexPath = Path.Combine(file.Substring(0, bundlesPathStart), "_.index.bin");
-                        index = new POE2Index(POE2ArchiveUtility.DecompressArchive(File.ReadAllBytes(indexPath))[0].file);
+                        //Try to recycle the index so we're not making this longer than it has to be. This should allow the user to potentially do silly crap
+                        //like extract poe1 and 2 stuff at the same time if they somehow got both sets of files in a search
+                        if (currentIndexDirectory != newIndexDirectory)
+                        {
+                            currentIndexDirectory = newIndexDirectory;
+                            var indexPath = Path.Combine(newIndexDirectory, "_.index.bin");
+                            index = new POE2Index(POE2ArchiveUtility.DecompressArchive(File.ReadAllBytes(indexPath))[0].file);
+                        }
                     }
                     else
                     {
@@ -7325,6 +7334,31 @@ namespace AquaModelTool
                 {
                     byte[] bytes = File.ReadAllBytes(file);
                     var ene = new SetEnemyList(bytes);
+                    for (int i = 0; i < ene.setEnemies.Count; i++)
+                    {
+                        var obj = ene.setEnemies[i];
+                        int a = 0;
+                        if (obj.int_20 != 0)
+                        {
+                            a = 1;
+                        }
+                        if (obj.int_24 != 0)
+                        {
+                            a = 1;
+                        }
+                        if (obj.int_28 != 0)
+                        {
+                            a = 1;
+                        }
+                        if (obj.int_2C != 0)
+                        {
+                            a = 1;
+                        }
+                        if (obj.flt_4C != 0)
+                        {
+                            a = 1;
+                        }
+                    }
                 }
             }
         }
@@ -7344,6 +7378,158 @@ namespace AquaModelTool
                 {
                     byte[] bytes = File.ReadAllBytes(file);
                     var cam = new SetCameraList(bytes);
+                }
+            }
+        }
+
+        private void stageGeobjExtractToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var openFileDialog = new OpenFileDialog()
+            {
+                Title = "Select Billy Hatcher geobj_*.arc File",
+                Filter = "Billy Hatcher geobj_*.arc files|geobj_*.arc",
+                FileName = "",
+                Multiselect = true
+            };
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                foreach (var file in openFileDialog.FileNames)
+                {
+                    var filename = Path.GetFileName(file);
+                    if (GEObj_Stage.archiveFilenames.Contains(filename))
+                    {
+                        var arc = new GEObj_Stage(File.ReadAllBytes(file));
+
+                        var outDir = file + "_out";
+                        Directory.CreateDirectory(outDir);
+                        foreach (var pair in arc.models)
+                        {
+                            var model = pair.Value;
+                            if (model != null)
+                            {
+                                var outPath = Path.Combine(outDir, $"{pair.Key}.fbx");
+                                var aqp = NinjaModelConvert.NinjaToAqua(model, out var aqn);
+                                if (aqp != null && aqp.vtxlList.Count > 0 || aqp.tempTris[0].faceVerts.Count > 0)
+                                {
+                                    aqp.ConvertToPSO2Model(true, false, false, true, false, false, false, true);
+                                    aqp.ConvertToLegacyTypes();
+                                    aqp.CreateTrueVertWeights();
+
+                                    FbxExporterNative.ExportToFile(aqp, aqn, new List<AquaMotion>(), outPath, new List<string>(), new List<Matrix4x4>(), false);
+                                }
+                            }
+                        }
+                        foreach (var pair in arc.colModels)
+                        {
+                            var model = pair.Value;
+                            if (model != null)
+                            {
+                                var aqpList = model.ConvertToAquaObject();
+                                var aqn = AquaNode.GenerateBasicAQN();
+                                for (int i = 0; i < aqpList.Count; i++)
+                                {
+                                    var aqp = aqpList[i];
+                                    string outPath;
+                                    if (i == 0 && aqpList.Count == 1)
+                                    {
+                                        outPath = Path.Combine(outDir, $"{pair.Key}.fbx");
+                                    }
+                                    else
+                                    {
+                                        outPath = Path.Combine(outDir, $"{pair.Key}_{i}.fbx");
+                                    }
+
+                                    if (aqp != null && aqp.vtxlList.Count > 0 || aqp.tempTris[0].faceVerts.Count > 0)
+                                    {
+                                        aqp.ConvertToLegacyTypes();
+                                        aqp.CreateTrueVertWeights();
+
+                                        FbxExporterNative.ExportToFile(aqp, aqn, new List<AquaMotion>(), outPath, new List<string>(), new List<Matrix4x4>(), false);
+                                    }
+                                }
+                            }
+                        }
+                        foreach (var pair in arc.model2s)
+                        {
+                            var model = pair.Value;
+                            if (model != null)
+                            {
+                                var outPath = Path.Combine(outDir, $"{pair.Key}.fbx");
+                                var aqp = NinjaModelConvert.NinjaToAqua(model, out var aqn);
+                                if (aqp != null && aqp.vtxlList.Count > 0 || aqp.tempTris[0].faceVerts.Count > 0)
+                                {
+                                    aqp.ConvertToPSO2Model(true, false, false, true, false, false, false, true);
+                                    aqp.ConvertToLegacyTypes();
+                                    aqp.CreateTrueVertWeights();
+
+                                    FbxExporterNative.ExportToFile(aqp, aqn, new List<AquaMotion>(), outPath, new List<string>(), new List<Matrix4x4>(), false);
+                                }
+                            }
+                        }
+                        foreach (var pair in arc.colModel2s)
+                        {
+                            var model = pair.Value;
+                            if (model != null)
+                            {
+                                var aqpList = model.ConvertToAquaObject();
+                                var aqn = AquaNode.GenerateBasicAQN();
+                                for (int i = 0; i < aqpList.Count; i++)
+                                {
+                                    var aqp = aqpList[i];
+                                    string outPath;
+                                    if (i == 0 && aqpList.Count == 1)
+                                    {
+                                        outPath = Path.Combine(outDir, $"{pair.Key}.fbx");
+                                    }
+                                    else
+                                    {
+                                        outPath = Path.Combine(outDir, $"{pair.Key}_{i}.fbx");
+                                    }
+
+                                    if (aqp != null && aqp.vtxlList.Count > 0 || aqp.tempTris[0].faceVerts.Count > 0)
+                                    {
+                                        aqp.ConvertToLegacyTypes();
+                                        aqp.CreateTrueVertWeights();
+
+                                        FbxExporterNative.ExportToFile(aqp, aqn, new List<AquaMotion>(), outPath, new List<string>(), new List<Matrix4x4>(), false);
+                                    }
+                                }
+                            }
+                        }
+                        if (arc.gvm != null)
+                        {
+                            arc.gvm.Save(Path.Combine(outDir, "textures.gvm"));
+                        }
+                    }
+                    else
+                    {
+                        var arc = new GEObj_Object(File.ReadAllBytes(file));
+
+                        var outDir = file + "_out";
+                        Directory.CreateDirectory(outDir);
+                        foreach (var pair in arc.models)
+                        {
+                            var model = pair.Value;
+                            if (model != null)
+                            {
+                                var outPath = Path.Combine(outDir, $"{pair.Key}.fbx");
+                                var aqp = NinjaModelConvert.NinjaToAqua(model, out var aqn);
+                                if (aqp != null && aqp.vtxlList.Count > 0 || aqp.tempTris[0].faceVerts.Count > 0)
+                                {
+                                    aqp.ConvertToPSO2Model(true, false, false, true, false, false, false, true);
+                                    aqp.ConvertToLegacyTypes();
+                                    aqp.CreateTrueVertWeights();
+
+                                    FbxExporterNative.ExportToFile(aqp, aqn, new List<AquaMotion>(), outPath, new List<string>(), new List<Matrix4x4>(), false);
+                                }
+                            }
+                        }
+                        if (arc.gvm != null)
+                        {
+                            arc.gvm.Save(Path.Combine(outDir, "textures.gvm"));
+                        }
+                    }
+
                 }
             }
         }
