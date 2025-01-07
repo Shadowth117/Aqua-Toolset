@@ -170,6 +170,8 @@ namespace AquaModelTool
             mSBExtractionExtractUnreferencedModelsAndTexturesToolStripMenuItem.Checked = smtSetting.extractUnreferencedMapData;
             mSBExtractionSeparateExtractionByModelToolStripMenuItem.Checked = smtSetting.separateMSBDumpByModel;
             addFBXRootNodeFixesBlenderSkinningIssuesTdToolStripMenuItem.Checked = smtSetting.addFBXRootNode;
+            addFLVERDummyNodesToolStripMenuItem.Checked = smtSetting.addFlverDummies;
+            parentDummyNodesToAttachToolStripMenuItem.Checked = smtSetting.parentDummiesToAttachNodes;
 
             SoulsConvert.game = smtSetting.soulsGame;
             SetSoulsGameToolStripText();
@@ -193,6 +195,8 @@ namespace AquaModelTool
             smtSetting.separateMSBDumpByModel = mSBExtractionSeparateExtractionByModelToolStripMenuItem.Checked;
             smtSetting.exportFormat = (ExportFormat)exportFormatCB.SelectedIndex;
             smtSetting.addFBXRootNode = addFBXRootNodeFixesBlenderSkinningIssuesTdToolStripMenuItem.Checked;
+            smtSetting.addFlverDummies = addFLVERDummyNodesToolStripMenuItem.Checked;
+            smtSetting.parentDummiesToAttachNodes = parentDummyNodesToAttachToolStripMenuItem.Checked;
 
             string smtSettingText = JsonSerializer.Serialize(smtSetting, jss);
             File.WriteAllText(mainSettingsPath + soulsSettingsFile, smtSettingText);
@@ -209,6 +213,8 @@ namespace AquaModelTool
             SoulsConvert.separateMSBDumpByModel = mSBExtractionSeparateExtractionByModelToolStripMenuItem.Checked;
             SoulsConvert.exportFormat = (ExportFormat)exportFormatCB.SelectedIndex;
             SoulsConvert.addFBXRootNode = addFBXRootNodeFixesBlenderSkinningIssuesTdToolStripMenuItem.Checked;
+            SoulsConvert.addFlverDummies = addFLVERDummyNodesToolStripMenuItem.Checked;
+            SoulsConvert.parentDummiesToAttachNodes = parentDummyNodesToAttachToolStripMenuItem.Checked;
         }
 
         public void ApplyModelImporterSettings()

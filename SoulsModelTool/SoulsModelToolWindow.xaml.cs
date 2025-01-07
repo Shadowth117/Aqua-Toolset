@@ -83,6 +83,8 @@ namespace SoulsModelTool
             mirrorTypeCB.SelectedIndex = (int)smtSetting.mirrorType;
             coordSystemCB.SelectedIndex = (int)smtSetting.coordSystem;
             addFBXRootNodeCB.IsChecked = smtSetting.addFBXRootNode;
+            addDummyNodeCB.IsChecked = smtSetting.addFlverDummies;
+            parentDummyToAttachCB.IsChecked = smtSetting.parentDummiesToAttachNodes;
 
             // using var ctx = new Assimp.AssimpContext();
             // var formats = ctx.GetSupportedImportFormats().ToList();
@@ -158,6 +160,8 @@ namespace SoulsModelTool
             smtSetting.coordSystem = (CoordSystem)coordSystemCB.SelectedIndex;
             smtSetting.mirrorType = (MirrorType)mirrorTypeCB.SelectedIndex;
             smtSetting.addFBXRootNode = (bool)addFBXRootNodeCB.IsChecked;
+            smtSetting.addFlverDummies = (bool)addDummyNodeCB.IsChecked;
+            smtSetting.parentDummiesToAttachNodes = (bool)parentDummyToAttachCB.IsChecked;
             string smtSettingText = JsonConvert.SerializeObject(smtSetting, jss);
             File.WriteAllText(settingsPath + settingsFile, smtSettingText);
         }
@@ -172,7 +176,7 @@ namespace SoulsModelTool
             string actualFilter = string.Join(";", transformedFilters);
             OpenFileDialog openFileDialog = new OpenFileDialog()
             {
-                Title = "Select From Software flver, MDL4, TPF, BND or BluePoint CMDL or CMSH file(s)",
+                Title = "Select From Software flver, MDL4, TPF, BND or BluePoint CMDL, CMSH, or CTXR file(s)",
                 Filter =
                     $"From Software flver, MDL4, or BND Files ({filterNames})|{actualFilter}|All Files (*.*)|*",
                 Multiselect = true

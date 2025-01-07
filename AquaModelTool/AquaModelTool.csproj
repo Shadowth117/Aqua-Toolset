@@ -29,4 +29,8 @@
     <ProjectReference Include="..\PSO2-Aqua-Library\AquaModelLibrary.Data\AquaModelLibrary.Data.csproj" />
   </ItemGroup>
 
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="xcopy &quot;$(SolutionDir)\README.md&quot; &quot;$(SolutionDir)AquaModelTool\bin\$(Configuration)\$(TargetFramework)&quot; /y " />
+  </Target>
+
 </Project>

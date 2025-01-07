@@ -67,6 +67,7 @@ namespace AquaModelTool
             applyMaterialNamesToMeshToolStripMenuItem = new ToolStripMenuItem();
             transformMeshToolStripMenuItem = new ToolStripMenuItem();
             addFBXRootNodeFixesBlenderSkinningIssuesTdToolStripMenuItem = new ToolStripMenuItem();
+            addFLVERDummyNodesToolStripMenuItem = new ToolStripMenuItem();
             toolStripSeparator14 = new ToolStripSeparator();
             setSoulsGameToolStripMenuItem = new ToolStripMenuItem();
             extractSoulsMapObjectLayoutFrommsbToolStripMenuItem = new ToolStripMenuItem();
@@ -128,6 +129,7 @@ namespace AquaModelTool
             pathOfExile2BatchModelConvertToolStripMenuItem = new ToolStripMenuItem();
             pathOfExile2MToolStripMenuItem = new ToolStripMenuItem();
             pathOfExile2RiggedModelAnimationConvertToolStripMenuItem = new ToolStripMenuItem();
+            pathOfExile1ModelSupportIsIncompleteAndMayFailOnSomeFilesToolStripMenuItem = new ToolStripMenuItem();
             toolStripSeparator5 = new ToolStripSeparator();
             batchPSO2ToFBXToolStripMenuItem = new ToolStripMenuItem();
             batchParsePSO2SetToTextToolStripMenuItem = new ToolStripMenuItem();
@@ -240,7 +242,7 @@ namespace AquaModelTool
             setCameraReadToolStripMenuItem = new ToolStripMenuItem();
             filePanel = new Panel();
             splitter1 = new Splitter();
-            pathOfExile1ModelSupportIsIncompleteAndMayFailOnSomeFilesToolStripMenuItem = new ToolStripMenuItem();
+            parentDummyNodesToAttachToolStripMenuItem = new ToolStripMenuItem();
             menuStrip1.SuspendLayout();
             SuspendLayout();
             // 
@@ -452,7 +454,7 @@ namespace AquaModelTool
             // 
             // otherGamesToolStripMenuItem
             // 
-            otherGamesToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { convertSoulsflverTofbxToolStripMenuItem, exportFormatCB, soulsMirroringCB, soulsCoordSystemCB, exportWithMetadataToolStripMenuItem, applyMaterialNamesToMeshToolStripMenuItem, transformMeshToolStripMenuItem, addFBXRootNodeFixesBlenderSkinningIssuesTdToolStripMenuItem, toolStripSeparator14, setSoulsGameToolStripMenuItem, extractSoulsMapObjectLayoutFrommsbToolStripMenuItem, mSBExtractionExtractUnreferencedModelsAndTexturesToolStripMenuItem, mSBExtractionSeparateExtractionByModelToolStripMenuItem, toolStripSeparator15, dumpAllFromSoulsbndToolStripMenuItem, toolStripSeparator16, mWCBNDExtractToolStripMenuItem, otogi12datExtractToolStripMenuItem, mWCBNDPackToolStripMenuItem, metalWolfChaosMMDConvertToolStripMenuItem, metalWolfChaosOTRConvertToolStripMenuItem, metalWolfChaosMDLConvertUnfinishedMostlyWorksToolStripMenuItem, toolStripSeparator12, generateMCGMCPToolStripMenuItem, convertModelToDemonsSoulsflverToolStripMenuItem, toolStripSeparator11, convertDemonsSoulsPS5CmdlToFbxToolStripMenuItem, convertDemonsSoulsPS5ctxrToolStripMenuItem, tryToDecompressShadowOfTheColossusFileToolStripMenuItem, noteShadowOfTheColossusPS4psarcsMUSTHaveTheirContentsPlacedInTheGamesEbootbinDirectoryToolStripMenuItem });
+            otherGamesToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { convertSoulsflverTofbxToolStripMenuItem, exportFormatCB, soulsMirroringCB, soulsCoordSystemCB, exportWithMetadataToolStripMenuItem, applyMaterialNamesToMeshToolStripMenuItem, transformMeshToolStripMenuItem, addFBXRootNodeFixesBlenderSkinningIssuesTdToolStripMenuItem, addFLVERDummyNodesToolStripMenuItem, parentDummyNodesToAttachToolStripMenuItem, toolStripSeparator14, setSoulsGameToolStripMenuItem, extractSoulsMapObjectLayoutFrommsbToolStripMenuItem, mSBExtractionExtractUnreferencedModelsAndTexturesToolStripMenuItem, mSBExtractionSeparateExtractionByModelToolStripMenuItem, toolStripSeparator15, dumpAllFromSoulsbndToolStripMenuItem, toolStripSeparator16, mWCBNDExtractToolStripMenuItem, otogi12datExtractToolStripMenuItem, mWCBNDPackToolStripMenuItem, metalWolfChaosMMDConvertToolStripMenuItem, metalWolfChaosOTRConvertToolStripMenuItem, metalWolfChaosMDLConvertUnfinishedMostlyWorksToolStripMenuItem, toolStripSeparator12, generateMCGMCPToolStripMenuItem, convertModelToDemonsSoulsflverToolStripMenuItem, toolStripSeparator11, convertDemonsSoulsPS5CmdlToFbxToolStripMenuItem, convertDemonsSoulsPS5ctxrToolStripMenuItem, tryToDecompressShadowOfTheColossusFileToolStripMenuItem, noteShadowOfTheColossusPS4psarcsMUSTHaveTheirContentsPlacedInTheGamesEbootbinDirectoryToolStripMenuItem });
             otherGamesToolStripMenuItem.Name = "otherGamesToolStripMenuItem";
             otherGamesToolStripMenuItem.Size = new Size(344, 22);
             otherGamesToolStripMenuItem.Text = "Souls And FromSoft/BluePoint Games";
@@ -519,6 +521,14 @@ namespace AquaModelTool
             addFBXRootNodeFixesBlenderSkinningIssuesTdToolStripMenuItem.Size = new Size(650, 22);
             addFBXRootNodeFixesBlenderSkinningIssuesTdToolStripMenuItem.Text = "Add FBX Root Node (Fixes Blender skinning issues due to its faulty fbx plugin)";
             addFBXRootNodeFixesBlenderSkinningIssuesTdToolStripMenuItem.Click += SaveSoulsSettings;
+            // 
+            // addFLVERDummyNodesToolStripMenuItem
+            // 
+            addFLVERDummyNodesToolStripMenuItem.CheckOnClick = true;
+            addFLVERDummyNodesToolStripMenuItem.Name = "addFLVERDummyNodesToolStripMenuItem";
+            addFLVERDummyNodesToolStripMenuItem.Size = new Size(650, 22);
+            addFLVERDummyNodesToolStripMenuItem.Text = "Add FLVER dummy nodes";
+            addFLVERDummyNodesToolStripMenuItem.Click += SaveSoulsSettings;
             // 
             // toolStripSeparator14
             // 
@@ -889,26 +899,26 @@ namespace AquaModelTool
             // blueDragonipkExtractToolStripMenuItem
             // 
             blueDragonipkExtractToolStripMenuItem.Name = "blueDragonipkExtractToolStripMenuItem";
-            blueDragonipkExtractToolStripMenuItem.Size = new Size(376, 22);
+            blueDragonipkExtractToolStripMenuItem.Size = new Size(444, 22);
             blueDragonipkExtractToolStripMenuItem.Text = "Blue Dragon *.ipk, *.mpk Extract ";
             blueDragonipkExtractToolStripMenuItem.Click += blueDragonipkExtractToolStripMenuItem_Click;
             // 
             // ikarugaarcExtractToolStripMenuItem
             // 
             ikarugaarcExtractToolStripMenuItem.Name = "ikarugaarcExtractToolStripMenuItem";
-            ikarugaarcExtractToolStripMenuItem.Size = new Size(376, 22);
+            ikarugaarcExtractToolStripMenuItem.Size = new Size(444, 22);
             ikarugaarcExtractToolStripMenuItem.Text = "Ikaruga *.arc Extract";
             ikarugaarcExtractToolStripMenuItem.Click += ikarugaarcExtractToolStripMenuItem_Click;
             // 
             // toolStripSeparator20
             // 
             toolStripSeparator20.Name = "toolStripSeparator20";
-            toolStripSeparator20.Size = new Size(373, 6);
+            toolStripSeparator20.Size = new Size(441, 6);
             // 
             // pathOfExile2ToolStripMenuItem
             // 
             pathOfExile2ToolStripMenuItem.Name = "pathOfExile2ToolStripMenuItem";
-            pathOfExile2ToolStripMenuItem.Size = new Size(376, 22);
+            pathOfExile2ToolStripMenuItem.Size = new Size(444, 22);
             pathOfExile2ToolStripMenuItem.Text = "Path of Exile 1 and 2 Archive Extract";
             pathOfExile2ToolStripMenuItem.Click += pathOfExile2ArchiveExtractToolStripMenuItem_Click;
             // 
@@ -932,6 +942,13 @@ namespace AquaModelTool
             pathOfExile2RiggedModelAnimationConvertToolStripMenuItem.Size = new Size(444, 22);
             pathOfExile2RiggedModelAnimationConvertToolStripMenuItem.Text = "Path of Exile 1 and 2 Rigged Model + Animation Convert (Slow)";
             pathOfExile2RiggedModelAnimationConvertToolStripMenuItem.Click += pathOfExile2RiggedModelAnimationConvertToolStripMenuItem_Click;
+            // 
+            // pathOfExile1ModelSupportIsIncompleteAndMayFailOnSomeFilesToolStripMenuItem
+            // 
+            pathOfExile1ModelSupportIsIncompleteAndMayFailOnSomeFilesToolStripMenuItem.Enabled = false;
+            pathOfExile1ModelSupportIsIncompleteAndMayFailOnSomeFilesToolStripMenuItem.Name = "pathOfExile1ModelSupportIsIncompleteAndMayFailOnSomeFilesToolStripMenuItem";
+            pathOfExile1ModelSupportIsIncompleteAndMayFailOnSomeFilesToolStripMenuItem.Size = new Size(444, 22);
+            pathOfExile1ModelSupportIsIncompleteAndMayFailOnSomeFilesToolStripMenuItem.Text = "Path of Exile 1 model support is incomplete and may fail on some files";
             // 
             // toolStripSeparator5
             // 
@@ -1718,12 +1735,15 @@ namespace AquaModelTool
             splitter1.TabIndex = 2;
             splitter1.TabStop = false;
             // 
-            // pathOfExile1ModelSupportIsIncompleteAndMayFailOnSomeFilesToolStripMenuItem
+            // parentDummyNodesToAttachToolStripMenuItem
             // 
-            pathOfExile1ModelSupportIsIncompleteAndMayFailOnSomeFilesToolStripMenuItem.Enabled = false;
-            pathOfExile1ModelSupportIsIncompleteAndMayFailOnSomeFilesToolStripMenuItem.Name = "pathOfExile1ModelSupportIsIncompleteAndMayFailOnSomeFilesToolStripMenuItem";
-            pathOfExile1ModelSupportIsIncompleteAndMayFailOnSomeFilesToolStripMenuItem.Size = new Size(444, 22);
-            pathOfExile1ModelSupportIsIncompleteAndMayFailOnSomeFilesToolStripMenuItem.Text = "Path of Exile 1 model support is incomplete and may fail on some files";
+            parentDummyNodesToAttachToolStripMenuItem.Checked = true;
+            parentDummyNodesToAttachToolStripMenuItem.CheckOnClick = true;
+            parentDummyNodesToAttachToolStripMenuItem.CheckState = CheckState.Checked;
+            parentDummyNodesToAttachToolStripMenuItem.Name = "parentDummyNodesToAttachToolStripMenuItem";
+            parentDummyNodesToAttachToolStripMenuItem.Size = new Size(650, 22);
+            parentDummyNodesToAttachToolStripMenuItem.Text = "Parent dummy nodes to attach nodes (Only used if Add FLVER dummy nodes is selected)";
+            parentDummyNodesToAttachToolStripMenuItem.Click += SaveSoulsSettings;
             // 
             // AquaModelTool
             // 
@@ -1959,6 +1979,8 @@ namespace AquaModelTool
         private ToolStripMenuItem stageGeobjExtractToolStripMenuItem;
         private ToolStripSeparator toolStripSeparator21;
         private ToolStripMenuItem pathOfExile1ModelSupportIsIncompleteAndMayFailOnSomeFilesToolStripMenuItem;
+        private ToolStripMenuItem addFLVERDummyNodesToolStripMenuItem;
+        private ToolStripMenuItem parentDummyNodesToAttachToolStripMenuItem;
     }
 }
 

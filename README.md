@@ -33,6 +33,9 @@ Phantasy Star Nova (PSN):
     
 Souls and Fromsoft/BluePoint Games:  
 -.flver/.flv conversion to .fbx. Can take in a .dcx or bnd file and extract both the internal .flver(s) and .tpf textures  
+-For .flver/.flv, can optionally convert dummies when outputting as .fbx. You may choose if these should attach to their original parents or the bones they're intended to attach to 
+-For .flver/.flv dummies, the name formatting is the dummy's data separated by #s. Specifically, Dummy # reference id # parent bone name # attach bone name # flag1 # unk30 # unk34 # hex color as RGBA
+
 -.cmdl/.cmsh conversion to .fbx. Files should be in their original folders as data such as materials and skeletons must be found externally in the game filesystem. Also converts .ctxr textures with the model, if they are found  
 -.ctxr conversion to .dds. .ctxc textures are always connected to particular .ctxr files and do not contain enough info to convert on their own, and so are only supported via a .ctxr  
 --Functional for most .flver variants, should work for all .flvers in Demon's Souls (2009) and all newer FromSoft games.   
@@ -55,6 +58,7 @@ Billy Hatcher and the Giant Egg:
 Other Games:  
 Blue Dragon:  
 -.ipk/.mpk Extraction. Automatically converts .dds files to PC variants.  
-Path of Exile 2:  
+Path of Exile 1/2:  
 -Archive Extraction  
 -Model and Animation Conversion  
+-Path of Exile 1 support is shakier, but should work on most things

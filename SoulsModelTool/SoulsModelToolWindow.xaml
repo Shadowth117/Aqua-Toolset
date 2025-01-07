@@ -53,6 +53,10 @@
                                   Click="smtSettingSet" />
                         <CheckBox x:Name="addFBXRootNodeCB" Content="Add FBX Root Node (Fixes Blender skinning issues due to its faulty fbx plugin)" IsChecked="True"
                                   Click="smtSettingSet" />
+                        <CheckBox x:Name="addDummyNodeCB" Content="Add the FLVER's dummy nodes" IsChecked="False"
+                                  Click="smtSettingSet" />
+                        <CheckBox x:Name="parentDummyToAttachCB" Content="Parent dummy nodes to attach nodes (Only used if Add FLVER dummy nodes is selected)" IsChecked="True"
+                                  Click="smtSettingSet" />
                     </StackPanel>
                 </GroupBox>
                 <GroupBox Header="MSB extraction">

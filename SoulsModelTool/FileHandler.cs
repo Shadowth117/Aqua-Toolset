@@ -19,13 +19,18 @@ namespace SoulsModelTool
             foreach (var file in FileNames)
             {
                 string ext = Path.GetExtension(file);
-                if (ext == ".cmsh" || ext == ".cmdl")
+                switch(ext.ToLower())
                 {
-                    ConvertBluepointModel(file);
-                }
-                else
-                {
-                    SoulsConvert.ConvertFile(file);
+                    case ".cmsh":
+                    case ".cmdl":
+                        ConvertBluepointModel(file);
+                        break;
+                    case ".ctxr":
+                        BluePointConvert.ConvertCTXR(file);
+                        break;
+                    default:
+                        SoulsConvert.ConvertFile(file);
+                        break;
                 }
             }
         }
@@ -42,7 +47,8 @@ namespace SoulsModelTool
             SoulsConvert.addFBXRootNode = smtSetting.addFBXRootNode;
             SoulsConvert.exportFormat = smtSetting.exportFormat;
             SoulsConvert.coordSystem = smtSetting.coordSystem;
-            SoulsConvert.addFBXRootNode = smtSetting.addFBXRootNode;
+            SoulsConvert.addFlverDummies = smtSetting.addFlverDummies;
+            SoulsConvert.parentDummiesToAttachNodes = smtSetting.parentDummiesToAttachNodes;
         }
 
         public static void ApplyModelImporterSettings(MainSetting mainSetting)

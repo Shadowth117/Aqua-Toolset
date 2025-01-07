@@ -147,6 +147,18 @@ namespace SoulsModelTool
                         case "-dontaddrootnode":
                             smtSetting.addFBXRootNode = false;
                             break;
+                        case "-addflverdummies":
+                            smtSetting.addFlverDummies = true;
+                            break;
+                        case "-dontaddflverdummies":
+                            smtSetting.addFlverDummies = false;
+                            break;
+                        case "-parentdummiestoattach":
+                            smtSetting.parentDummiesToAttachNodes = true;
+                            break;
+                        case "-dontparentdummiestoattach":
+                            smtSetting.parentDummiesToAttachNodes = false;
+                            break;
                         default:
                             filePaths.Add(arg);
                             break;
