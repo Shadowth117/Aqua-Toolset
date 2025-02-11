@@ -34,7 +34,7 @@ Phantasy Star Nova (PSN):
 Souls and Fromsoft/BluePoint Games:  
 -.flver/.flv conversion to .fbx. Can take in a .dcx or bnd file and extract both the internal .flver(s) and .tpf textures  
 -For .flver/.flv, can optionally convert dummies when outputting as .fbx. You may choose if these should attach to their original parents or the bones they're intended to attach to 
--For .flver/.flv dummies, the name formatting is the dummy's data separated by #s. Specifically, Dummy # reference id # parent bone name # attach bone name # flag1 # unk30 # unk34 # hex color as RGBA
+-For .flver/.flv dummies, the name formatting is the dummy's data separated by #s. Specifically, Dummy # reference id # parent bone name # attach bone name # flag1 # unk30 # unk34 # hex color as RGBA eg. Dummy#100#R_weapon#Model_Dmy#True#0#0#FFFFFFFF
 
 -.cmdl/.cmsh conversion to .fbx. Files should be in their original folders as data such as materials and skeletons must be found externally in the game filesystem. Also converts .ctxr textures with the model, if they are found  
 -.ctxr conversion to .dds. .ctxc textures are always connected to particular .ctxr files and do not contain enough info to convert on their own, and so are only supported via a .ctxr  

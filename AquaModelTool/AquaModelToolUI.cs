@@ -209,7 +209,7 @@ namespace AquaModelTool
             SoulsConvert.mirrorType = (MirrorType)soulsMirroringCB.SelectedIndex;
             SoulsConvert.coordSystem = (CoordSystem)soulsCoordSystemCB.SelectedIndex;
             SoulsConvert.transformMesh = transformMeshToolStripMenuItem.Checked;
-            SoulsConvert.extractUnreferencedMapData = extractSoulsMapObjectLayoutFrommsbToolStripMenuItem.Checked;
+            SoulsConvert.extractUnreferencedMapData = mSBExtractionExtractUnreferencedModelsAndTexturesToolStripMenuItem.Checked;
             SoulsConvert.separateMSBDumpByModel = mSBExtractionSeparateExtractionByModelToolStripMenuItem.Checked;
             SoulsConvert.exportFormat = (ExportFormat)exportFormatCB.SelectedIndex;
             SoulsConvert.addFBXRootNode = addFBXRootNodeFixesBlenderSkinningIssuesTdToolStripMenuItem.Checked;
@@ -4827,9 +4827,9 @@ namespace AquaModelTool
 
         private void setSoulsGameToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            SetSoulsGameToolStripText();
             SetSoulsGameInternal();
             SaveSoulsSettingsInternal();
+            SetSoulsGameToolStripText();
         }
 
         private void SetSoulsGameToolStripText()
@@ -5511,19 +5511,19 @@ namespace AquaModelTool
             };
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
+                StageDef.StageDefinition redToGreen;
                 using (MemoryStream stream = new MemoryStream(File.ReadAllBytes(openFileDialog.FileName)))
                 using (var streamReader = new BufferedStreamReaderBE<MemoryStream>(stream))
                 {
                     var stgDef = new StageDef(streamReader);
-
-                    List<string> missionTypes = new List<string>();
-                    foreach (var def in stgDef.defs)
-                    {
-                        if (!missionTypes.Contains(def.missionType))
-                        {
-                            missionTypes.Add(def.missionType);
-                        }
-                    }
+                }
+                
+                using (MemoryStream stream = new MemoryStream(File.ReadAllBytes(openFileDialog.FileName)))
+                using (var streamReader = new BufferedStreamReaderBE<MemoryStream>(stream))
+                {
+                    var stgDef = new StageDef(streamReader);
+                    //stgDef.defs[1].worldName = "red";
+                    //File.WriteAllBytes(openFileDialog.FileName, stgDef.GetBytes());
                 }
             }
         }
@@ -7536,6 +7536,24 @@ namespace AquaModelTool
                         }
                     }
 
+                }
+            }
+        }
+
+        private void readNOMsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var openFileDialog = new CommonOpenFileDialog
+            {
+                Title = "Select nom root folder",
+                IsFolderPicker = true,
+            };
+            if (openFileDialog.ShowDialog() == CommonFileDialogResult.Ok)
+            {
+                var files = Directory.GetFiles(openFileDialog.FileName, "*.nom", SearchOption.AllDirectories);
+                foreach (var file in files)
+                {
+                    byte[] bytes = File.ReadAllBytes(file);
+                    var nom = new NOM(bytes);
                 }
             }
         }

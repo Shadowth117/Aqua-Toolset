@@ -68,6 +68,7 @@ namespace AquaModelTool
             transformMeshToolStripMenuItem = new ToolStripMenuItem();
             addFBXRootNodeFixesBlenderSkinningIssuesTdToolStripMenuItem = new ToolStripMenuItem();
             addFLVERDummyNodesToolStripMenuItem = new ToolStripMenuItem();
+            parentDummyNodesToAttachToolStripMenuItem = new ToolStripMenuItem();
             toolStripSeparator14 = new ToolStripSeparator();
             setSoulsGameToolStripMenuItem = new ToolStripMenuItem();
             extractSoulsMapObjectLayoutFrommsbToolStripMenuItem = new ToolStripMenuItem();
@@ -240,9 +241,9 @@ namespace AquaModelTool
             pOE2IndexReadToolStripMenuItem = new ToolStripMenuItem();
             setEnemyReadToolStripMenuItem = new ToolStripMenuItem();
             setCameraReadToolStripMenuItem = new ToolStripMenuItem();
+            readNOMsToolStripMenuItem = new ToolStripMenuItem();
             filePanel = new Panel();
             splitter1 = new Splitter();
-            parentDummyNodesToAttachToolStripMenuItem = new ToolStripMenuItem();
             menuStrip1.SuspendLayout();
             SuspendLayout();
             // 
@@ -435,7 +436,7 @@ namespace AquaModelTool
             // 
             // toolsToolStripMenuItem
             // 
-            toolsToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { updateClassicPlayerAnimToNGSAnimToolStripMenuItem, toolStripSeparator4, otherGamesToolStripMenuItem, otherGamesToolStripMenuItem1, otherGamesToolStripMenuItem2, otherGamesToolStripMenuItem3, toolStripSeparator5, batchPSO2ToFBXToolStripMenuItem, batchParsePSO2SetToTextToolStripMenuItem, legacyAqp2objObjExportToolStripMenuItem, legacyAqp2objBatchExportToolStripMenuItem, legacyAqp2objObjImportToolStripMenuItem, prmEffectModelExportToolStripMenuItem, prmEffectFromModelToolStripMenuItem, toolStripSeparator3, evtSkitLuaDecompilerToolStripMenuItem, convertTxtToPSO2TextToolStripMenuItem, convertTxtToPSO2TextFolderSelectToolStripMenuItem, parsePSO2TextToolStripMenuItem, parsePSO2TextFolderSelectToolStripMenuItem, toolStripSeparator6, convertNATextToEnPatchToolStripMenuItem, generateCharacterFileSheetToolStripMenuItem, toolStripSeparator19, assembleNGSMapToolStripMenuItem, convertMapTexturesTopngToolStripMenuItem, usePCDirectoriesToolStripMenuItem, toolStripSeparator18, parseVTBFToTextToolStripMenuItem, checkAllShaderExtrasToolStripMenuItem });
+            toolsToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { otherGamesToolStripMenuItem, otherGamesToolStripMenuItem1, otherGamesToolStripMenuItem2, otherGamesToolStripMenuItem3, toolStripSeparator5, batchPSO2ToFBXToolStripMenuItem, batchParsePSO2SetToTextToolStripMenuItem, legacyAqp2objObjExportToolStripMenuItem, legacyAqp2objBatchExportToolStripMenuItem, legacyAqp2objObjImportToolStripMenuItem, prmEffectModelExportToolStripMenuItem, prmEffectFromModelToolStripMenuItem, toolStripSeparator3, evtSkitLuaDecompilerToolStripMenuItem, convertTxtToPSO2TextToolStripMenuItem, convertTxtToPSO2TextFolderSelectToolStripMenuItem, parsePSO2TextToolStripMenuItem, parsePSO2TextFolderSelectToolStripMenuItem, toolStripSeparator6, convertNATextToEnPatchToolStripMenuItem, generateCharacterFileSheetToolStripMenuItem, toolStripSeparator19, assembleNGSMapToolStripMenuItem, convertMapTexturesTopngToolStripMenuItem, usePCDirectoriesToolStripMenuItem, toolStripSeparator18, parseVTBFToTextToolStripMenuItem, checkAllShaderExtrasToolStripMenuItem, toolStripSeparator4, updateClassicPlayerAnimToNGSAnimToolStripMenuItem });
             toolsToolStripMenuItem.Name = "toolsToolStripMenuItem";
             toolsToolStripMenuItem.Size = new Size(46, 23);
             toolsToolStripMenuItem.Text = "Tools";
@@ -529,6 +530,16 @@ namespace AquaModelTool
             addFLVERDummyNodesToolStripMenuItem.Size = new Size(650, 22);
             addFLVERDummyNodesToolStripMenuItem.Text = "Add FLVER dummy nodes";
             addFLVERDummyNodesToolStripMenuItem.Click += SaveSoulsSettings;
+            // 
+            // parentDummyNodesToAttachToolStripMenuItem
+            // 
+            parentDummyNodesToAttachToolStripMenuItem.Checked = true;
+            parentDummyNodesToAttachToolStripMenuItem.CheckOnClick = true;
+            parentDummyNodesToAttachToolStripMenuItem.CheckState = CheckState.Checked;
+            parentDummyNodesToAttachToolStripMenuItem.Name = "parentDummyNodesToAttachToolStripMenuItem";
+            parentDummyNodesToAttachToolStripMenuItem.Size = new Size(650, 22);
+            parentDummyNodesToAttachToolStripMenuItem.Text = "Parent dummy nodes to attach nodes (Only used if Add FLVER dummy nodes is selected)";
+            parentDummyNodesToAttachToolStripMenuItem.Click += SaveSoulsSettings;
             // 
             // toolStripSeparator14
             // 
@@ -1500,7 +1511,7 @@ namespace AquaModelTool
             // 
             // debug3ToolStripMenuItem
             // 
-            debug3ToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { readPATHToolStripMenuItem, readPOF0ToolStripMenuItem, readStageDefToolStripMenuItem, decryptINCToolStripMenuItem, readARCToolStripMenuItem, dumpBillyArcPof0ToolStripMenuItem, dumpExtremeAnimsToolStripMenuItem, readGEPlayerToolStripMenuItem, readAniModelToolStripMenuItem, readLibModelToolStripMenuItem, protoThingToItemModelToolStripMenuItem, readGalleryEggToolStripMenuItem, readCMDLToolStripMenuItem, checkToolStripMenuItem, checkAllcmshToolStripMenuItem, checkAllBillySetObjToolStripMenuItem, testReadOldCMDLToolStripMenuItem, readGEEggToolStripMenuItem, readFlverTestToolStripMenuItem, readWriteTexTestToolStripMenuItem, pSOCryptTestToolStripMenuItem, customRoboGCSFDDumpToolStripMenuItem, customRoboPartReadToolStripMenuItem, billyLightTestToolStripMenuItem, geoObjStageReadToolStripMenuItem, objCollisionReadToolStripMenuItem, arEnemyReadToolStripMenuItem, pOE2IndexReadToolStripMenuItem, setEnemyReadToolStripMenuItem, setCameraReadToolStripMenuItem });
+            debug3ToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { readPATHToolStripMenuItem, readPOF0ToolStripMenuItem, readStageDefToolStripMenuItem, decryptINCToolStripMenuItem, readARCToolStripMenuItem, dumpBillyArcPof0ToolStripMenuItem, dumpExtremeAnimsToolStripMenuItem, readGEPlayerToolStripMenuItem, readAniModelToolStripMenuItem, readLibModelToolStripMenuItem, protoThingToItemModelToolStripMenuItem, readGalleryEggToolStripMenuItem, readCMDLToolStripMenuItem, checkToolStripMenuItem, checkAllcmshToolStripMenuItem, checkAllBillySetObjToolStripMenuItem, testReadOldCMDLToolStripMenuItem, readGEEggToolStripMenuItem, readFlverTestToolStripMenuItem, readWriteTexTestToolStripMenuItem, pSOCryptTestToolStripMenuItem, customRoboGCSFDDumpToolStripMenuItem, customRoboPartReadToolStripMenuItem, billyLightTestToolStripMenuItem, geoObjStageReadToolStripMenuItem, objCollisionReadToolStripMenuItem, arEnemyReadToolStripMenuItem, pOE2IndexReadToolStripMenuItem, setEnemyReadToolStripMenuItem, setCameraReadToolStripMenuItem, readNOMsToolStripMenuItem });
             debug3ToolStripMenuItem.Name = "debug3ToolStripMenuItem";
             debug3ToolStripMenuItem.Size = new Size(60, 23);
             debug3ToolStripMenuItem.Text = "Debug3";
@@ -1715,6 +1726,13 @@ namespace AquaModelTool
             setCameraReadToolStripMenuItem.Text = "SetCameraRead";
             setCameraReadToolStripMenuItem.Click += setCameraReadToolStripMenuItem_Click;
             // 
+            // readNOMsToolStripMenuItem
+            // 
+            readNOMsToolStripMenuItem.Name = "readNOMsToolStripMenuItem";
+            readNOMsToolStripMenuItem.Size = new Size(213, 22);
+            readNOMsToolStripMenuItem.Text = "ReadNOMs";
+            readNOMsToolStripMenuItem.Click += readNOMsToolStripMenuItem_Click;
+            // 
             // filePanel
             // 
             filePanel.AutoSize = true;
@@ -1734,16 +1752,6 @@ namespace AquaModelTool
             splitter1.Size = new Size(4, 296);
             splitter1.TabIndex = 2;
             splitter1.TabStop = false;
-            // 
-            // parentDummyNodesToAttachToolStripMenuItem
-            // 
-            parentDummyNodesToAttachToolStripMenuItem.Checked = true;
-            parentDummyNodesToAttachToolStripMenuItem.CheckOnClick = true;
-            parentDummyNodesToAttachToolStripMenuItem.CheckState = CheckState.Checked;
-            parentDummyNodesToAttachToolStripMenuItem.Name = "parentDummyNodesToAttachToolStripMenuItem";
-            parentDummyNodesToAttachToolStripMenuItem.Size = new Size(650, 22);
-            parentDummyNodesToAttachToolStripMenuItem.Text = "Parent dummy nodes to attach nodes (Only used if Add FLVER dummy nodes is selected)";
-            parentDummyNodesToAttachToolStripMenuItem.Click += SaveSoulsSettings;
             // 
             // AquaModelTool
             // 
@@ -1981,6 +1989,7 @@ namespace AquaModelTool
         private ToolStripMenuItem pathOfExile1ModelSupportIsIncompleteAndMayFailOnSomeFilesToolStripMenuItem;
         private ToolStripMenuItem addFLVERDummyNodesToolStripMenuItem;
         private ToolStripMenuItem parentDummyNodesToAttachToolStripMenuItem;
+        private ToolStripMenuItem readNOMsToolStripMenuItem;
     }
 }
 
