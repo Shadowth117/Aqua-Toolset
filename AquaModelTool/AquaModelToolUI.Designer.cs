@@ -56,8 +56,6 @@ namespace AquaModelTool
             toolStripSeparator8 = new ToolStripSeparator();
             toolStripSeparator2 = new ToolStripSeparator();
             toolsToolStripMenuItem = new ToolStripMenuItem();
-            updateClassicPlayerAnimToNGSAnimToolStripMenuItem = new ToolStripMenuItem();
-            toolStripSeparator4 = new ToolStripSeparator();
             otherGamesToolStripMenuItem = new ToolStripMenuItem();
             convertSoulsflverTofbxToolStripMenuItem = new ToolStripMenuItem();
             exportFormatCB = new ToolStripComboBox();
@@ -119,6 +117,8 @@ namespace AquaModelTool
             billyHatcherbintxtBackTobinToolStripMenuItem = new ToolStripMenuItem();
             billyHatcherCyrillicbinTextTotxtToolStripMenuItem = new ToolStripMenuItem();
             billyHatcherCyrillictxtTobinToolStripMenuItem = new ToolStripMenuItem();
+            billyHatcherEventToJSONToolStripMenuItem = new ToolStripMenuItem();
+            billyHatcherJSONToEventToolStripMenuItem = new ToolStripMenuItem();
             toolStripSeparator17 = new ToolStripSeparator();
             stageGeobjExtractToolStripMenuItem = new ToolStripMenuItem();
             toolStripSeparator21 = new ToolStripSeparator();
@@ -155,6 +155,8 @@ namespace AquaModelTool
             toolStripSeparator18 = new ToolStripSeparator();
             parseVTBFToTextToolStripMenuItem = new ToolStripMenuItem();
             checkAllShaderExtrasToolStripMenuItem = new ToolStripMenuItem();
+            toolStripSeparator4 = new ToolStripSeparator();
+            updateClassicPlayerAnimToNGSAnimToolStripMenuItem = new ToolStripMenuItem();
             filenameButton = new ToolStripMenuItem();
             debugToolStripMenuItem = new ToolStripMenuItem();
             readBonesToolStripMenuItem = new ToolStripMenuItem();
@@ -244,6 +246,8 @@ namespace AquaModelTool
             readNOMsToolStripMenuItem = new ToolStripMenuItem();
             filePanel = new Panel();
             splitter1 = new Splitter();
+            billyHatcherBGMRegularbinToTextToolStripMenuItem = new ToolStripMenuItem();
+            billyHatcherTextToBGMRegularbinToolStripMenuItem = new ToolStripMenuItem();
             menuStrip1.SuspendLayout();
             SuspendLayout();
             // 
@@ -440,18 +444,6 @@ namespace AquaModelTool
             toolsToolStripMenuItem.Name = "toolsToolStripMenuItem";
             toolsToolStripMenuItem.Size = new Size(46, 23);
             toolsToolStripMenuItem.Text = "Tools";
-            // 
-            // updateClassicPlayerAnimToNGSAnimToolStripMenuItem
-            // 
-            updateClassicPlayerAnimToNGSAnimToolStripMenuItem.Name = "updateClassicPlayerAnimToNGSAnimToolStripMenuItem";
-            updateClassicPlayerAnimToNGSAnimToolStripMenuItem.Size = new Size(344, 22);
-            updateClassicPlayerAnimToNGSAnimToolStripMenuItem.Text = "Update classic player anim to NGS anim";
-            updateClassicPlayerAnimToNGSAnimToolStripMenuItem.Click += updateClassicPlayerAnimToNGSAnimToolStripMenuItem_Click;
-            // 
-            // toolStripSeparator4
-            // 
-            toolStripSeparator4.Name = "toolStripSeparator4";
-            toolStripSeparator4.Size = new Size(341, 6);
             // 
             // otherGamesToolStripMenuItem
             // 
@@ -775,7 +767,7 @@ namespace AquaModelTool
             // 
             // otherGamesToolStripMenuItem2
             // 
-            otherGamesToolStripMenuItem2.DropDownItems.AddRange(new ToolStripItem[] { extractBorderBreakPS4FARCToolStripMenuItem, setMOTBONEbinPathToolStripMenuItem, toolStripSeparator7, billyHatcherGinjaTofbxToolStripMenuItem, readBillyHatchermc2TofbxToolStripMenuItem, fbxSetToBillyHatcherlndToolStripMenuItem, fbxToBillyHatchermc2ToolStripMenuItem, billyHatcherprdArchiveExtractToolStripMenuItem, packBillyHatcherprdToolStripMenuItem, packBillyHatchernrcToolStripMenuItem, packBillyHatchergplToolStripMenuItem, billyHatcherbinTextTotxtToolStripMenuItem, billyHatcherbintxtBackTobinToolStripMenuItem, billyHatcherCyrillicbinTextTotxtToolStripMenuItem, billyHatcherCyrillictxtTobinToolStripMenuItem, toolStripSeparator17, stageGeobjExtractToolStripMenuItem, toolStripSeparator21 });
+            otherGamesToolStripMenuItem2.DropDownItems.AddRange(new ToolStripItem[] { extractBorderBreakPS4FARCToolStripMenuItem, setMOTBONEbinPathToolStripMenuItem, toolStripSeparator7, billyHatcherGinjaTofbxToolStripMenuItem, readBillyHatchermc2TofbxToolStripMenuItem, fbxSetToBillyHatcherlndToolStripMenuItem, fbxToBillyHatchermc2ToolStripMenuItem, billyHatcherprdArchiveExtractToolStripMenuItem, packBillyHatcherprdToolStripMenuItem, packBillyHatchernrcToolStripMenuItem, packBillyHatchergplToolStripMenuItem, toolStripSeparator21, billyHatcherEventToJSONToolStripMenuItem, billyHatcherJSONToEventToolStripMenuItem, billyHatcherBGMRegularbinToTextToolStripMenuItem, billyHatcherTextToBGMRegularbinToolStripMenuItem, billyHatcherbinTextTotxtToolStripMenuItem, billyHatcherbintxtBackTobinToolStripMenuItem, billyHatcherCyrillicbinTextTotxtToolStripMenuItem, billyHatcherCyrillictxtTobinToolStripMenuItem, toolStripSeparator17, stageGeobjExtractToolStripMenuItem });
             otherGamesToolStripMenuItem2.Name = "otherGamesToolStripMenuItem2";
             otherGamesToolStripMenuItem2.Size = new Size(344, 22);
             otherGamesToolStripMenuItem2.Text = "Other Sega Games";
@@ -882,6 +874,20 @@ namespace AquaModelTool
             billyHatcherCyrillictxtTobinToolStripMenuItem.Size = new Size(427, 22);
             billyHatcherCyrillictxtTobinToolStripMenuItem.Text = "Billy Hatcher Cyrillic .txt to .bin";
             billyHatcherCyrillictxtTobinToolStripMenuItem.Click += billyHatcherCyrillictxtTobinToolStripMenuItem_Click;
+            // 
+            // billyHatcherEventToJSONToolStripMenuItem
+            // 
+            billyHatcherEventToJSONToolStripMenuItem.Name = "billyHatcherEventToJSONToolStripMenuItem";
+            billyHatcherEventToJSONToolStripMenuItem.Size = new Size(427, 22);
+            billyHatcherEventToJSONToolStripMenuItem.Text = "Billy Hatcher Event to JSON";
+            billyHatcherEventToJSONToolStripMenuItem.Click += billyHatcherEventToJSONToolStripMenuItem_Click;
+            // 
+            // billyHatcherJSONToEventToolStripMenuItem
+            // 
+            billyHatcherJSONToEventToolStripMenuItem.Name = "billyHatcherJSONToEventToolStripMenuItem";
+            billyHatcherJSONToEventToolStripMenuItem.Size = new Size(427, 22);
+            billyHatcherJSONToEventToolStripMenuItem.Text = "Billy Hatcher JSON to Event";
+            billyHatcherJSONToEventToolStripMenuItem.Click += billyHatcherJSONToEventToolStripMenuItem_Click;
             // 
             // toolStripSeparator17
             // 
@@ -1123,6 +1129,18 @@ namespace AquaModelTool
             checkAllShaderExtrasToolStripMenuItem.Size = new Size(344, 22);
             checkAllShaderExtrasToolStripMenuItem.Text = "Check All Shader Extras";
             checkAllShaderExtrasToolStripMenuItem.Click += checkAllShaderExtrasToolStripMenuItem_Click;
+            // 
+            // toolStripSeparator4
+            // 
+            toolStripSeparator4.Name = "toolStripSeparator4";
+            toolStripSeparator4.Size = new Size(341, 6);
+            // 
+            // updateClassicPlayerAnimToNGSAnimToolStripMenuItem
+            // 
+            updateClassicPlayerAnimToNGSAnimToolStripMenuItem.Name = "updateClassicPlayerAnimToNGSAnimToolStripMenuItem";
+            updateClassicPlayerAnimToNGSAnimToolStripMenuItem.Size = new Size(344, 22);
+            updateClassicPlayerAnimToNGSAnimToolStripMenuItem.Text = "Update classic player anim to NGS anim";
+            updateClassicPlayerAnimToNGSAnimToolStripMenuItem.Click += updateClassicPlayerAnimToNGSAnimToolStripMenuItem_Click;
             // 
             // filenameButton
             // 
@@ -1753,6 +1771,20 @@ namespace AquaModelTool
             splitter1.TabIndex = 2;
             splitter1.TabStop = false;
             // 
+            // billyHatcherBGMRegularbinToTextToolStripMenuItem
+            // 
+            billyHatcherBGMRegularbinToTextToolStripMenuItem.Name = "billyHatcherBGMRegularbinToTextToolStripMenuItem";
+            billyHatcherBGMRegularbinToTextToolStripMenuItem.Size = new Size(427, 22);
+            billyHatcherBGMRegularbinToTextToolStripMenuItem.Text = "Billy Hatcher BGMRegular.bin to text";
+            billyHatcherBGMRegularbinToTextToolStripMenuItem.Click += billyHatcherBGMRegularbinToTextToolStripMenuItem_Click;
+            // 
+            // billyHatcherTextToBGMRegularbinToolStripMenuItem
+            // 
+            billyHatcherTextToBGMRegularbinToolStripMenuItem.Name = "billyHatcherTextToBGMRegularbinToolStripMenuItem";
+            billyHatcherTextToBGMRegularbinToolStripMenuItem.Size = new Size(427, 22);
+            billyHatcherTextToBGMRegularbinToolStripMenuItem.Text = "Billy Hatcher text to BGMRegular.bin";
+            billyHatcherTextToBGMRegularbinToolStripMenuItem.Click += billyHatcherTextToBGMRegularbinToolStripMenuItem_Click;
+            // 
             // AquaModelTool
             // 
             AllowDrop = true;
@@ -1990,6 +2022,10 @@ namespace AquaModelTool
         private ToolStripMenuItem addFLVERDummyNodesToolStripMenuItem;
         private ToolStripMenuItem parentDummyNodesToAttachToolStripMenuItem;
         private ToolStripMenuItem readNOMsToolStripMenuItem;
+        private ToolStripMenuItem billyHatcherEventToJSONToolStripMenuItem;
+        private ToolStripMenuItem billyHatcherJSONToEventToolStripMenuItem;
+        private ToolStripMenuItem billyHatcherBGMRegularbinToTextToolStripMenuItem;
+        private ToolStripMenuItem billyHatcherTextToBGMRegularbinToolStripMenuItem;
     }
 }
 

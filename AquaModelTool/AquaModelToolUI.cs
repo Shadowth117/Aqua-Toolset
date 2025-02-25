@@ -56,11 +56,13 @@ using System.Net.Mail;
 using System.Numerics;
 using System.Reflection;
 using System.Runtime.Serialization;
+using System.Security.Cryptography;
 using System.Text;
 using System.Text.Json;
 using Zamboni;
 using Zamboni.IceFileFormats;
 using static AquaModelLibrary.Core.BillyHatcher.LNDConvert;
+using static AquaModelLibrary.Data.BillyHatcher.PATH;
 using Matrix4x4 = System.Numerics.Matrix4x4;
 using OpenFileDialog = System.Windows.Forms.OpenFileDialog;
 using Path = System.IO.Path;
@@ -5213,6 +5215,49 @@ namespace AquaModelTool
                     using (var streamReader = new BufferedStreamReaderBE<MemoryStream>(stream))
                     {
                         var path = new PATH(streamReader);
+                        var pathInfo1 = path.pathInfoList[1];
+                        var vertDef1 = pathInfo1.vertDef;
+                        /*
+                        var vertDef4 = new PATH.VertDefinition();
+                        vertDef4.unkByte0 = vertDef1.unkByte0;
+                        vertDef4.unkByte1 = vertDef1.unkByte1;
+                        vertDef4.vertCount = vertDef1.vertCount;
+                        vertDef4.vertPositions = vertDef1.vertPositions.ToList();
+                        vertDef4.vertNormals = vertDef1.vertNormals.ToList();
+                        for (int i = 0; i < vertDef4.vertPositions.Count; i++)
+                        {
+                            vertDef4.vertPositions[i] = new Vector3(vertDef4.vertPositions[i].X + 10, vertDef4.vertPositions[i].Y, vertDef4.vertPositions[i].Z + 25);
+                        }
+                        var pathInfo4 = new PATH.PathInfo();
+                        pathInfo4.doesNotUseNormals = pathInfo1.doesNotUseNormals;
+                        pathInfo4.unkByte1 = pathInfo1.unkByte1;
+                        pathInfo4.lengthsCount = pathInfo1.lengthsCount;
+                        pathInfo4.id = 4;
+                        pathInfo4.unkInt = pathInfo1.unkInt;
+                        pathInfo4.totalLength = pathInfo1.totalLength;
+                        pathInfo4.definitionOffset = -1;
+                        pathInfo4.lengthsOffset = pathInfo1.lengthsOffset;
+                        pathInfo4.lengthsList = pathInfo1.lengthsList;
+                        pathInfo4.vertDef = vertDef4;
+
+                        path.pathInfoList.Add(pathInfo4);
+
+                        foreach (var pathPair in path.rawPathDefinitions)
+                        {
+                            if (pathPair.Value.defs[0].vertSet == 1 && pathPair.Value.defs.Count > 1)
+                            {
+                                PATH.RawPathDefinition rp4 = new();
+                                rp4.vertSet = 4;
+                                rp4.startVert = 0;
+                                rp4.endVert = 6;
+
+                                pathPair.Value.defs.Insert(0, rp4);
+                                pathPair.Value.defCount += 1;
+                            }
+                        }
+                        */
+
+                        File.WriteAllBytes(file, path.GetBytes());
                     }
                 }
             }
@@ -5517,7 +5562,7 @@ namespace AquaModelTool
                 {
                     var stgDef = new StageDef(streamReader);
                 }
-                
+
                 using (MemoryStream stream = new MemoryStream(File.ReadAllBytes(openFileDialog.FileName)))
                 using (var streamReader = new BufferedStreamReaderBE<MemoryStream>(stream))
                 {
@@ -7554,6 +7599,86 @@ namespace AquaModelTool
                 {
                     byte[] bytes = File.ReadAllBytes(file);
                     var nom = new NOM(bytes);
+                }
+            }
+        }
+
+        private void billyHatcherEventToJSONToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var openFileDialog = new OpenFileDialog()
+            {
+                Title = "Select event_*.arc file",
+                Filter = "event_*.arc files|event_*.arc",
+                FileName = "",
+                Multiselect = true
+            };
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                foreach (var file in openFileDialog.FileNames)
+                {
+                    byte[] bytes = File.ReadAllBytes(file);
+                    var evt = new Event(bytes);
+                    var text = JsonSerializer.Serialize(evt, jss);
+                    File.WriteAllText(file + ".json", text);
+                }
+            }
+        }
+
+        private void billyHatcherJSONToEventToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var openFileDialog = new OpenFileDialog()
+            {
+                Title = "Select event_*.json file",
+                Filter = "event_*.json files|event_*.json",
+                FileName = "",
+                Multiselect = true
+            };
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                foreach (var file in openFileDialog.FileNames)
+                {
+                    var text = File.ReadAllText(file);
+                    var testRead = JsonSerializer.Deserialize<Event>(text);
+                    var evtbytes = testRead.GetBytes();
+                    File.WriteAllBytes(file.Replace(".json", ""), evtbytes);
+                }
+            }
+        }
+
+        private void billyHatcherBGMRegularbinToTextToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var openFileDialog = new OpenFileDialog()
+            {
+                Title = "Select BGMRegular.bin file",
+                Filter = "BGMRegular.bin files|BGMRegular.bin",
+                FileName = "",
+                Multiselect = true
+            };
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                foreach (var file in openFileDialog.FileNames)
+                {
+                    var bgm = new BGMRegular(File.ReadAllBytes(file));
+                    File.WriteAllLines(file + ".txt", bgm.bgmFiles);
+                }
+            }
+        }
+
+        private void billyHatcherTextToBGMRegularbinToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var openFileDialog = new OpenFileDialog()
+            {
+                Title = "Select BGMRegular text file",
+                Filter = "BGMRegular text files|*.txt",
+                FileName = "",
+                Multiselect = true
+            };
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                foreach (var file in openFileDialog.FileNames)
+                {
+                    var bgm = new BGMRegular() { bgmFiles = File.ReadAllLines(file).ToList()};
+                    File.WriteAllBytes(file.Replace(".txt", ""), bgm.GetBytes());
                 }
             }
         }
