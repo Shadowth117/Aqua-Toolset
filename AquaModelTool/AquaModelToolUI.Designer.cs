@@ -113,15 +113,17 @@ namespace AquaModelTool
             packBillyHatcherprdToolStripMenuItem = new ToolStripMenuItem();
             packBillyHatchernrcToolStripMenuItem = new ToolStripMenuItem();
             packBillyHatchergplToolStripMenuItem = new ToolStripMenuItem();
+            toolStripSeparator21 = new ToolStripSeparator();
+            billyHatcherEventToJSONToolStripMenuItem = new ToolStripMenuItem();
+            billyHatcherJSONToEventToolStripMenuItem = new ToolStripMenuItem();
+            billyHatcherBGMRegularbinToTextToolStripMenuItem = new ToolStripMenuItem();
+            billyHatcherTextToBGMRegularbinToolStripMenuItem = new ToolStripMenuItem();
             billyHatcherbinTextTotxtToolStripMenuItem = new ToolStripMenuItem();
             billyHatcherbintxtBackTobinToolStripMenuItem = new ToolStripMenuItem();
             billyHatcherCyrillicbinTextTotxtToolStripMenuItem = new ToolStripMenuItem();
             billyHatcherCyrillictxtTobinToolStripMenuItem = new ToolStripMenuItem();
-            billyHatcherEventToJSONToolStripMenuItem = new ToolStripMenuItem();
-            billyHatcherJSONToEventToolStripMenuItem = new ToolStripMenuItem();
             toolStripSeparator17 = new ToolStripSeparator();
             stageGeobjExtractToolStripMenuItem = new ToolStripMenuItem();
-            toolStripSeparator21 = new ToolStripSeparator();
             otherGamesToolStripMenuItem3 = new ToolStripMenuItem();
             blueDragonipkExtractToolStripMenuItem = new ToolStripMenuItem();
             ikarugaarcExtractToolStripMenuItem = new ToolStripMenuItem();
@@ -246,8 +248,6 @@ namespace AquaModelTool
             readNOMsToolStripMenuItem = new ToolStripMenuItem();
             filePanel = new Panel();
             splitter1 = new Splitter();
-            billyHatcherBGMRegularbinToTextToolStripMenuItem = new ToolStripMenuItem();
-            billyHatcherTextToBGMRegularbinToolStripMenuItem = new ToolStripMenuItem();
             menuStrip1.SuspendLayout();
             SuspendLayout();
             // 
@@ -847,6 +847,39 @@ namespace AquaModelTool
             packBillyHatchergplToolStripMenuItem.Text = "Pack Billy Hatcher .gpl";
             packBillyHatchergplToolStripMenuItem.Click += packBillyHatchergplToolStripMenuItem_Click;
             // 
+            // toolStripSeparator21
+            // 
+            toolStripSeparator21.Name = "toolStripSeparator21";
+            toolStripSeparator21.Size = new Size(424, 6);
+            // 
+            // billyHatcherEventToJSONToolStripMenuItem
+            // 
+            billyHatcherEventToJSONToolStripMenuItem.Name = "billyHatcherEventToJSONToolStripMenuItem";
+            billyHatcherEventToJSONToolStripMenuItem.Size = new Size(427, 22);
+            billyHatcherEventToJSONToolStripMenuItem.Text = "Billy Hatcher Event to JSON";
+            billyHatcherEventToJSONToolStripMenuItem.Click += billyHatcherEventToJSONToolStripMenuItem_Click;
+            // 
+            // billyHatcherJSONToEventToolStripMenuItem
+            // 
+            billyHatcherJSONToEventToolStripMenuItem.Name = "billyHatcherJSONToEventToolStripMenuItem";
+            billyHatcherJSONToEventToolStripMenuItem.Size = new Size(427, 22);
+            billyHatcherJSONToEventToolStripMenuItem.Text = "Billy Hatcher JSON to Event";
+            billyHatcherJSONToEventToolStripMenuItem.Click += billyHatcherJSONToEventToolStripMenuItem_Click;
+            // 
+            // billyHatcherBGMRegularbinToTextToolStripMenuItem
+            // 
+            billyHatcherBGMRegularbinToTextToolStripMenuItem.Name = "billyHatcherBGMRegularbinToTextToolStripMenuItem";
+            billyHatcherBGMRegularbinToTextToolStripMenuItem.Size = new Size(427, 22);
+            billyHatcherBGMRegularbinToTextToolStripMenuItem.Text = "Billy Hatcher BGMRegular.bin to text";
+            billyHatcherBGMRegularbinToTextToolStripMenuItem.Click += billyHatcherBGMRegularbinToTextToolStripMenuItem_Click;
+            // 
+            // billyHatcherTextToBGMRegularbinToolStripMenuItem
+            // 
+            billyHatcherTextToBGMRegularbinToolStripMenuItem.Name = "billyHatcherTextToBGMRegularbinToolStripMenuItem";
+            billyHatcherTextToBGMRegularbinToolStripMenuItem.Size = new Size(427, 22);
+            billyHatcherTextToBGMRegularbinToolStripMenuItem.Text = "Billy Hatcher text to BGMRegular.bin";
+            billyHatcherTextToBGMRegularbinToolStripMenuItem.Click += billyHatcherTextToBGMRegularbinToolStripMenuItem_Click;
+            // 
             // billyHatcherbinTextTotxtToolStripMenuItem
             // 
             billyHatcherbinTextTotxtToolStripMenuItem.Name = "billyHatcherbinTextTotxtToolStripMenuItem";
@@ -875,20 +908,6 @@ namespace AquaModelTool
             billyHatcherCyrillictxtTobinToolStripMenuItem.Text = "Billy Hatcher Cyrillic .txt to .bin";
             billyHatcherCyrillictxtTobinToolStripMenuItem.Click += billyHatcherCyrillictxtTobinToolStripMenuItem_Click;
             // 
-            // billyHatcherEventToJSONToolStripMenuItem
-            // 
-            billyHatcherEventToJSONToolStripMenuItem.Name = "billyHatcherEventToJSONToolStripMenuItem";
-            billyHatcherEventToJSONToolStripMenuItem.Size = new Size(427, 22);
-            billyHatcherEventToJSONToolStripMenuItem.Text = "Billy Hatcher Event to JSON";
-            billyHatcherEventToJSONToolStripMenuItem.Click += billyHatcherEventToJSONToolStripMenuItem_Click;
-            // 
-            // billyHatcherJSONToEventToolStripMenuItem
-            // 
-            billyHatcherJSONToEventToolStripMenuItem.Name = "billyHatcherJSONToEventToolStripMenuItem";
-            billyHatcherJSONToEventToolStripMenuItem.Size = new Size(427, 22);
-            billyHatcherJSONToEventToolStripMenuItem.Text = "Billy Hatcher JSON to Event";
-            billyHatcherJSONToEventToolStripMenuItem.Click += billyHatcherJSONToEventToolStripMenuItem_Click;
-            // 
             // toolStripSeparator17
             // 
             toolStripSeparator17.Name = "toolStripSeparator17";
@@ -900,11 +919,6 @@ namespace AquaModelTool
             stageGeobjExtractToolStripMenuItem.Size = new Size(427, 22);
             stageGeobjExtractToolStripMenuItem.Text = "Billy Hatcher Stage geobj arc extract";
             stageGeobjExtractToolStripMenuItem.Click += stageGeobjExtractToolStripMenuItem_Click;
-            // 
-            // toolStripSeparator21
-            // 
-            toolStripSeparator21.Name = "toolStripSeparator21";
-            toolStripSeparator21.Size = new Size(424, 6);
             // 
             // otherGamesToolStripMenuItem3
             // 
@@ -1770,20 +1784,6 @@ namespace AquaModelTool
             splitter1.Size = new Size(4, 296);
             splitter1.TabIndex = 2;
             splitter1.TabStop = false;
-            // 
-            // billyHatcherBGMRegularbinToTextToolStripMenuItem
-            // 
-            billyHatcherBGMRegularbinToTextToolStripMenuItem.Name = "billyHatcherBGMRegularbinToTextToolStripMenuItem";
-            billyHatcherBGMRegularbinToTextToolStripMenuItem.Size = new Size(427, 22);
-            billyHatcherBGMRegularbinToTextToolStripMenuItem.Text = "Billy Hatcher BGMRegular.bin to text";
-            billyHatcherBGMRegularbinToTextToolStripMenuItem.Click += billyHatcherBGMRegularbinToTextToolStripMenuItem_Click;
-            // 
-            // billyHatcherTextToBGMRegularbinToolStripMenuItem
-            // 
-            billyHatcherTextToBGMRegularbinToolStripMenuItem.Name = "billyHatcherTextToBGMRegularbinToolStripMenuItem";
-            billyHatcherTextToBGMRegularbinToolStripMenuItem.Size = new Size(427, 22);
-            billyHatcherTextToBGMRegularbinToolStripMenuItem.Text = "Billy Hatcher text to BGMRegular.bin";
-            billyHatcherTextToBGMRegularbinToolStripMenuItem.Click += billyHatcherTextToBGMRegularbinToolStripMenuItem_Click;
             // 
             // AquaModelTool
             // 

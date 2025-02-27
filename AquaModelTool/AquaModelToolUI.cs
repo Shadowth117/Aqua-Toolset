@@ -3818,8 +3818,8 @@ namespace AquaModelTool
         {
             OpenFileDialog openFileDialog = new OpenFileDialog()
             {
-                Title = "Select Demon's Souls PS5 cmdl file(s)",
-                Filter = "Demon's Souls PS5 cmsh Files (*.cmsh, *.cmdl)|*.cmsh;*.cmdl|All Files (*.*)|*",
+                Title = "Select Bluepoint model file(s)",
+                Filter = "Bluepoint cmdl files|*.cmdl|Bluepoint cmsh files|*.cmsh|Bluepoint cmsh Files (*.cmsh, *.cmdl)|*.cmsh;*.cmdl|All Files (*.*)|*",
                 Multiselect = true
             };
             if (openFileDialog.ShowDialog() == DialogResult.OK)
@@ -6194,6 +6194,32 @@ namespace AquaModelTool
                 foreach (var file in openFileDialog.FileNames)
                 {
                     var cmdl = new CMDL(File.ReadAllBytes(file));
+                    var matmap = cmdl.GetCMATMaterialMap();
+                    if (matmap.Count == 0)
+                    {
+                        throw new Exception();
+                    } else
+                    {
+                        foreach(var set in matmap)
+                        {
+                            //Debug.WriteLine($"{set.Key} {set.Value}");
+                        }
+                    }
+                    var meshRefs = cmdl.GetCMeshReferences();
+                    if (meshRefs.Count == 0)
+                    {
+                        throw new Exception();
+                    } else
+                    {
+                        foreach (var meshref in meshRefs)
+                        {
+                            //Debug.WriteLine($"{meshref}");
+                        }
+                    }
+                    var cpidRef = cmdl.GetCPIDPath();
+                    //Debug.WriteLine(cpidRef);
+                    cmdl.GetCCLMs(out var cclm, out var cclmhq);
+                    //Debug.WriteLine($"{cclm} {cclmhq}");
                 }
             }
         }
