@@ -16,6 +16,7 @@ using AquaModelLibrary.Data.BluePoint.CAWS;
 using AquaModelLibrary.Data.BluePoint.CGPR;
 using AquaModelLibrary.Data.BluePoint.CMDL;
 using AquaModelLibrary.Data.BluePoint.CTXR;
+using AquaModelLibrary.Data.Capcom.MonsterHunter;
 using AquaModelLibrary.Data.CustomRoboBattleRevolution;
 using AquaModelLibrary.Data.CustomRoboBattleRevolution.Model;
 using AquaModelLibrary.Data.FromSoft;
@@ -45,6 +46,8 @@ using AquaModelLibrary.Helpers.PSO2;
 using AquaModelLibrary.Helpers.Readers;
 using AquaModelLibrary.ToolUX.CommonForms;
 using ArchiveLib;
+using BCnEncoder.Shared.ImageFiles;
+using ICSharpCode.SharpZipLib.Tar;
 using Microsoft.WindowsAPICodePack.Dialogs;
 using SoulsFormats;
 using System;
@@ -59,6 +62,7 @@ using System.Runtime.Serialization;
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.Json;
+using UnluacNET;
 using Zamboni;
 using Zamboni.IceFileFormats;
 using static AquaModelLibrary.Core.BillyHatcher.LNDConvert;
@@ -6198,9 +6202,10 @@ namespace AquaModelTool
                     if (matmap.Count == 0)
                     {
                         throw new Exception();
-                    } else
+                    }
+                    else
                     {
-                        foreach(var set in matmap)
+                        foreach (var set in matmap)
                         {
                             //Debug.WriteLine($"{set.Key} {set.Value}");
                         }
@@ -6209,7 +6214,8 @@ namespace AquaModelTool
                     if (meshRefs.Count == 0)
                     {
                         throw new Exception();
-                    } else
+                    }
+                    else
                     {
                         foreach (var meshref in meshRefs)
                         {
@@ -7703,8 +7709,187 @@ namespace AquaModelTool
             {
                 foreach (var file in openFileDialog.FileNames)
                 {
-                    var bgm = new BGMRegular() { bgmFiles = File.ReadAllLines(file).ToList()};
+                    var bgm = new BGMRegular() { bgmFiles = File.ReadAllLines(file).ToList() };
                     File.WriteAllBytes(file.Replace(".txt", ""), bgm.GetBytes());
+                }
+            }
+        }
+
+        private void decompPZZToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var openFileDialog = new OpenFileDialog()
+            {
+                Title = "Select file",
+                Filter = "PZZ compressed files|*",
+                FileName = "",
+                Multiselect = true
+            };
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                foreach (var file in openFileDialog.FileNames)
+                {
+                    var ext = Path.GetExtension(file);
+                    File.WriteAllBytes(file.Replace(ext, $".decomp{ext}"), CompressionHelper.PZZDecompress(File.ReadAllBytes(file)));
+                }
+            }
+        }
+
+        private void monHunAPXToDDSToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var openFileDialog = new OpenFileDialog()
+            {
+                Title = "Select Monster Hunter texture file",
+                Filter = ".apx, tex.bin, TM2 files|*.apx;*tex.bin;*tex.decomp.bin;*.TM2",
+                FileName = "",
+                Multiselect = true
+            };
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                foreach (var file in openFileDialog.FileNames)
+                {
+                    var fileBytes = File.ReadAllBytes(file);
+
+                    //Skip TIM2 for the moment
+                    if (fileBytes[0] == 0x54 && fileBytes[1] == 0x49 && fileBytes[2] == 0x4D && fileBytes[3] == 0x32)
+                    {
+                        Debug.WriteLine($"Skipped TIM2 {file}");
+                        continue;
+                    }
+                    else if (Path.GetExtension(file).ToLower() == ".apx")
+                    {
+                        var apx = new APX(fileBytes);
+                        File.WriteAllBytes(file + ".dds", apx.ToDDS());
+                    }
+                    else //If it got in, it's probably an archive
+                    {
+                        var MHArchive = new MHArchive(fileBytes);
+                        var baseString = Path.GetFileNameWithoutExtension(Path.GetFileNameWithoutExtension(file));
+                        baseString = baseString.Replace("_tex", "");
+
+                        for (int i = 0; i < MHArchive.files.Count; i++)
+                        {
+                            var apx = new APX(MHArchive.files[i]);
+                            File.WriteAllBytes(baseString + $"_{i}.dds", apx.ToDDS());
+                        }
+                    }
+                }
+            }
+        }
+
+        private void monHunAHIAMOToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var openFileDialog = new OpenFileDialog()
+            {
+                Title = "Select Monster Hunter file",
+                Filter = ".amo, .amh bin files|*.amo;*amh*bin",
+                FileName = "",
+                Multiselect = true
+            };
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                foreach (var file in openFileDialog.FileNames)
+                {
+                    var fileBytes = File.ReadAllBytes(file);
+                    var ext = Path.GetExtension(file).ToLower();
+                    var outDir = file + "_";
+                    Directory.CreateDirectory(outDir);
+                    List<string> texNames = null;
+                    MHTagFile amo = null;
+                    MHTagFile ahi = null;
+
+                    if (ext == ".amo")
+                    {
+                        amo = new MHTagFile(fileBytes);
+                        var ahiPath = file.Replace(".amo", ".ahi");
+                        if(File.Exists(ahiPath))
+                        {
+                            ahi = new MHTagFile(File.ReadAllBytes(ahiPath));
+                        }
+
+                        var texPath = file.Replace(".amo", ".bin");
+                        if(texPath.Contains(".decomp"))
+                        {
+                            texPath = texPath.Replace(".decomp", "_tex.decomp");
+                        } else
+                        {
+                            texPath = texPath.Replace(".bin", "_tex.bin");
+                        }
+                        if(File.Exists(texPath))
+                        {
+                            texNames = new List<string>();
+                            var texArchive = new MHArchive(File.ReadAllBytes(texPath));
+
+                            var baseName = Path.GetFileNameWithoutExtension(Path.GetFileNameWithoutExtension(file));
+                            baseName = baseName.Replace("_tex", "");
+                            for (int i = 0; i < texArchive.files.Count; i++)
+                            {
+                                var texFile = texArchive.files[i];
+                                var apx = new APX(texFile);
+
+                                var texString = $"{baseName}_{i}.dds";
+                                texNames.Add(texString);
+                                File.WriteAllBytes(Path.Combine(outDir, texString), apx.ToDDS());
+                            }
+                        }
+
+                    } else
+                    {
+                        var archive = new MHArchive(fileBytes);
+                        if (archive.files.Count > 0)
+                        {
+                            amo = new MHTagFile(archive.files[0]);
+                            if(archive.files.Count > 1)
+                            {
+                                ahi = new MHTagFile(archive.files[1]);
+                            }
+                        }
+
+                        var baseName = Path.GetFileNameWithoutExtension(Path.GetFileNameWithoutExtension(file));
+                        baseName = baseName.Replace("_amh", "");
+
+                        var texPath = file.Replace("_amh", "");
+                        if (texPath.Contains(".decomp"))
+                        {
+                            texPath = texPath.Replace(".decomp", "_tex.decomp");
+                        }
+                        else
+                        {
+                            texPath = texPath.Replace(".bin", "_tex.bin");
+                        }
+                        if(!File.Exists(texPath))
+                        {
+                            var texPath2 = file.Replace("_amh", "").Replace(".bin", ".apx");
+                            if(File.Exists(texPath2))
+                            {
+                                texNames = new List<string>();
+                                var texString = $"{baseName}.dds";
+                                texNames.Add(texString);
+                                File.WriteAllBytes(Path.Combine(outDir, texString), (new APX(File.ReadAllBytes(texPath2))).ToDDS());
+                            }
+                        } else
+                        {
+                            texNames = new List<string>();
+                            var texArc = new MHArchive(File.ReadAllBytes(texPath));
+                            for(int i = 0; i < texArc.files.Count; i++)
+                            {
+                                var texFile = texArc.files[i];
+                                var apx = new APX(texFile);
+
+                                var texString = $"{baseName}_{i}.dds";
+                                texNames.Add(texString);
+                                File.WriteAllBytes(Path.Combine(outDir, texString), apx.ToDDS());
+                            }
+                        }
+                    }
+                    MHConvert.AMOAHIConvert(amo, ahi, texNames, out var aqp, out var aqn);
+                    var outPath = Path.Combine(outDir, $"{Path.GetFileNameWithoutExtension(file)}.fbx");
+                    if (aqp != null && aqp.vtxlList.Count > 0 || aqp.tempTris[0].faceVerts.Count > 0)
+                    {
+                        aqp.ConvertToLegacyTypes();
+                        aqp.CreateTrueVertWeights();
+
+                        FbxExporterNative.ExportToFile(aqp, aqn, new List<AquaMotion>(), outPath, new List<string>(), new List<Matrix4x4>(), false);
+                    }
                 }
             }
         }

@@ -214,6 +214,8 @@ namespace AquaModelTool
             sTGExportBustedToolStripMenuItem = new ToolStripMenuItem();
             readNSAToolStripMenuItem = new ToolStripMenuItem();
             readNMBToolStripMenuItem = new ToolStripMenuItem();
+            decompPZZToolStripMenuItem = new ToolStripMenuItem();
+            monHunAPXToDDSToolStripMenuItem = new ToolStripMenuItem();
             debug3ToolStripMenuItem = new ToolStripMenuItem();
             readPATHToolStripMenuItem = new ToolStripMenuItem();
             readPOF0ToolStripMenuItem = new ToolStripMenuItem();
@@ -248,6 +250,7 @@ namespace AquaModelTool
             readNOMsToolStripMenuItem = new ToolStripMenuItem();
             filePanel = new Panel();
             splitter1 = new Splitter();
+            monHunAHIAMOToolStripMenuItem = new ToolStripMenuItem();
             menuStrip1.SuspendLayout();
             SuspendLayout();
             // 
@@ -1361,7 +1364,7 @@ namespace AquaModelTool
             // 
             // debug2ToolStripMenuItem
             // 
-            debug2ToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { boneFlagTestToolStripMenuItem, cMTTestToolStripMenuItem, pSZTextToolStripMenuItem, pSZEnemyZoneToolStripMenuItem, pSZObjZoneToolStripMenuItem, pSZEnemyDataToolStripMenuItem, dumpAllTextToolStripMenuItem, assimpExportToolStripMenuItem, readNNMotionToolStripMenuItem, parseCAWSToolStripMenuItem, readMSBToolStripMenuItem, parseCANIToolStripMenuItem, parseDRBToolStripMenuItem, sortCMSHToolStripMenuItem, scanPOS0GapToolStripMenuItem, gatherMatchingCMSHNamesToolStripMenuItem, readFCLToolStripMenuItem, readMotAnimToolStripMenuItem, readCGPRToolStripMenuItem, readMusToolStripMenuItem, readSTGToolStripMenuItem, readLATToolStripMenuItem, sTGExportBustedToolStripMenuItem, readNSAToolStripMenuItem, readNMBToolStripMenuItem });
+            debug2ToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { boneFlagTestToolStripMenuItem, cMTTestToolStripMenuItem, pSZTextToolStripMenuItem, pSZEnemyZoneToolStripMenuItem, pSZObjZoneToolStripMenuItem, pSZEnemyDataToolStripMenuItem, dumpAllTextToolStripMenuItem, assimpExportToolStripMenuItem, readNNMotionToolStripMenuItem, parseCAWSToolStripMenuItem, readMSBToolStripMenuItem, parseCANIToolStripMenuItem, parseDRBToolStripMenuItem, sortCMSHToolStripMenuItem, scanPOS0GapToolStripMenuItem, gatherMatchingCMSHNamesToolStripMenuItem, readFCLToolStripMenuItem, readMotAnimToolStripMenuItem, readCGPRToolStripMenuItem, readMusToolStripMenuItem, readSTGToolStripMenuItem, readLATToolStripMenuItem, sTGExportBustedToolStripMenuItem, readNSAToolStripMenuItem, readNMBToolStripMenuItem, decompPZZToolStripMenuItem, monHunAPXToDDSToolStripMenuItem, monHunAHIAMOToolStripMenuItem });
             debug2ToolStripMenuItem.Name = "debug2ToolStripMenuItem";
             debug2ToolStripMenuItem.Size = new Size(60, 23);
             debug2ToolStripMenuItem.Text = "Debug2";
@@ -1540,6 +1543,20 @@ namespace AquaModelTool
             readNMBToolStripMenuItem.Size = new Size(231, 22);
             readNMBToolStripMenuItem.Text = "ReadNMB";
             readNMBToolStripMenuItem.Click += readNMBToolStripMenuItem_Click;
+            // 
+            // decompPZZToolStripMenuItem
+            // 
+            decompPZZToolStripMenuItem.Name = "decompPZZToolStripMenuItem";
+            decompPZZToolStripMenuItem.Size = new Size(231, 22);
+            decompPZZToolStripMenuItem.Text = "DecompPZZ";
+            decompPZZToolStripMenuItem.Click += decompPZZToolStripMenuItem_Click;
+            // 
+            // monHunAPXToDDSToolStripMenuItem
+            // 
+            monHunAPXToDDSToolStripMenuItem.Name = "monHunAPXToDDSToolStripMenuItem";
+            monHunAPXToDDSToolStripMenuItem.Size = new Size(231, 22);
+            monHunAPXToDDSToolStripMenuItem.Text = "MonHunAPXToDDS";
+            monHunAPXToDDSToolStripMenuItem.Click += monHunAPXToDDSToolStripMenuItem_Click;
             // 
             // debug3ToolStripMenuItem
             // 
@@ -1785,6 +1802,13 @@ namespace AquaModelTool
             splitter1.TabIndex = 2;
             splitter1.TabStop = false;
             // 
+            // monHunAHIAMOToolStripMenuItem
+            // 
+            monHunAHIAMOToolStripMenuItem.Name = "monHunAHIAMOToolStripMenuItem";
+            monHunAHIAMOToolStripMenuItem.Size = new Size(231, 22);
+            monHunAHIAMOToolStripMenuItem.Text = "MonHunAHIAMO";
+            monHunAHIAMOToolStripMenuItem.Click += monHunAHIAMOToolStripMenuItem_Click;
+            // 
             // AquaModelTool
             // 
             AllowDrop = true;
@@ -2026,6 +2050,9 @@ namespace AquaModelTool
         private ToolStripMenuItem billyHatcherJSONToEventToolStripMenuItem;
         private ToolStripMenuItem billyHatcherBGMRegularbinToTextToolStripMenuItem;
         private ToolStripMenuItem billyHatcherTextToBGMRegularbinToolStripMenuItem;
+        private ToolStripMenuItem decompPZZToolStripMenuItem;
+        private ToolStripMenuItem monHunAPXToDDSToolStripMenuItem;
+        private ToolStripMenuItem monHunAHIAMOToolStripMenuItem;
     }
 }
 
