@@ -455,7 +455,6 @@ namespace AquaModelTool
                         aquaUI.packageModel = new AquaPackage();
                         aquaUI.packageModel.ext = ext;
                         aquaUI.packageModel.Read(File.ReadAllBytes(currentFile));
-
                         control = new ModelEditor(aquaUI.packageModel);
                         isNIFL = aquaUI.packageModel.models[0].nifl.magic != 0;
                         this.Size = new Size(400, 360);
@@ -1411,10 +1410,13 @@ namespace AquaModelTool
                     for (int i = 0; i < aquaUI.packageModel.models.Count && i < modelCount; i++)
                     {
                         var model = aquaUI.packageModel.models[i];
+
+
                         if (model.objc.type > 0xC32)
                         {
                             model.splitVSETPerMesh();
                         }
+
                         model.FixHollowMatNaming();
 
                         var name = saveFileDialog.FileName;
@@ -3837,7 +3839,7 @@ namespace AquaModelTool
                     try
                     {
 #endif
-                    BluePointConvert.ConvertCMDLCMSH(file);
+                        BluePointConvert.ConvertCMDLCMSH(file);
 #if !DEBUG
                     }
                     catch (Exception ex)
@@ -4245,297 +4247,22 @@ namespace AquaModelTool
 
         private void sortCMSHToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            var openFileDialog = new OpenFileDialog()
-            {
-                Title = "Select CMSH File",
-                Filter = "CMSH files|*.cmsh",
-                FileName = "",
-                Multiselect = true
-            };
-            if (openFileDialog.ShowDialog() == DialogResult.OK)
-            {
-                var baseDir = Path.GetDirectoryName(openFileDialog.FileNames[0]);
-                Directory.CreateDirectory(Path.Combine(baseDir, "NoInfo", "80"));
-                Directory.CreateDirectory(Path.Combine(baseDir, "NoInfo", "81"));
-
-                Directory.CreateDirectory(Path.Combine(baseDir, "DeSType", "82"));
-                Directory.CreateDirectory(Path.Combine(baseDir, "DeSType", "200"));
-                Directory.CreateDirectory(Path.Combine(baseDir, "DeSType", "500"));
-                Directory.CreateDirectory(Path.Combine(baseDir, "DeSType", "A01"));
-
-                Directory.CreateDirectory(Path.Combine(baseDir, "DeSType", "AA01"));
-                Directory.CreateDirectory(Path.Combine(baseDir, "DeSType", "2A01"));
-                Directory.CreateDirectory(Path.Combine(baseDir, "DeSType", "ACC"));
-                Directory.CreateDirectory(Path.Combine(baseDir, "Compact", "88"));
-
-                Directory.CreateDirectory(Path.Combine(baseDir, "Compact", "89"));
-                Directory.CreateDirectory(Path.Combine(baseDir, "CMSH_Ref", "5"));
-                Directory.CreateDirectory(Path.Combine(baseDir, "CMSH_Ref", "D"));
-                Directory.CreateDirectory(Path.Combine(baseDir, "CMSH_Ref", "15"));
-
-                Directory.CreateDirectory(Path.Combine(baseDir, "CMSH_Ref", "41"));
-                Directory.CreateDirectory(Path.Combine(baseDir, "CMSH_Ref", "4901"));
-                Directory.CreateDirectory(Path.Combine(baseDir, "CMSH_Ref", "5100"));
-                Directory.CreateDirectory(Path.Combine(baseDir, "CMSH_Ref", "1100"));
-
-                foreach (var file in openFileDialog.FileNames)
-                {
-                    BluePointConvert.ReadFileTest(file, out int start, out int flags, out int modelType);
-                    switch (start)
-                    {
-                        case 0x1100:
-                            File.Move(file, Path.Combine(baseDir, "CMSH_Ref", "1100", Path.GetFileName(file)));
-                            break;
-                        case 0x5100:
-                            File.Move(file, Path.Combine(baseDir, "CMSH_Ref", "5100", Path.GetFileName(file)));
-                            break;
-                        case 0x4901:
-                            File.Move(file, Path.Combine(baseDir, "CMSH_Ref", "4901", Path.GetFileName(file)));
-                            break;
-                        case 0x4100:
-                            File.Move(file, Path.Combine(baseDir, "CMSH_Ref", "41", Path.GetFileName(file)));
-                            break;
-                        case 0xAA01:
-                            File.Move(file, Path.Combine(baseDir, "DeSType", "AA01", Path.GetFileName(file)));
-                            break;
-                        case 0x2A01:
-                            File.Move(file, Path.Combine(baseDir, "DeSType", "2A01", Path.GetFileName(file)));
-                            break;
-                        case 0xA8C:
-                        case 0x68C:
-                            switch (modelType)
-                            {
-                                case 0x2:
-                                case 0xA:
-                                    break;
-                                case 0x5:
-                                    File.Move(file, Path.Combine(baseDir, "CMSH_Ref", "5", Path.GetFileName(file)));
-                                    continue;
-                                case 0xD:
-                                    File.Move(file, Path.Combine(baseDir, "CMSH_Ref", "D", Path.GetFileName(file)));
-                                    continue;
-                                case 0x15:
-                                    File.Move(file, Path.Combine(baseDir, "CMSH_Ref", "15", Path.GetFileName(file)));
-                                    continue;
-                                default:
-                                    break;
-                            }
-
-                            switch (flags)
-                            {
-                                case 0x89:
-                                    File.Move(file, Path.Combine(baseDir, "Compact", "89", Path.GetFileName(file)));
-                                    break;
-                                case 0x88:
-                                    File.Move(file, Path.Combine(baseDir, "Compact", "88", Path.GetFileName(file)));
-                                    break;
-                                case 0x80:
-                                    File.Move(file, Path.Combine(baseDir, "NoInfo", "80", Path.GetFileName(file)));
-                                    break;
-                                case 0x81:
-                                    File.Move(file, Path.Combine(baseDir, "NoInfo", "81", Path.GetFileName(file)));
-                                    break;
-                                case 0x82:
-                                    File.Move(file, Path.Combine(baseDir, "DeSType", "82", Path.GetFileName(file)));
-                                    break;
-                                default:
-                                    break;
-                            }
-                            break;
-                        case 0xACC:
-                            File.Move(file, Path.Combine(baseDir, "DeSType", "ACC", Path.GetFileName(file)));
-                            break;
-                        case 0x200:
-                            File.Move(file, Path.Combine(baseDir, "DeSType", "200", Path.GetFileName(file)));
-                            break;
-                        case 0x500:
-                            File.Move(file, Path.Combine(baseDir, "DeSType", "500", Path.GetFileName(file)));
-                            break;
-                        case 0xA01:
-                            File.Move(file, Path.Combine(baseDir, "DeSType", "A01", Path.GetFileName(file)));
-                            break;
-                        default:
-                            break;
-                    }
-
-                }
-            }
-        }
-
-        private void scanPOS0GapToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            CommonOpenFileDialog goodFolderDialog = new CommonOpenFileDialog()
-            {
-                IsFolderPicker = true,
-                Title = "Select folder of cmshs",
-            };
-            if (goodFolderDialog.ShowDialog() == CommonFileDialogResult.Ok)
-            {
-                StringBuilder sb = new StringBuilder();
-                Dictionary<int, List<(string fileName, byte[] gap)>> posGaps = new Dictionary<int, List<(string filename, byte[] gap)>>();
-
-                var files = Directory.EnumerateFiles(goodFolderDialog.FileName);
-
-                foreach (var file in files)
-                {
-                    var tuple = (Path.GetFileName(file), BluePointConvert.ReadFileTestVertDef(file).ToArray());
-                    var len = tuple.Item2.Length;
-                    if (posGaps.ContainsKey(len))
-                    {
-                        posGaps[len].Add(tuple);
-                    }
-                    else
-                    {
-                        posGaps[len] = new List<(string fileName, byte[] gap)>() { tuple };
-                    }
-                }
-
-                var keys = posGaps.Keys.ToList();
-                keys.Sort();
-
-                foreach (var key in keys)
-                {
-                    sb.Append("\n");
-                    sb.Append(key + "\n");
-                    var posGapSet = posGaps[key];
-                    posGapSet.Sort();
-                    foreach (var pair in posGapSet)
-                    {
-                        foreach (var bt in pair.gap)
-                        {
-                            sb.Append(bt.ToString("X"));
-                        }
-                        sb.Append($" {pair.fileName}");
-                        sb.Append("\n");
-                    }
-                }
-
-                File.WriteAllText(Path.Combine(goodFolderDialog.FileName, "cmshPosGaps.txt"), sb.ToString());
-            }
-        }
-
-        private void gatherMatchingCMSHNamesToolStripMenuItem_Click(object sender, EventArgs e)
-        {
             var openFileDialog = new CommonOpenFileDialog()
             {
-                Title = "Select Folder",
+                Title = "Select CMSH Dir",
                 IsFolderPicker = true,
-                Multiselect = true
             };
             if (openFileDialog.ShowDialog() == CommonFileDialogResult.Ok)
             {
-                var baseDir = openFileDialog.FileName;
-                var files = Directory.GetFiles(baseDir, "*.cmsh", SearchOption.AllDirectories);
-
-                Dictionary<string, List<string>> paths = new Dictionary<string, List<string>>();
+                var baseDir = Path.GetDirectoryName(openFileDialog.FileName);
+                var files = Directory.GetFiles(openFileDialog.FileName, "*.cmsh", SearchOption.AllDirectories);
+                List<string> outLines = new List<string>();
                 foreach (var file in files)
                 {
-                    string baseName = Path.GetFileName(file);
-                    string pathStr = baseName;
-
-                    BluePointConvert.ReadFileTest(file, out int start, out int flags, out int modelType);
-                    switch (start)
-                    {
-                        case 0x1100:
-                            pathStr += " CMSH_Ref_1100";
-                            break;
-                        case 0x5100:
-                            pathStr += " CMSH_Ref_5100";
-                            break;
-                        case 0x4901:
-                            pathStr += " CMSH_Ref_4901";
-                            break;
-                        case 0x4100:
-                            pathStr += " CMSH_Ref_41";
-                            break;
-                        case 0xAA01:
-                            pathStr += " DeSType_AA01";
-                            break;
-                        case 0x2A01:
-                            pathStr += " DeSType_2A01";
-                            break;
-                        case 0xA8C:
-                        case 0x68C:
-                            switch (modelType)
-                            {
-                                case 0x2:
-                                case 0xA:
-                                    break;
-                                case 0x5:
-                                    pathStr += " CMSH_Ref_5";
-                                    continue;
-                                case 0xD:
-                                    pathStr += " CMSH_Ref_D";
-                                    continue;
-                                case 0x15:
-                                    pathStr += " CMSH_Ref_15";
-                                    continue;
-                                default:
-                                    break;
-                            }
-
-                            switch (flags)
-                            {
-                                case 0x89:
-                                    pathStr += " Compact_89";
-                                    break;
-                                case 0x88:
-                                    pathStr += " Compact_88";
-                                    break;
-                                case 0x80:
-                                    pathStr += " NoInfo_80";
-                                    break;
-                                case 0x81:
-                                    pathStr += " NoInfo_81";
-                                    break;
-                                case 0x82:
-                                    pathStr += " DeSType_82";
-                                    break;
-                                default:
-                                    break;
-                            }
-                            break;
-                        case 0xACC:
-                            pathStr += " DeSType_ACC";
-                            break;
-                        case 0x200:
-                            pathStr += " DeSType_200";
-                            break;
-                        case 0x500:
-                            pathStr += " DeSType_500";
-                            break;
-                        case 0xA01:
-                            pathStr += " DeSType_A01";
-                            break;
-                        default:
-                            break;
-                    }
-
-                    if (paths.ContainsKey(baseName))
-                    {
-                        paths[baseName].Add(pathStr);
-                    }
-                    else
-                    {
-                        paths[baseName] = new List<string> { pathStr };
-                    }
+                    BluePointConvert.ReadFileTest(file, out int start);
+                    outLines.Add($"{start.ToString("X")} {file}");
                 }
-
-                StringBuilder txt = new StringBuilder();
-                foreach (var pathSet in paths)
-                {
-                    if (pathSet.Value.Count > 1)
-                    {
-                        txt.AppendLine(pathSet.Key);
-                        foreach (var path in pathSet.Value)
-                        {
-                            txt.AppendLine(path);
-                        }
-                        txt.AppendLine("");
-                    }
-                }
-
-                File.WriteAllText(Path.Combine(baseDir, "Matches.txt"), txt.ToString());
+                File.WriteAllLines(Path.Combine(baseDir, "CMSH_Types.txt"), outLines);
             }
         }
 
@@ -7715,12 +7442,12 @@ namespace AquaModelTool
             }
         }
 
-        private void decompPZZToolStripMenuItem_Click(object sender, EventArgs e)
+        private void convertAMOAHIModelToolStripMenuItem_Click(object sender, EventArgs e)
         {
             var openFileDialog = new OpenFileDialog()
             {
-                Title = "Select file",
-                Filter = "PZZ compressed files|*",
+                Title = "Select Monster Hunter file",
+                Filter = ".amo, .amh bin files|*.amo;*amh*bin",
                 FileName = "",
                 Multiselect = true
             };
@@ -7728,18 +7455,120 @@ namespace AquaModelTool
             {
                 foreach (var file in openFileDialog.FileNames)
                 {
-                    var ext = Path.GetExtension(file);
-                    File.WriteAllBytes(file.Replace(ext, $".decomp{ext}"), CompressionHelper.PZZDecompress(File.ReadAllBytes(file)));
+                    var fileBytes = File.ReadAllBytes(file);
+                    var ext = Path.GetExtension(file).ToLower();
+                    var outDir = file + "_";
+                    Directory.CreateDirectory(outDir);
+                    List<string> texNames = null;
+                    MHTagFile amo = null;
+                    MHTagFile ahi = null;
+
+                    if (ext == ".amo")
+                    {
+                        amo = new MHTagFile(fileBytes);
+                        var ahiPath = file.Replace(".amo", ".ahi");
+                        if (File.Exists(ahiPath))
+                        {
+                            ahi = new MHTagFile(File.ReadAllBytes(ahiPath));
+                        }
+
+                        var texPath = file.Replace(".amo", ".bin");
+                        if (texPath.Contains(".decomp"))
+                        {
+                            texPath = texPath.Replace(".decomp", "_tex.decomp");
+                        }
+                        else
+                        {
+                            texPath = texPath.Replace(".bin", "_tex.bin");
+                        }
+                        if (File.Exists(texPath))
+                        {
+                            texNames = new List<string>();
+                            var texArchive = new MHArchive(File.ReadAllBytes(texPath));
+
+                            var baseName = Path.GetFileNameWithoutExtension(Path.GetFileNameWithoutExtension(file));
+                            baseName = baseName.Replace("_tex", "");
+                            for (int i = 0; i < texArchive.files.Count; i++)
+                            {
+                                var texFile = texArchive.files[i];
+                                var apx = new APX(texFile);
+
+                                var texString = $"{baseName}_{i}.dds";
+                                texNames.Add(texString);
+                                File.WriteAllBytes(Path.Combine(outDir, texString), apx.ToDDS());
+                            }
+                        }
+
+                    }
+                    else
+                    {
+                        var archive = new MHArchive(fileBytes);
+                        if (archive.files.Count > 0)
+                        {
+                            amo = new MHTagFile(archive.files[0]);
+                            if (archive.files.Count > 1)
+                            {
+                                ahi = new MHTagFile(archive.files[1]);
+                            }
+                        }
+
+                        var baseName = Path.GetFileNameWithoutExtension(Path.GetFileNameWithoutExtension(file));
+                        baseName = baseName.Replace("_amh", "");
+
+                        var texPath = file.Replace("_amh", "");
+                        if (texPath.Contains(".decomp"))
+                        {
+                            texPath = texPath.Replace(".decomp", "_tex.decomp");
+                        }
+                        else
+                        {
+                            texPath = texPath.Replace(".bin", "_tex.bin");
+                        }
+                        if (!File.Exists(texPath))
+                        {
+                            var texPath2 = file.Replace("_amh", "").Replace(".bin", ".apx");
+                            if (File.Exists(texPath2))
+                            {
+                                texNames = new List<string>();
+                                var texString = $"{baseName}.dds";
+                                texNames.Add(texString);
+                                File.WriteAllBytes(Path.Combine(outDir, texString), (new APX(File.ReadAllBytes(texPath2))).ToDDS());
+                            }
+                        }
+                        else
+                        {
+                            texNames = new List<string>();
+                            var texArc = new MHArchive(File.ReadAllBytes(texPath));
+                            for (int i = 0; i < texArc.files.Count; i++)
+                            {
+                                var texFile = texArc.files[i];
+                                var apx = new APX(texFile);
+
+                                var texString = $"{baseName}_{i}.dds";
+                                texNames.Add(texString);
+                                File.WriteAllBytes(Path.Combine(outDir, texString), apx.ToDDS());
+                            }
+                        }
+                    }
+                    MHConvert.AMOAHIConvert(amo, ahi, texNames, out var aqp, out var aqn);
+                    var outPath = Path.Combine(outDir, $"{Path.GetFileNameWithoutExtension(file)}.fbx");
+                    if (aqp != null && aqp.vtxlList.Count > 0 || aqp.tempTris[0].faceVerts.Count > 0)
+                    {
+                        aqp.ConvertToLegacyTypes();
+                        aqp.CreateTrueVertWeights();
+
+                        FbxExporterNative.ExportToFile(aqp, aqn, new List<AquaMotion>(), outPath, new List<string>(), new List<Matrix4x4>(), false);
+                    }
                 }
             }
         }
 
-        private void monHunAPXToDDSToolStripMenuItem_Click(object sender, EventArgs e)
+        private void convertAPXTextureToolStripMenuItem_Click(object sender, EventArgs e)
         {
             var openFileDialog = new OpenFileDialog()
             {
                 Title = "Select Monster Hunter texture file",
-                Filter = ".apx, tex.bin, TM2 files|*.apx;*tex.bin;*tex.decomp.bin;*.TM2",
+                Filter = ".apx, tex.bin files|*.apx;*tex.bin;*tex.decomp.bin",
                 FileName = "",
                 Multiselect = true
             };
@@ -7776,12 +7605,12 @@ namespace AquaModelTool
             }
         }
 
-        private void monHunAHIAMOToolStripMenuItem_Click(object sender, EventArgs e)
+        private void decompressPzzToolStripMenuItem_Click(object sender, EventArgs e)
         {
             var openFileDialog = new OpenFileDialog()
             {
-                Title = "Select Monster Hunter file",
-                Filter = ".amo, .amh bin files|*.amo;*amh*bin",
+                Title = "Select file",
+                Filter = "PZZ compressed files|*",
                 FileName = "",
                 Multiselect = true
             };
@@ -7789,107 +7618,8 @@ namespace AquaModelTool
             {
                 foreach (var file in openFileDialog.FileNames)
                 {
-                    var fileBytes = File.ReadAllBytes(file);
-                    var ext = Path.GetExtension(file).ToLower();
-                    var outDir = file + "_";
-                    Directory.CreateDirectory(outDir);
-                    List<string> texNames = null;
-                    MHTagFile amo = null;
-                    MHTagFile ahi = null;
-
-                    if (ext == ".amo")
-                    {
-                        amo = new MHTagFile(fileBytes);
-                        var ahiPath = file.Replace(".amo", ".ahi");
-                        if(File.Exists(ahiPath))
-                        {
-                            ahi = new MHTagFile(File.ReadAllBytes(ahiPath));
-                        }
-
-                        var texPath = file.Replace(".amo", ".bin");
-                        if(texPath.Contains(".decomp"))
-                        {
-                            texPath = texPath.Replace(".decomp", "_tex.decomp");
-                        } else
-                        {
-                            texPath = texPath.Replace(".bin", "_tex.bin");
-                        }
-                        if(File.Exists(texPath))
-                        {
-                            texNames = new List<string>();
-                            var texArchive = new MHArchive(File.ReadAllBytes(texPath));
-
-                            var baseName = Path.GetFileNameWithoutExtension(Path.GetFileNameWithoutExtension(file));
-                            baseName = baseName.Replace("_tex", "");
-                            for (int i = 0; i < texArchive.files.Count; i++)
-                            {
-                                var texFile = texArchive.files[i];
-                                var apx = new APX(texFile);
-
-                                var texString = $"{baseName}_{i}.dds";
-                                texNames.Add(texString);
-                                File.WriteAllBytes(Path.Combine(outDir, texString), apx.ToDDS());
-                            }
-                        }
-
-                    } else
-                    {
-                        var archive = new MHArchive(fileBytes);
-                        if (archive.files.Count > 0)
-                        {
-                            amo = new MHTagFile(archive.files[0]);
-                            if(archive.files.Count > 1)
-                            {
-                                ahi = new MHTagFile(archive.files[1]);
-                            }
-                        }
-
-                        var baseName = Path.GetFileNameWithoutExtension(Path.GetFileNameWithoutExtension(file));
-                        baseName = baseName.Replace("_amh", "");
-
-                        var texPath = file.Replace("_amh", "");
-                        if (texPath.Contains(".decomp"))
-                        {
-                            texPath = texPath.Replace(".decomp", "_tex.decomp");
-                        }
-                        else
-                        {
-                            texPath = texPath.Replace(".bin", "_tex.bin");
-                        }
-                        if(!File.Exists(texPath))
-                        {
-                            var texPath2 = file.Replace("_amh", "").Replace(".bin", ".apx");
-                            if(File.Exists(texPath2))
-                            {
-                                texNames = new List<string>();
-                                var texString = $"{baseName}.dds";
-                                texNames.Add(texString);
-                                File.WriteAllBytes(Path.Combine(outDir, texString), (new APX(File.ReadAllBytes(texPath2))).ToDDS());
-                            }
-                        } else
-                        {
-                            texNames = new List<string>();
-                            var texArc = new MHArchive(File.ReadAllBytes(texPath));
-                            for(int i = 0; i < texArc.files.Count; i++)
-                            {
-                                var texFile = texArc.files[i];
-                                var apx = new APX(texFile);
-
-                                var texString = $"{baseName}_{i}.dds";
-                                texNames.Add(texString);
-                                File.WriteAllBytes(Path.Combine(outDir, texString), apx.ToDDS());
-                            }
-                        }
-                    }
-                    MHConvert.AMOAHIConvert(amo, ahi, texNames, out var aqp, out var aqn);
-                    var outPath = Path.Combine(outDir, $"{Path.GetFileNameWithoutExtension(file)}.fbx");
-                    if (aqp != null && aqp.vtxlList.Count > 0 || aqp.tempTris[0].faceVerts.Count > 0)
-                    {
-                        aqp.ConvertToLegacyTypes();
-                        aqp.CreateTrueVertWeights();
-
-                        FbxExporterNative.ExportToFile(aqp, aqn, new List<AquaMotion>(), outPath, new List<string>(), new List<Matrix4x4>(), false);
-                    }
+                    var ext = Path.GetExtension(file);
+                    File.WriteAllBytes(file.Replace(ext, $".decomp{ext}"), CompressionHelper.PZZDecompress(File.ReadAllBytes(file)));
                 }
             }
         }
