@@ -115,6 +115,21 @@ namespace CMXPatcher
             }
         }
 
+        private byte[][] DeleteFileOfTypeInIceGroup(byte[][] group, string ext)
+        {
+            List<byte[]> newGroup = new List<byte[]>();
+            for(int i = 0; i < group.Length; i++)
+            {
+                var a = IceFile.getFileName(group[i]).ToLower();
+                if (!IceFile.getFileName(group[i]).ToLower().Contains(ext))
+                {
+                    newGroup.Add(group[i]);
+                }
+            }
+
+            return newGroup.ToArray();
+        }
+
         private void InjectCmxToIceGroup(byte[][] group, byte[] cmxRaw)
         {
             //Loop through files to get what we need
@@ -449,6 +464,8 @@ namespace CMXPatcher
             //Write system ice
             var cmxRaw = cmxOut.ToArray();
             var cmtRaw = cmtOut.ToArray();
+            cmxIce.groupOneFiles = DeleteFileOfTypeInIceGroup(cmxIce.groupOneFiles, ".cml");
+            cmxIce.groupTwoFiles = DeleteFileOfTypeInIceGroup(cmxIce.groupTwoFiles, ".cml");
             InjectCmxToIceGroup(cmxIce.groupOneFiles, cmxRaw);
             InjectCmxToIceGroup(cmxIce.groupTwoFiles, cmxRaw);
             InjectCmtToIceGroup(cmxIce.groupOneFiles, cmtRaw);
