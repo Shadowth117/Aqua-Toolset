@@ -1,6 +1,5 @@
 ﻿using AquaModelLibrary.Core.BluePoint;
 using AquaModelLibrary.Core.FromSoft;
-using AquaModelLibrary.Core.General;
 using AquaModelLibrary.Core.ToolUX;
 using System;
 using System.IO;
