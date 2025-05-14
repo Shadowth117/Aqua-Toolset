@@ -26,7 +26,7 @@ namespace CMXPatcher
             outText.AppendLine("costumeSoundId = " + body.body2.costumeSoundId.ToString(new CultureInfo("en-US")));
             outText.AppendLine("headId = " + body.body2.headId.ToString(new CultureInfo("en-US")));
             outText.AppendLine("int_38 = " + body.body2.int_38.ToString(new CultureInfo("en-US")));
-            outText.AppendLine("int_3C = " + body.body2.int_3C.ToString(new CultureInfo("en-US")));
+            outText.AppendLine("int_3C = " + body.body2.linkedOuterId.ToString(new CultureInfo("en-US")));
 
             outText.AppendLine("linkedInnerId = " + body.body2.linkedInnerId.ToString(new CultureInfo("en-US")));
             outText.AppendLine("int_44 = " + body.body2.int_44.ToString(new CultureInfo("en-US")));
@@ -104,7 +104,7 @@ namespace CMXPatcher
                         body.body2.int_38 = Int32.Parse(contents[1], new CultureInfo("en-US"));
                         break;
                     case "int_3C":
-                        body.body2.int_3C = Int32.Parse(contents[1], new CultureInfo("en-US"));
+                        body.body2.linkedOuterId = Int32.Parse(contents[1], new CultureInfo("en-US"));
                         break;
 
                     case "int_40":
@@ -164,7 +164,10 @@ namespace CMXPatcher
             bodyBytes.AddRange(DataHelpers.ConvertStruct(body.body));
             if (postRetem)
             {
-                bodyBytes.AddValue(body.string8Ptr);
+                bodyBytes.AddValue(body.byteId_0);
+                bodyBytes.AddValue(body.byteId_1);
+                bodyBytes.AddValue(body.byteId_2);
+                bodyBytes.AddValue(body.byteId_3);
                 bodyBytes.AddRange(DataHelpers.ConvertStruct(body.bodyMaskColorMapping));
             }
             bodyBytes.AddRange(DataHelpers.ConvertStruct(body.body2));
