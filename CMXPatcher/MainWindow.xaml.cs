@@ -129,6 +129,11 @@ namespace CMXPatcher
             ExtractHairEntryNoPrompt(type, dict, id);
         }
 
+        private void ExtractCMLEntry(object sender, RoutedEventArgs e)
+        {
+            patcher.ExtractCMLs();
+        }
+
         private void ExtractBodyEntry(string type, Dictionary<int, BODYObject> dict)
         {
             var id = NumberPrompt.ShowDialog(type);

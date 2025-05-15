@@ -25,6 +25,7 @@
                     <MenuItem Header="Extract Cast Arms entry" Click="ExtractCarmEntry"/>
                     <MenuItem Header="Extract Cast Legs entry" Click="ExtractClegEntry"/>
                     <MenuItem Header="Extract Hair entry" Click="ExtractHairEntry"/>
+                    <MenuItem Header="Extract System CMLs" Click="ExtractCMLEntry"/>
                 </MenuItem>
             </Menu>
         </Grid>

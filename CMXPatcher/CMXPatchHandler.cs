@@ -10,6 +10,7 @@ using System.Linq;
 using System.Windows;
 using Zamboni;
 using Zamboni.IceFileFormats;
+using static Zamboni.IceFileFormats.IceHeaderStructures;
 
 namespace CMXPatcher
 {
@@ -21,6 +22,7 @@ namespace CMXPatcher
         public string moddedCMXPath = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location) + "\\ModdedCMX\\";
         public string downgradeCMXPath = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location) + "\\BenchmarkCMX\\";
         public string modPath = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location) + "\\Mods\\";
+        public string systemCmlDumpPath = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location) + "\\SystemCMLDumps\\";
         public string pso2_binDir;
         public IceFile cmxIce;
         public CharacterMakingIndex cmx;
@@ -54,6 +56,53 @@ namespace CMXPatcher
             }
         }
 
+        public void ExtractCMLs()
+        {
+            string cmxPath = Path.Combine(pso2_binDir, CharacterMakingIndex.dataDir, HashHelpers.GetFileHash(CharacterMakingIce.classicCMX));
+            if (File.Exists(cmxPath))
+            {
+                var strm = new MemoryStream(File.ReadAllBytes(cmxPath));
+                cmxIce = IceFile.LoadIceFile(strm);
+                strm.Dispose();
+
+                
+                foreach(var file in cmxIce.groupOneFiles)
+                {
+                    var fname = IceFile.getFileName(file);
+                    if (fname.ToLower().EndsWith(".cml"))
+                    {
+                        Directory.CreateDirectory(systemCmlDumpPath);
+                        File.WriteAllBytes(Path.Combine(systemCmlDumpPath, fname), StripICEHeader(file));
+                    }
+                }
+                foreach (var file in cmxIce.groupOneFiles)
+                {
+                    var fname = IceFile.getFileName(file);
+                    if (fname.ToLower().EndsWith(".cml"))
+                    {
+                        Directory.CreateDirectory(systemCmlDumpPath);
+                        File.WriteAllBytes(Path.Combine(systemCmlDumpPath, fname), StripICEHeader(file));
+                    }
+                }
+            }
+        }
+
+        public byte[] StripICEHeader(byte[] bytes)
+        {
+            if(bytes.Length < 0x50)
+            {
+                return new byte[0];
+            }
+            byte[] output;
+
+            int headerSize = BitConverter.ToInt32(bytes, 0xC);
+            var newSize = bytes.Length - headerSize;
+            output = new byte[newSize];
+            Array.Copy(bytes, headerSize, output, 0, newSize);
+
+            return output;
+        }
+
         public bool InjectCMXMods(bool restoreMode = false)
         {
             if (readyToMod == false)
@@ -69,6 +118,18 @@ namespace CMXPatcher
                 cmxRaw = File.ReadAllBytes(backupPath + "\\pl_data_info.cmx");
             }
 
+            //Gather and write mods to cmx
+            List<string> CmlNames = new List<string>();
+            List<byte[]> Cmls = new List<byte[]>();
+            if (restoreMode == false)
+            {
+                GatherCMXModText();
+                GatherModdedCMLs(CmlNames, Cmls);
+            } else
+            {
+                GatherModdedCMLs(CmlNames, Cmls, true);
+            }
+
             //Write cmx to ice
             string cmxPath = Path.Combine(pso2_binDir, CharacterMakingIndex.dataDir, HashHelpers.GetFileHash(CharacterMakingIce.classicCMX));
             if (File.Exists(cmxPath))
@@ -79,13 +140,14 @@ namespace CMXPatcher
 
                 InjectCmxToIceGroup(cmxIce.groupOneFiles, cmxRaw);
                 InjectCmxToIceGroup(cmxIce.groupTwoFiles, cmxRaw);
+
+                for(int i = 0; i < CmlNames.Count; i++)
+                {
+                    InjectNamedFileToIceGroup(cmxIce.groupOneFiles, Cmls[i], CmlNames[i]);
+                    InjectNamedFileToIceGroup(cmxIce.groupTwoFiles, Cmls[i], CmlNames[i]);
+                }
             }
 
-            //Gather and write mods to cmx
-            if (restoreMode == false)
-            {
-                GatherCMXModText();
-            }
 #if DEBUG
             File.WriteAllBytes(settingsPath + "test.cmx", cmxRaw);
 #endif
@@ -111,6 +173,33 @@ namespace CMXPatcher
                 {
                     MessageBox.Show("Unable to write cmx to patcher directory. Check file permissions.");
                     return false;
+                }
+            }
+        }
+
+        public void GatherModdedCMLs(List<string> moddedCmlNames, List<byte[]> moddedCmls, bool fromBackup = false)
+        {
+            var path = fromBackup ? backupPath : modPath;
+            var files = Directory.GetFiles(modPath, "*.cml", SearchOption.AllDirectories).ToArray();
+            foreach (var file in files)
+            {
+                var fName = Path.GetFileName(file);
+                moddedCmlNames.Add(fName);
+                var fileBytes = File.ReadAllBytes(file);
+
+                //Rebuild the ICE header (needed in most cases)
+                if (fileBytes[0] == 0x63 && fileBytes[1] == 0x6D && fileBytes[2] == 0x6C)
+                {
+                    moddedCmls.Add(fileBytes);
+                } else
+                {
+                    var header = new IceFileHeader(fName, (uint)fileBytes.Length);
+                    var headerBytes = header.GetBytes();
+                    var newFileArr = new byte[headerBytes.Length + fileBytes.Length];
+                    Array.Copy(headerBytes, 0, newFileArr, 0, headerBytes.Length);
+                    Array.Copy(fileBytes, 0, newFileArr, headerBytes.Length, fileBytes.Length);
+
+                    moddedCmls.Add(newFileArr);
                 }
             }
         }
@@ -232,6 +321,7 @@ namespace CMXPatcher
 
         public void BackupCMX()
         {
+            Dictionary<string, byte[]> cmlDict = new Dictionary<string, byte[]>();
             bool isOldCmx = false;
             //Check original CMX to see if we need to do a new backup.
             string cmxPath = Path.Combine(pso2_binDir, CharacterMakingIndex.dataDir, HashHelpers.GetFileHash(CharacterMakingIce.classicCMX));
@@ -248,7 +338,8 @@ namespace CMXPatcher
                 //Loop through files to get what we need
                 foreach (byte[] file in files)
                 {
-                    if (IceFile.getFileName(file).ToLower().Contains(".cmx"))
+                    var filename = IceFile.getFileName(file);
+                    if (filename.ToLower().EndsWith(".cmx"))
                     {
                         //If the filesize is actually different, since it should be the same between modded ones and the originals, we want to back it up
                         if (cmxRaw == null || file.Length != cmxRaw.Length)
@@ -261,6 +352,9 @@ namespace CMXPatcher
 
                         //We can break here since we're really only expecting an NGS cmx and there's only one of those.
                         break;
+                    } else if (filename.ToLower().EndsWith(".cml"))
+                    {
+                        cmlDict.Add(filename, StripICEHeader(file));
                     }
                 }
                 files.Clear();
@@ -272,10 +366,19 @@ namespace CMXPatcher
             }
 
             //Backup if the file didn't exist or the CMX was old
+            //Backup CMLs that didn't exist or when we backup CMX
             if (!File.Exists(backupPath + "\\pl_data_info.cmx") || isOldCmx)
             {
                 Directory.CreateDirectory(backupPath);
                 File.WriteAllBytes(backupPath + "\\pl_data_info.cmx", cmxRaw);
+            }
+            foreach(var set in cmlDict)
+            {
+                if (!File.Exists(backupPath + $"\\{set.Key}") || isOldCmx)
+                {
+                    Directory.CreateDirectory(backupPath);
+                    File.WriteAllBytes(backupPath + $"\\{set.Key}", set.Value);
+                }
             }
             readyToMod = true;
         }
