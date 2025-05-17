@@ -3834,7 +3834,7 @@ namespace AquaModelTool
                     try
                     {
 #endif
-                        BluePointConvert.ConvertCMDLCMSH(file);
+                    BluePointConvert.ConvertCMDLCMSH(file);
 #if !DEBUG
                     }
                     catch (Exception ex)
@@ -5739,11 +5739,11 @@ namespace AquaModelTool
                 {
                     var arc = new AniModel(File.ReadAllBytes(file));
                     var outPath = file + "_out";
-                    for(int i = 0; i < arc.models.Count; i++)
+                    for (int i = 0; i < arc.models.Count; i++)
                     {
                         File.WriteAllBytes(Path.Combine(outPath, $"model_{i}.gj"), NinjaModelConvert.GetGjBytes(arc.models[i]));
                     }
-                    for(int i = 0; i < arc.motions.Count; i++)
+                    for (int i = 0; i < arc.motions.Count; i++)
                     {
                         if (arc.motions[i] != null)
                         {
@@ -5847,7 +5847,7 @@ namespace AquaModelTool
                 foreach (var file in openFileDialog.FileNames)
                 {
                     var arc = new GalleryEgg(File.ReadAllBytes(file));
-                    
+
 
                     var outDir = file + "_out";
                     Directory.CreateDirectory(outDir);
@@ -5872,7 +5872,7 @@ namespace AquaModelTool
                             arc.texArchives[i].Save(Path.Combine(outDir, arc.texLists[i].texNames[0] + ".gvm"));
                         }
                     }
-                    
+
                 }
             }
         }
@@ -7852,6 +7852,312 @@ namespace AquaModelTool
             }
         }
 
+        private void compareFilesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var fileDialog = new CommonOpenFileDialog()
+            {
+                IsFolderPicker = true,
+                Title = "Pick one root directory to compare"
+            };
+            if (fileDialog.ShowDialog() == CommonFileDialogResult.Ok)
+            {
+                var folder0 = fileDialog.FileName;
+                if (fileDialog.ShowDialog() == CommonFileDialogResult.Ok)
+                {
+                    var folder1 = fileDialog.FileName;
+                    var folder0Files = Directory.GetFiles(folder0, "*", SearchOption.AllDirectories);
+                    var folder1Files = Directory.GetFiles(folder1, "*", SearchOption.AllDirectories);
+
+                    for (int i = 0; i < folder0Files.Length; i++)
+                    {
+                        folder0Files[i] = Path.GetFileName(folder0Files[i]).ToLower();
+                    }
+                    for (int i = 0; i < folder1Files.Length; i++)
+                    {
+                        folder1Files[i] = Path.GetFileName(folder1Files[i]).ToLower();
+                    }
+
+                    List<string> folder0UniqueFiles = new List<string>();
+                    foreach (var file in folder0Files)
+                    {
+                        if (!folder1Files.Contains(file))
+                        {
+                            folder0UniqueFiles.Add(file);
+                        }
+                    }
+                    List<string> folder1UniqueFiles = new List<string>();
+                    foreach (var file in folder1Files)
+                    {
+                        if (!folder0Files.Contains(file))
+                        {
+                            folder1UniqueFiles.Add(file);
+                        }
+                    }
+
+                    Debug.WriteLine(folder0 + " Unique Files");
+                    foreach (var file in folder0UniqueFiles)
+                    {
+                        Debug.WriteLine(file);
+                    }
+                    Debug.WriteLine(folder1 + " Unique Files");
+                    foreach (var file in folder1UniqueFiles)
+                    {
+                        Debug.WriteLine(file);
+                    }
+                }
+            }
+        }
+
+        private void readArBluePresbyterToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var openFileDialog = new OpenFileDialog()
+            {
+                Title = "Select Billy Hatcher ar_blue_presbyter.arc, menu_model.arc",
+                Filter = "Billy Hatcher ar_blue_presbyter.arc, menu_model.arc files|ar_blue_presbyter.arc;menu_model.arc",
+                FileName = "",
+                Multiselect = true
+            };
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                foreach (var file in openFileDialog.FileNames)
+                {
+                    if (file.Contains("ar_blue_presbyter.arc"))
+                    {
+                        var arc = new ArBluePresbyter(File.ReadAllBytes(file));
+
+                        var outDir = file + "_out";
+                        Directory.CreateDirectory(outDir);
+                        var model = arc.model;
+                        if (model != null)
+                        {
+                            var outPath = Path.Combine(outDir, $"model.fbx");
+                            var aqp = NinjaModelConvert.NinjaToAqua(model, out var aqn, arc.texList.texNames);
+                            if (aqp != null && aqp.vtxlList.Count > 0 || aqp.tempTris[0].faceVerts.Count > 0)
+                            {
+                                aqp.ConvertToPSO2Model(true, false, false, true, false, false, false, true);
+                                aqp.ConvertToLegacyTypes();
+                                aqp.CreateTrueVertWeights();
+
+                                FbxExporterNative.ExportToFile(aqp, aqn, new List<AquaMotion>(), outPath, new List<string>(), new List<Matrix4x4>(), false);
+                            }
+                        }
+                        if (arc.gvm != null)
+                        {
+                            arc.gvm.Save(Path.Combine(outDir, $"textures.gvm"));
+                        }
+                    }
+                    else
+                    {
+                        var outDir = file + "_out";
+                        Directory.CreateDirectory(outDir);
+                        var arc = new ProtoMenuModel(File.ReadAllBytes(file));
+                        for (int i = 0; i < arc.models.Count; i++)
+                        {
+                            var model = arc.models[i];
+                            if (model != null)
+                            {
+                                var outPath = Path.Combine(outDir, $"model{i}.fbx");
+                                var aqp = NinjaModelConvert.NinjaToAqua(model, out var aqn, arc.texList.texNames);
+                                if (aqp != null && aqp.vtxlList.Count > 0 || aqp.tempTris[0].faceVerts.Count > 0)
+                                {
+                                    aqp.ConvertToPSO2Model(true, false, false, true, false, false, false, true);
+                                    aqp.ConvertToLegacyTypes();
+                                    aqp.CreateTrueVertWeights();
+
+                                    FbxExporterNative.ExportToFile(aqp, aqn, new List<AquaMotion>(), outPath, new List<string>(), new List<Matrix4x4>(), false);
+                                }
+                            }
+
+                        }
+                        if (arc.gvm != null)
+                        {
+                            arc.gvm.Save(Path.Combine(outDir, $"textures.gvm"));
+                        }
+                    }
+
+                }
+            }
+        }
+
+        private void readMenuModelToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var openFileDialog = new OpenFileDialog()
+            {
+                Title = "Select Billy Hatcher battlemodel, menu model",
+                Filter = "Billy Hatcher ar_blue_presbyter.arc, menu_model.arc files|battlemodel*.arc;menu_*.arc;main_menu_*.arc",
+                FileName = "",
+                Multiselect = true
+            };
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                foreach (var file in openFileDialog.FileNames)
+                {
+                    var fileName = Path.GetFileName(file);
+                    if (fileName == "menu_model.arc")
+                    {
+                        var outDir = file + "_out";
+                        Directory.CreateDirectory(outDir);
+                        var arc = new ProtoMenuModel(File.ReadAllBytes(file));
+                        for (int i = 0; i < arc.models.Count; i++)
+                        {
+                            var model = arc.models[i];
+                            if (model != null)
+                            {
+                                var outPath = Path.Combine(outDir, $"model{i}.fbx");
+                                var aqp = NinjaModelConvert.NinjaToAqua(model, out var aqn, arc.texList.texNames);
+                                if (aqp != null && aqp.vtxlList.Count > 0 || aqp.tempTris[0].faceVerts.Count > 0)
+                                {
+                                    aqp.ConvertToPSO2Model(true, false, false, true, false, false, false, true);
+                                    aqp.ConvertToLegacyTypes();
+                                    aqp.CreateTrueVertWeights();
+
+                                    FbxExporterNative.ExportToFile(aqp, aqn, new List<AquaMotion>(), outPath, new List<string>(), new List<Matrix4x4>(), false);
+                                }
+                            }
+
+                        }
+                        if (arc.gvm != null)
+                        {
+                            arc.gvm.Save(Path.Combine(outDir, $"textures.gvm"));
+                        }
+                    }
+                    else if (fileName == "battlemodel_player.arc")
+                    {
+                        var outDir = file + "_out";
+                        Directory.CreateDirectory(outDir);
+                        var arc = new BattleModelPlayer(File.ReadAllBytes(file));
+                        for (int i = 0; i < arc.models.Count; i++)
+                        {
+                            var model = arc.models[i];
+                            if (model != null)
+                            {
+                                var outPath = Path.Combine(outDir, $"model{i}.fbx");
+                                var aqp = NinjaModelConvert.NinjaToAqua(model, out var aqn, arc.texLists[0].texNames);
+                                if (aqp != null && aqp.vtxlList.Count > 0 || aqp.tempTris[0].faceVerts.Count > 0)
+                                {
+                                    aqp.ConvertToPSO2Model(true, false, false, true, false, false, false, true);
+                                    aqp.ConvertToLegacyTypes();
+                                    aqp.CreateTrueVertWeights();
+
+                                    FbxExporterNative.ExportToFile(aqp, aqn, new List<AquaMotion>(), outPath, new List<string>(), new List<Matrix4x4>(), false);
+                                }
+                            }
+
+                        }
+                        for (int i = 0; i < arc.gvms.Count; i++)
+                        {
+                            var gvm = arc.gvms[i];
+                            gvm.Save(Path.Combine(outDir, $"textures_{i}.gvm"));
+                        }
+                    }
+                    else
+                    {
+                        var outDir = file + "_out";
+                        Directory.CreateDirectory(outDir);
+                        var arc = new MenuModel(File.ReadAllBytes(file));
+                        for (int i = 0; i < arc.models.Count; i++)
+                        {
+                            var model = arc.models[i];
+                            if (model != null)
+                            {
+                                var outPath = Path.Combine(outDir, $"model{i}.fbx");
+                                var aqp = NinjaModelConvert.NinjaToAqua(model, out var aqn, arc.texLists[0].texNames);
+                                if (aqp != null && aqp.vtxlList.Count > 0 || aqp.tempTris[0].faceVerts.Count > 0)
+                                {
+                                    aqp.ConvertToPSO2Model(true, false, false, true, false, false, false, true);
+                                    aqp.ConvertToLegacyTypes();
+                                    aqp.CreateTrueVertWeights();
+
+                                    FbxExporterNative.ExportToFile(aqp, aqn, new List<AquaMotion>(), outPath, new List<string>(), new List<Matrix4x4>(), false);
+                                }
+                            }
+
+                        }
+                        for (int i = 0; i < arc.gvms.Count; i++)
+                        {
+                            var gvm = arc.gvms[i];
+                            gvm.Save(Path.Combine(outDir, $"textures_{i}.gvm"));
+                        }
+                    }
+                }
+            }
+        }
+
+        private void billyHatcherAeMenuExtractToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var openFileDialog = new OpenFileDialog()
+            {
+                Title = "Select Billy Hatcher ae menu File",
+                Filter = "Billy Hatcher ae menu files|ae_*.arc",
+                FileName = "",
+                Multiselect = true
+            };
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                foreach (var file in openFileDialog.FileNames)
+                {
+                    var outDir = file + "_out";
+                    Directory.CreateDirectory(outDir);
+
+                    AeMenuData ae = new AeMenuData(File.ReadAllBytes(file));
+                    File.WriteAllBytes(Path.Combine(outDir, Path.GetFileName(file) + ".ae"), ae.menuData);
+
+                    foreach (var gvpSet in ae.gvps)
+                    {
+                        File.WriteAllBytes(Path.Combine(outDir, Path.ChangeExtension(gvpSet.Key, ".gvp")), gvpSet.Value);
+                    }
+                    //No need to write the texture list since we only ever have one and can build it from the gvm
+                    ae.gvm.Save(Path.Combine(outDir, Path.GetFileName(file) + ".gvm"));
+                }
+            }
+        }
+
+        private void billyHatcherAeMenuPackToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            CommonOpenFileDialog openFileDialog = new CommonOpenFileDialog()
+            {
+                Title = "Select Billy Hatcher Extracted ae menu Folder(s)",
+                IsFolderPicker = true,
+            };
+            if (openFileDialog.ShowDialog() == CommonFileDialogResult.Ok)
+            {
+                foreach (var file in openFileDialog.FileNames)
+                {
+                    var aeFiles = Directory.GetFiles(file, "*.ae");
+                    var gvmFiles = Directory.GetFiles(file, "*.gvm");
+                    var gvpFiles = Directory.GetFiles(file, "*.gvp");
+                    Dictionary<string, byte[]> gvpDict = new Dictionary<string, byte[]>();
+                    foreach(var gvpPath in gvpFiles)
+                    {
+                        gvpDict.Add(Path.GetFileNameWithoutExtension(gvpPath), File.ReadAllBytes(gvpPath));
+                    }
+
+                    AeMenuData data = new();
+                    data.menuData = File.ReadAllBytes(aeFiles[0]);
+                    data.gvm = new PuyoFile(File.ReadAllBytes(gvmFiles[0]));
+                    data.texList = new NJTextureList(data.gvm.Entries.Select(x => Path.GetFileNameWithoutExtension(x.Name)).ToList());
+                    for(int i = 0; i < data.gvm.Entries.Count; i++)
+                    {
+                        var tex = Path.GetFileNameWithoutExtension(data.gvm.Entries[i].Name);
+                        if (gvpDict.ContainsKey(tex))
+                        {
+                            data.gvps.Add(tex, gvpDict[tex]);
+                        }
+                    }
+
+                    var outName = file;
+                    if (outName.EndsWith("_out"))
+                    {
+                        outName = outName.Substring(0, outName.Length - 4);
+                    }
+                    else
+                    {
+                        outName += ".arc";
+                    }
+                    File.WriteAllBytes(outName, data.GetBytes());
+                }
+            }
+        }
     }
 }
 
