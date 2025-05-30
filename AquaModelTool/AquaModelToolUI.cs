@@ -2228,6 +2228,7 @@ namespace AquaModelTool
                     {
                         modelPackage = new AquaPackage();
                         modelPackage.models.Add(AXSMethods.ReadAXS(filename, true, out aqn));
+                        modelPackage.models[0].ConvertToPSO2Model(true, false, false, true, false, false, true, false, true, true);
                     }
                     else
                     {
@@ -3043,7 +3044,7 @@ namespace AquaModelTool
                         var aqp = new AquaPackage(AXSMethods.ReadAXS(file, true, out AquaNode aqn));
                         if (aqp.models[0] != null && aqp.models[0].vtxlList.Count > 0)
                         {
-                            aqp.models[0].ConvertToPSO2Model(true, false, false, true, false, false);
+                            aqp.models[0].ConvertToPSO2Model(true, false, false, true, false, false, true, false, true, true);
 
                             var outName = Path.ChangeExtension(file, ".aqp");
                             File.WriteAllBytes(outName, aqp.GetPackageBytes(outName));
@@ -6268,7 +6269,7 @@ namespace AquaModelTool
                     var fileBase = Path.GetFileNameWithoutExtension(file);
                     var fileOutBase = fileBase + "_out";
                     var outPathBase = Path.Combine(Path.GetDirectoryName(file), fileOutBase);
-                    var mdat = SoulsFile<SoulsFormats.Otogi2.DAT>.Read(file);
+                    var mdat = SoulsFile<SoulsFormats.Other.Otogi2.DAT>.Read(file);
 
                     Directory.CreateDirectory(outPathBase);
                     if (mdat.Data1 != null)
@@ -7329,6 +7330,24 @@ namespace AquaModelTool
                                 if (aqp != null && aqp.vtxlList.Count > 0 || aqp.tempTris[0].faceVerts.Count > 0)
                                 {
                                     aqp.ConvertToPSO2Model(true, false, false, true, false, false, false, true);
+                                    aqp.ConvertToLegacyTypes();
+                                    aqp.CreateTrueVertWeights();
+
+                                    FbxExporterNative.ExportToFile(aqp, aqn, new List<AquaMotion>(), outPath, new List<string>(), new List<Matrix4x4>(), false);
+                                }
+                            }
+                        }
+                        foreach (var pair in arc.csdyModels)
+                        {
+                            var model = pair.Value;
+                            if (model != null)
+                            {
+                                var outPath = Path.Combine(outDir, $"{pair.Key}.fbx");
+                                
+                                var aqp = model.ConvertToAquaObject()[0]; //These will always be single models
+                                var aqn = AquaNode.GenerateBasicAQN();
+                                if (aqp != null && aqp.vtxlList.Count > 0 || aqp.tempTris[0].faceVerts.Count > 0)
+                                {
                                     aqp.ConvertToLegacyTypes();
                                     aqp.CreateTrueVertWeights();
 
