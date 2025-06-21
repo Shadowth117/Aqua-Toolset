@@ -16,7 +16,8 @@
             <Setter Property="Margin" Value="0 3" />
         </Style>
         <Style TargetType="CheckBox" BasedOn="{StaticResource ElementSpacing}">
-            <Setter Property="ContentTemplate"> <!-- This is for text wrapping the "Please have this on" text -->
+            <Setter Property="ContentTemplate">
+                <!-- This is for text wrapping the "Please have this on" text -->
                 <Setter.Value>
                     <DataTemplate>
                         <TextBlock Text="{TemplateBinding Content}" TextWrapping="Wrap" />
@@ -39,10 +40,11 @@
         </Menu>
         <Grid HorizontalAlignment="Left">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="9*" />
+                <ColumnDefinition Width="163*"/>
+                <ColumnDefinition Width="85*" />
             </Grid.ColumnDefinitions>
-            <StackPanel Style="{StaticResource AreaSpacing}">
+            <StackPanel Style="{StaticResource AreaSpacing}" Grid.ColumnSpan="2" Margin="5,5,5,372">
                 <GroupBox Header="Fromsoft modifiers">
                     <StackPanel>
                         <CheckBox x:Name="useMetaDataCB" Content="Convert FLVER with metadata" IsChecked="True"
@@ -72,7 +74,7 @@
                     </StackPanel>
                 </GroupBox>
             </StackPanel>
-            <StackPanel Grid.Column="1" Style="{StaticResource AreaSpacing}">
+            <StackPanel Grid.Column="2" Style="{StaticResource AreaSpacing}" Margin="5,5,5,372">
                 <Label Target="{Binding ElementName=exportFormatCB}" Content="Export Format:" />
                 <ComboBox x:Name="exportFormatCB" Width="160" SelectionChanged="exportFormatCB_SelectionChanged" />
                 <Label Target="{Binding ElementName=mirrorTypeCB}" Content="Mirror Type:" />

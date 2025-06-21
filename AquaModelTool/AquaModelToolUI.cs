@@ -24,7 +24,6 @@ using AquaModelLibrary.Data.FromSoft;
 using AquaModelLibrary.Data.Ikaruga._360;
 using AquaModelLibrary.Data.Ninja;
 using AquaModelLibrary.Data.Ninja.Model;
-using AquaModelLibrary.Data.Ninja.Model.Ginja;
 using AquaModelLibrary.Data.Ninja.Motion;
 using AquaModelLibrary.Data.NNStructs;
 using AquaModelLibrary.Data.Nova;
@@ -37,7 +36,6 @@ using AquaModelLibrary.Data.PSO2.Constants;
 using AquaModelLibrary.Data.PSO2.MiscPSO2Structs;
 using AquaModelLibrary.Data.PSU;
 using AquaModelLibrary.Data.Utility;
-using AquaModelLibrary.Data.Vicious;
 using AquaModelLibrary.Data.Zero;
 using AquaModelLibrary.Helpers;
 using AquaModelLibrary.Helpers.Extensions;
@@ -3835,7 +3833,7 @@ namespace AquaModelTool
                     try
                     {
 #endif
-                    BluePointConvert.ConvertCMDLCMSH(file);
+                        BluePointConvert.ConvertCMDLCMSH(file);
 #if !DEBUG
                     }
                     catch (Exception ex)
@@ -4278,84 +4276,12 @@ namespace AquaModelTool
             }
         }
 
-        private void extractBorderBreakPS4FARCToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            var openFileDialog = new OpenFileDialog()
-            {
-                Title = "Select Border Break archive file (Models rigging and skinning is broken at this time)",
-                Filter = "*_obj.bin, *.pfa, spr_*.bin, *tex.bin, fld_*.bin files|*_obj.bin;spr_*.bin;*tex.bin;*.pfa;fld_*.bin|Model archive files *_obj.bin|*_obj.bin|spr_*.bin, *tex.bin files|spr_*.bin;*tex.bin|pfa files|*.pfa|FLD Stage Collision Files fld_*.bin|fld_*.bin",
-                FileName = "",
-                Multiselect = true
-            };
-            if (openFileDialog.ShowDialog() == DialogResult.OK)
-            {
-                foreach (var archiveFile in openFileDialog.FileNames)
-                {
-                    if (archiveFile.EndsWith("pfa"))
-                    {
-                        using (MemoryStream stream = new MemoryStream(File.ReadAllBytes(archiveFile)))
-                        using (var streamReader = new BufferedStreamReaderBE<MemoryStream>(stream))
-                        {
-                            var pfa = new FARC(streamReader);
-                            var path = archiveFile + "_out";
-                            Directory.CreateDirectory(path);
-                            foreach (var file in pfa.fileEntries)
-                            {
-                                var fname = Path.Combine(path, file.fileName);
-                                File.WriteAllBytes(fname, file.fileData);
-
-                                //Extract txp
-                                if (file.fileName.StartsWith("spr_") || file.fileName.EndsWith("tex.bin"))
-                                {
-                                    BorderBreakPS4Convert.ExtractTXP(fname, file.fileData);
-                                }
-                                else if (file.fileName.EndsWith("_obj.bin"))
-                                {
-                                    ConvertAM2BBPS4Model(fname, file.fileData);
-                                }
-                            }
-                        }
-                    }
-                    else if (archiveFile.EndsWith("_obj.bin"))
-                    {
-                        var objBinRaw = File.ReadAllBytes(archiveFile);
-                        ConvertAM2BBPS4Model(archiveFile, objBinRaw);
-                    }
-                    else if (Path.GetFileName(archiveFile).StartsWith("fld_"))
-                    {
-                        var fldBinRaw = File.ReadAllBytes(archiveFile);
-                        ConvertAM2BBPS4FLD(archiveFile, fldBinRaw);
-                    }
-                    else
-                    {
-                        var txpRaw = File.ReadAllBytes(archiveFile);
-                        BorderBreakPS4Convert.ExtractTXP(archiveFile, txpRaw);
-                    }
-                }
-            }
-        }
-
         public static void ConvertEOBJ(string eobj, byte[] eobjRaw)
         {
             using (MemoryStream stream = new MemoryStream(eobjRaw))
             using (var streamReader = new BufferedStreamReaderBE<MemoryStream>(stream))
             {
                 new E_OBJ(streamReader);
-            }
-        }
-
-        private void setMOTBONEbinPathToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            var openFileDialog = new OpenFileDialog()
-            {
-                Title = "Select mot_bone.bin file",
-                Filter = "mot_bone.bin|mot_bone.bin",
-                FileName = "",
-            };
-            if (openFileDialog.ShowDialog() == DialogResult.OK)
-            {
-                borderBreakPS4BonePath = openFileDialog.FileName;
-                SaveMainSettings();
             }
         }
 
@@ -5670,212 +5596,9 @@ namespace AquaModelTool
             }
         }
 
-        private void readGEPlayerToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            var openFileDialog = new OpenFileDialog()
-            {
-                Title = "Select Billy Hatcher ge_player*.arc File",
-                Filter = "Billy Hatcher ge_player*.arc files|ge_player*.arc",
-                FileName = "",
-                Multiselect = true
-            };
-            if (openFileDialog.ShowDialog() == DialogResult.OK)
-            {
-                foreach (var file in openFileDialog.FileNames)
-                {
-                    var arc = new GEPlayer(File.ReadAllBytes(file));
-
-                    var outDir = file + "_out";
-                    Directory.CreateDirectory(outDir);
-                    for (int i = 0; i < arc.models.Count; i++)
-                    {
-                        var model = arc.models[i];
-                        if (model != null)
-                        {
-                            var outPath = Path.Combine(outDir, $"model_{i}.fbx");
-                            var aqp = NinjaModelConvert.NinjaToAqua(model, out var aqn);
-                            if (aqp != null && aqp.vtxlList.Count > 0 || aqp.tempTris[0].faceVerts.Count > 0)
-                            {
-                                aqp.ConvertToPSO2Model(true, false, false, true, false, false, false, true);
-                                aqp.ConvertToLegacyTypes();
-                                aqp.CreateTrueVertWeights();
-
-                                FbxExporterNative.ExportToFile(aqp, aqn, new List<AquaMotion>(), outPath, new List<string>(), new List<Matrix4x4>(), false);
-                            }
-                        }
-                    }
-                    if (arc.dFace != null)
-                    {
-                        var outPath = Path.Combine(outDir, $"face.fbx");
-                        var aqp = NinjaModelConvert.NinjaToAqua(arc.dFace, out var aqn);
-                        if (aqp != null && aqp.vtxlList.Count > 0 || aqp.tempTris[0].faceVerts.Count > 0)
-                        {
-                            aqp.ConvertToPSO2Model(true, false, false, true, false, false, false, true);
-                            aqp.ConvertToLegacyTypes();
-                            aqp.CreateTrueVertWeights();
-
-                            FbxExporterNative.ExportToFile(aqp, aqn, new List<AquaMotion>(), outPath, new List<string>(), new List<Matrix4x4>(), false);
-                        }
-                    }
-                    if (arc.gvm != null)
-                    {
-                        arc.gvm.Save(Path.Combine(outDir, "textures.gvm"));
-                    }
-                }
-            }
-        }
-
-        private void readAniModelToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            var openFileDialog = new OpenFileDialog()
-            {
-                Title = "Select Billy Hatcher ani_model_*.arc File",
-                Filter = "Billy Hatcher ani_model_*.arc files|ani_model_*.arc",
-                FileName = "",
-                Multiselect = true
-            };
-            if (openFileDialog.ShowDialog() == DialogResult.OK)
-            {
-                foreach (var file in openFileDialog.FileNames)
-                {
-                    var arc = new AniModel(File.ReadAllBytes(file));
-                    var outPath = file + "_out";
-                    for (int i = 0; i < arc.models.Count; i++)
-                    {
-                        File.WriteAllBytes(Path.Combine(outPath, $"model_{i}.gj"), NinjaModelConvert.GetGjBytes(arc.models[i]));
-                    }
-                    for (int i = 0; i < arc.motions.Count; i++)
-                    {
-                        if (arc.motions[i] != null)
-                        {
-                            File.WriteAllBytes(Path.Combine(outPath, $"motion_{i}.njm"), NinjaModelConvert.GetNjmBytes(arc.motions[i], NJSMotion.MotionWriteMode.BillyMode));
-                        }
-                    }
-                    arc.gvm.Save(Path.Combine(outPath, "textures.gvm"));
-                    //File.WriteAllBytes(file + ".out", arc.GetBytes());
-                    /*
-                    var outDir = file + "_out";
-                    for (int t = 0; t < arc.texList.texNames.Count; t++)
-                    {
-                        arc.texList.texNames[t] = arc.texList.texNames[t] += ".png";
-                    }
-                    Directory.CreateDirectory(outDir);
-                    for (int i = 0; i < arc.models.Count; i++)
-                    {
-                        var model = arc.models[i];
-                        if (model != null)
-                        {
-                            var outPath = Path.Combine(outDir, $"model_{i}.fbx");
-                            var aqp = NinjaModelConvert.NinjaToAqua(model, out var aqn, arc.texList.texNames);
-                            if (aqp != null && aqp.vtxlList.Count > 0 || aqp.tempTris[0].faceVerts.Count > 0)
-                            {
-                                aqp.ConvertToPSO2Model(true, false, false, true, false, false, false, true);
-                                aqp.ConvertToLegacyTypes();
-                                aqp.CreateTrueVertWeights();
-
-                                FbxExporterNative.ExportToFile(aqp, aqn, new List<AquaMotion>(), outPath, new List<string>(), new List<Matrix4x4>(), false);
-                            }
-                        }
-                    }
-                    if (arc.gvm != null)
-                    {
-                        arc.gvm.Save(Path.Combine(outDir, "textures.gvm"));
-                    }
-                    */
-                }
-            }
-        }
-
         private void protoThingToItemModelToolStripMenuItem_Click(object sender, EventArgs e)
         {
             BillyMisc.BillyProtoPackCompile();
-        }
-
-        private void readLibModelToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            var openFileDialog = new OpenFileDialog()
-            {
-                Title = "Select Billy Hatcher lib_*.arc, item_*.arc File",
-                Filter = "Billy Hatcher lib_*.arc, item_*.arc files|lib_*.arc;item_*.arc",
-                FileName = "",
-                Multiselect = true
-            };
-            if (openFileDialog.ShowDialog() == DialogResult.OK)
-            {
-                foreach (var file in openFileDialog.FileNames)
-                {
-                    var arc = new ItemLibModel(File.ReadAllBytes(file));
-
-                    var outDir = file + "_out";
-                    Directory.CreateDirectory(outDir);
-                    var model = arc.model;
-                    for (int t = 0; t < arc.texList.texNames.Count; t++)
-                    {
-                        arc.texList.texNames[t] = arc.texList.texNames[t] += ".png";
-                    }
-                    if (model != null)
-                    {
-                        var outPath = Path.Combine(outDir, $"model.fbx");
-                        var aqp = NinjaModelConvert.NinjaToAqua(model, out var aqn, arc.texList.texNames);
-                        if (aqp != null && aqp.vtxlList.Count > 0 || aqp.tempTris[0].faceVerts.Count > 0)
-                        {
-                            aqp.ConvertToPSO2Model(true, false, false, true, false, false, false, true);
-                            aqp.ConvertToLegacyTypes();
-                            aqp.CreateTrueVertWeights();
-
-                            FbxExporterNative.ExportToFile(aqp, aqn, new List<AquaMotion>(), outPath, new List<string>(), new List<Matrix4x4>(), false);
-                        }
-                    }
-                    if (arc.gvm != null)
-                    {
-                        arc.gvm.Save(Path.Combine(outDir, "textures.gvm"));
-                    }
-                }
-            }
-        }
-
-        private void readGalleryEggToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            var openFileDialog = new OpenFileDialog()
-            {
-                Title = "Select Billy Hatcher gallery_egg.arc",
-                Filter = "Billy Hatcher gallery_egg.arc files|gallery_egg.arc",
-                FileName = "",
-                Multiselect = true
-            };
-            if (openFileDialog.ShowDialog() == DialogResult.OK)
-            {
-                foreach (var file in openFileDialog.FileNames)
-                {
-                    var arc = new GalleryEgg(File.ReadAllBytes(file));
-
-
-                    var outDir = file + "_out";
-                    Directory.CreateDirectory(outDir);
-                    var model = arc.model;
-                    if (model != null)
-                    {
-                        var outPath = Path.Combine(outDir, $"model.fbx");
-                        var aqp = NinjaModelConvert.NinjaToAqua(model, out var aqn);
-                        if (aqp != null && aqp.vtxlList.Count > 0 || aqp.tempTris[0].faceVerts.Count > 0)
-                        {
-                            aqp.ConvertToPSO2Model(true, false, false, true, false, false, false, true);
-                            aqp.ConvertToLegacyTypes();
-                            aqp.CreateTrueVertWeights();
-
-                            FbxExporterNative.ExportToFile(aqp, aqn, new List<AquaMotion>(), outPath, new List<string>(), new List<Matrix4x4>(), false);
-                        }
-                    }
-                    if (arc.texArchives != null)
-                    {
-                        for (int i = 0; i < arc.texLists.Count; i++)
-                        {
-                            arc.texArchives[i].Save(Path.Combine(outDir, arc.texLists[i].texNames[0] + ".gvm"));
-                        }
-                    }
-
-                }
-            }
         }
 
         private void tryToDecompressShadowOfTheColossusFileToolStripMenuItem_Click(object sender, EventArgs e)
@@ -6188,49 +5911,6 @@ namespace AquaModelTool
                     }
                 });
             }
-        }
-
-        private void readGEEggToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            var openFileDialog = new OpenFileDialog()
-            {
-                Title = "Select Billy Hatcher ge_egg.arc File",
-                Filter = "Billy Hatcher ge_egg.arc files|ge_egg.arc",
-                FileName = "",
-                Multiselect = true
-            };
-            if (openFileDialog.ShowDialog() == DialogResult.OK)
-            {
-                foreach (var file in openFileDialog.FileNames)
-                {
-                    var arc = new GEEGG(File.ReadAllBytes(file));
-
-                    var outDir = file + "_out";
-                    Directory.CreateDirectory(outDir);
-                    for (int i = 0; i < arc.models.Count; i++)
-                    {
-                        var model = arc.models[i];
-                        if (model != null)
-                        {
-                            var outPath = Path.Combine(outDir, $"model_{i}.fbx");
-                            var aqp = NinjaModelConvert.NinjaToAqua(model, out var aqn);
-                            if (aqp != null && aqp.vtxlList.Count > 0 || (aqp.tempTris.Count > 0 && aqp.tempTris[0].faceVerts.Count > 0))
-                            {
-                                aqp.ConvertToPSO2Model(true, false, false, true, false, false, false, true);
-                                aqp.ConvertToLegacyTypes();
-                                aqp.CreateTrueVertWeights();
-
-                                FbxExporterNative.ExportToFile(aqp, aqn, new List<AquaMotion>(), outPath, new List<string>(), new List<Matrix4x4>(), false);
-                            }
-                        }
-                    }
-                    if (arc.gvm != null)
-                    {
-                        arc.gvm.Save(Path.Combine(outDir, "textures.gvm"));
-                    }
-                }
-            }
-
         }
 
         private void readFlverTestToolStripMenuItem_Click(object sender, EventArgs e)
@@ -6711,100 +6391,6 @@ namespace AquaModelTool
                         }
                     }
 
-                }
-            }
-        }
-
-        private void objCollisionReadToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            var openFileDialog = new OpenFileDialog()
-            {
-                Title = "Select Billy Hatcher obj*.bin, *.dml File",
-                Filter = "Billy Hatcher obj*.bin, *.dml files|obj*.bin;*.dml",
-                FileName = "",
-                Multiselect = true
-            };
-            if (openFileDialog.ShowDialog() == DialogResult.OK)
-            {
-                foreach (var file in openFileDialog.FileNames)
-                {
-                    var fileName = Path.GetFileNameWithoutExtension(file);
-                    var model = new CSDY(File.ReadAllBytes(file), true, 0);
-                    var outDir = file + "_out";
-                    Directory.CreateDirectory(outDir);
-                    if (model != null)
-                    {
-                        var aqpList = model.ConvertToAquaObject();
-                        var aqn = AquaNode.GenerateBasicAQN();
-                        for (int i = 0; i < aqpList.Count; i++)
-                        {
-                            var aqp = aqpList[i];
-                            string outPath;
-                            if (i == 0 && aqpList.Count == 1)
-                            {
-                                outPath = Path.Combine(outDir, $"{fileName}.fbx");
-                            }
-                            else
-                            {
-                                outPath = Path.Combine(outDir, $"{fileName}_{i}.fbx");
-                            }
-
-                            if (aqp != null && aqp.vtxlList.Count > 0 || aqp.tempTris[0].faceVerts.Count > 0)
-                            {
-                                aqp.ConvertToLegacyTypes();
-                                aqp.CreateTrueVertWeights();
-
-                                FbxExporterNative.ExportToFile(aqp, aqn, new List<AquaMotion>(), outPath, new List<string>(), new List<Matrix4x4>(), false);
-                            }
-                        }
-                    }
-                }
-            }
-        }
-
-        private void arEnemyReadToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            var openFileDialog = new OpenFileDialog()
-            {
-                Title = "Select Billy Hatcher ar_ene/obj_*.arc Files that aren't param",
-                Filter = "Billy Hatcher ar_ene/obj_*.arc (Except Param!) files|ar_ene_*.arc;ar_obj_*.arc",
-                FileName = "",
-                Multiselect = true
-            };
-            if (openFileDialog.ShowDialog() == DialogResult.OK)
-            {
-                foreach (var file in openFileDialog.FileNames)
-                {
-                    if (file.Contains("param"))
-                    {
-                        continue;
-                    }
-                    var arc = new ArEnemy(File.ReadAllBytes(file));
-
-                    var outDir = file + "_out";
-                    Directory.CreateDirectory(outDir);
-                    for (int i = 0; i < arc.models.Count; i++)
-                    {
-                        var model = arc.models[i];
-                        if (model != null)
-                        {
-                            List<string> texList = null;
-                            if (arc.texList.Count != 0)
-                            {
-                                texList = arc.texList[0].texNames;
-                            }
-                            var outPath = Path.Combine(outDir, $"model_{i}.fbx");
-                            var aqp = NinjaModelConvert.NinjaToAqua(model, out var aqn, texList);
-                            if (aqp != null && aqp.vtxlList.Count > 0 || aqp.tempTris[0].faceVerts.Count > 0)
-                            {
-                                aqp.ConvertToPSO2Model(true, false, false, true, false, false, false, true);
-                                aqp.ConvertToLegacyTypes();
-                                aqp.CreateTrueVertWeights();
-
-                                FbxExporterNative.ExportToFile(aqp, aqn, new List<AquaMotion>(), outPath, new List<string>(), new List<Matrix4x4>(), false);
-                            }
-                        }
-                    }
                 }
             }
         }
@@ -7343,7 +6929,7 @@ namespace AquaModelTool
                             if (model != null)
                             {
                                 var outPath = Path.Combine(outDir, $"{pair.Key}.fbx");
-                                
+
                                 var aqp = model.ConvertToAquaObject()[0]; //These will always be single models
                                 var aqn = AquaNode.GenerateBasicAQN();
                                 if (aqp != null && aqp.vtxlList.Count > 0 || aqp.tempTris[0].faceVerts.Count > 0)
@@ -7664,72 +7250,6 @@ namespace AquaModelTool
             }
         }
 
-        private void readArMaToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            var openFileDialog = new OpenFileDialog()
-            {
-                Title = "Select Billy Hatcher ar_ma_*.arc File",
-                Filter = "Billy Hatcher ar_ma_*.arc files|ar_ma_*.arc",
-                FileName = "",
-                Multiselect = true
-            };
-            if (openFileDialog.ShowDialog() == DialogResult.OK)
-            {
-                foreach (var file in openFileDialog.FileNames)
-                {
-                    var arc = new ArMa(File.ReadAllBytes(file));
-
-                    var outDir = file + "_out";
-                    Directory.CreateDirectory(outDir);
-                    for (int i = 0; i < arc.models.Count; i++)
-                    {
-                        var model = arc.models[i];
-                        if (model != null)
-                        {
-                            var outPath = Path.Combine(outDir, $"model_{i}.fbx");
-                            for (int t = 0; t < arc.texnamesList[0].texNames.Count; t++)
-                            {
-                                arc.texnamesList[0].texNames[t] = arc.texnamesList[0].texNames[t] += ".png";
-                            }
-                            var aqp = NinjaModelConvert.NinjaToAqua(model, out var aqn, arc.texnamesList[0].texNames);
-                            if (aqp != null && aqp.vtxlList.Count > 0 || (aqp.tempTris.Count > 0 && aqp.tempTris[0].faceVerts.Count > 0))
-                            {
-                                aqp.ConvertToPSO2Model(true, false, false, true, false, false, false, true);
-                                aqp.ConvertToLegacyTypes();
-                                aqp.CreateTrueVertWeights();
-
-                                FbxExporterNative.ExportToFile(aqp, aqn, new List<AquaMotion>(), outPath, new List<string>(), new List<Matrix4x4>(), false);
-                            }
-                        }
-                    }
-                    if (arc.gvm != null)
-                    {
-                        arc.gvm.Save(Path.Combine(outDir, "textures.gvm"));
-                    }
-                }
-            }
-        }
-
-        private void readBillyStageObjToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            var openFileDialog = new OpenFileDialog()
-            {
-                Title = "Select Billy Hatcher stgobj File",
-                Filter = "Billy Hatcher stgobj files|stgobj*.arc",
-                FileName = "",
-                Multiselect = true
-            };
-            if (openFileDialog.ShowDialog() == DialogResult.OK)
-            {
-                foreach (var file in openFileDialog.FileNames)
-                {
-                    var arc = new StageObj(File.ReadAllBytes(file));
-
-
-                }
-            }
-        }
-
         private void billyHatcherStafflistarcTotxtToolStripMenuItem_Click(object sender, EventArgs e)
         {
             var openFileDialog = new OpenFileDialog()
@@ -7806,71 +7326,6 @@ namespace AquaModelTool
             }
         }
 
-        private void readObjMsToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            var openFileDialog = new OpenFileDialog()
-            {
-                Title = "Select Billy Hatcher obj_ms_*.arc File",
-                Filter = "Billy Hatcher obj_ms_*.arc files|obj_ms_*.arc",
-                FileName = "",
-                Multiselect = true
-            };
-            if (openFileDialog.ShowDialog() == DialogResult.OK)
-            {
-                foreach (var file in openFileDialog.FileNames)
-                {
-                    NJSObject model = null;
-                    NJTextureList njtl = null;
-                    PuyoFile gvm = null;
-                    switch (Path.GetFileName(file))
-                    {
-                        case "obj_ms_bomb.arc":
-                            var bomb = new ObjMsBomb(File.ReadAllBytes(file));
-                            model = bomb.model;
-                            njtl = bomb.texLists[0];
-                            gvm = bomb.gvm;
-                            break;
-                        case "obj_ms_fwball.arc":
-                            var fwball = new ObjMsFwBall(File.ReadAllBytes(file));
-                            model = fwball.model;
-                            njtl = fwball.texList;
-                            gvm = fwball.gvm;
-                            break;
-                        case "obj_ms_prisoner.arc":
-                            var prisoner = new ObjMsPrisoner(File.ReadAllBytes(file));
-                            model = prisoner.model;
-                            njtl = prisoner.texList;
-                            gvm = prisoner.gvm;
-                            break;
-                    }
-
-                    var outDir = file + "_out";
-                    Directory.CreateDirectory(outDir);
-                    if (model != null)
-                    {
-                        var outPath = Path.Combine(outDir, $"model_0.fbx");
-                        for (int t = 0; t < njtl.texNames.Count; t++)
-                        {
-                            njtl.texNames[t] = njtl.texNames[t] += ".png";
-                        }
-                        var aqp = NinjaModelConvert.NinjaToAqua(model, out var aqn, njtl.texNames);
-                        if (aqp != null && aqp.vtxlList.Count > 0 || (aqp.tempTris.Count > 0 && aqp.tempTris[0].faceVerts.Count > 0))
-                        {
-                            aqp.ConvertToPSO2Model(true, false, false, true, false, false, false, true);
-                            aqp.ConvertToLegacyTypes();
-                            aqp.CreateTrueVertWeights();
-
-                            FbxExporterNative.ExportToFile(aqp, aqn, new List<AquaMotion>(), outPath, new List<string>(), new List<Matrix4x4>(), false);
-                        }
-                    }
-                    if (gvm != null)
-                    {
-                        gvm.Save(Path.Combine(outDir, "textures.gvm"));
-                    }
-                }
-            }
-        }
-
         private void compareFilesToolStripMenuItem_Click(object sender, EventArgs e)
         {
             var fileDialog = new CommonOpenFileDialog()
@@ -7927,12 +7382,12 @@ namespace AquaModelTool
             }
         }
 
-        private void readArBluePresbyterToolStripMenuItem_Click(object sender, EventArgs e)
+        private void billyHatcherAeMenuExtractToolStripMenuItem_Click(object sender, EventArgs e)
         {
             var openFileDialog = new OpenFileDialog()
             {
-                Title = "Select Billy Hatcher ar_blue_presbyter.arc, menu_model.arc",
-                Filter = "Billy Hatcher ar_blue_presbyter.arc, menu_model.arc files|ar_blue_presbyter.arc;menu_model.arc",
+                Title = "Select Billy Hatcher ae menu File",
+                Filter = "Billy Hatcher ae menu files|ae_*.arc",
                 FileName = "",
                 Multiselect = true
             };
@@ -7940,6 +7395,83 @@ namespace AquaModelTool
             {
                 foreach (var file in openFileDialog.FileNames)
                 {
+                    var outDir = file + "_out";
+                    Directory.CreateDirectory(outDir);
+
+                    AeMenuData ae = new AeMenuData(File.ReadAllBytes(file));
+                    File.WriteAllBytes(Path.Combine(outDir, Path.GetFileName(file) + ".ae"), ae.menuData);
+
+                    foreach (var gvpSet in ae.gvps)
+                    {
+                        File.WriteAllBytes(Path.Combine(outDir, Path.ChangeExtension(gvpSet.Key, ".gvp")), gvpSet.Value);
+                    }
+                    //No need to write the texture list since we only ever have one and can build it from the gvm
+                    ae.gvm.Save(Path.Combine(outDir, Path.GetFileName(file) + ".gvm"));
+                }
+            }
+        }
+
+        private void billyHatcherAeMenuPackToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            CommonOpenFileDialog openFileDialog = new CommonOpenFileDialog()
+            {
+                Title = "Select Billy Hatcher Extracted ae menu Folder(s)",
+                IsFolderPicker = true,
+            };
+            if (openFileDialog.ShowDialog() == CommonFileDialogResult.Ok)
+            {
+                foreach (var file in openFileDialog.FileNames)
+                {
+                    var aeFiles = Directory.GetFiles(file, "*.ae");
+                    var gvmFiles = Directory.GetFiles(file, "*.gvm");
+                    var gvpFiles = Directory.GetFiles(file, "*.gvp");
+                    Dictionary<string, byte[]> gvpDict = new Dictionary<string, byte[]>();
+                    foreach (var gvpPath in gvpFiles)
+                    {
+                        gvpDict.Add(Path.GetFileNameWithoutExtension(gvpPath), File.ReadAllBytes(gvpPath));
+                    }
+
+                    AeMenuData data = new();
+                    data.menuData = File.ReadAllBytes(aeFiles[0]);
+                    data.gvm = new PuyoFile(File.ReadAllBytes(gvmFiles[0]));
+                    data.texList = new NJTextureList(data.gvm.Entries.Select(x => Path.GetFileNameWithoutExtension(x.Name)).ToList());
+                    for (int i = 0; i < data.gvm.Entries.Count; i++)
+                    {
+                        var tex = Path.GetFileNameWithoutExtension(data.gvm.Entries[i].Name);
+                        if (gvpDict.ContainsKey(tex))
+                        {
+                            data.gvps.Add(tex, gvpDict[tex]);
+                        }
+                    }
+
+                    var outName = file;
+                    if (outName.EndsWith("_out"))
+                    {
+                        outName = outName.Substring(0, outName.Length - 4);
+                    }
+                    else
+                    {
+                        outName += ".arc";
+                    }
+                    File.WriteAllBytes(outName, data.GetBytes());
+                }
+            }
+        }
+
+        private void readMenuModelToolStripMenuItem_Click_1(object sender, EventArgs e)
+        {
+            var openFileDialog = new OpenFileDialog()
+            {
+                Title = "Select Billy Hatcher battlemodel, menu model",
+                Filter = "Billy Hatcher ar_blue_presbyter.arc, menu_model.arc files|battlemodel*.arc;menu_*.arc;main_menu_*.arc",
+                FileName = "",
+                Multiselect = true
+            };
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                foreach (var file in openFileDialog.FileNames)
+                {
+                    var fileName = Path.GetFileName(file);
                     if (file.Contains("ar_blue_presbyter.arc"))
                     {
                         var arc = new ArBluePresbyter(File.ReadAllBytes(file));
@@ -7965,54 +7497,7 @@ namespace AquaModelTool
                             arc.gvm.Save(Path.Combine(outDir, $"textures.gvm"));
                         }
                     }
-                    else
-                    {
-                        var outDir = file + "_out";
-                        Directory.CreateDirectory(outDir);
-                        var arc = new ProtoMenuModel(File.ReadAllBytes(file));
-                        for (int i = 0; i < arc.models.Count; i++)
-                        {
-                            var model = arc.models[i];
-                            if (model != null)
-                            {
-                                var outPath = Path.Combine(outDir, $"model{i}.fbx");
-                                var aqp = NinjaModelConvert.NinjaToAqua(model, out var aqn, arc.texList.texNames);
-                                if (aqp != null && aqp.vtxlList.Count > 0 || aqp.tempTris[0].faceVerts.Count > 0)
-                                {
-                                    aqp.ConvertToPSO2Model(true, false, false, true, false, false, false, true);
-                                    aqp.ConvertToLegacyTypes();
-                                    aqp.CreateTrueVertWeights();
-
-                                    FbxExporterNative.ExportToFile(aqp, aqn, new List<AquaMotion>(), outPath, new List<string>(), new List<Matrix4x4>(), false);
-                                }
-                            }
-
-                        }
-                        if (arc.gvm != null)
-                        {
-                            arc.gvm.Save(Path.Combine(outDir, $"textures.gvm"));
-                        }
-                    }
-
-                }
-            }
-        }
-
-        private void readMenuModelToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            var openFileDialog = new OpenFileDialog()
-            {
-                Title = "Select Billy Hatcher battlemodel, menu model",
-                Filter = "Billy Hatcher ar_blue_presbyter.arc, menu_model.arc files|battlemodel*.arc;menu_*.arc;main_menu_*.arc",
-                FileName = "",
-                Multiselect = true
-            };
-            if (openFileDialog.ShowDialog() == DialogResult.OK)
-            {
-                foreach (var file in openFileDialog.FileNames)
-                {
-                    var fileName = Path.GetFileName(file);
-                    if (fileName == "menu_model.arc")
+                    else if (fileName == "menu_model.arc")
                     {
                         var outDir = file + "_out";
                         Directory.CreateDirectory(outDir);
@@ -8102,12 +7587,12 @@ namespace AquaModelTool
             }
         }
 
-        private void billyHatcherAeMenuExtractToolStripMenuItem_Click(object sender, EventArgs e)
+        private void readArMaToolStripMenuItem_Click_1(object sender, EventArgs e)
         {
             var openFileDialog = new OpenFileDialog()
             {
-                Title = "Select Billy Hatcher ae menu File",
-                Filter = "Billy Hatcher ae menu files|ae_*.arc",
+                Title = "Select Billy Hatcher ar_ma_*.arc File",
+                Filter = "Billy Hatcher ar_ma_*.arc files|ar_ma_*.arc",
                 FileName = "",
                 Multiselect = true
             };
@@ -8115,65 +7600,533 @@ namespace AquaModelTool
             {
                 foreach (var file in openFileDialog.FileNames)
                 {
+                    var arc = new ArMa(File.ReadAllBytes(file));
+
                     var outDir = file + "_out";
                     Directory.CreateDirectory(outDir);
-
-                    AeMenuData ae = new AeMenuData(File.ReadAllBytes(file));
-                    File.WriteAllBytes(Path.Combine(outDir, Path.GetFileName(file) + ".ae"), ae.menuData);
-
-                    foreach (var gvpSet in ae.gvps)
+                    for (int i = 0; i < arc.models.Count; i++)
                     {
-                        File.WriteAllBytes(Path.Combine(outDir, Path.ChangeExtension(gvpSet.Key, ".gvp")), gvpSet.Value);
+                        var model = arc.models[i];
+                        if (model != null)
+                        {
+                            var outPath = Path.Combine(outDir, $"model_{i}.fbx");
+                            for (int t = 0; t < arc.texnamesList[0].texNames.Count; t++)
+                            {
+                                arc.texnamesList[0].texNames[t] = arc.texnamesList[0].texNames[t] += ".png";
+                            }
+                            var aqp = NinjaModelConvert.NinjaToAqua(model, out var aqn, arc.texnamesList[0].texNames);
+                            if (aqp != null && aqp.vtxlList.Count > 0 || (aqp.tempTris.Count > 0 && aqp.tempTris[0].faceVerts.Count > 0))
+                            {
+                                aqp.ConvertToPSO2Model(true, false, false, true, false, false, false, true);
+                                aqp.ConvertToLegacyTypes();
+                                aqp.CreateTrueVertWeights();
+
+                                FbxExporterNative.ExportToFile(aqp, aqn, new List<AquaMotion>(), outPath, new List<string>(), new List<Matrix4x4>(), false);
+                            }
+                        }
                     }
-                    //No need to write the texture list since we only ever have one and can build it from the gvm
-                    ae.gvm.Save(Path.Combine(outDir, Path.GetFileName(file) + ".gvm"));
+                    if (arc.gvm != null)
+                    {
+                        arc.gvm.Save(Path.Combine(outDir, "textures.gvm"));
+                    }
                 }
             }
         }
 
-        private void billyHatcherAeMenuPackToolStripMenuItem_Click(object sender, EventArgs e)
+        private void readObjMsToolStripMenuItem_Click_1(object sender, EventArgs e)
         {
-            CommonOpenFileDialog openFileDialog = new CommonOpenFileDialog()
+            var openFileDialog = new OpenFileDialog()
             {
-                Title = "Select Billy Hatcher Extracted ae menu Folder(s)",
-                IsFolderPicker = true,
+                Title = "Select Billy Hatcher obj_ms_*.arc File",
+                Filter = "Billy Hatcher obj_ms_*.arc files|obj_ms_*.arc",
+                FileName = "",
+                Multiselect = true
             };
-            if (openFileDialog.ShowDialog() == CommonFileDialogResult.Ok)
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
                 foreach (var file in openFileDialog.FileNames)
                 {
-                    var aeFiles = Directory.GetFiles(file, "*.ae");
-                    var gvmFiles = Directory.GetFiles(file, "*.gvm");
-                    var gvpFiles = Directory.GetFiles(file, "*.gvp");
-                    Dictionary<string, byte[]> gvpDict = new Dictionary<string, byte[]>();
-                    foreach(var gvpPath in gvpFiles)
+                    NJSObject model = null;
+                    NJTextureList njtl = null;
+                    PuyoFile gvm = null;
+                    switch (Path.GetFileName(file))
                     {
-                        gvpDict.Add(Path.GetFileNameWithoutExtension(gvpPath), File.ReadAllBytes(gvpPath));
+                        case "obj_ms_bomb.arc":
+                            var bomb = new ObjMsBomb(File.ReadAllBytes(file));
+                            model = bomb.model;
+                            njtl = bomb.texLists[0];
+                            gvm = bomb.gvm;
+                            break;
+                        case "obj_ms_fwball.arc":
+                            var fwball = new ObjMsFwBall(File.ReadAllBytes(file));
+                            model = fwball.model;
+                            njtl = fwball.texList;
+                            gvm = fwball.gvm;
+                            break;
+                        case "obj_ms_prisoner.arc":
+                            var prisoner = new ObjMsPrisoner(File.ReadAllBytes(file));
+                            model = prisoner.model;
+                            njtl = prisoner.texList;
+                            gvm = prisoner.gvm;
+                            break;
                     }
 
-                    AeMenuData data = new();
-                    data.menuData = File.ReadAllBytes(aeFiles[0]);
-                    data.gvm = new PuyoFile(File.ReadAllBytes(gvmFiles[0]));
-                    data.texList = new NJTextureList(data.gvm.Entries.Select(x => Path.GetFileNameWithoutExtension(x.Name)).ToList());
-                    for(int i = 0; i < data.gvm.Entries.Count; i++)
+                    var outDir = file + "_out";
+                    Directory.CreateDirectory(outDir);
+                    if (model != null)
                     {
-                        var tex = Path.GetFileNameWithoutExtension(data.gvm.Entries[i].Name);
-                        if (gvpDict.ContainsKey(tex))
+                        var outPath = Path.Combine(outDir, $"model_0.fbx");
+                        for (int t = 0; t < njtl.texNames.Count; t++)
                         {
-                            data.gvps.Add(tex, gvpDict[tex]);
+                            njtl.texNames[t] = njtl.texNames[t] += ".png";
+                        }
+                        var aqp = NinjaModelConvert.NinjaToAqua(model, out var aqn, njtl.texNames);
+                        if (aqp != null && aqp.vtxlList.Count > 0 || (aqp.tempTris.Count > 0 && aqp.tempTris[0].faceVerts.Count > 0))
+                        {
+                            aqp.ConvertToPSO2Model(true, false, false, true, false, false, false, true);
+                            aqp.ConvertToLegacyTypes();
+                            aqp.CreateTrueVertWeights();
+
+                            FbxExporterNative.ExportToFile(aqp, aqn, new List<AquaMotion>(), outPath, new List<string>(), new List<Matrix4x4>(), false);
                         }
                     }
-
-                    var outName = file;
-                    if (outName.EndsWith("_out"))
+                    if (gvm != null)
                     {
-                        outName = outName.Substring(0, outName.Length - 4);
+                        gvm.Save(Path.Combine(outDir, "textures.gvm"));
+                    }
+                }
+            }
+        }
+
+        private void extractBorderBreakPS4FARCToolStripMenuItem_Click_1(object sender, EventArgs e)
+        {
+            var openFileDialog = new OpenFileDialog()
+            {
+                Title = "Select Border Break archive file (Models' rigging and skinning is broken at this time)",
+                Filter = "*_obj.bin, *.pfa, spr_*.bin, *tex.bin, fld_*.bin files|*_obj.bin;spr_*.bin;*tex.bin;*.pfa;fld_*.bin|Model archive files *_obj.bin|*_obj.bin|spr_*.bin, *tex.bin files|spr_*.bin;*tex.bin|pfa files|*.pfa|FLD Stage Collision Files fld_*.bin|fld_*.bin",
+                FileName = "",
+                Multiselect = true
+            };
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                foreach (var archiveFile in openFileDialog.FileNames)
+                {
+                    if (archiveFile.EndsWith("pfa"))
+                    {
+                        using (MemoryStream stream = new MemoryStream(File.ReadAllBytes(archiveFile)))
+                        using (var streamReader = new BufferedStreamReaderBE<MemoryStream>(stream))
+                        {
+                            var pfa = new FARC(streamReader);
+                            var path = archiveFile + "_out";
+                            Directory.CreateDirectory(path);
+                            foreach (var file in pfa.fileEntries)
+                            {
+                                var fname = Path.Combine(path, file.fileName);
+                                File.WriteAllBytes(fname, file.fileData);
+
+                                //Extract txp
+                                if (file.fileName.StartsWith("spr_") || file.fileName.EndsWith("tex.bin"))
+                                {
+                                    BorderBreakPS4Convert.ExtractTXP(fname, file.fileData);
+                                }
+                                else if (file.fileName.EndsWith("_obj.bin"))
+                                {
+                                    ConvertAM2BBPS4Model(fname, file.fileData);
+                                }
+                            }
+                        }
+                    }
+                    else if (archiveFile.EndsWith("_obj.bin"))
+                    {
+                        var objBinRaw = File.ReadAllBytes(archiveFile);
+                        ConvertAM2BBPS4Model(archiveFile, objBinRaw);
+                    }
+                    else if (Path.GetFileName(archiveFile).StartsWith("fld_"))
+                    {
+                        var fldBinRaw = File.ReadAllBytes(archiveFile);
+                        ConvertAM2BBPS4FLD(archiveFile, fldBinRaw);
                     }
                     else
                     {
-                        outName += ".arc";
+                        var txpRaw = File.ReadAllBytes(archiveFile);
+                        BorderBreakPS4Convert.ExtractTXP(archiveFile, txpRaw);
                     }
-                    File.WriteAllBytes(outName, data.GetBytes());
+                }
+            }
+        }
+
+        private void setMOTBONEbinPathToolStripMenuItem_Click_1(object sender, EventArgs e)
+        {
+            var openFileDialog = new OpenFileDialog()
+            {
+                Title = "Select mot_bone.bin file",
+                Filter = "mot_bone.bin|mot_bone.bin",
+                FileName = "",
+            };
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                borderBreakPS4BonePath = openFileDialog.FileName;
+                SaveMainSettings();
+            }
+        }
+
+        private void objbindmlExtractToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var openFileDialog = new OpenFileDialog()
+            {
+                Title = "Select Billy Hatcher obj*.bin, *.dml File",
+                Filter = "Billy Hatcher obj*.bin, *.dml files|obj*.bin;*.dml",
+                FileName = "",
+                Multiselect = true
+            };
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                foreach (var file in openFileDialog.FileNames)
+                {
+                    var fileName = Path.GetFileNameWithoutExtension(file);
+                    var model = new CSDY(File.ReadAllBytes(file), true, 0);
+                    var outDir = file + "_out";
+                    Directory.CreateDirectory(outDir);
+                    if (model != null)
+                    {
+                        var aqpList = model.ConvertToAquaObject();
+                        var aqn = AquaNode.GenerateBasicAQN();
+                        for (int i = 0; i < aqpList.Count; i++)
+                        {
+                            var aqp = aqpList[i];
+                            string outPath;
+                            if (i == 0 && aqpList.Count == 1)
+                            {
+                                outPath = Path.Combine(outDir, $"{fileName}.fbx");
+                            }
+                            else
+                            {
+                                outPath = Path.Combine(outDir, $"{fileName}_{i}.fbx");
+                            }
+
+                            if (aqp != null && aqp.vtxlList.Count > 0 || aqp.tempTris[0].faceVerts.Count > 0)
+                            {
+                                aqp.ConvertToLegacyTypes();
+                                aqp.CreateTrueVertWeights();
+
+                                FbxExporterNative.ExportToFile(aqp, aqn, new List<AquaMotion>(), outPath, new List<string>(), new List<Matrix4x4>(), false);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        private void arenearcArobjarcToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var openFileDialog = new OpenFileDialog()
+            {
+                Title = "Select Billy Hatcher ar_ene/obj_*.arc Files that aren't param",
+                Filter = "Billy Hatcher ar_ene/obj_*.arc (Except Param!) files|ar_ene_*.arc;ar_obj_*.arc",
+                FileName = "",
+                Multiselect = true
+            };
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                foreach (var file in openFileDialog.FileNames)
+                {
+                    if (file.Contains("param"))
+                    {
+                        continue;
+                    }
+                    var arc = new ArEnemy(File.ReadAllBytes(file));
+
+                    var outDir = file + "_out";
+                    Directory.CreateDirectory(outDir);
+                    for (int i = 0; i < arc.models.Count; i++)
+                    {
+                        var model = arc.models[i];
+                        if (model != null)
+                        {
+                            List<string> texList = null;
+                            if (arc.texList.Count != 0)
+                            {
+                                texList = arc.texList[0].texNames;
+                            }
+                            var outPath = Path.Combine(outDir, $"model_{i}.fbx");
+                            var aqp = NinjaModelConvert.NinjaToAqua(model, out var aqn, texList);
+                            if (aqp != null && aqp.vtxlList.Count > 0 || aqp.tempTris[0].faceVerts.Count > 0)
+                            {
+                                aqp.ConvertToPSO2Model(true, false, false, true, false, false, false, true);
+                                aqp.ConvertToLegacyTypes();
+                                aqp.CreateTrueVertWeights();
+
+                                FbxExporterNative.ExportToFile(aqp, aqn, new List<AquaMotion>(), outPath, new List<string>(), new List<Matrix4x4>(), false);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        private void geeggarcExtractToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var openFileDialog = new OpenFileDialog()
+            {
+                Title = "Select Billy Hatcher ge_egg.arc File",
+                Filter = "Billy Hatcher ge_egg.arc files|ge_egg.arc",
+                FileName = "",
+                Multiselect = true
+            };
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                foreach (var file in openFileDialog.FileNames)
+                {
+                    var arc = new GEEGG(File.ReadAllBytes(file));
+
+                    var outDir = file + "_out";
+                    Directory.CreateDirectory(outDir);
+                    for (int i = 0; i < arc.models.Count; i++)
+                    {
+                        var model = arc.models[i];
+                        if (model != null)
+                        {
+                            var outPath = Path.Combine(outDir, $"model_{i}.fbx");
+                            var aqp = NinjaModelConvert.NinjaToAqua(model, out var aqn);
+                            if (aqp != null && aqp.vtxlList.Count > 0 || (aqp.tempTris.Count > 0 && aqp.tempTris[0].faceVerts.Count > 0))
+                            {
+                                aqp.ConvertToPSO2Model(true, false, false, true, false, false, false, true);
+                                aqp.ConvertToLegacyTypes();
+                                aqp.CreateTrueVertWeights();
+
+                                FbxExporterNative.ExportToFile(aqp, aqn, new List<AquaMotion>(), outPath, new List<string>(), new List<Matrix4x4>(), false);
+                            }
+                        }
+                    }
+                    if (arc.gvm != null)
+                    {
+                        arc.gvm.Save(Path.Combine(outDir, "textures.gvm"));
+                    }
+                }
+            }
+        }
+
+        private void galleryeggarcExtractToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var openFileDialog = new OpenFileDialog()
+            {
+                Title = "Select Billy Hatcher gallery_egg.arc",
+                Filter = "Billy Hatcher gallery_egg.arc files|gallery_egg.arc",
+                FileName = "",
+                Multiselect = true
+            };
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                foreach (var file in openFileDialog.FileNames)
+                {
+                    var arc = new GalleryEgg(File.ReadAllBytes(file));
+
+
+                    var outDir = file + "_out";
+                    Directory.CreateDirectory(outDir);
+                    var model = arc.model;
+                    if (model != null)
+                    {
+                        var outPath = Path.Combine(outDir, $"model.fbx");
+                        var aqp = NinjaModelConvert.NinjaToAqua(model, out var aqn);
+                        if (aqp != null && aqp.vtxlList.Count > 0 || aqp.tempTris[0].faceVerts.Count > 0)
+                        {
+                            aqp.ConvertToPSO2Model(true, false, false, true, false, false, false, true);
+                            aqp.ConvertToLegacyTypes();
+                            aqp.CreateTrueVertWeights();
+
+                            FbxExporterNative.ExportToFile(aqp, aqn, new List<AquaMotion>(), outPath, new List<string>(), new List<Matrix4x4>(), false);
+                        }
+                    }
+                    if (arc.texArchives != null)
+                    {
+                        for (int i = 0; i < arc.texLists.Count; i++)
+                        {
+                            arc.texArchives[i].Save(Path.Combine(outDir, arc.texLists[i].texNames[0] + ".gvm"));
+                        }
+                    }
+
+                }
+            }
+        }
+
+        private void libitemarcExtractToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var openFileDialog = new OpenFileDialog()
+            {
+                Title = "Select Billy Hatcher lib_*.arc, item_*.arc File",
+                Filter = "Billy Hatcher lib_*.arc, item_*.arc files|lib_*.arc;item_*.arc",
+                FileName = "",
+                Multiselect = true
+            };
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                foreach (var file in openFileDialog.FileNames)
+                {
+                    var arc = new ItemLibModel(File.ReadAllBytes(file));
+
+                    var outDir = file + "_out";
+                    Directory.CreateDirectory(outDir);
+                    var model = arc.model;
+                    for (int t = 0; t < arc.texList.texNames.Count; t++)
+                    {
+                        arc.texList.texNames[t] = arc.texList.texNames[t] += ".png";
+                    }
+                    if (model != null)
+                    {
+                        var outPath = Path.Combine(outDir, $"model.fbx");
+                        var aqp = NinjaModelConvert.NinjaToAqua(model, out var aqn, arc.texList.texNames);
+                        if (aqp != null && aqp.vtxlList.Count > 0 || aqp.tempTris[0].faceVerts.Count > 0)
+                        {
+                            aqp.ConvertToPSO2Model(true, false, false, true, false, false, false, true);
+                            aqp.ConvertToLegacyTypes();
+                            aqp.CreateTrueVertWeights();
+
+                            FbxExporterNative.ExportToFile(aqp, aqn, new List<AquaMotion>(), outPath, new List<string>(), new List<Matrix4x4>(), false);
+                        }
+                    }
+                    if (arc.gvm != null)
+                    {
+                        arc.gvm.Save(Path.Combine(outDir, "textures.gvm"));
+                    }
+                }
+            }
+        }
+
+        private void animodelarcExtractToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var openFileDialog = new OpenFileDialog()
+            {
+                Title = "Select Billy Hatcher ani_model_*.arc File",
+                Filter = "Billy Hatcher ani_model_*.arc files|ani_model_*.arc",
+                FileName = "",
+                Multiselect = true
+            };
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                foreach (var file in openFileDialog.FileNames)
+                {
+                    var arc = new AniModel(File.ReadAllBytes(file));
+                    var outPath = file + "_out";
+                    for (int i = 0; i < arc.models.Count; i++)
+                    {
+                        File.WriteAllBytes(Path.Combine(outPath, $"model_{i}.gj"), NinjaModelConvert.GetGjBytes(arc.models[i]));
+                    }
+                    for (int i = 0; i < arc.motions.Count; i++)
+                    {
+                        if (arc.motions[i] != null)
+                        {
+                            File.WriteAllBytes(Path.Combine(outPath, $"motion_{i}.njm"), NinjaModelConvert.GetNjmBytes(arc.motions[i], NJSMotion.MotionWriteMode.BillyMode));
+                        }
+                    }
+                    var outDir = file + "_out";
+
+                    Directory.CreateDirectory(outDir);
+                    for (int i = 0; i < arc.models.Count; i++)
+                    {
+                        var model = arc.models[i];
+                        if (model != null)
+                        {
+                            var finalOutPath = Path.Combine(outDir, $"model_{i}.fbx");
+                            var aqp = NinjaModelConvert.NinjaToAqua(model, out var aqn, arc.texList.texNames);
+                            if (aqp != null && aqp.vtxlList.Count > 0 || aqp.tempTris[0].faceVerts.Count > 0)
+                            {
+                                aqp.ConvertToPSO2Model(true, false, false, true, false, false, false, true);
+                                aqp.ConvertToLegacyTypes();
+                                aqp.CreateTrueVertWeights();
+
+                                FbxExporterNative.ExportToFile(aqp, aqn, new List<AquaMotion>(), finalOutPath, new List<string>(), new List<Matrix4x4>(), false);
+                            }
+                        }
+                    }
+                    if (arc.gvm != null)
+                    {
+                        arc.gvm.Save(Path.Combine(outDir, "textures.gvm"));
+                    }
+                    if (arc.polyAnim != null)
+                    {
+                        arc.polyAnim.gvm.Save(Path.Combine(outDir, "polyanim_textures.gvm"));
+                    }
+
+                }
+            }
+        }
+
+        private void geplayerarcExtractToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var openFileDialog = new OpenFileDialog()
+            {
+                Title = "Select Billy Hatcher ge_player*.arc File",
+                Filter = "Billy Hatcher ge_player*.arc files|ge_player*.arc",
+                FileName = "",
+                Multiselect = true
+            };
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                foreach (var file in openFileDialog.FileNames)
+                {
+                    var arc = new GEPlayer(File.ReadAllBytes(file));
+
+                    var outDir = file + "_out";
+                    Directory.CreateDirectory(outDir);
+                    for (int i = 0; i < arc.models.Count; i++)
+                    {
+                        var model = arc.models[i];
+                        if (model != null)
+                        {
+                            var outPath = Path.Combine(outDir, $"model_{i}.fbx");
+                            var aqp = NinjaModelConvert.NinjaToAqua(model, out var aqn);
+                            if (aqp != null && aqp.vtxlList.Count > 0 || aqp.tempTris[0].faceVerts.Count > 0)
+                            {
+                                aqp.ConvertToPSO2Model(true, false, false, true, false, false, false, true);
+                                aqp.ConvertToLegacyTypes();
+                                aqp.CreateTrueVertWeights();
+
+                                FbxExporterNative.ExportToFile(aqp, aqn, new List<AquaMotion>(), outPath, new List<string>(), new List<Matrix4x4>(), false);
+                            }
+                        }
+                    }
+                    if (arc.dFace != null)
+                    {
+                        var outPath = Path.Combine(outDir, $"face.fbx");
+                        var aqp = NinjaModelConvert.NinjaToAqua(arc.dFace, out var aqn);
+                        if (aqp != null && aqp.vtxlList.Count > 0 || aqp.tempTris[0].faceVerts.Count > 0)
+                        {
+                            aqp.ConvertToPSO2Model(true, false, false, true, false, false, false, true);
+                            aqp.ConvertToLegacyTypes();
+                            aqp.CreateTrueVertWeights();
+
+                            FbxExporterNative.ExportToFile(aqp, aqn, new List<AquaMotion>(), outPath, new List<string>(), new List<Matrix4x4>(), false);
+                        }
+                    }
+                    if (arc.gvm != null)
+                    {
+                        arc.gvm.Save(Path.Combine(outDir, "textures.gvm"));
+                    }
+                }
+            }
+        }
+
+        private void padExtractToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var openFileDialog = new OpenFileDialog()
+            {
+                Title = "Select Billy Hatcher pad File",
+                Filter = "Billy Hatcher pad files|*.pad",
+                FileName = "",
+                Multiselect = true
+            };
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                foreach (var file in openFileDialog.FileNames)
+                {
+                    var arc = new PAD(File.ReadAllBytes(file));
+                    var outDir = file + "_out";
+                    Directory.CreateDirectory(outDir);
+                    if (arc.polyAnim.gvm != null)
+                    {
+                        arc.polyAnim.gvm.Save(Path.Combine(outDir, "textures.gvm"));
+                    }
                 }
             }
         }
