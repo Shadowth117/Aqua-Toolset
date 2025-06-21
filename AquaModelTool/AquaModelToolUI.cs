@@ -4741,6 +4741,10 @@ namespace AquaModelTool
                     else if (file.EndsWith("Default.arc"))
                     {
                         var trialLnd = new TrialDefaultArc(File.ReadAllBytes(file));
+                        if (trialLnd.protoLND.gvm != null)
+                        {
+                            File.WriteAllBytes(Path.Combine(outDir, $"{Path.GetFileNameWithoutExtension(file)}.gvm"), trialLnd.protoLND.gvm.GetBytes());
+                        }
                         aqpList = LNDToAqua(trialLnd.protoLND);
                     }
 
