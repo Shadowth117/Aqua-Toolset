@@ -85,12 +85,7 @@ namespace SoulsModelTool
             addFBXRootNodeCB.IsChecked = smtSetting.addFBXRootNode;
             addDummyNodeCB.IsChecked = smtSetting.addFlverDummies;
             parentDummyToAttachCB.IsChecked = smtSetting.parentDummiesToAttachNodes;
-
-            // using var ctx = new Assimp.AssimpContext();
-            // var formats = ctx.GetSupportedImportFormats().ToList();
-            // formats.Sort();
-            //
-            // importFormats = formats.ToArray();
+            includeTangentDataCB.IsChecked = smtSetting.addTangentData;
 
             importFormats = new[]
             {
@@ -162,6 +157,7 @@ namespace SoulsModelTool
             smtSetting.addFBXRootNode = (bool)addFBXRootNodeCB.IsChecked;
             smtSetting.addFlverDummies = (bool)addDummyNodeCB.IsChecked;
             smtSetting.parentDummiesToAttachNodes = (bool)parentDummyToAttachCB.IsChecked;
+            smtSetting.addTangentData = (bool)includeTangentDataCB.IsChecked;
             string smtSettingText = JsonConvert.SerializeObject(smtSetting, jss);
             File.WriteAllText(settingsPath + settingsFile, smtSettingText);
         }

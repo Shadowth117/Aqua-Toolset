@@ -171,6 +171,7 @@ namespace AquaModelTool
             addFBXRootNodeFixesBlenderSkinningIssuesTdToolStripMenuItem.Checked = smtSetting.addFBXRootNode;
             addFLVERDummyNodesToolStripMenuItem.Checked = smtSetting.addFlverDummies;
             parentDummyNodesToAttachToolStripMenuItem.Checked = smtSetting.parentDummiesToAttachNodes;
+            includeTangentDataToolStripMenuItem.Checked = smtSetting.addTangentData;
 
             SoulsConvert.game = smtSetting.soulsGame;
             SetSoulsGameToolStripText();
@@ -196,6 +197,7 @@ namespace AquaModelTool
             smtSetting.addFBXRootNode = addFBXRootNodeFixesBlenderSkinningIssuesTdToolStripMenuItem.Checked;
             smtSetting.addFlverDummies = addFLVERDummyNodesToolStripMenuItem.Checked;
             smtSetting.parentDummiesToAttachNodes = parentDummyNodesToAttachToolStripMenuItem.Checked;
+            smtSetting.addTangentData = includeTangentDataToolStripMenuItem.Checked;
 
             string smtSettingText = JsonSerializer.Serialize(smtSetting, jss);
             File.WriteAllText(mainSettingsPath + soulsSettingsFile, smtSettingText);
@@ -214,6 +216,7 @@ namespace AquaModelTool
             SoulsConvert.addFBXRootNode = addFBXRootNodeFixesBlenderSkinningIssuesTdToolStripMenuItem.Checked;
             SoulsConvert.addFlverDummies = addFLVERDummyNodesToolStripMenuItem.Checked;
             SoulsConvert.parentDummiesToAttachNodes = parentDummyNodesToAttachToolStripMenuItem.Checked;
+            SoulsConvert.addTangentData = includeTangentDataToolStripMenuItem.Checked;
         }
 
         public void ApplyModelImporterSettings()
@@ -3833,7 +3836,7 @@ namespace AquaModelTool
                     try
                     {
 #endif
-                        BluePointConvert.ConvertCMDLCMSH(file);
+                    BluePointConvert.ConvertCMDLCMSH(file);
 #if !DEBUG
                     }
                     catch (Exception ex)
@@ -5224,58 +5227,20 @@ namespace AquaModelTool
             };
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
-                StageDef.StageDefinition newRed2;
                 StageDef.StageDefinition newGreen2;
-                StageDef.StageDefinition newRedBoss;
-                StageDef.StageDefinition newRedBoss2;
                 using (MemoryStream stream = new MemoryStream(File.ReadAllBytes(openFileDialog.FileName)))
                 using (var streamReader = new BufferedStreamReaderBE<MemoryStream>(stream))
                 {
                     var stgDef = new StageDef(streamReader);
-                    newRed2 = stgDef.defs[1];
-                    newRed2.missionName = "red2";
-                    //newRedBoss = stgDef.defs[8];
-                    //newRedBoss.missionName = "red_boss";
-                    newRedBoss2 = stgDef.defs[0];
-                    newRedBoss2.missionName = "red_boss2";
+                    newGreen2 = stgDef.defs[6];
+                    //newGreen2.missionName = "green7";
                 }
                 using (MemoryStream stream = new MemoryStream(File.ReadAllBytes(openFileDialog.FileName)))
                 using (var streamReader = new BufferedStreamReaderBE<MemoryStream>(stream))
                 {
                     var stgDef = new StageDef(streamReader);
-                    newGreen2 = stgDef.defs[0];
-                    newGreen2.missionName = "green2";
-                    newRedBoss = stgDef.defs[1];
-                    newRedBoss.missionName = "red_boss";
-                }
-
-                using (MemoryStream stream = new MemoryStream(File.ReadAllBytes(openFileDialog.FileName)))
-                using (var streamReader = new BufferedStreamReaderBE<MemoryStream>(stream))
-                {
-                    var stgDef = new StageDef(streamReader);
-                    stgDef.defs[17] = newRed2;
                     stgDef.defs[1] = newGreen2;
-                    stgDef.defs[73] = newRedBoss;
-                    stgDef.defs[81] = newRedBoss2;
                     File.WriteAllBytes(openFileDialog.FileName, stgDef.GetBytes());
-                }
-            }
-        }
-
-        private void readGrassToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            var openFileDialog = new OpenFileDialog()
-            {
-                Title = "Select grass File",
-                Filter = "GRASS files|*.grass",
-                FileName = "",
-                Multiselect = true
-            };
-            if (openFileDialog.ShowDialog() == DialogResult.OK)
-            {
-                foreach (var file in openFileDialog.FileNames)
-                {
-                    SoulsConvert.ReadSoulsFile(file);
                 }
             }
         }
@@ -5291,24 +5256,6 @@ namespace AquaModelTool
                 customScaleBox.Enabled = false;
             }
             SaveMainSettings();
-        }
-
-        private void readMRPRoomGoodsToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            var openFileDialog = new OpenFileDialog()
-            {
-                Title = "Select mrp File",
-                Filter = "Room files|*.mrp",
-                FileName = "",
-                Multiselect = true
-            };
-            if (openFileDialog.ShowDialog() == DialogResult.OK)
-            {
-                foreach (var file in openFileDialog.FileNames)
-                {
-                    var mrp = new MyRoomParameters(File.ReadAllBytes(file), 0);
-                }
-            }
         }
 
         private void decryptINCToolStripMenuItem_Click(object sender, EventArgs e)
@@ -7311,25 +7258,6 @@ namespace AquaModelTool
             }
         }
 
-        private void readStorySeqToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            var openFileDialog = new OpenFileDialog()
-            {
-                Title = "Select Billy Hatcher StorySeq File",
-                Filter = "Billy Hatcher StorySeq files|storyseq.arc",
-                FileName = "",
-                Multiselect = true
-            };
-            if (openFileDialog.ShowDialog() == DialogResult.OK)
-            {
-                foreach (var file in openFileDialog.FileNames)
-                {
-                    StorySeq seq = new StorySeq(File.ReadAllBytes(file));
-                    File.WriteAllBytes(file + ".test", seq.GetBytes());
-                }
-            }
-        }
-
         private void compareFilesToolStripMenuItem_Click(object sender, EventArgs e)
         {
             var fileDialog = new CommonOpenFileDialog()
@@ -8131,6 +8059,25 @@ namespace AquaModelTool
                     {
                         arc.polyAnim.gvm.Save(Path.Combine(outDir, "textures.gvm"));
                     }
+                }
+            }
+        }
+
+        private void readStorySeqToolStripMenuItem_Click_1(object sender, EventArgs e)
+        {
+            var openFileDialog = new OpenFileDialog()
+            {
+                Title = "Select Billy Hatcher StorySeq File",
+                Filter = "Billy Hatcher StorySeq files|storyseq.arc",
+                FileName = "",
+                Multiselect = true
+            };
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                foreach (var file in openFileDialog.FileNames)
+                {
+                    StorySeq seq = new StorySeq(File.ReadAllBytes(file));
+                    File.WriteAllBytes(file + ".test", seq.GetBytes());
                 }
             }
         }

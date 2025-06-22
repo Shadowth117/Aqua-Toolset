@@ -59,6 +59,8 @@
                                   Click="smtSettingSet" />
                         <CheckBox x:Name="parentDummyToAttachCB" Content="Parent dummy nodes to attach nodes (Only used if Add FLVER dummy nodes is selected)" IsChecked="True"
                                   Click="smtSettingSet" />
+                        <CheckBox x:Name="includeTangentDataCB" Content="Include Tangent Data" IsChecked="False"
+                                  Click="smtSettingSet" />
                     </StackPanel>
                 </GroupBox>
                 <GroupBox Header="MSB extraction">

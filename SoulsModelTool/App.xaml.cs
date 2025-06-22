@@ -159,6 +159,12 @@ namespace SoulsModelTool
                         case "-dontparentdummiestoattach":
                             smtSetting.parentDummiesToAttachNodes = false;
                             break;
+                        case "-includetangentdata":
+                            smtSetting.addTangentData = true;
+                            break;
+                        case "-dontincludetangentdata":
+                            smtSetting.addTangentData = false;
+                            break;
                         default:
                             filePaths.Add(arg);
                             break;

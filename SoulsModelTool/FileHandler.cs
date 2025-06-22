@@ -49,6 +49,7 @@ namespace SoulsModelTool
             SoulsConvert.coordSystem = smtSetting.coordSystem;
             SoulsConvert.addFlverDummies = smtSetting.addFlverDummies;
             SoulsConvert.parentDummiesToAttachNodes = smtSetting.parentDummiesToAttachNodes;
+            SoulsConvert.addTangentData = smtSetting.addTangentData;
         }
 
         public static void ApplyModelImporterSettings(MainSetting mainSetting)
