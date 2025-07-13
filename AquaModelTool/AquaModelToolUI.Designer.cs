@@ -475,18 +475,20 @@ namespace AquaModelTool
             exportFormatCB.Name = "exportFormatCB";
             exportFormatCB.Size = new Size(250, 23);
             exportFormatCB.Click += SaveSoulsSettings;
+            exportFormatCB.TextChanged += SaveSoulsSettings;
             // 
             // soulsMirroringCB
             // 
             soulsMirroringCB.Name = "soulsMirroringCB";
             soulsMirroringCB.Size = new Size(250, 23);
-            soulsMirroringCB.Click += SaveSoulsSettings;
+            soulsMirroringCB.TextChanged += SaveSoulsSettings;
             // 
             // soulsCoordSystemCB
             // 
             soulsCoordSystemCB.Name = "soulsCoordSystemCB";
             soulsCoordSystemCB.Size = new Size(250, 23);
             soulsCoordSystemCB.Click += SaveSoulsSettings;
+            soulsCoordSystemCB.TextChanged += SaveSoulsSettings;
             // 
             // exportWithMetadataToolStripMenuItem
             // 

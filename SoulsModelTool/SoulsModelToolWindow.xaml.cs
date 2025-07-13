@@ -158,6 +158,11 @@ namespace SoulsModelTool
             smtSetting.addFlverDummies = (bool)addDummyNodeCB.IsChecked;
             smtSetting.parentDummiesToAttachNodes = (bool)parentDummyToAttachCB.IsChecked;
             smtSetting.addTangentData = (bool)includeTangentDataCB.IsChecked;
+            SMTSettingSave();
+        }
+
+        private void SMTSettingSave()
+        {
             string smtSettingText = JsonConvert.SerializeObject(smtSetting, jss);
             File.WriteAllText(settingsPath + settingsFile, smtSettingText);
         }
@@ -330,16 +335,19 @@ namespace SoulsModelTool
             {
                 scaleUD.IsEnabled = false;
             }
+            SMTSettingSave();
         }
 
         private void scaleUDChanged(object sender, RoutedPropertyChangedEventArgs<object> routedEvent)
         {
             mainSetting.customScaleValue = scaleUD.Value.ToString();
+            SMTSettingSave();
         }
 
         private void exportFormatCBChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
         {
             smtSetting.exportFormat = (ExportFormat)exportFormatCB.SelectedIndex;
+            SMTSettingSave();
         }
 
         private void FileDrop(object sender, DragEventArgs e)
@@ -385,16 +393,26 @@ namespace SoulsModelTool
         private void mirrorTypeCB_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
         {
             smtSetting.mirrorType = (MirrorType)mirrorTypeCB.SelectedIndex;
+            SMTSettingSave();
         }
+
+        private void mirrorTypeCB_SelectionChanged(object sender, EventArgs e)
+        {
+            smtSetting.mirrorType = (MirrorType)mirrorTypeCB.SelectedIndex;
+            SMTSettingSave();
+        }
+
 
         private void coordSystemCB_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
         {
             smtSetting.coordSystem = (CoordSystem)coordSystemCB.SelectedIndex;
+            SMTSettingSave();
         }
 
         private void exportFormatCB_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
         {
             smtSetting.exportFormat = (ExportFormat)exportFormatCB.SelectedIndex;
+            SMTSettingSave();
         }
     }
 }
