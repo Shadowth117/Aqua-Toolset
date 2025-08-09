@@ -18,6 +18,7 @@ namespace FalseIdola
     {
         public MainWindow()
         {
+            Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
             InitializeComponent();
         }
 

@@ -7939,21 +7939,21 @@ namespace AquaModelTool
                 foreach (var file in openFileDialog.FileNames)
                 {
                     var arc = new AniModel(File.ReadAllBytes(file));
-                    var outPath = file + "_out";
+                    var outDir = file + "_out";
+
+                    Directory.CreateDirectory(outDir);
+                    /*
                     for (int i = 0; i < arc.models.Count; i++)
                     {
-                        File.WriteAllBytes(Path.Combine(outPath, $"model_{i}.gj"), NinjaModelConvert.GetGjBytes(arc.models[i]));
+                        File.WriteAllBytes(Path.Combine(outDir, $"model_{i}.gj"), NinjaModelConvert.GetGjBytes(arc.models[i]));
                     }
                     for (int i = 0; i < arc.motions.Count; i++)
                     {
                         if (arc.motions[i] != null)
                         {
-                            File.WriteAllBytes(Path.Combine(outPath, $"motion_{i}.njm"), NinjaModelConvert.GetNjmBytes(arc.motions[i], NJSMotion.MotionWriteMode.BillyMode));
+                            File.WriteAllBytes(Path.Combine(outDir, $"motion_{i}.njm"), NinjaModelConvert.GetNjmBytes(arc.motions[i], NJSMotion.MotionWriteMode.BillyMode));
                         }
-                    }
-                    var outDir = file + "_out";
-
-                    Directory.CreateDirectory(outDir);
+                    }*/
                     for (int i = 0; i < arc.models.Count; i++)
                     {
                         var model = arc.models[i];
