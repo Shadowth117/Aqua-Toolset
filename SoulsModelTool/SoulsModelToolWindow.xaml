@@ -80,7 +80,7 @@
                 <Label Target="{Binding ElementName=exportFormatCB}" Content="Export Format:" />
                 <ComboBox x:Name="exportFormatCB" Width="160" SelectionChanged="exportFormatCB_SelectionChanged" />
                 <Label Target="{Binding ElementName=mirrorTypeCB}" Content="Mirror Type:" />
-                <ComboBox x:Name="mirrorTypeCB" Width="160" DropDownClosed="mirrorTypeCB_SelectionChanged" SelectionChanged="mirrorTypeCB_SelectionChanged" />
+                <ComboBox x:Name="mirrorTypeCB" Width="160" DropDownClosed="mirrorTypeCB_DropDownClosed" SelectionChanged="mirrorTypeCB_SelectionChanged" />
                 <Label Target="{Binding ElementName=coordSystemCB}" Content="FBX Coordinate System:" />
                 <ComboBox x:Name="coordSystemCB" Width="160" SelectionChanged="coordSystemCB_SelectionChanged" />
                 <Label Target="{Binding ElementName=scaleUD}" Content="Custom Scale:" />
