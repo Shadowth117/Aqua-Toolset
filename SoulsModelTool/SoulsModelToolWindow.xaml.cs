@@ -396,7 +396,7 @@ namespace SoulsModelTool
             SMTSettingSave();
         }
 
-        private void mirrorTypeCB_SelectionChanged(object sender, EventArgs e)
+        private void mirrorTypeCB_DropDownClosed(object sender, EventArgs e)
         {
             smtSetting.mirrorType = (MirrorType)mirrorTypeCB.SelectedIndex;
             SMTSettingSave();
