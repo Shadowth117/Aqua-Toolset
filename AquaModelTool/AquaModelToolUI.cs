@@ -5878,7 +5878,7 @@ namespace AquaModelTool
                 foreach (var file in openFileDialog.FileNames)
                 {
                     var fileData = SoulsFile<TPF>.Read(file);
-                    fileData.Compression = new DCX.NoCompressionInfo();
+                    fileData.Compression = DCX.Type.None;
                     File.WriteAllBytes(file.Replace("tpf.dcx", "tpf"), fileData.Write());
                 }
             }
