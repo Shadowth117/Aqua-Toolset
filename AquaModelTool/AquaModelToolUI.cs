@@ -24,7 +24,6 @@ using AquaModelLibrary.Data.FromSoft;
 using AquaModelLibrary.Data.Ikaruga._360;
 using AquaModelLibrary.Data.Ninja;
 using AquaModelLibrary.Data.Ninja.Model;
-using AquaModelLibrary.Data.Ninja.Motion;
 using AquaModelLibrary.Data.NNStructs;
 using AquaModelLibrary.Data.Nova;
 using AquaModelLibrary.Data.POE2;
@@ -52,7 +51,6 @@ using System.Collections.Immutable;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Globalization;
-using System.IO;
 using System.Numerics;
 using System.Reflection;
 using System.Text;
@@ -133,6 +131,7 @@ namespace AquaModelTool
                 }
             }
             customScaleBox.Text = mainSetting.customScaleValue;
+            importAsRigidToolStripMenuItem.Checked = mainSetting.importAsRigid;
             if (importScaleTypeCB.SelectedIndex != 2)
             {
                 customScaleBox.Enabled = false;
@@ -453,7 +452,7 @@ namespace AquaModelTool
                         aquaUI.packageModel.Read(File.ReadAllBytes(currentFile));
                         control = new ModelEditor(aquaUI.packageModel);
                         isNIFL = aquaUI.packageModel.models[0].nifl.magic != 0;
-                        this.Size = new Size(400, 360);
+                        this.Size = new Size(440, 360);
                         setModelOptions(true);
                         break;
                     case ".aqm":
@@ -469,7 +468,7 @@ namespace AquaModelTool
                         aquaUI.packageMotion.Read(File.ReadAllBytes(currentFile));
                         isNIFL = aquaUI.packageMotion.motions[0].nifl.magic != 0;
 
-                        this.Size = new Size(400, 320);
+                        this.Size = new Size(440, 320);
                         control = new AnimationEditor(aquaUI.packageMotion);
                         setModelOptions(false);
                         break;
@@ -2995,35 +2994,7 @@ namespace AquaModelTool
 
         private void importModelToolStripMenuItem_Click_1(object sender, EventArgs e)
         {
-            SaveMainSettings();
-            using (var ctx = new Assimp.AssimpContext())
-            {
-                var formats = ctx.GetSupportedImportFormats().ToList();
-                formats.Sort();
 
-                OpenFileDialog openFileDialog;
-                openFileDialog = new OpenFileDialog()
-                {
-                    Title = "Import model file, fbx recommended (output .aqp and .aqn will write to import directory)",
-                    Filter = ""
-                };
-                string tempFilter = "(*.fbx,*.dae,*.glb,*.gltf,*.pmx,*.smd)|*.fbx;*.dae;*.glb;*.gltf;*.pmx;*.smd";
-                string tempFilter2 = "";
-                openFileDialog.Filter = tempFilter + tempFilter2;
-
-                if (openFileDialog.ShowDialog() == DialogResult.OK)
-                {
-                    ApplyModelImporterSettings();
-                    var aqp = AssimpModelImporter.AssimpAquaConvertFull(openFileDialog.FileName, 1, false, true, out AquaNode aqn);
-                    AquaPackage aqPackage = new AquaPackage(aqp);
-                    var ext = Path.GetExtension(openFileDialog.FileName);
-                    var outStr = openFileDialog.FileName.Replace(ext, "_out.aqp");
-                    aqPackage.WritePackage(outStr);
-                    File.WriteAllBytes(Path.ChangeExtension(outStr, ".aqn"), aqn.GetBytesNIFL());
-
-                    AquaUIOpenFile(outStr);
-                }
-            }
         }
 
         private void convertPSNovaaxsaifToolStripMenuItem1_Click(object sender, EventArgs e)
@@ -3836,7 +3807,7 @@ namespace AquaModelTool
                     try
                     {
 #endif
-                    BluePointConvert.ConvertCMDLCMSH(file);
+                        BluePointConvert.ConvertCMDLCMSH(file);
 #if !DEBUG
                     }
                     catch (Exception ex)
@@ -4294,6 +4265,7 @@ namespace AquaModelTool
             mainSetting.BBPS4BonePath = borderBreakPS4BonePath;
             mainSetting.customScaleValue = customScaleBox.Text;
             mainSetting.customScaleSelection = $"{importScaleTypeCB.SelectedIndex}";
+            mainSetting.importAsRigid = importAsRigidToolStripMenuItem.Checked;
 
             string mainSettingText = JsonSerializer.Serialize(mainSetting);
             File.WriteAllText(mainSettingsPath + mainSettingsFile, mainSettingText);
@@ -8078,6 +8050,39 @@ namespace AquaModelTool
                 {
                     StorySeq seq = new StorySeq(File.ReadAllBytes(file));
                     File.WriteAllBytes(file + ".test", seq.GetBytes());
+                }
+            }
+        }
+
+        private void importToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SaveMainSettings();
+            using (var ctx = new Assimp.AssimpContext())
+            {
+                var formats = ctx.GetSupportedImportFormats().ToList();
+                formats.Sort();
+
+                OpenFileDialog openFileDialog;
+                openFileDialog = new OpenFileDialog()
+                {
+                    Title = "Import model file, fbx recommended (output .aqp and .aqn will write to import directory)",
+                    Filter = ""
+                };
+                string tempFilter = "(*.fbx,*.dae,*.glb,*.gltf,*.pmx,*.smd)|*.fbx;*.dae;*.glb;*.gltf;*.pmx;*.smd";
+                string tempFilter2 = "";
+                openFileDialog.Filter = tempFilter + tempFilter2;
+
+                if (openFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    ApplyModelImporterSettings();
+                    var aqp = AssimpModelImporter.AssimpAquaConvertFull(openFileDialog.FileName, 1, false, true, out AquaNode aqn, true, false, importAsRigidToolStripMenuItem.Checked);
+                    AquaPackage aqPackage = new AquaPackage(aqp);
+                    var ext = Path.GetExtension(openFileDialog.FileName);
+                    var outStr = openFileDialog.FileName.Replace(ext, "_out.aqp");
+                    aqPackage.WritePackage(outStr);
+                    File.WriteAllBytes(Path.ChangeExtension(outStr, ".aqn"), aqn.GetBytesNIFL());
+
+                    AquaUIOpenFile(outStr);
                 }
             }
         }

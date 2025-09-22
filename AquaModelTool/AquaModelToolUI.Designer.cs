@@ -67,6 +67,7 @@ namespace AquaModelTool
             addFBXRootNodeFixesBlenderSkinningIssuesTdToolStripMenuItem = new ToolStripMenuItem();
             addFLVERDummyNodesToolStripMenuItem = new ToolStripMenuItem();
             parentDummyNodesToAttachToolStripMenuItem = new ToolStripMenuItem();
+            includeTangentDataToolStripMenuItem = new ToolStripMenuItem();
             toolStripSeparator14 = new ToolStripSeparator();
             setSoulsGameToolStripMenuItem = new ToolStripMenuItem();
             extractSoulsMapObjectLayoutFrommsbToolStripMenuItem = new ToolStripMenuItem();
@@ -256,7 +257,8 @@ namespace AquaModelTool
             readStorySeqToolStripMenuItem = new ToolStripMenuItem();
             filePanel = new Panel();
             splitter1 = new Splitter();
-            includeTangentDataToolStripMenuItem = new ToolStripMenuItem();
+            importToolStripMenuItem = new ToolStripMenuItem();
+            importAsRigidToolStripMenuItem = new ToolStripMenuItem();
             menuStrip1.SuspendLayout();
             SuspendLayout();
             // 
@@ -286,6 +288,7 @@ namespace AquaModelTool
             // 
             // importModelToolStripMenuItem
             // 
+            importModelToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { importToolStripMenuItem, importAsRigidToolStripMenuItem });
             importModelToolStripMenuItem.Name = "importModelToolStripMenuItem";
             importModelToolStripMenuItem.Size = new Size(206, 22);
             importModelToolStripMenuItem.Text = "Import Model";
@@ -543,6 +546,14 @@ namespace AquaModelTool
             parentDummyNodesToAttachToolStripMenuItem.Size = new Size(650, 22);
             parentDummyNodesToAttachToolStripMenuItem.Text = "Parent dummy nodes to attach nodes (Only used if Add FLVER dummy nodes is selected)";
             parentDummyNodesToAttachToolStripMenuItem.Click += SaveSoulsSettings;
+            // 
+            // includeTangentDataToolStripMenuItem
+            // 
+            includeTangentDataToolStripMenuItem.CheckOnClick = true;
+            includeTangentDataToolStripMenuItem.Name = "includeTangentDataToolStripMenuItem";
+            includeTangentDataToolStripMenuItem.Size = new Size(650, 22);
+            includeTangentDataToolStripMenuItem.Text = "Include Tangent Data";
+            includeTangentDataToolStripMenuItem.Click += SaveSoulsSettings;
             // 
             // toolStripSeparator14
             // 
@@ -1848,13 +1859,20 @@ namespace AquaModelTool
             splitter1.TabIndex = 2;
             splitter1.TabStop = false;
             // 
-            // includeTangentDataToolStripMenuItem
+            // importToolStripMenuItem
             // 
-            includeTangentDataToolStripMenuItem.CheckOnClick = true;
-            includeTangentDataToolStripMenuItem.Name = "includeTangentDataToolStripMenuItem";
-            includeTangentDataToolStripMenuItem.Size = new Size(650, 22);
-            includeTangentDataToolStripMenuItem.Text = "Include Tangent Data";
-            includeTangentDataToolStripMenuItem.Click += SaveSoulsSettings;
+            importToolStripMenuItem.Name = "importToolStripMenuItem";
+            importToolStripMenuItem.Size = new Size(180, 22);
+            importToolStripMenuItem.Text = "Import";
+            importToolStripMenuItem.Click += importToolStripMenuItem_Click;
+            // 
+            // importAsRigidToolStripMenuItem
+            // 
+            importAsRigidToolStripMenuItem.CheckOnClick = true;
+            importAsRigidToolStripMenuItem.Name = "importAsRigidToolStripMenuItem";
+            importAsRigidToolStripMenuItem.Size = new Size(180, 22);
+            importAsRigidToolStripMenuItem.Text = "Rigid (Unskinned)";
+            importAsRigidToolStripMenuItem.ToolTipText = "Required for build parts, room items, scenery items etc. Import mesh data as unskinned; meshes will be 'weighted' to a single bone per mesh.";
             // 
             // AquaModelTool
             // 
@@ -2106,6 +2124,8 @@ namespace AquaModelTool
         private ToolStripMenuItem padExtractToolStripMenuItem;
         private ToolStripMenuItem readStorySeqToolStripMenuItem;
         private ToolStripMenuItem includeTangentDataToolStripMenuItem;
+        private ToolStripMenuItem importToolStripMenuItem;
+        private ToolStripMenuItem importAsRigidToolStripMenuItem;
     }
 }
 
