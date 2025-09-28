@@ -168,6 +168,7 @@ namespace CMXPatcher
                 bodyBytes.AddValue(body.byteId_1);
                 bodyBytes.AddValue(body.byteId_2);
                 bodyBytes.AddValue(body.byteId_3);
+                bodyBytes.AddValue((int)0);
                 bodyBytes.AddRange(DataHelpers.ConvertStruct(body.bodyMaskColorMapping));
             }
             bodyBytes.AddRange(DataHelpers.ConvertStruct(body.body2));
