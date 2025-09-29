@@ -80,9 +80,6 @@ namespace CMXPatcher
 
                 switch (contents[0])
                 {
-                    case "int_20":
-                        body.body.string7Ptr = Int32.Parse(contents[1], new CultureInfo("en-US"));
-                        break;
                     case "int_24_0x9_0x9":
                         body.body2.int_24_0x9_0x9 = Int32.Parse(contents[1], new CultureInfo("en-US"));
                         break;
@@ -164,11 +161,10 @@ namespace CMXPatcher
             bodyBytes.AddRange(DataHelpers.ConvertStruct(body.body));
             if (postRetem)
             {
-                bodyBytes.AddValue(body.byteId_0);
-                bodyBytes.AddValue(body.byteId_1);
-                bodyBytes.AddValue(body.byteId_2);
-                bodyBytes.AddValue(body.byteId_3);
-                bodyBytes.AddValue((int)0);
+                bodyBytes.Add(body.byteId_0);
+                bodyBytes.Add(body.byteId_1);
+                bodyBytes.Add(body.byteId_2);
+                bodyBytes.Add(body.byteId_3);
                 bodyBytes.AddRange(DataHelpers.ConvertStruct(body.bodyMaskColorMapping));
             }
             bodyBytes.AddRange(DataHelpers.ConvertStruct(body.body2));
