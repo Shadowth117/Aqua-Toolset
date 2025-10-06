@@ -32,6 +32,8 @@ namespace AquaModelTool
             fileToolStripMenuItem = new ToolStripMenuItem();
             openToolStripMenuItem = new ToolStripMenuItem();
             importModelToolStripMenuItem = new ToolStripMenuItem();
+            importToolStripMenuItem = new ToolStripMenuItem();
+            importAsRigidToolStripMenuItem = new ToolStripMenuItem();
             convertAnimationToAQMToolStripMenuItem = new ToolStripMenuItem();
             convertAnimToolStripMenuItem = new ToolStripMenuItem();
             forceNoCharacterMetadataCheckBox = new ToolStripMenuItem();
@@ -257,8 +259,7 @@ namespace AquaModelTool
             readStorySeqToolStripMenuItem = new ToolStripMenuItem();
             filePanel = new Panel();
             splitter1 = new Splitter();
-            importToolStripMenuItem = new ToolStripMenuItem();
-            importAsRigidToolStripMenuItem = new ToolStripMenuItem();
+            readWriteLNDTestToolStripMenuItem = new ToolStripMenuItem();
             menuStrip1.SuspendLayout();
             SuspendLayout();
             // 
@@ -293,6 +294,21 @@ namespace AquaModelTool
             importModelToolStripMenuItem.Size = new Size(206, 22);
             importModelToolStripMenuItem.Text = "Import Model";
             importModelToolStripMenuItem.Click += importModelToolStripMenuItem_Click_1;
+            // 
+            // importToolStripMenuItem
+            // 
+            importToolStripMenuItem.Name = "importToolStripMenuItem";
+            importToolStripMenuItem.Size = new Size(168, 22);
+            importToolStripMenuItem.Text = "Import";
+            importToolStripMenuItem.Click += importToolStripMenuItem_Click;
+            // 
+            // importAsRigidToolStripMenuItem
+            // 
+            importAsRigidToolStripMenuItem.CheckOnClick = true;
+            importAsRigidToolStripMenuItem.Name = "importAsRigidToolStripMenuItem";
+            importAsRigidToolStripMenuItem.Size = new Size(168, 22);
+            importAsRigidToolStripMenuItem.Text = "Rigid (Unskinned)";
+            importAsRigidToolStripMenuItem.ToolTipText = "Required for build parts, room items, scenery items etc. Import mesh data as unskinned; meshes will be 'weighted' to a single bone per mesh.";
             // 
             // convertAnimationToAQMToolStripMenuItem
             // 
@@ -1673,7 +1689,7 @@ namespace AquaModelTool
             // 
             // debug3ToolStripMenuItem
             // 
-            debug3ToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { readPATHToolStripMenuItem, readPOF0ToolStripMenuItem, readStageDefToolStripMenuItem, decryptINCToolStripMenuItem, dumpBillyArcPof0ToolStripMenuItem, dumpExtremeAnimsToolStripMenuItem, protoThingToItemModelToolStripMenuItem, readCMDLToolStripMenuItem, checkToolStripMenuItem, checkAllcmshToolStripMenuItem, checkAllBillySetObjToolStripMenuItem, testReadOldCMDLToolStripMenuItem, readFlverTestToolStripMenuItem, readWriteTexTestToolStripMenuItem, pSOCryptTestToolStripMenuItem, customRoboGCSFDDumpToolStripMenuItem, customRoboPartReadToolStripMenuItem, billyLightTestToolStripMenuItem, pOE2IndexReadToolStripMenuItem, setEnemyReadToolStripMenuItem, setCameraReadToolStripMenuItem, readNOMsToolStripMenuItem, readStorySeqToolStripMenuItem });
+            debug3ToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { readPATHToolStripMenuItem, readPOF0ToolStripMenuItem, readStageDefToolStripMenuItem, decryptINCToolStripMenuItem, dumpBillyArcPof0ToolStripMenuItem, dumpExtremeAnimsToolStripMenuItem, protoThingToItemModelToolStripMenuItem, readCMDLToolStripMenuItem, checkToolStripMenuItem, checkAllcmshToolStripMenuItem, checkAllBillySetObjToolStripMenuItem, testReadOldCMDLToolStripMenuItem, readFlverTestToolStripMenuItem, readWriteTexTestToolStripMenuItem, pSOCryptTestToolStripMenuItem, customRoboGCSFDDumpToolStripMenuItem, customRoboPartReadToolStripMenuItem, billyLightTestToolStripMenuItem, pOE2IndexReadToolStripMenuItem, setEnemyReadToolStripMenuItem, setCameraReadToolStripMenuItem, readNOMsToolStripMenuItem, readStorySeqToolStripMenuItem, readWriteLNDTestToolStripMenuItem });
             debug3ToolStripMenuItem.Name = "debug3ToolStripMenuItem";
             debug3ToolStripMenuItem.Size = new Size(60, 23);
             debug3ToolStripMenuItem.Text = "Debug3";
@@ -1859,20 +1875,12 @@ namespace AquaModelTool
             splitter1.TabIndex = 2;
             splitter1.TabStop = false;
             // 
-            // importToolStripMenuItem
+            // readWriteLNDTestToolStripMenuItem
             // 
-            importToolStripMenuItem.Name = "importToolStripMenuItem";
-            importToolStripMenuItem.Size = new Size(180, 22);
-            importToolStripMenuItem.Text = "Import";
-            importToolStripMenuItem.Click += importToolStripMenuItem_Click;
-            // 
-            // importAsRigidToolStripMenuItem
-            // 
-            importAsRigidToolStripMenuItem.CheckOnClick = true;
-            importAsRigidToolStripMenuItem.Name = "importAsRigidToolStripMenuItem";
-            importAsRigidToolStripMenuItem.Size = new Size(180, 22);
-            importAsRigidToolStripMenuItem.Text = "Rigid (Unskinned)";
-            importAsRigidToolStripMenuItem.ToolTipText = "Required for build parts, room items, scenery items etc. Import mesh data as unskinned; meshes will be 'weighted' to a single bone per mesh.";
+            readWriteLNDTestToolStripMenuItem.Name = "readWriteLNDTestToolStripMenuItem";
+            readWriteLNDTestToolStripMenuItem.Size = new Size(213, 22);
+            readWriteLNDTestToolStripMenuItem.Text = "ReadWriteLNDTest";
+            readWriteLNDTestToolStripMenuItem.Click += readWriteLNDTestToolStripMenuItem_Click;
             // 
             // AquaModelTool
             // 
@@ -2126,6 +2134,7 @@ namespace AquaModelTool
         private ToolStripMenuItem includeTangentDataToolStripMenuItem;
         private ToolStripMenuItem importToolStripMenuItem;
         private ToolStripMenuItem importAsRigidToolStripMenuItem;
+        private ToolStripMenuItem readWriteLNDTestToolStripMenuItem;
     }
 }
 

@@ -3807,7 +3807,7 @@ namespace AquaModelTool
                     try
                     {
 #endif
-                        BluePointConvert.ConvertCMDLCMSH(file);
+                    BluePointConvert.ConvertCMDLCMSH(file);
 #if !DEBUG
                     }
                     catch (Exception ex)
@@ -8083,6 +8083,29 @@ namespace AquaModelTool
                     File.WriteAllBytes(Path.ChangeExtension(outStr, ".aqn"), aqn.GetBytesNIFL());
 
                     AquaUIOpenFile(outStr);
+                }
+            }
+        }
+
+        private void readWriteLNDTestToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var openFileDialog = new OpenFileDialog()
+            {
+                Title = "Select Billy Hatcher LND File",
+                Filter = "Billy Hatcher LND files|*.lnd",
+                FileName = "",
+                Multiselect = true
+            };
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                foreach (var file in openFileDialog.FileNames)
+                {
+                    LND lnd = new LND(File.ReadAllBytes(file));
+                    var lndBytes = lnd.GetBytes();
+                    if (lndBytes != null)
+                    {
+                        File.WriteAllBytes(file + ".test", lndBytes);
+                    }
                 }
             }
         }
