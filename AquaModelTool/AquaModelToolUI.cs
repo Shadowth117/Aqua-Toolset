@@ -24,6 +24,7 @@ using AquaModelLibrary.Data.FromSoft;
 using AquaModelLibrary.Data.Ikaruga._360;
 using AquaModelLibrary.Data.Ninja;
 using AquaModelLibrary.Data.Ninja.Model;
+using AquaModelLibrary.Data.Ninja.Motion;
 using AquaModelLibrary.Data.NNStructs;
 using AquaModelLibrary.Data.Nova;
 using AquaModelLibrary.Data.POE2;
@@ -157,6 +158,7 @@ namespace AquaModelTool
             soulsMirroringCB.Items.Add("Mirror Z (Default)");
             soulsMirroringCB.Items.Add("Mirror Y");
             soulsMirroringCB.Items.Add("Mirror X");
+            soulsMirroringCB.Items.Add("HavokMax YZ Swap (Overrides Coordinate System)");
             soulsCoordSystemCB.Items.Add("FBX OpenGL Y Up (Classic, adds 90 degrees)");
             soulsCoordSystemCB.Items.Add("FBX BB Tool Z Up (Default)");
             exportFormatCB.SelectedIndex = (int)smtSetting.exportFormat;
@@ -2104,7 +2106,7 @@ namespace AquaModelTool
             OpenFileDialog openFileDialog = new OpenFileDialog()
             {
                 Title = "Select a PSO2 file",
-                Filter = $"All Supported Files|*.aqp;*.aqo;*.trp;*.tro;*.axs;*.prm;*.prx;*.ice;|All Files|*",
+                Filter = $"All Supported Files|*.aqp;*.aqo;*.trp;*.tro;*.tcb;*.axs;*.prm;*.prx;*.ice;|All Files|*",
                 Multiselect = true,
             };
             if (openFileDialog.ShowDialog() == DialogResult.OK)
@@ -2183,6 +2185,11 @@ namespace AquaModelTool
                                         case ".dds":
                                             ddsList.Add(iceFileName, IceMethods.RemoveIceEnvelope(file));
                                             break;
+                                        case ".tcb":
+                                            var tcb = new TCBTerrainConvex(file);
+                                            sets.Add(iceFileName, (new AquaPackage(tcb.ConvertTCBToAquaObject()), AquaNode.GenerateBasicAQN()));
+                                            break;
+
                                     }
                                 }
 
@@ -2219,8 +2226,17 @@ namespace AquaModelTool
                     }
                     else if (simpleModelExtensions.Contains(ext))
                     {
+                        modelPackage = new AquaPackage();
                         var prm = new PRM(File.ReadAllBytes(filename));
                         modelPackage.models.Add(prm.ConvertToAquaObject());
+                        aqn = AquaNode.GenerateBasicAQN();
+                        isPrm = true;
+                    }
+                    else if (ext == ".tcb")
+                    {
+                        modelPackage = new AquaPackage();
+                        var tcb = new TCBTerrainConvex(File.ReadAllBytes(filename));
+                        modelPackage.models.Add(tcb.ConvertTCBToAquaObject());
                         aqn = AquaNode.GenerateBasicAQN();
                         isPrm = true;
                     }
@@ -2279,7 +2295,15 @@ namespace AquaModelTool
                         model.splitVSETPerMesh();
                         model.FixHollowMatNaming();
 
-                        var name = Path.ChangeExtension(filename, ".fbx");
+                        string name;
+                        if(Path.GetExtension(filename.ToLower()) is ".tcb" or ".prm" or ".prx" or ".trp" or ".tro")
+                        {
+                            name = filename + ".fbx";
+                        } else
+                        {
+                            name = Path.ChangeExtension(filename, ".fbx");
+                        }
+
                         if (modelCount > 1)
                         {
                             name = Path.Combine(Path.GetDirectoryName(name), Path.GetFileNameWithoutExtension(name) + $"_{i}.fbx");
@@ -4860,6 +4884,61 @@ namespace AquaModelTool
                     using (var streamReader = new BufferedStreamReaderBE<MemoryStream>(stream))
                     {
                         var path = new PATH(streamReader);
+                        Vector2 xzMin = new Vector2(path.pathInfoList[0].vertDef.vertPositions[0].X, path.pathInfoList[0].vertDef.vertPositions[0].Z);
+                        Vector2 xzMax = new Vector2(path.pathInfoList[0].vertDef.vertPositions[0].X, path.pathInfoList[0].vertDef.vertPositions[0].Z);
+                        foreach (var info in path.pathInfoList)
+                        {
+                            foreach(var vert in info.vertDef.vertPositions)
+                            {
+                                if(xzMin.X > vert.X)
+                                {
+                                    xzMin.X = vert.X;
+                                }
+                                if(xzMax.X < vert.X)
+                                {
+                                    xzMax.X = vert.X;
+                                }
+                                if(xzMin.Y > vert.Z)
+                                {
+                                    xzMin.Y = vert.Z;
+                                }
+                                if(xzMax.Y < vert.Z)
+                                {
+                                    xzMax.Y = vert.Z;
+                                }
+                            }
+                        }
+                        var root = path.pathSectors[0];
+                        path.pathSectors.Clear();
+                        path.pathSectors.Add(root);
+
+                        root.xzMax = xzMax;
+                        root.xzMin = xzMin;
+                        root.isFinalSubdivision = 1;
+                        root.childId0 = 0;
+                        root.childId1 = 0;
+                        root.childId2 = 0;
+                        root.childId3 = 0;
+                        root.childSector0 = null;
+                        root.childSector1 = null;
+                        root.childSector2 = null;
+                        root.childSector3 = null;
+                        root.rawPathOffset = 0;
+                        root.rawPathCount = (ushort)path.pathInfoList.Count;
+
+                        path.pathSegmentDict.Clear();
+
+                        List<PATH.PathSegment> segments = new List<PATH.PathSegment>();
+                        for(int i = 0; i < path.pathInfoList.Count; i++)
+                        {
+                            PATH.PathSegment seg = new PATH.PathSegment();
+                            seg.startVert = 0;
+                            seg.endVert = (ushort)(path.pathInfoList[i].vertDef.vertPositions.Count - 1);
+                            seg.vertSet = (ushort)i;
+                            segments.Add(seg);
+                        }
+
+                        path.pathSegmentDict.Add(0, segments);
                         /*
                         var vertDef4 = new PATH.VertDefinition();
                         vertDef4.unkByte0 = vertDef1.unkByte0;
@@ -7434,6 +7513,13 @@ namespace AquaModelTool
                         var outDir = file + "_out";
                         Directory.CreateDirectory(outDir);
                         var arc = new BattleModelPlayer(File.ReadAllBytes(file));
+                        var motions = NinjaMotionConvert.NJMToAqm(arc.motions);
+                        List<string> motionNames = new List<string>() { "Bind" };
+                        for(int i = 0; i < motions.Count; i++)
+                        {
+                            motionNames.Add($"motion{i}");
+                        }
+                        motions.Insert(0, new AquaMotion());
                         for (int i = 0; i < arc.models.Count; i++)
                         {
                             var model = arc.models[i];
@@ -7447,7 +7533,7 @@ namespace AquaModelTool
                                     aqp.ConvertToLegacyTypes();
                                     aqp.CreateTrueVertWeights();
 
-                                    FbxExporterNative.ExportToFile(aqp, aqn, new List<AquaMotion>(), outPath, new List<string>(), new List<Matrix4x4>(), false);
+                                    FbxExporterNative.ExportToFile(aqp, aqn, motions, outPath, motionNames, new List<Matrix4x4>(), false);
                                 }
                             }
 
@@ -7553,6 +7639,7 @@ namespace AquaModelTool
                     NJSObject model = null;
                     NJTextureList njtl = null;
                     PuyoFile gvm = null;
+                    NJSMotion motion = null;
                     switch (Path.GetFileName(file))
                     {
                         case "obj_ms_bomb.arc":
@@ -7572,6 +7659,7 @@ namespace AquaModelTool
                             model = prisoner.model;
                             njtl = prisoner.texList;
                             gvm = prisoner.gvm;
+                            motion = prisoner.motion;
                             break;
                     }
 
@@ -7585,13 +7673,20 @@ namespace AquaModelTool
                             njtl.texNames[t] = njtl.texNames[t] += ".png";
                         }
                         var aqp = NinjaModelConvert.NinjaToAqua(model, out var aqn, njtl.texNames);
+                        List<AquaMotion> motions = new List<AquaMotion>();
+                        List<string> motionNames = new List<string>() { "Bind" };
+                        if(motion != null)
+                        {
+                            motions.AddRange(NinjaMotionConvert.NJMToAqm(new List<NJSMotion>() { motion }));
+                            motionNames.Add("motion0");
+                        }
                         if (aqp != null && aqp.vtxlList.Count > 0 || (aqp.tempTris.Count > 0 && aqp.tempTris[0].faceVerts.Count > 0))
                         {
                             aqp.ConvertToPSO2Model(true, false, false, true, false, false, false, true);
                             aqp.ConvertToLegacyTypes();
                             aqp.CreateTrueVertWeights();
 
-                            FbxExporterNative.ExportToFile(aqp, aqn, new List<AquaMotion>(), outPath, new List<string>(), new List<Matrix4x4>(), false);
+                            FbxExporterNative.ExportToFile(aqp, aqn, motions, outPath, motionNames, new List<Matrix4x4>(), false);
                         }
                     }
                     if (gvm != null)
@@ -7880,14 +7975,17 @@ namespace AquaModelTool
                     {
                         var outPath = Path.Combine(outDir, $"model.fbx");
                         var aqp = NinjaModelConvert.NinjaToAqua(model, out var aqn, arc.texList.texNames);
+                        var motions = NinjaMotionConvert.NJMToAqm(new List<NJSMotion>() { arc.anim });
+                        motions.Insert(0, new AquaMotion());
                         if (aqp != null && aqp.vtxlList.Count > 0 || aqp.tempTris[0].faceVerts.Count > 0)
                         {
                             aqp.ConvertToPSO2Model(true, false, false, true, false, false, false, true);
                             aqp.ConvertToLegacyTypes();
                             aqp.CreateTrueVertWeights();
 
-                            FbxExporterNative.ExportToFile(aqp, aqn, new List<AquaMotion>(), outPath, new List<string>(), new List<Matrix4x4>(), false);
+                            FbxExporterNative.ExportToFile(aqp, aqn, motions, outPath, new List<string>() { "bind", "motion0" }, new List<Matrix4x4>(), false);
                         }
+
                     }
                     if (arc.gvm != null)
                     {
@@ -7914,6 +8012,13 @@ namespace AquaModelTool
                     var outDir = file + "_out";
 
                     Directory.CreateDirectory(outDir);
+                    var motions = NinjaMotionConvert.NJMToAqm(arc.motions);
+                    List<string> motionNames = new List<string>() { "Bind" };
+                    for (int i = 0; i < motions.Count; i++)
+                    {
+                        motionNames.Add($"motion{i}");
+                    }
+                    motions.Insert(0, new AquaMotion());
                     /*
                     for (int i = 0; i < arc.models.Count; i++)
                     {
@@ -7939,7 +8044,7 @@ namespace AquaModelTool
                                 aqp.ConvertToLegacyTypes();
                                 aqp.CreateTrueVertWeights();
 
-                                FbxExporterNative.ExportToFile(aqp, aqn, new List<AquaMotion>(), finalOutPath, new List<string>(), new List<Matrix4x4>(), false);
+                                FbxExporterNative.ExportToFile(aqp, aqn, motions, finalOutPath, motionNames, new List<Matrix4x4>(), false);
                             }
                         }
                     }

@@ -77,6 +77,7 @@ namespace SoulsModelTool
             mirrorTypeCB.Items.Add("Mirror Z (Default)");
             mirrorTypeCB.Items.Add("Mirror Y");
             mirrorTypeCB.Items.Add("Mirror X");
+            mirrorTypeCB.Items.Add("HavokMax YZ Swap (Overrides Coordinate System)");
             coordSystemCB.Items.Add("OpenGL Y Up (Classic, adds 90 degrees)");
             coordSystemCB.Items.Add("BB Tool Z Up (Default)");
             exportFormatCB.SelectedIndex = (int)smtSetting.exportFormat;
