@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
-    <TargetFramework>net6.0-windows</TargetFramework>
+    <TargetFramework>net9.0-windows7.0</TargetFramework>
     <Nullable>enable</Nullable>
     <UseWindowsForms>true</UseWindowsForms>
     <ImplicitUsings>enable</ImplicitUsings>
@@ -29,8 +29,18 @@
     <ProjectReference Include="..\PSO2-Aqua-Library\AquaModelLibrary.Data\AquaModelLibrary.Data.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Reference Include="AquaModelLibrary.Native.X64">
+      <HintPath>..\PSO2-Aqua-Library\Shared\AquaModelLibrary.Native.X64.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
     <Exec Command="xcopy &quot;$(SolutionDir)\README.md&quot; &quot;$(SolutionDir)AquaModelTool\bin\$(Configuration)\$(TargetFramework)&quot; /y " />
+  </Target>
+
+  <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
+    <Exec Command="xcopy &quot;$(SolutionDir)PSO2-Aqua-Library\Shared&quot; &quot;$(TargetDir)&quot; /e /y /i /r" />
   </Target>
 
 </Project>

@@ -1,12 +1,11 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 17
-VisualStudioVersion = 17.7.34024.191
+# Visual Studio Version 18
+VisualStudioVersion = 18.1.11312.151 d18.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AquaAutoRig", "AquaAutoRig\AquaAutoRig.csproj", "{B1AE95F0-1AA7-44F3-87E4-0FAE1EEDC09D}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CMXPatcher", "CMXPatcher\CMXPatcher.csproj", "{00A66533-9158-412B-A0E8-0495C0E1A1F7}"
 	ProjectSection(ProjectDependencies) = postProject
-		{2C3B66BB-F1A9-4513-AB63-570D7687C6A7} = {2C3B66BB-F1A9-4513-AB63-570D7687C6A7}
 		{4561B5CC-E3FA-4754-B502-AABFCE0CE4E5} = {4561B5CC-E3FA-4754-B502-AABFCE0CE4E5}
 		{DA174023-5342-4845-BD0C-8D421C33161D} = {DA174023-5342-4845-BD0C-8D421C33161D}
 	EndProjectSection
@@ -16,11 +15,6 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SoulsModelTool", "SoulsModelTool\SoulsModelTool.csproj", "{6D0B2EEA-2DCF-417B-A343-DC77E0D0C3B6}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WeaponInstaller", "WeaponInstaller\WeaponInstaller.csproj", "{CD56B4A4-4AC2-4346-B1CB-EBA9BFF6335D}"
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "AquaModelLibrary.Native", "PSO2-Aqua-Library\AquaModelLibrary.Native\AquaModelLibrary.Native.vcxproj", "{2C3B66BB-F1A9-4513-AB63-570D7687C6A7}"
-	ProjectSection(ProjectDependencies) = postProject
-		{53E191B3-9BAE-4A34-B877-551D2DCB08F9} = {53E191B3-9BAE-4A34-B877-551D2DCB08F9}
-	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SonicAudioLib", "SonicAudioTools\Source\SonicAudioLib\SonicAudioLib.csproj", "{63138773-1F47-474C-9345-15EB6183ECC6}"
 EndProject
@@ -101,14 +95,6 @@ Global
 		{CD56B4A4-4AC2-4346-B1CB-EBA9BFF6335D}.Release|Any CPU.Build.0 = Release|Any CPU
 		{CD56B4A4-4AC2-4346-B1CB-EBA9BFF6335D}.Release|x64.ActiveCfg = Release|Any CPU
 		{CD56B4A4-4AC2-4346-B1CB-EBA9BFF6335D}.Release|x64.Build.0 = Release|Any CPU
-		{2C3B66BB-F1A9-4513-AB63-570D7687C6A7}.Debug|Any CPU.ActiveCfg = Debug|x64
-		{2C3B66BB-F1A9-4513-AB63-570D7687C6A7}.Debug|Any CPU.Build.0 = Debug|x64
-		{2C3B66BB-F1A9-4513-AB63-570D7687C6A7}.Debug|x64.ActiveCfg = Debug|x64
-		{2C3B66BB-F1A9-4513-AB63-570D7687C6A7}.Debug|x64.Build.0 = Debug|x64
-		{2C3B66BB-F1A9-4513-AB63-570D7687C6A7}.Release|Any CPU.ActiveCfg = Release|x64
-		{2C3B66BB-F1A9-4513-AB63-570D7687C6A7}.Release|Any CPU.Build.0 = Release|x64
-		{2C3B66BB-F1A9-4513-AB63-570D7687C6A7}.Release|x64.ActiveCfg = Release|x64
-		{2C3B66BB-F1A9-4513-AB63-570D7687C6A7}.Release|x64.Build.0 = Release|x64
 		{63138773-1F47-474C-9345-15EB6183ECC6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{63138773-1F47-474C-9345-15EB6183ECC6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{63138773-1F47-474C-9345-15EB6183ECC6}.Debug|x64.ActiveCfg = Debug|Any CPU

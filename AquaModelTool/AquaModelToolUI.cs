@@ -2296,10 +2296,11 @@ namespace AquaModelTool
                         model.FixHollowMatNaming();
 
                         string name;
-                        if(Path.GetExtension(filename.ToLower()) is ".tcb" or ".prm" or ".prx" or ".trp" or ".tro")
+                        if (Path.GetExtension(filename.ToLower()) is ".tcb" or ".prm" or ".prx" or ".trp" or ".tro")
                         {
                             name = filename + ".fbx";
-                        } else
+                        }
+                        else
                         {
                             name = Path.ChangeExtension(filename, ".fbx");
                         }
@@ -4888,21 +4889,21 @@ namespace AquaModelTool
                         Vector2 xzMax = new Vector2(path.pathInfoList[0].vertDef.vertPositions[0].X, path.pathInfoList[0].vertDef.vertPositions[0].Z);
                         foreach (var info in path.pathInfoList)
                         {
-                            foreach(var vert in info.vertDef.vertPositions)
+                            foreach (var vert in info.vertDef.vertPositions)
                             {
-                                if(xzMin.X > vert.X)
+                                if (xzMin.X > vert.X)
                                 {
                                     xzMin.X = vert.X;
                                 }
-                                if(xzMax.X < vert.X)
+                                if (xzMax.X < vert.X)
                                 {
                                     xzMax.X = vert.X;
                                 }
-                                if(xzMin.Y > vert.Z)
+                                if (xzMin.Y > vert.Z)
                                 {
                                     xzMin.Y = vert.Z;
                                 }
-                                if(xzMax.Y < vert.Z)
+                                if (xzMax.Y < vert.Z)
                                 {
                                     xzMax.Y = vert.Z;
                                 }
@@ -4929,7 +4930,7 @@ namespace AquaModelTool
                         path.pathSegmentDict.Clear();
 
                         List<PATH.PathSegment> segments = new List<PATH.PathSegment>();
-                        for(int i = 0; i < path.pathInfoList.Count; i++)
+                        for (int i = 0; i < path.pathInfoList.Count; i++)
                         {
                             PATH.PathSegment seg = new PATH.PathSegment();
                             seg.startVert = 0;
@@ -7516,7 +7517,7 @@ namespace AquaModelTool
                         var arc = new BattleModelPlayer(File.ReadAllBytes(file));
                         var motions = NinjaMotionConvert.NJMToAqm(arc.motions);
                         List<string> motionNames = new List<string>() { "Bind" };
-                        for(int i = 0; i < motions.Count; i++)
+                        for (int i = 0; i < motions.Count; i++)
                         {
                             motionNames.Add($"motion{i}");
                         }
@@ -7676,7 +7677,7 @@ namespace AquaModelTool
                         var aqp = NinjaModelConvert.NinjaToAqua(model, out var aqn, njtl.texNames);
                         List<AquaMotion> motions = new List<AquaMotion>();
                         List<string> motionNames = new List<string>() { "Bind" };
-                        if(motion != null)
+                        if (motion != null)
                         {
                             motions.AddRange(NinjaMotionConvert.NJMToAqm(new List<NJSMotion>() { motion }));
                             motionNames.Add("motion0");
@@ -8212,6 +8213,26 @@ namespace AquaModelTool
                     {
                         File.WriteAllBytes(file + ".test", lndBytes);
                     }
+                }
+            }
+        }
+
+        private void dumpZlibTestToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var openFileDialog = new OpenFileDialog()
+            {
+                Title = "Select Zlib File",
+                Filter = "Zlib files|*",
+                FileName = "",
+                Multiselect = true
+            };
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                foreach (var file in openFileDialog.FileNames)
+                {
+                    var blob = File.ReadAllBytes(file);
+                    var a = CompressionHelper.ZlibDefaultDecompress(blob, 100000000);
+                    File.WriteAllBytes(file + ".unc", a);
                 }
             }
         }
