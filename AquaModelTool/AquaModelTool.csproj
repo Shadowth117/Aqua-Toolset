@@ -39,8 +39,4 @@
     <Exec Command="xcopy &quot;$(SolutionDir)\README.md&quot; &quot;$(SolutionDir)AquaModelTool\bin\$(Configuration)\$(TargetFramework)&quot; /y " />
   </Target>
 
-  <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
-    <Exec Command="xcopy &quot;$(SolutionDir)PSO2-Aqua-Library\Shared&quot; &quot;$(TargetDir)&quot; /e /y /i /r" />
-  </Target>
-
 </Project>

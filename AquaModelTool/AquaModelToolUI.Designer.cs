@@ -258,9 +258,12 @@ namespace AquaModelTool
             readNOMsToolStripMenuItem = new ToolStripMenuItem();
             readStorySeqToolStripMenuItem = new ToolStripMenuItem();
             readWriteLNDTestToolStripMenuItem = new ToolStripMenuItem();
+            dumpZlibTestToolStripMenuItem = new ToolStripMenuItem();
+            dumbGVRTestThingToolStripMenuItem = new ToolStripMenuItem();
             filePanel = new Panel();
             splitter1 = new Splitter();
-            dumpZlibTestToolStripMenuItem = new ToolStripMenuItem();
+            exportBillySplinesToolStripMenuItem = new ToolStripMenuItem();
+            importBillySplinesToolStripMenuItem = new ToolStripMenuItem();
             menuStrip1.SuspendLayout();
             SuspendLayout();
             // 
@@ -1515,7 +1518,7 @@ namespace AquaModelTool
             // 
             // debug2ToolStripMenuItem
             // 
-            debug2ToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { boneFlagTestToolStripMenuItem, pSZTextToolStripMenuItem, pSZEnemyZoneToolStripMenuItem, pSZObjZoneToolStripMenuItem, pSZEnemyDataToolStripMenuItem, dumpAllTextToolStripMenuItem, assimpExportToolStripMenuItem, readNNMotionToolStripMenuItem, parseCAWSToolStripMenuItem, parseCANIToolStripMenuItem, parseDRBToolStripMenuItem, sortCMSHToolStripMenuItem, readFCLToolStripMenuItem, readMotAnimToolStripMenuItem, readCGPRToolStripMenuItem, readMusToolStripMenuItem, readSTGToolStripMenuItem, readLATToolStripMenuItem, sTGExportBustedToolStripMenuItem, readNSAToolStripMenuItem, readNMBToolStripMenuItem, readStgObjToolStripMenuItem, readPADToolStripMenuItem, compareFilesToolStripMenuItem });
+            debug2ToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { boneFlagTestToolStripMenuItem, pSZTextToolStripMenuItem, pSZEnemyZoneToolStripMenuItem, pSZObjZoneToolStripMenuItem, pSZEnemyDataToolStripMenuItem, dumpAllTextToolStripMenuItem, assimpExportToolStripMenuItem, readNNMotionToolStripMenuItem, parseCAWSToolStripMenuItem, parseCANIToolStripMenuItem, parseDRBToolStripMenuItem, sortCMSHToolStripMenuItem, readFCLToolStripMenuItem, readMotAnimToolStripMenuItem, readCGPRToolStripMenuItem, readMusToolStripMenuItem, readSTGToolStripMenuItem, readLATToolStripMenuItem, sTGExportBustedToolStripMenuItem, readNSAToolStripMenuItem, readNMBToolStripMenuItem, readStgObjToolStripMenuItem, readPADToolStripMenuItem, compareFilesToolStripMenuItem, exportBillySplinesToolStripMenuItem, importBillySplinesToolStripMenuItem });
             debug2ToolStripMenuItem.Name = "debug2ToolStripMenuItem";
             debug2ToolStripMenuItem.Size = new Size(60, 23);
             debug2ToolStripMenuItem.Text = "Debug2";
@@ -1690,7 +1693,7 @@ namespace AquaModelTool
             // 
             // debug3ToolStripMenuItem
             // 
-            debug3ToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { readPATHToolStripMenuItem, readPOF0ToolStripMenuItem, readStageDefToolStripMenuItem, decryptINCToolStripMenuItem, dumpBillyArcPof0ToolStripMenuItem, dumpExtremeAnimsToolStripMenuItem, protoThingToItemModelToolStripMenuItem, readCMDLToolStripMenuItem, checkToolStripMenuItem, checkAllcmshToolStripMenuItem, checkAllBillySetObjToolStripMenuItem, testReadOldCMDLToolStripMenuItem, readFlverTestToolStripMenuItem, readWriteTexTestToolStripMenuItem, pSOCryptTestToolStripMenuItem, customRoboGCSFDDumpToolStripMenuItem, customRoboPartReadToolStripMenuItem, billyLightTestToolStripMenuItem, pOE2IndexReadToolStripMenuItem, setEnemyReadToolStripMenuItem, setCameraReadToolStripMenuItem, readNOMsToolStripMenuItem, readStorySeqToolStripMenuItem, readWriteLNDTestToolStripMenuItem, dumpZlibTestToolStripMenuItem });
+            debug3ToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { readPATHToolStripMenuItem, readPOF0ToolStripMenuItem, readStageDefToolStripMenuItem, decryptINCToolStripMenuItem, dumpBillyArcPof0ToolStripMenuItem, dumpExtremeAnimsToolStripMenuItem, protoThingToItemModelToolStripMenuItem, readCMDLToolStripMenuItem, checkToolStripMenuItem, checkAllcmshToolStripMenuItem, checkAllBillySetObjToolStripMenuItem, testReadOldCMDLToolStripMenuItem, readFlverTestToolStripMenuItem, readWriteTexTestToolStripMenuItem, pSOCryptTestToolStripMenuItem, customRoboGCSFDDumpToolStripMenuItem, customRoboPartReadToolStripMenuItem, billyLightTestToolStripMenuItem, pOE2IndexReadToolStripMenuItem, setEnemyReadToolStripMenuItem, setCameraReadToolStripMenuItem, readNOMsToolStripMenuItem, readStorySeqToolStripMenuItem, readWriteLNDTestToolStripMenuItem, dumpZlibTestToolStripMenuItem, dumbGVRTestThingToolStripMenuItem });
             debug3ToolStripMenuItem.Name = "debug3ToolStripMenuItem";
             debug3ToolStripMenuItem.Size = new Size(60, 23);
             debug3ToolStripMenuItem.Text = "Debug3";
@@ -1863,6 +1866,20 @@ namespace AquaModelTool
             readWriteLNDTestToolStripMenuItem.Text = "ReadWriteLNDTest";
             readWriteLNDTestToolStripMenuItem.Click += readWriteLNDTestToolStripMenuItem_Click;
             // 
+            // dumpZlibTestToolStripMenuItem
+            // 
+            dumpZlibTestToolStripMenuItem.Name = "dumpZlibTestToolStripMenuItem";
+            dumpZlibTestToolStripMenuItem.Size = new Size(213, 22);
+            dumpZlibTestToolStripMenuItem.Text = "DumpZlibTest";
+            dumpZlibTestToolStripMenuItem.Click += dumpZlibTestToolStripMenuItem_Click;
+            // 
+            // dumbGVRTestThingToolStripMenuItem
+            // 
+            dumbGVRTestThingToolStripMenuItem.Name = "dumbGVRTestThingToolStripMenuItem";
+            dumbGVRTestThingToolStripMenuItem.Size = new Size(213, 22);
+            dumbGVRTestThingToolStripMenuItem.Text = "DumbGVRTestThing";
+            dumbGVRTestThingToolStripMenuItem.Click += dumbGVRTestThingToolStripMenuItem_Click;
+            // 
             // filePanel
             // 
             filePanel.AutoSize = true;
@@ -1883,12 +1900,19 @@ namespace AquaModelTool
             splitter1.TabIndex = 2;
             splitter1.TabStop = false;
             // 
-            // dumpZlibTestToolStripMenuItem
+            // exportBillySplinesToolStripMenuItem
             // 
-            dumpZlibTestToolStripMenuItem.Name = "dumpZlibTestToolStripMenuItem";
-            dumpZlibTestToolStripMenuItem.Size = new Size(213, 22);
-            dumpZlibTestToolStripMenuItem.Text = "DumpZlibTest";
-            dumpZlibTestToolStripMenuItem.Click += dumpZlibTestToolStripMenuItem_Click;
+            exportBillySplinesToolStripMenuItem.Name = "exportBillySplinesToolStripMenuItem";
+            exportBillySplinesToolStripMenuItem.Size = new Size(180, 22);
+            exportBillySplinesToolStripMenuItem.Text = "ExportBillySplines";
+            exportBillySplinesToolStripMenuItem.Click += exportBillySplinesToolStripMenuItem_Click;
+            // 
+            // importBillySplinesToolStripMenuItem
+            // 
+            importBillySplinesToolStripMenuItem.Name = "importBillySplinesToolStripMenuItem";
+            importBillySplinesToolStripMenuItem.Size = new Size(180, 22);
+            importBillySplinesToolStripMenuItem.Text = "ImportBillySplines";
+            importBillySplinesToolStripMenuItem.Click += importBillySplinesToolStripMenuItem_Click;
             // 
             // AquaModelTool
             // 
@@ -2144,6 +2168,9 @@ namespace AquaModelTool
         private ToolStripMenuItem importAsRigidToolStripMenuItem;
         private ToolStripMenuItem readWriteLNDTestToolStripMenuItem;
         private ToolStripMenuItem dumpZlibTestToolStripMenuItem;
+        private ToolStripMenuItem dumbGVRTestThingToolStripMenuItem;
+        private ToolStripMenuItem exportBillySplinesToolStripMenuItem;
+        private ToolStripMenuItem importBillySplinesToolStripMenuItem;
     }
 }
 
