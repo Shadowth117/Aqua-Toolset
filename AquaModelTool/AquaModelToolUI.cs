@@ -8264,7 +8264,7 @@ namespace AquaModelTool
             }
         }
 
-        private void exportBillySplinesToolStripMenuItem_Click(object sender, EventArgs e)
+        private void extractPathSplinesToolStripMenuItem_Click(object sender, EventArgs e)
         {
             var openFileDialog = new OpenFileDialog()
             {
@@ -8279,7 +8279,7 @@ namespace AquaModelTool
                 {
                     var path = new PATH(File.ReadAllBytes(file));
                     Directory.CreateDirectory(file + "_");
-                    for(int i = 0; i < path.pathInfoList.Count; i++)
+                    for (int i = 0; i < path.pathInfoList.Count; i++)
                     {
                         var pathInfo = path.pathInfoList[i];
                         var spline = PathConvert.ExportPathSpline(path, i);
@@ -8291,7 +8291,7 @@ namespace AquaModelTool
             }
         }
 
-        private void importBillySplinesToolStripMenuItem_Click(object sender, EventArgs e)
+        private void importPathSplinesToolStripMenuItem_Click(object sender, EventArgs e)
         {
             var openFileDialog = new OpenFileDialog()
             {
@@ -8308,19 +8308,21 @@ namespace AquaModelTool
                     FileName = "",
                     Multiselect = true
                 };
-                if(openFileDialog2.ShowDialog() == DialogResult.OK)
+                if (openFileDialog2.ShowDialog() == DialogResult.OK)
                 {
                     var path = new PATH(File.ReadAllBytes(openFileDialog.FileName));
                     var pathOg = new PATH(File.ReadAllBytes(openFileDialog.FileName));
+
                     foreach (var file in openFileDialog2.FileNames)
                     {
                         var filename = Path.GetFileName(file);
                         var splitFilename = filename.Split('_');
-                        if(splitFilename.Length < 6)
+                        if (splitFilename.Length < 6)
                         {
                             MessageBox.Show("Not all spline values defined.\nFormatting should be 'spline_4_1_0_0_0'\nFirst value is spline id, second is UsesNormals," +
                                 "\nthird is IsObjectPath, fourth is IsLiquidCurrent, final is IsRaceMissionPath");
-                        } else
+                        }
+                        else
                         {
                             var splineId = Int32.Parse(splitFilename[1]);
                             var usesNormals = Int32.Parse(splitFilename[2]) > 0 ? true : false;
@@ -8330,8 +8332,9 @@ namespace AquaModelTool
 
                             AssimpModelImporter.scaleHandling = (AssimpModelImporter.ScaleHandling)importScaleTypeCB.SelectedIndex;
                             var aqp = AssimpModelImporter.AssimpAquaConvertFull(file, 1, true, true, out var aqn, false, true, false, false);
-                            PathConvert.ImportSplineToPath(path, aqn, Path.GetFileName(openFileDialog.FileName), usesNormals, 
-                                isLiquidCurrent, isObjectPath, isRaceMissionPath, splineId);
+
+                            PathConvert.ImportSplineToPath(path, aqn, Path.GetFileName(openFileDialog.FileName), usesNormals,
+                            isLiquidCurrent, isObjectPath, isRaceMissionPath, splineId, normalizeSplineNormalVectorToolStripMenuItem.Checked);
                         }
                     }
                     File.WriteAllBytes(openFileDialog.FileName, path.GetBytes());

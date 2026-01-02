@@ -113,6 +113,8 @@ namespace AquaModelTool
             packBillyHatcherprdToolStripMenuItem = new ToolStripMenuItem();
             packBillyHatchernrcToolStripMenuItem = new ToolStripMenuItem();
             packBillyHatchergplToolStripMenuItem = new ToolStripMenuItem();
+            extractPathSplinesToolStripMenuItem = new ToolStripMenuItem();
+            importPathSplinesToolStripMenuItem = new ToolStripMenuItem();
             toolStripSeparator21 = new ToolStripSeparator();
             billyHatcherEventToJSONToolStripMenuItem = new ToolStripMenuItem();
             billyHatcherJSONToEventToolStripMenuItem = new ToolStripMenuItem();
@@ -262,8 +264,7 @@ namespace AquaModelTool
             dumbGVRTestThingToolStripMenuItem = new ToolStripMenuItem();
             filePanel = new Panel();
             splitter1 = new Splitter();
-            exportBillySplinesToolStripMenuItem = new ToolStripMenuItem();
-            importBillySplinesToolStripMenuItem = new ToolStripMenuItem();
+            normalizeSplineNormalVectorToolStripMenuItem = new ToolStripMenuItem();
             menuStrip1.SuspendLayout();
             SuspendLayout();
             // 
@@ -809,7 +810,7 @@ namespace AquaModelTool
             // 
             // otherGamesToolStripMenuItem2
             // 
-            otherGamesToolStripMenuItem2.DropDownItems.AddRange(new ToolStripItem[] { billyHatcherGinjaTofbxToolStripMenuItem, readBillyHatchermc2TofbxToolStripMenuItem, fbxSetToBillyHatcherlndToolStripMenuItem, fbxToBillyHatchermc2ToolStripMenuItem, billyHatcherprdArchiveExtractToolStripMenuItem, packBillyHatcherprdToolStripMenuItem, packBillyHatchernrcToolStripMenuItem, packBillyHatchergplToolStripMenuItem, toolStripSeparator21, billyHatcherEventToJSONToolStripMenuItem, billyHatcherJSONToEventToolStripMenuItem, billyHatcherBGMRegularbinToTextToolStripMenuItem, billyHatcherTextToBGMRegularbinToolStripMenuItem, billyHatcherbinTextTotxtToolStripMenuItem, billyHatcherbintxtBackTobinToolStripMenuItem, billyHatcherCyrillicbinTextTotxtToolStripMenuItem, billyHatcherCyrillictxtTobinToolStripMenuItem, billyHatcherStafflistarcTotxtToolStripMenuItem, billyHatchertxtToStafflistarcToolStripMenuItem, toolStripSeparator17, billyHatcherAeMenuExtractToolStripMenuItem, billyHatcherAeMenuPackToolStripMenuItem, toolStripSeparator7, animodelarcExtractToolStripMenuItem, arenearcArobjarcToolStripMenuItem, readArMaToolStripMenuItem, galleryeggarcExtractToolStripMenuItem, geeggarcExtractToolStripMenuItem, geplayerarcExtractToolStripMenuItem, stageGeobjExtractToolStripMenuItem, libitemarcExtractToolStripMenuItem, readMenuModelToolStripMenuItem, objbindmlExtractToolStripMenuItem, readObjMsToolStripMenuItem, padExtractToolStripMenuItem });
+            otherGamesToolStripMenuItem2.DropDownItems.AddRange(new ToolStripItem[] { billyHatcherGinjaTofbxToolStripMenuItem, readBillyHatchermc2TofbxToolStripMenuItem, fbxSetToBillyHatcherlndToolStripMenuItem, fbxToBillyHatchermc2ToolStripMenuItem, billyHatcherprdArchiveExtractToolStripMenuItem, packBillyHatcherprdToolStripMenuItem, packBillyHatchernrcToolStripMenuItem, packBillyHatchergplToolStripMenuItem, extractPathSplinesToolStripMenuItem, importPathSplinesToolStripMenuItem, normalizeSplineNormalVectorToolStripMenuItem, toolStripSeparator21, billyHatcherEventToJSONToolStripMenuItem, billyHatcherJSONToEventToolStripMenuItem, billyHatcherBGMRegularbinToTextToolStripMenuItem, billyHatcherTextToBGMRegularbinToolStripMenuItem, billyHatcherbinTextTotxtToolStripMenuItem, billyHatcherbintxtBackTobinToolStripMenuItem, billyHatcherCyrillicbinTextTotxtToolStripMenuItem, billyHatcherCyrillictxtTobinToolStripMenuItem, billyHatcherStafflistarcTotxtToolStripMenuItem, billyHatchertxtToStafflistarcToolStripMenuItem, toolStripSeparator17, billyHatcherAeMenuExtractToolStripMenuItem, billyHatcherAeMenuPackToolStripMenuItem, toolStripSeparator7, animodelarcExtractToolStripMenuItem, arenearcArobjarcToolStripMenuItem, readArMaToolStripMenuItem, galleryeggarcExtractToolStripMenuItem, geeggarcExtractToolStripMenuItem, geplayerarcExtractToolStripMenuItem, stageGeobjExtractToolStripMenuItem, libitemarcExtractToolStripMenuItem, readMenuModelToolStripMenuItem, objbindmlExtractToolStripMenuItem, readObjMsToolStripMenuItem, padExtractToolStripMenuItem });
             otherGamesToolStripMenuItem2.Name = "otherGamesToolStripMenuItem2";
             otherGamesToolStripMenuItem2.Size = new Size(344, 22);
             otherGamesToolStripMenuItem2.Text = "Billy Hatcher (PC and GC)";
@@ -869,6 +870,20 @@ namespace AquaModelTool
             packBillyHatchergplToolStripMenuItem.Size = new Size(372, 22);
             packBillyHatchergplToolStripMenuItem.Text = "Pack .gpl";
             packBillyHatchergplToolStripMenuItem.Click += packBillyHatchergplToolStripMenuItem_Click;
+            // 
+            // extractPathSplinesToolStripMenuItem
+            // 
+            extractPathSplinesToolStripMenuItem.Name = "extractPathSplinesToolStripMenuItem";
+            extractPathSplinesToolStripMenuItem.Size = new Size(372, 22);
+            extractPathSplinesToolStripMenuItem.Text = "Extract Path Splines";
+            extractPathSplinesToolStripMenuItem.Click += extractPathSplinesToolStripMenuItem_Click;
+            // 
+            // importPathSplinesToolStripMenuItem
+            // 
+            importPathSplinesToolStripMenuItem.Name = "importPathSplinesToolStripMenuItem";
+            importPathSplinesToolStripMenuItem.Size = new Size(372, 22);
+            importPathSplinesToolStripMenuItem.Text = "Import Path Spline(s)";
+            importPathSplinesToolStripMenuItem.Click += importPathSplinesToolStripMenuItem_Click;
             // 
             // toolStripSeparator21
             // 
@@ -1518,7 +1533,7 @@ namespace AquaModelTool
             // 
             // debug2ToolStripMenuItem
             // 
-            debug2ToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { boneFlagTestToolStripMenuItem, pSZTextToolStripMenuItem, pSZEnemyZoneToolStripMenuItem, pSZObjZoneToolStripMenuItem, pSZEnemyDataToolStripMenuItem, dumpAllTextToolStripMenuItem, assimpExportToolStripMenuItem, readNNMotionToolStripMenuItem, parseCAWSToolStripMenuItem, parseCANIToolStripMenuItem, parseDRBToolStripMenuItem, sortCMSHToolStripMenuItem, readFCLToolStripMenuItem, readMotAnimToolStripMenuItem, readCGPRToolStripMenuItem, readMusToolStripMenuItem, readSTGToolStripMenuItem, readLATToolStripMenuItem, sTGExportBustedToolStripMenuItem, readNSAToolStripMenuItem, readNMBToolStripMenuItem, readStgObjToolStripMenuItem, readPADToolStripMenuItem, compareFilesToolStripMenuItem, exportBillySplinesToolStripMenuItem, importBillySplinesToolStripMenuItem });
+            debug2ToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { boneFlagTestToolStripMenuItem, pSZTextToolStripMenuItem, pSZEnemyZoneToolStripMenuItem, pSZObjZoneToolStripMenuItem, pSZEnemyDataToolStripMenuItem, dumpAllTextToolStripMenuItem, assimpExportToolStripMenuItem, readNNMotionToolStripMenuItem, parseCAWSToolStripMenuItem, parseCANIToolStripMenuItem, parseDRBToolStripMenuItem, sortCMSHToolStripMenuItem, readFCLToolStripMenuItem, readMotAnimToolStripMenuItem, readCGPRToolStripMenuItem, readMusToolStripMenuItem, readSTGToolStripMenuItem, readLATToolStripMenuItem, sTGExportBustedToolStripMenuItem, readNSAToolStripMenuItem, readNMBToolStripMenuItem, readStgObjToolStripMenuItem, readPADToolStripMenuItem, compareFilesToolStripMenuItem });
             debug2ToolStripMenuItem.Name = "debug2ToolStripMenuItem";
             debug2ToolStripMenuItem.Size = new Size(60, 23);
             debug2ToolStripMenuItem.Text = "Debug2";
@@ -1900,19 +1915,14 @@ namespace AquaModelTool
             splitter1.TabIndex = 2;
             splitter1.TabStop = false;
             // 
-            // exportBillySplinesToolStripMenuItem
+            // normalizeSplineNormalVectorToolStripMenuItem
             // 
-            exportBillySplinesToolStripMenuItem.Name = "exportBillySplinesToolStripMenuItem";
-            exportBillySplinesToolStripMenuItem.Size = new Size(180, 22);
-            exportBillySplinesToolStripMenuItem.Text = "ExportBillySplines";
-            exportBillySplinesToolStripMenuItem.Click += exportBillySplinesToolStripMenuItem_Click;
-            // 
-            // importBillySplinesToolStripMenuItem
-            // 
-            importBillySplinesToolStripMenuItem.Name = "importBillySplinesToolStripMenuItem";
-            importBillySplinesToolStripMenuItem.Size = new Size(180, 22);
-            importBillySplinesToolStripMenuItem.Text = "ImportBillySplines";
-            importBillySplinesToolStripMenuItem.Click += importBillySplinesToolStripMenuItem_Click;
+            normalizeSplineNormalVectorToolStripMenuItem.Checked = true;
+            normalizeSplineNormalVectorToolStripMenuItem.CheckOnClick = true;
+            normalizeSplineNormalVectorToolStripMenuItem.CheckState = CheckState.Checked;
+            normalizeSplineNormalVectorToolStripMenuItem.Name = "normalizeSplineNormalVectorToolStripMenuItem";
+            normalizeSplineNormalVectorToolStripMenuItem.Size = new Size(372, 22);
+            normalizeSplineNormalVectorToolStripMenuItem.Text = "Normalize Spline Normal Vector On Import";
             // 
             // AquaModelTool
             // 
@@ -2169,8 +2179,9 @@ namespace AquaModelTool
         private ToolStripMenuItem readWriteLNDTestToolStripMenuItem;
         private ToolStripMenuItem dumpZlibTestToolStripMenuItem;
         private ToolStripMenuItem dumbGVRTestThingToolStripMenuItem;
-        private ToolStripMenuItem exportBillySplinesToolStripMenuItem;
-        private ToolStripMenuItem importBillySplinesToolStripMenuItem;
+        private ToolStripMenuItem extractPathSplinesToolStripMenuItem;
+        private ToolStripMenuItem importPathSplinesToolStripMenuItem;
+        private ToolStripMenuItem normalizeSplineNormalVectorToolStripMenuItem;
     }
 }
 
