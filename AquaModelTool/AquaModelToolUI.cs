@@ -5989,14 +5989,14 @@ namespace AquaModelTool
                 foreach (var file in openFileDialog.FileNames)
                 {
                     var a = SoulsFile<TPF>.Read(file);
-                    /*
+                    
                     for (int i = 0; i < a.Textures.Count; i++)
                     {
                         var tex = a.Textures[i];
                         var texturea = Headerizer.Headerize(tex);
                         var b = new TPF.Texture(tex.Name, tex.Format, tex.Flags1, texturea, TPF.TPFPlatform.PS4);
                         a.Textures[i] = b;
-                    }*/
+                    }
 
                     File.WriteAllBytes(file + "_testOut.tpf", a.Write());
                 }
