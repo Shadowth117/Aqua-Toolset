@@ -7805,7 +7805,7 @@ namespace AquaModelTool
                                 outPath = Path.Combine(outDir, $"{fileName}_{i}.fbx");
                             }
 
-                            if (aqp != null && aqp.tempTris[0].faceVerts.Count > 0)
+                            if (aqp != null && aqp.vtxlList.Count > 0)
                             {
                                 aqp.ConvertToLegacyTypes();
                                 aqp.CreateTrueVertWeights();
