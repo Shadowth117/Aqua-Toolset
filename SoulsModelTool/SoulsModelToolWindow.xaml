@@ -83,7 +83,7 @@
                 <ComboBox x:Name="mirrorTypeCB" Width="160" DropDownClosed="mirrorTypeCB_DropDownClosed" SelectionChanged="mirrorTypeCB_SelectionChanged" />
                 <Label Target="{Binding ElementName=coordSystemCB}" Content="FBX Coordinate System:" />
                 <ComboBox x:Name="coordSystemCB" Width="160" SelectionChanged="coordSystemCB_SelectionChanged" />
-                <Label Target="{Binding ElementName=scaleUD}" Content="Custom Scale:" />
+                <Label Target="{Binding ElementName=scaleUD}" Content="(Import Only) Custom Scale:" />
                 <xctk:DoubleUpDown x:Name="scaleUD" Width="160" Value="1" ValueChanged="scaleUDChanged" />
                 <Label Target="{Binding ElementName=scaleHandlingCB}" Content="Scale Handling:" />
                 <ComboBox x:Name="scaleHandlingCB" Width="160" SelectionChanged="scaleCBSelectionChanged" />
