@@ -39,6 +39,9 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AquaModelLibrary.Data", "PSO2-Aqua-Library\AquaModelLibrary.Data\AquaModelLibrary.Data.csproj", "{53E191B3-9BAE-4A34-B877-551D2DCB08F9}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AquaModelLibrary.Core", "PSO2-Aqua-Library\AquaModelLibrary.Core\AquaModelLibrary.Core.csproj", "{DA174023-5342-4845-BD0C-8D421C33161D}"
+	ProjectSection(ProjectDependencies) = postProject
+		{2C3B66BB-F1A9-4513-AB63-570D7687C6A7} = {2C3B66BB-F1A9-4513-AB63-570D7687C6A7}
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{8C378F39-C6A0-426C-9979-918E7A7F8815}"
 	ProjectSection(SolutionItems) = preProject

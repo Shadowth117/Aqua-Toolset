@@ -5422,7 +5422,7 @@ namespace AquaModelTool
                 foreach (var file in openFileDialog.FileNames)
                 {
                     var aqp = NinjaModelConvert.GinjaConvert(file, out var aqn);
-                    if (aqp != null && aqp.tempTris[0].faceVerts.Count > 0)
+                    if (aqp != null && aqp.tempTris[0].faceVerts.Count > 0 || (aqp.vtxlList.Count > 0 && aqp.vtxlList[0].vertPositions.Count > 0))
                     {
                         aqp.ConvertToPSO2Model(true, false, false, true, false, false, false, true);
                         aqp.ConvertToLegacyTypes();
@@ -5535,7 +5535,7 @@ namespace AquaModelTool
                 foreach (var file in openFileDialog.FileNames)
                 {
                     var aqp = MDLConvert.ConvertMDL(File.ReadAllBytes(file), out var aqn);
-                    if (aqp != null && aqp.tempTris[0].faceVerts.Count > 0)
+                    if (aqp != null && aqp.tempTris[0].faceVerts.Count > 0 || (aqp.vtxlList.Count > 0 && aqp.vtxlList[0].vertPositions.Count > 0))
                     {
                         aqp.ConvertToPSO2Model(true, false, false, true, false, false, false, true);
                         aqp.ConvertToLegacyTypes();
@@ -6082,7 +6082,7 @@ namespace AquaModelTool
                     {
                         var aqp = aqpList[i];
                         var aqn = aqnList[i];
-                        if (aqp != null && aqp.tempTris[0].faceVerts.Count > 0)
+                        if (aqp != null && aqp.tempTris[0].faceVerts.Count > 0 || (aqp.vtxlList.Count > 0 && aqp.vtxlList[0].vertPositions.Count > 0))
                         {
                             aqp.ConvertToPSO2Model(true, false, false, true, false, false, false, true);
                             aqp.ConvertToLegacyTypes();
@@ -6139,7 +6139,7 @@ namespace AquaModelTool
                 foreach (var file in openFileDialog.FileNames)
                 {
                     var aqp = NinjaModelConvert.XjConvert(file, out var aqn);
-                    if (aqp != null && aqp.tempTris[0].faceVerts.Count > 0)
+                    if (aqp != null && aqp.tempTris[0].faceVerts.Count > 0 || (aqp.vtxlList.Count > 0 && aqp.vtxlList[0].vertPositions.Count > 0))
                     {
                         aqp.ConvertToPSO2Model(true, false, false, true, false, false, false, true);
                         aqp.ConvertToLegacyTypes();
@@ -6274,7 +6274,7 @@ namespace AquaModelTool
                             {
                                 var outPath = Path.Combine(outDir, $"{pair.Key}.fbx");
                                 var aqp = NinjaModelConvert.NinjaToAqua(model, out var aqn);
-                                if (aqp != null && aqp.tempTris[0].faceVerts.Count > 0)
+                                if (aqp != null && aqp.tempTris[0].faceVerts.Count > 0 || (aqp.vtxlList.Count > 0 && aqp.vtxlList[0].vertPositions.Count > 0))
                                 {
                                     aqp.ConvertToPSO2Model(true, false, false, true, false, false, false, true);
                                     aqp.ConvertToLegacyTypes();
@@ -6304,7 +6304,7 @@ namespace AquaModelTool
                                         outPath = Path.Combine(outDir, $"{pair.Key}_{i}.fbx");
                                     }
 
-                                    if (aqp != null && aqp.tempTris[0].faceVerts.Count > 0)
+                                    if (aqp != null && aqp.tempTris[0].faceVerts.Count > 0 || (aqp.vtxlList.Count > 0 && aqp.vtxlList[0].vertPositions.Count > 0))
                                     {
                                         aqp.ConvertToLegacyTypes();
                                         aqp.CreateTrueVertWeights();
@@ -6321,7 +6321,7 @@ namespace AquaModelTool
                             {
                                 var outPath = Path.Combine(outDir, $"{pair.Key}.fbx");
                                 var aqp = NinjaModelConvert.NinjaToAqua(model, out var aqn);
-                                if (aqp != null && aqp.tempTris[0].faceVerts.Count > 0)
+                                if (aqp != null && aqp.tempTris[0].faceVerts.Count > 0 || (aqp.vtxlList.Count > 0 && aqp.vtxlList[0].vertPositions.Count > 0))
                                 {
                                     aqp.ConvertToPSO2Model(true, false, false, true, false, false, false, true);
                                     aqp.ConvertToLegacyTypes();
@@ -6351,7 +6351,7 @@ namespace AquaModelTool
                                         outPath = Path.Combine(outDir, $"{pair.Key}_{i}.fbx");
                                     }
 
-                                    if (aqp != null && aqp.tempTris[0].faceVerts.Count > 0)
+                                    if (aqp != null && aqp.tempTris[0].faceVerts.Count > 0 || (aqp.vtxlList.Count > 0 && aqp.vtxlList[0].vertPositions.Count > 0))
                                     {
                                         aqp.ConvertToLegacyTypes();
                                         aqp.CreateTrueVertWeights();
@@ -6379,7 +6379,7 @@ namespace AquaModelTool
                             {
                                 var outPath = Path.Combine(outDir, $"{pair.Key}.fbx");
                                 var aqp = NinjaModelConvert.NinjaToAqua(model, out var aqn);
-                                if (aqp != null && aqp.tempTris[0].faceVerts.Count > 0)
+                                if (aqp != null && aqp.tempTris[0].faceVerts.Count > 0 || (aqp.vtxlList.Count > 0 && aqp.vtxlList[0].vertPositions.Count > 0))
                                 {
                                     aqp.ConvertToPSO2Model(true, false, false, true, false, false, false, true);
                                     aqp.ConvertToLegacyTypes();
@@ -6505,7 +6505,7 @@ namespace AquaModelTool
                                     outPath = Path.Combine(outDir, $"{fileName}_{mdl}_{i}.fbx");
                                 }
 
-                                if (aqp != null && aqp.tempTris[0].faceVerts.Count > 0)
+                                if (aqp != null && aqp.tempTris[0].faceVerts.Count > 0 || (aqp.vtxlList.Count > 0 && aqp.vtxlList[0].vertPositions.Count > 0))
                                 {
                                     aqp.ConvertToLegacyTypes();
                                     aqp.CreateTrueVertWeights();
@@ -6613,7 +6613,7 @@ namespace AquaModelTool
                                     outPath = Path.Combine(outDir, $"{fileName}_{mdl}_{i}.fbx");
                                 }
 
-                                if (aqp != null && aqp.tempTris[0].faceVerts.Count > 0)
+                                if (aqp != null && aqp.tempTris[0].faceVerts.Count > 0 || (aqp.vtxlList.Count > 0 && aqp.vtxlList[0].vertPositions.Count > 0))
                                 {
                                     aqp.ConvertToLegacyTypes();
                                     aqp.CreateTrueVertWeights();
@@ -6719,7 +6719,7 @@ namespace AquaModelTool
                                     outPath = Path.Combine(outDir, $"{fileName}_{mdl}_{i}.fbx");
                                 }
 
-                                if (aqp != null && aqp.tempTris[0].faceVerts.Count > 0)
+                                if (aqp != null && aqp.tempTris[0].faceVerts.Count > 0 || (aqp.vtxlList.Count > 0 && aqp.vtxlList[0].vertPositions.Count > 0))
                                 {
                                     aqp.ConvertToLegacyTypes();
                                     aqp.CreateTrueVertWeights();
@@ -6812,7 +6812,7 @@ namespace AquaModelTool
                             {
                                 var outPath = Path.Combine(outDir, $"{pair.Key}.fbx");
                                 var aqp = NinjaModelConvert.NinjaToAqua(model, out var aqn);
-                                if (aqp != null && aqp.tempTris[0].faceVerts.Count > 0)
+                                if (aqp != null && aqp.tempTris[0].faceVerts.Count > 0 || (aqp.vtxlList.Count > 0 && aqp.vtxlList[0].vertPositions.Count > 0))
                                 {
                                     aqp.ConvertToPSO2Model(true, false, false, true, false, false, false, true);
                                     aqp.ConvertToLegacyTypes();
@@ -6842,7 +6842,7 @@ namespace AquaModelTool
                                         outPath = Path.Combine(outDir, $"{pair.Key}_{i}.fbx");
                                     }
 
-                                    if (aqp != null && aqp.tempTris[0].faceVerts.Count > 0)
+                                    if (aqp != null && aqp.tempTris[0].faceVerts.Count > 0 || (aqp.vtxlList.Count > 0 && aqp.vtxlList[0].vertPositions.Count > 0))
                                     {
                                         aqp.ConvertToLegacyTypes();
                                         aqp.CreateTrueVertWeights();
@@ -6859,7 +6859,7 @@ namespace AquaModelTool
                             {
                                 var outPath = Path.Combine(outDir, $"{pair.Key}.fbx");
                                 var aqp = NinjaModelConvert.NinjaToAqua(model, out var aqn);
-                                if (aqp != null && aqp.tempTris[0].faceVerts.Count > 0)
+                                if (aqp != null && aqp.tempTris[0].faceVerts.Count > 0 || (aqp.vtxlList.Count > 0 && aqp.vtxlList[0].vertPositions.Count > 0))
                                 {
                                     aqp.ConvertToPSO2Model(true, false, false, true, false, false, false, true);
                                     aqp.ConvertToLegacyTypes();
@@ -6889,7 +6889,7 @@ namespace AquaModelTool
                                         outPath = Path.Combine(outDir, $"{pair.Key}_{i}.fbx");
                                     }
 
-                                    if (aqp != null && aqp.tempTris[0].faceVerts.Count > 0)
+                                    if (aqp != null && aqp.tempTris[0].faceVerts.Count > 0 || (aqp.vtxlList.Count > 0 && aqp.vtxlList[0].vertPositions.Count > 0))
                                     {
                                         aqp.ConvertToLegacyTypes();
                                         aqp.CreateTrueVertWeights();
@@ -6917,7 +6917,7 @@ namespace AquaModelTool
                             {
                                 var outPath = Path.Combine(outDir, $"{pair.Key}.fbx");
                                 var aqp = NinjaModelConvert.NinjaToAqua(model, out var aqn);
-                                if (aqp != null && aqp.tempTris[0].faceVerts.Count > 0)
+                                if (aqp != null && aqp.tempTris[0].faceVerts.Count > 0 || (aqp.vtxlList.Count > 0 && aqp.vtxlList[0].vertPositions.Count > 0))
                                 {
                                     aqp.ConvertToPSO2Model(true, false, false, true, false, false, false, true);
                                     aqp.ConvertToLegacyTypes();
@@ -6936,7 +6936,7 @@ namespace AquaModelTool
 
                                 var aqp = model.ConvertToAquaObject()[0]; //These will always be single models
                                 var aqn = AquaNode.GenerateBasicAQN();
-                                if (aqp != null && aqp.tempTris[0].faceVerts.Count > 0)
+                                if (aqp != null && aqp.tempTris[0].faceVerts.Count > 0 || (aqp.vtxlList.Count > 0 && aqp.vtxlList[0].vertPositions.Count > 0))
                                 {
                                     aqp.ConvertToLegacyTypes();
                                     aqp.CreateTrueVertWeights();
@@ -7163,7 +7163,7 @@ namespace AquaModelTool
                     }
                     MHConvert.AMOAHIConvert(amo, ahi, texNames, out var aqp, out var aqn);
                     var outPath = Path.Combine(outDir, $"{Path.GetFileNameWithoutExtension(file)}.fbx");
-                    if (aqp != null && aqp.tempTris[0].faceVerts.Count > 0)
+                    if (aqp != null && aqp.tempTris[0].faceVerts.Count > 0 || (aqp.vtxlList.Count > 0 && aqp.vtxlList[0].vertPositions.Count > 0))
                     {
                         aqp.ConvertToLegacyTypes();
                         aqp.CreateTrueVertWeights();
@@ -7468,7 +7468,7 @@ namespace AquaModelTool
                         {
                             var outPath = Path.Combine(outDir, $"model.fbx");
                             var aqp = NinjaModelConvert.NinjaToAqua(model, out var aqn, arc.texList.texNames);
-                            if (aqp != null && aqp.tempTris[0].faceVerts.Count > 0)
+                            if (aqp != null && aqp.tempTris[0].faceVerts.Count > 0 || (aqp.vtxlList.Count > 0 && aqp.vtxlList[0].vertPositions.Count > 0))
                             {
                                 aqp.ConvertToPSO2Model(true, false, false, true, false, false, false, true);
                                 aqp.ConvertToLegacyTypes();
@@ -7494,7 +7494,7 @@ namespace AquaModelTool
                             {
                                 var outPath = Path.Combine(outDir, $"model{i}.fbx");
                                 var aqp = NinjaModelConvert.NinjaToAqua(model, out var aqn, arc.texList.texNames);
-                                if (aqp != null && aqp.tempTris[0].faceVerts.Count > 0)
+                                if (aqp != null && aqp.tempTris[0].faceVerts.Count > 0 || (aqp.vtxlList.Count > 0 && aqp.vtxlList[0].vertPositions.Count > 0))
                                 {
                                     aqp.ConvertToPSO2Model(true, false, false, true, false, false, false, true);
                                     aqp.ConvertToLegacyTypes();
@@ -7529,7 +7529,7 @@ namespace AquaModelTool
                             {
                                 var outPath = Path.Combine(outDir, $"model{i}.fbx");
                                 var aqp = NinjaModelConvert.NinjaToAqua(model, out var aqn, arc.texLists[0].texNames);
-                                if (aqp != null && aqp.tempTris[0].faceVerts.Count > 0)
+                                if (aqp != null && aqp.tempTris[0].faceVerts.Count > 0 || (aqp.vtxlList.Count > 0 && aqp.vtxlList[0].vertPositions.Count > 0))
                                 {
                                     aqp.ConvertToPSO2Model(true, false, false, true, false, false, false, true);
                                     aqp.ConvertToLegacyTypes();
@@ -7558,7 +7558,7 @@ namespace AquaModelTool
                             {
                                 var outPath = Path.Combine(outDir, $"model{i}.fbx");
                                 var aqp = NinjaModelConvert.NinjaToAqua(model, out var aqn, arc.texLists[0].texNames);
-                                if (aqp != null && aqp.tempTris[0].faceVerts.Count > 0)
+                                if (aqp != null && aqp.tempTris[0].faceVerts.Count > 0 || (aqp.vtxlList.Count > 0 && aqp.vtxlList[0].vertPositions.Count > 0))
                                 {
                                     aqp.ConvertToPSO2Model(true, false, false, true, false, false, false, true);
                                     aqp.ConvertToLegacyTypes();
@@ -7607,7 +7607,7 @@ namespace AquaModelTool
                                 arc.texnamesList[0].texNames[t] = arc.texnamesList[0].texNames[t] += ".png";
                             }
                             var aqp = NinjaModelConvert.NinjaToAqua(model, out var aqn, arc.texnamesList[0].texNames);
-                            if (aqp != null && (aqp.tempTris.Count > 0 && aqp.tempTris[0].faceVerts.Count > 0))
+                            if (aqp != null && (aqp.tempTris.Count > 0 && aqp.tempTris[0].faceVerts.Count > 0) || (aqp.vtxlList.Count > 0 && aqp.vtxlList[0].vertPositions.Count > 0))
                             {
                                 aqp.ConvertToPSO2Model(true, false, false, true, false, false, false, true);
                                 aqp.ConvertToLegacyTypes();
@@ -7682,7 +7682,7 @@ namespace AquaModelTool
                             motions.AddRange(NinjaMotionConvert.NJMToAqm(new List<NJSMotion>() { motion }));
                             motionNames.Add("motion0");
                         }
-                        if (aqp != null && (aqp.tempTris.Count > 0 && aqp.tempTris[0].faceVerts.Count > 0))
+                        if (aqp != null && (aqp.tempTris.Count > 0 && aqp.tempTris[0].faceVerts.Count > 0) || (aqp.vtxlList.Count > 0 && aqp.vtxlList[0].vertPositions.Count > 0))
                         {
                             aqp.ConvertToPSO2Model(true, false, false, true, false, false, false, true);
                             aqp.ConvertToLegacyTypes();
@@ -7851,7 +7851,7 @@ namespace AquaModelTool
                             }
                             var outPath = Path.Combine(outDir, $"model_{i}.fbx");
                             var aqp = NinjaModelConvert.NinjaToAqua(model, out var aqn, texList);
-                            if (aqp != null && aqp.tempTris[0].faceVerts.Count > 0)
+                            if (aqp != null && aqp.tempTris[0].faceVerts.Count > 0 || (aqp.vtxlList.Count > 0 && aqp.vtxlList[0].vertPositions.Count > 0))
                             {
                                 aqp.ConvertToPSO2Model(true, false, false, true, false, false, false, true);
                                 aqp.ConvertToLegacyTypes();
@@ -7889,7 +7889,7 @@ namespace AquaModelTool
                         {
                             var outPath = Path.Combine(outDir, $"model_{i}.fbx");
                             var aqp = NinjaModelConvert.NinjaToAqua(model, out var aqn);
-                            if (aqp != null && (aqp.tempTris.Count > 0 && aqp.tempTris[0].faceVerts.Count > 0))
+                            if (aqp != null && (aqp.tempTris.Count > 0 && aqp.tempTris[0].faceVerts.Count > 0) || (aqp.vtxlList.Count > 0 && aqp.vtxlList[0].vertPositions.Count > 0))
                             {
                                 aqp.ConvertToPSO2Model(true, false, false, true, false, false, false, true);
                                 aqp.ConvertToLegacyTypes();
@@ -7930,7 +7930,7 @@ namespace AquaModelTool
                     {
                         var outPath = Path.Combine(outDir, $"model.fbx");
                         var aqp = NinjaModelConvert.NinjaToAqua(model, out var aqn);
-                        if (aqp != null && aqp.tempTris[0].faceVerts.Count > 0)
+                        if (aqp != null && aqp.tempTris[0].faceVerts.Count > 0 || (aqp.vtxlList.Count > 0 && aqp.vtxlList[0].vertPositions.Count > 0))
                         {
                             aqp.ConvertToPSO2Model(true, false, false, true, false, false, false, true);
                             aqp.ConvertToLegacyTypes();
@@ -7979,7 +7979,7 @@ namespace AquaModelTool
                         var aqp = NinjaModelConvert.NinjaToAqua(model, out var aqn, arc.texList.texNames);
                         var motions = NinjaMotionConvert.NJMToAqm(new List<NJSMotion>() { arc.anim });
                         motions.Insert(0, new AquaMotion());
-                        if (aqp != null && aqp.tempTris[0].faceVerts.Count > 0)
+                        if (aqp != null && aqp.tempTris[0].faceVerts.Count > 0 || (aqp.vtxlList.Count > 0 && aqp.vtxlList[0].vertPositions.Count > 0))
                         {
                             aqp.ConvertToPSO2Model(true, false, false, true, false, false, false, true);
                             aqp.ConvertToLegacyTypes();
@@ -8040,7 +8040,7 @@ namespace AquaModelTool
                         {
                             var finalOutPath = Path.Combine(outDir, $"model_{i}.fbx");
                             var aqp = NinjaModelConvert.NinjaToAqua(model, out var aqn, arc.texList.texNames);
-                            if (aqp != null && aqp.tempTris[0].faceVerts.Count > 0)
+                            if (aqp != null && aqp.tempTris[0].faceVerts.Count > 0 || (aqp.vtxlList.Count > 0 && aqp.vtxlList[0].vertPositions.Count > 0))
                             {
                                 aqp.ConvertToPSO2Model(true, false, false, true, false, false, false, true);
                                 aqp.ConvertToLegacyTypes();
@@ -8087,7 +8087,7 @@ namespace AquaModelTool
                         {
                             var outPath = Path.Combine(outDir, $"model_{i}.fbx");
                             var aqp = NinjaModelConvert.NinjaToAqua(model, out var aqn);
-                            if (aqp != null && aqp.tempTris[0].faceVerts.Count > 0)
+                            if (aqp != null && aqp.tempTris[0].faceVerts.Count > 0 || (aqp.vtxlList.Count > 0 && aqp.vtxlList[0].vertPositions.Count > 0))
                             {
                                 aqp.ConvertToPSO2Model(true, false, false, true, false, false, false, true);
                                 aqp.ConvertToLegacyTypes();
@@ -8101,7 +8101,7 @@ namespace AquaModelTool
                     {
                         var outPath = Path.Combine(outDir, $"face.fbx");
                         var aqp = NinjaModelConvert.NinjaToAqua(arc.dFace, out var aqn);
-                        if (aqp != null && aqp.tempTris[0].faceVerts.Count > 0)
+                        if (aqp != null && aqp.tempTris[0].faceVerts.Count > 0 || (aqp.vtxlList.Count > 0 && aqp.vtxlList[0].vertPositions.Count > 0))
                         {
                             aqp.ConvertToPSO2Model(true, false, false, true, false, false, false, true);
                             aqp.ConvertToLegacyTypes();
