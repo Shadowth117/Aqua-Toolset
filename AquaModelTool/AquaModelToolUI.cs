@@ -3056,7 +3056,11 @@ namespace AquaModelTool
                 }
 
 #if DEBUG
-                File.WriteAllLines("C:\\failedFiiles.txt", failedFiles);
+                if (failedFiles.Count > 0)
+                {
+                    File.WriteAllLines("C:\\failedFiiles.txt", failedFiles);
+                }
+
 #endif
                 System.Diagnostics.Debug.Unindent();
                 System.Diagnostics.Debug.Flush();
