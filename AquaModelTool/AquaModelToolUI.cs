@@ -2245,6 +2245,7 @@ namespace AquaModelTool
                         modelPackage = new AquaPackage();
                         modelPackage.models.Add(AXSMethods.ReadAXS(filename, true, out aqn));
                         modelPackage.models[0].ConvertToPSO2Model(true, false, false, true, false, false, true, false, true, true);
+                        modelPackage.models[0].CreateTrueVertWeights();
                     }
                     else
                     {
@@ -3836,7 +3837,7 @@ namespace AquaModelTool
                     try
                     {
 #endif
-                    BluePointConvert.ConvertCMDLCMSH(file);
+                        BluePointConvert.ConvertCMDLCMSH(file);
 #if !DEBUG
                     }
                     catch (Exception ex)
@@ -5993,7 +5994,7 @@ namespace AquaModelTool
                 foreach (var file in openFileDialog.FileNames)
                 {
                     var a = SoulsFile<TPF>.Read(file);
-                    
+
                     for (int i = 0; i < a.Textures.Count; i++)
                     {
                         var tex = a.Textures[i];
@@ -8342,6 +8343,24 @@ namespace AquaModelTool
                         }
                     }
                     File.WriteAllBytes(openFileDialog.FileName, path.GetBytes());
+                }
+            }
+        }
+
+        private void readDemoStageDefToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var openFileDialog = new OpenFileDialog()
+            {
+                Title = "Select ge_stagedef.bin",
+                Filter = "ge_stagedef.bin files|ge_stagedef.bin",
+                FileName = "",
+            };
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                using (MemoryStream stream = new MemoryStream(File.ReadAllBytes(openFileDialog.FileName)))
+                using (var streamReader = new BufferedStreamReaderBE<MemoryStream>(stream))
+                {
+                    var stgDef = new DemoStageDef(streamReader);
                 }
             }
         }
