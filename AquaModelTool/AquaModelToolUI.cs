@@ -3837,7 +3837,7 @@ namespace AquaModelTool
                     try
                     {
 #endif
-                        BluePointConvert.ConvertCMDLCMSH(file);
+                    BluePointConvert.ConvertCMDLCMSH(file);
 #if !DEBUG
                     }
                     catch (Exception ex)
@@ -8361,6 +8361,50 @@ namespace AquaModelTool
                 using (var streamReader = new BufferedStreamReaderBE<MemoryStream>(stream))
                 {
                     var stgDef = new DemoStageDef(streamReader);
+                }
+            }
+        }
+
+        private void sEMapRegularbinToJSONToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var openFileDialog = new OpenFileDialog()
+            {
+                Title = "Select SEMapRegular.bin file",
+                Filter = "SEMapRegular.bin files|SEMapRegular.bin",
+                FileName = "",
+                Multiselect = true
+            };
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                foreach (var file in openFileDialog.FileNames)
+                {
+                    byte[] bytes = File.ReadAllBytes(file);
+                    var sem = new SEMapRegular(bytes);
+                    sem.JSONPrepLists();
+                    var text = JsonSerializer.Serialize(sem, jss);
+                    File.WriteAllText(file + ".json", text);
+                }
+            }
+        }
+
+        private void jSONToSEMapRegularbinToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var openFileDialog = new OpenFileDialog()
+            {
+                Title = "Select SEMapRegular.bin.json file",
+                Filter = "SEMapRegular.bin.json files|SEMapRegular.bin.json",
+                FileName = "",
+                Multiselect = true
+            };
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                foreach (var file in openFileDialog.FileNames)
+                {
+                    var text = File.ReadAllText(file);
+                    var sem = JsonSerializer.Deserialize<SEMapRegular>(text);
+                    sem.GamePrepFromJSONLists();
+                    var semapBytes = sem.GetBytes();
+                    File.WriteAllBytes(file.Replace(".json", ""), semapBytes);
                 }
             }
         }

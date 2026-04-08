@@ -263,9 +263,11 @@ namespace AquaModelTool
             readWriteLNDTestToolStripMenuItem = new ToolStripMenuItem();
             dumpZlibTestToolStripMenuItem = new ToolStripMenuItem();
             dumbGVRTestThingToolStripMenuItem = new ToolStripMenuItem();
+            readDemoStageDefToolStripMenuItem = new ToolStripMenuItem();
             filePanel = new Panel();
             splitter1 = new Splitter();
-            readDemoStageDefToolStripMenuItem = new ToolStripMenuItem();
+            sEMapRegularbinToJSONToolStripMenuItem = new ToolStripMenuItem();
+            jSONToSEMapRegularbinToolStripMenuItem = new ToolStripMenuItem();
             menuStrip1.SuspendLayout();
             SuspendLayout();
             // 
@@ -811,7 +813,7 @@ namespace AquaModelTool
             // 
             // otherGamesToolStripMenuItem2
             // 
-            otherGamesToolStripMenuItem2.DropDownItems.AddRange(new ToolStripItem[] { billyHatcherGinjaTofbxToolStripMenuItem, readBillyHatchermc2TofbxToolStripMenuItem, fbxSetToBillyHatcherlndToolStripMenuItem, fbxToBillyHatchermc2ToolStripMenuItem, billyHatcherprdArchiveExtractToolStripMenuItem, packBillyHatcherprdToolStripMenuItem, packBillyHatchernrcToolStripMenuItem, packBillyHatchergplToolStripMenuItem, extractPathSplinesToolStripMenuItem, importPathSplinesToolStripMenuItem, normalizeSplineNormalVectorToolStripMenuItem, toolStripSeparator21, billyHatcherEventToJSONToolStripMenuItem, billyHatcherJSONToEventToolStripMenuItem, billyHatcherBGMRegularbinToTextToolStripMenuItem, billyHatcherTextToBGMRegularbinToolStripMenuItem, billyHatcherbinTextTotxtToolStripMenuItem, billyHatcherbintxtBackTobinToolStripMenuItem, billyHatcherCyrillicbinTextTotxtToolStripMenuItem, billyHatcherCyrillictxtTobinToolStripMenuItem, billyHatcherStafflistarcTotxtToolStripMenuItem, billyHatchertxtToStafflistarcToolStripMenuItem, toolStripSeparator17, billyHatcherAeMenuExtractToolStripMenuItem, billyHatcherAeMenuPackToolStripMenuItem, toolStripSeparator7, animodelarcExtractToolStripMenuItem, arenearcArobjarcToolStripMenuItem, readArMaToolStripMenuItem, galleryeggarcExtractToolStripMenuItem, geeggarcExtractToolStripMenuItem, geplayerarcExtractToolStripMenuItem, stageGeobjExtractToolStripMenuItem, libitemarcExtractToolStripMenuItem, readMenuModelToolStripMenuItem, objbindmlExtractToolStripMenuItem, readObjMsToolStripMenuItem, padExtractToolStripMenuItem });
+            otherGamesToolStripMenuItem2.DropDownItems.AddRange(new ToolStripItem[] { billyHatcherGinjaTofbxToolStripMenuItem, readBillyHatchermc2TofbxToolStripMenuItem, fbxSetToBillyHatcherlndToolStripMenuItem, fbxToBillyHatchermc2ToolStripMenuItem, billyHatcherprdArchiveExtractToolStripMenuItem, packBillyHatcherprdToolStripMenuItem, packBillyHatchernrcToolStripMenuItem, packBillyHatchergplToolStripMenuItem, extractPathSplinesToolStripMenuItem, importPathSplinesToolStripMenuItem, normalizeSplineNormalVectorToolStripMenuItem, toolStripSeparator21, billyHatcherEventToJSONToolStripMenuItem, billyHatcherJSONToEventToolStripMenuItem, sEMapRegularbinToJSONToolStripMenuItem, jSONToSEMapRegularbinToolStripMenuItem, billyHatcherBGMRegularbinToTextToolStripMenuItem, billyHatcherTextToBGMRegularbinToolStripMenuItem, billyHatcherbinTextTotxtToolStripMenuItem, billyHatcherbintxtBackTobinToolStripMenuItem, billyHatcherCyrillicbinTextTotxtToolStripMenuItem, billyHatcherCyrillictxtTobinToolStripMenuItem, billyHatcherStafflistarcTotxtToolStripMenuItem, billyHatchertxtToStafflistarcToolStripMenuItem, toolStripSeparator17, billyHatcherAeMenuExtractToolStripMenuItem, billyHatcherAeMenuPackToolStripMenuItem, toolStripSeparator7, animodelarcExtractToolStripMenuItem, arenearcArobjarcToolStripMenuItem, readArMaToolStripMenuItem, galleryeggarcExtractToolStripMenuItem, geeggarcExtractToolStripMenuItem, geplayerarcExtractToolStripMenuItem, stageGeobjExtractToolStripMenuItem, libitemarcExtractToolStripMenuItem, readMenuModelToolStripMenuItem, objbindmlExtractToolStripMenuItem, readObjMsToolStripMenuItem, padExtractToolStripMenuItem });
             otherGamesToolStripMenuItem2.Name = "otherGamesToolStripMenuItem2";
             otherGamesToolStripMenuItem2.Size = new Size(344, 22);
             otherGamesToolStripMenuItem2.Text = "Billy Hatcher (PC and GC)";
@@ -1905,6 +1907,13 @@ namespace AquaModelTool
             dumbGVRTestThingToolStripMenuItem.Text = "DumbGVRTestThing";
             dumbGVRTestThingToolStripMenuItem.Click += dumbGVRTestThingToolStripMenuItem_Click;
             // 
+            // readDemoStageDefToolStripMenuItem
+            // 
+            readDemoStageDefToolStripMenuItem.Name = "readDemoStageDefToolStripMenuItem";
+            readDemoStageDefToolStripMenuItem.Size = new Size(213, 22);
+            readDemoStageDefToolStripMenuItem.Text = "ReadDemoStageDef";
+            readDemoStageDefToolStripMenuItem.Click += readDemoStageDefToolStripMenuItem_Click;
+            // 
             // filePanel
             // 
             filePanel.AutoSize = true;
@@ -1925,12 +1934,19 @@ namespace AquaModelTool
             splitter1.TabIndex = 2;
             splitter1.TabStop = false;
             // 
-            // readDemoStageDefToolStripMenuItem
+            // sEMapRegularbinToJSONToolStripMenuItem
             // 
-            readDemoStageDefToolStripMenuItem.Name = "readDemoStageDefToolStripMenuItem";
-            readDemoStageDefToolStripMenuItem.Size = new Size(213, 22);
-            readDemoStageDefToolStripMenuItem.Text = "ReadDemoStageDef";
-            readDemoStageDefToolStripMenuItem.Click += readDemoStageDefToolStripMenuItem_Click;
+            sEMapRegularbinToJSONToolStripMenuItem.Name = "sEMapRegularbinToJSONToolStripMenuItem";
+            sEMapRegularbinToJSONToolStripMenuItem.Size = new Size(372, 22);
+            sEMapRegularbinToJSONToolStripMenuItem.Text = "SEMapRegular.bin to JSON";
+            sEMapRegularbinToJSONToolStripMenuItem.Click += sEMapRegularbinToJSONToolStripMenuItem_Click;
+            // 
+            // jSONToSEMapRegularbinToolStripMenuItem
+            // 
+            jSONToSEMapRegularbinToolStripMenuItem.Name = "jSONToSEMapRegularbinToolStripMenuItem";
+            jSONToSEMapRegularbinToolStripMenuItem.Size = new Size(372, 22);
+            jSONToSEMapRegularbinToolStripMenuItem.Text = "JSON to SEMapRegular.bin";
+            jSONToSEMapRegularbinToolStripMenuItem.Click += jSONToSEMapRegularbinToolStripMenuItem_Click;
             // 
             // AquaModelTool
             // 
@@ -2191,6 +2207,8 @@ namespace AquaModelTool
         private ToolStripMenuItem importPathSplinesToolStripMenuItem;
         private ToolStripMenuItem normalizeSplineNormalVectorToolStripMenuItem;
         private ToolStripMenuItem readDemoStageDefToolStripMenuItem;
+        private ToolStripMenuItem sEMapRegularbinToJSONToolStripMenuItem;
+        private ToolStripMenuItem jSONToSEMapRegularbinToolStripMenuItem;
     }
 }
 
