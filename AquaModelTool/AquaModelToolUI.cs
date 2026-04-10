@@ -1436,8 +1436,12 @@ namespace AquaModelTool
             };
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
-                AquaGeneric ag = new AquaGeneric(File.ReadAllBytes(openFileDialog.FileName), openFileDialog.FileName);
-                ag.DumpNOF0(ag.agSR, openFileDialog.FileName);
+                using (MemoryStream ms = new MemoryStream(File.ReadAllBytes(openFileDialog.FileName)))
+                using (BufferedStreamReaderBE<MemoryStream> sr = new BufferedStreamReaderBE<MemoryStream>(ms))
+                {
+                    AquaGeneric ag = new AquaGeneric(sr, openFileDialog.FileName);
+                    ag.DumpNOF0(ag.agSR, openFileDialog.FileName);
+                }
             }
         }
 
