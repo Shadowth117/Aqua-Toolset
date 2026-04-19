@@ -8412,6 +8412,20 @@ namespace AquaModelTool
                 }
             }
         }
+
+        private void readWDSNToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog()
+            {
+                Title = "Select PSO2 Window Design file(s)",
+                Filter = "PSO2 Window Design Files (*.wdsn)|*.wdsn|All Files (*.*)|*",
+                Multiselect = true
+            };
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                var wdsn = new WindowDesign(File.ReadAllBytes(openFileDialog.FileName));
+            }
+        }
     }
 }
 
