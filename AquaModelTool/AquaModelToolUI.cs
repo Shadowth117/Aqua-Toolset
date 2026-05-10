@@ -1476,7 +1476,7 @@ namespace AquaModelTool
                 }
 
                 //Set up export
-                using (var ctx = new Assimp.AssimpContext())
+                using (var ctx = new SharpAssimp.AssimpContext())
                 {
                     var formats = ctx.GetSupportedExportFormats();
                     List<(string ext, string desc)> filterKeys = new List<(string ext, string desc)>();
@@ -1505,7 +1505,7 @@ namespace AquaModelTool
                     {
                         var id = saveFileDialog.FilterIndex - 1;
 
-                        Assimp.ExportFormatDescription exportFormat = null;
+                        SharpAssimp.ExportFormatDescription exportFormat = null;
                         for (int i = 0; i < formats.Length; i++)
                         {
                             if (formats[i].Description == filterKeys[id].desc && formats[i].FileExtension == filterKeys[id].ext)
@@ -1537,7 +1537,7 @@ namespace AquaModelTool
 
                             try
                             {
-                                ctx.ExportFile(scene, finalName, exportFormat.FormatId, Assimp.PostProcessSteps.FlipUVs);
+                                ctx.ExportFile(scene, finalName, exportFormat.FormatId, SharpAssimp.PostProcessSteps.FlipUVs);
                             }
                             catch (Win32Exception w)
                             {
@@ -1558,7 +1558,7 @@ namespace AquaModelTool
                 Filter = "Assimp Model Files (*.*)|*.*"
             };
             List<string> filters = new List<string>();
-            using (var ctx = new Assimp.AssimpContext())
+            using (var ctx = new SharpAssimp.AssimpContext())
             {
                 foreach (var format in ctx.GetSupportedExportFormats())
                 {
@@ -3227,7 +3227,7 @@ namespace AquaModelTool
         private void convertAnimToolStripMenuItem_Click(object sender, EventArgs e)
         {
             SaveMainSettings();
-            using (var ctx = new Assimp.AssimpContext())
+            using (var ctx = new SharpAssimp.AssimpContext())
             {
                 var formats = ctx.GetSupportedImportFormats().ToList();
                 formats.Sort();
@@ -3615,7 +3615,7 @@ namespace AquaModelTool
             //Model saving
             if (modelExtensions.Contains(ext))
             {
-                using (var ctx = new Assimp.AssimpContext())
+                using (var ctx = new SharpAssimp.AssimpContext())
                 {
                     var formats = ctx.GetSupportedExportFormats();
                     List<(string ext, string desc)> filterKeys = new List<(string ext, string desc)>();
@@ -3679,7 +3679,7 @@ namespace AquaModelTool
                     {
                         var id = saveFileDialog.FilterIndex - 1;
                         var scene = AssimpModelExporter.AssimpExport(saveFileDialog.FileName, aquaUI.packageModel.models[0], aqn);
-                        Assimp.ExportFormatDescription exportFormat = null;
+                        SharpAssimp.ExportFormatDescription exportFormat = null;
                         for (int i = 0; i < formats.Length; i++)
                         {
                             if (formats[i].Description == filterKeys[id].desc && formats[i].FileExtension == filterKeys[id].ext)
@@ -3695,7 +3695,7 @@ namespace AquaModelTool
 
                         try
                         {
-                            ctx.ExportFile(scene, saveFileDialog.FileName, exportFormat.FormatId, Assimp.PostProcessSteps.FlipUVs);
+                            ctx.ExportFile(scene, saveFileDialog.FileName, exportFormat.FormatId, SharpAssimp.PostProcessSteps.FlipUVs);
 
                             //Dae fix because Assimp 4 and 5.X can't seem to properly get a root node.
                             if (Path.GetExtension(saveFileDialog.FileName) == ".dae")
@@ -3777,7 +3777,7 @@ namespace AquaModelTool
 
         private void convertModelToDemonsSoulsflverToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            using (var ctx = new Assimp.AssimpContext())
+            using (var ctx = new SharpAssimp.AssimpContext())
             {
                 var formats = ctx.GetSupportedImportFormats().ToList();
                 formats.Sort();
@@ -3938,7 +3938,7 @@ namespace AquaModelTool
         private void convertAnimsTonomToolStripMenuItem_Click(object sender, EventArgs e)
         {
             SaveMainSettings();
-            using (var ctx = new Assimp.AssimpContext())
+            using (var ctx = new SharpAssimp.AssimpContext())
             {
                 var formats = ctx.GetSupportedImportFormats().ToList();
                 formats.Sort();
@@ -8173,7 +8173,7 @@ namespace AquaModelTool
         private void importToolStripMenuItem_Click(object sender, EventArgs e)
         {
             SaveMainSettings();
-            using (var ctx = new Assimp.AssimpContext())
+            using (var ctx = new SharpAssimp.AssimpContext())
             {
                 var formats = ctx.GetSupportedImportFormats().ToList();
                 formats.Sort();
