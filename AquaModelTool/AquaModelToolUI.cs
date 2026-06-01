@@ -1415,6 +1415,7 @@ namespace AquaModelTool
                         }
 
                         model.FixHollowMatNaming();
+                        model.AssignStaticWeights();
 
                         var name = saveFileDialog.FileName;
                         if (modelCount > 1)
@@ -2213,6 +2214,7 @@ namespace AquaModelTool
                                             var model = set.Value.aqp.models[i];
                                             model.splitVSETPerMesh();
                                             model.FixHollowMatNaming();
+                                            model.AssignStaticWeights();
 
                                             var name = Path.Combine(dir, set.Key + ".fbx");
                                             if (setModelCount > 1)
@@ -2299,6 +2301,7 @@ namespace AquaModelTool
                         var model = modelPackage.models[i];
                         model.splitVSETPerMesh();
                         model.FixHollowMatNaming();
+                        model.AssignStaticWeights();
 
                         string name;
                         if (Path.GetExtension(filename.ToLower()) is ".tcb" or ".prm" or ".prx" or ".trp" or ".tro")
