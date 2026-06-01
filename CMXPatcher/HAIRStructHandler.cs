@@ -49,9 +49,9 @@ namespace CMXPatcher
             outText.AppendLine("unkFloat8 = " + hair.hair.unkFloat8.ToString(new CultureInfo("en-US")));
             outText.AppendLine("unkFloat9 = " + hair.hair.unkFloat9.ToString(new CultureInfo("en-US")));
             outText.AppendLine("unkInt15 = " + hair.hair.unkInt15.ToString(new CultureInfo("en-US")));
-            outText.AppendLine("unkInt16 = " + hair.hair.unkInt16.ToString(new CultureInfo("en-US")));
+            //outText.AppendLine("unkInt16 = " + hair.hair.unkInt16.ToString(new CultureInfo("en-US")));
 
-            outText.AppendLine("unkInt17 = " + hair.hair.unkInt17.ToString(new CultureInfo("en-US")));
+            //outText.AppendLine("unkInt17 = " + hair.hair.unkInt17.ToString(new CultureInfo("en-US")));
             outText.AppendLine("unkInt18 = " + hair.hair.unkInt18.ToString(new CultureInfo("en-US")));
             outText.AppendLine("unkInt19 = " + hair.hair.unkInt19.ToString(new CultureInfo("en-US")));
             outText.AppendLine("unkInt20 = " + hair.hair.unkInt20.ToString(new CultureInfo("en-US")));
@@ -161,11 +161,11 @@ namespace CMXPatcher
                         hair.hair.unkInt15 = Int32.Parse(contents[1], new CultureInfo("en-US"));
                         break;
                     case "unkInt16":
-                        hair.hair.unkInt16 = Int32.Parse(contents[1], new CultureInfo("en-US"));
+                        //hair.hair.unkInt16 = Int32.Parse(contents[1], new CultureInfo("en-US"));
                         break;
 
                     case "unkInt17":
-                        hair.hair.unkInt17 = Int32.Parse(contents[1], new CultureInfo("en-US"));
+                        //hair.hair.unkInt17 = Int32.Parse(contents[1], new CultureInfo("en-US"));
                         break;
                     case "unkInt18":
                         hair.hair.unkInt18 = Int32.Parse(contents[1], new CultureInfo("en-US"));
