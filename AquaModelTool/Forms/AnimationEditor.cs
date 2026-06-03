@@ -191,7 +191,7 @@ namespace AquaModelTool
                     break;
                 case 1:
                     mainId = node.Parent.Index;
-                    keyDataId = AddTransformType(node.Parent);
+                    keyDataId = AddTransformType(node.Parent, mainId);
                     break;
                 case 2:
                     mainId = node.Parent.Parent.Index;
@@ -326,7 +326,7 @@ namespace AquaModelTool
             return newMkey;
         }
 
-        private int AddTransformType(TreeNode node)
+        private int AddTransformType(TreeNode node, int mainId)
         {
             int tfmType = GetTransformType(node, out int check);
             if (check == -1)
@@ -345,6 +345,7 @@ namespace AquaModelTool
             }
 
             currentMotion.motionKeys[node.Index].keyData.Insert(id + 1, GenerateMKEY(tfmType));
+            currentMotion.motionKeys[mainId].mseg.nodeDataCount++;
 
             return id + 1;
         }
@@ -571,12 +572,6 @@ namespace AquaModelTool
                 case 2:
                     currentMotion.motionKeys[node.Parent.Parent.Index].keyData[node.Parent.Index].keyCount -= 1;
                     var keySet = currentMotion.motionKeys[node.Parent.Parent.Index].keyData[node.Parent.Index];
-                    keySet.keyCount--;
-                    keySet.frameTimings.RemoveAt(node.Index);
-                    if (keySet.keyCount == 1)
-                    {
-                        keySet.frameTimings.Clear();
-                    }
                     var dataType = keySet.dataType;
                     if ((dataType & 0x80) > 0)
                     {
@@ -589,18 +584,26 @@ namespace AquaModelTool
                         case 0x2:
                         case 0x3:
                             keySet.vector4Keys.RemoveAt(node.Index);
+                            keySet.keyCount = keySet.vector4Keys.Count;
                             break;
-
                         case 0x5:
                             keySet.intKeys.RemoveAt(node.Index);
+                            keySet.keyCount = keySet.intKeys.Count;
                             break;
                         //0x4 is texture/uv related, 0x6 is Camera related - Array of floats. 0x4 seems to be used for every .aqv frame set interestingly
                         case 0x4:
                         case 0x6:
                             keySet.floatKeys.RemoveAt(node.Index);
+                            keySet.keyCount = keySet.floatKeys.Count;
                             break;
                         default:
                             throw new Exception("Unexpected data type!");
+                    }
+
+                    keySet.frameTimings.RemoveAt(node.Index);
+                    if (keySet.keyCount == 1)
+                    {
+                        keySet.frameTimings.Clear();
                     }
                     break;
                 default:
