@@ -24,6 +24,7 @@ using AquaModelLibrary.Data.FromSoft;
 using AquaModelLibrary.Data.Ikaruga._360;
 using AquaModelLibrary.Data.Ninja;
 using AquaModelLibrary.Data.Ninja.Model;
+using AquaModelLibrary.Data.Ninja.Model.Ginja;
 using AquaModelLibrary.Data.Ninja.Motion;
 using AquaModelLibrary.Data.NNStructs;
 using AquaModelLibrary.Data.Nova;
@@ -8427,6 +8428,71 @@ namespace AquaModelTool
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
                 var wdsn = new WindowDesign(File.ReadAllBytes(openFileDialog.FileName));
+            }
+        }
+
+        private void aniArcTestToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var openFileDialog = new OpenFileDialog()
+            {
+                Title = "Select Billy Hatcher ani_model_*.arc File",
+                Filter = "Billy Hatcher ani_model_*.arc files|ani_model_*.arc",
+                FileName = "",
+                Multiselect = true
+            };
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                foreach (var file in openFileDialog.FileNames)
+                {
+                    var arc = new AniModel(File.ReadAllBytes(file));
+
+                    foreach(var mdl in arc.models)
+                    {
+                        ProcessNJChild(mdl);
+                    }
+
+                    File.WriteAllBytes(file, arc.GetBytes());
+                }
+            }
+        }
+
+        private void ProcessNJChild(AquaModelLibrary.Data.Ninja.Model.NJSObject obj)
+        {
+            if(obj.mesh != null)
+            {
+                var attach = (GinjaAttach)obj.mesh;
+
+                if(attach.vertData != null)
+                {
+                    for (int i = 0; i < attach.vertData.posList.Count; i++)
+                    {
+                        var valuePair = attach.vertData.posList[i];
+                        valuePair.Y *= 2;
+                        attach.vertData.posList[i] = valuePair;
+                    }
+                }
+                if(attach.skinVertData != null)
+                {
+                    foreach(var element in attach.skinVertData.elements)
+                    {
+                        for(int i = 0; i < element.posNrms.Count; i++)
+                        {
+                            var valuePair = element.posNrms[i];
+                            valuePair.posY *= 2;
+                            element.posNrms[i] = valuePair;
+                        }
+                    }
+                }
+            }
+
+            if(obj.childObject != null)
+            {
+                ProcessNJChild(obj.childObject);
+            }
+
+            if(obj.siblingObject != null)
+            {
+                ProcessNJChild(obj.siblingObject);
             }
         }
     }

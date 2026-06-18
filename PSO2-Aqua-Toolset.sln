@@ -52,7 +52,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NvTriStripDotNet", "PSO2-Aq
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "AquaModelLibrary.Native", "PSO2-Aqua-Library\AquaModelLibrary.Native\AquaModelLibrary.Native.vcxproj", "{2C3B66BB-F1A9-4513-AB63-570D7687C6A7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleIntrinsicModelPattern", "PSO2-Aqua-Library\SimpleIntrinsicModelPattern\SimpleIntrinsicModelPattern.csproj", "{D63A02EF-07E5-1811-171D-F9E22E88B23B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleModelPattern", "PSO2-Aqua-Library\SimpleIntrinsicModelPattern\SimpleModelPattern.csproj", "{D63A02EF-07E5-1811-171D-F9E22E88B23B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
