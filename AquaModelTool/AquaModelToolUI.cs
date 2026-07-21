@@ -5305,7 +5305,7 @@ namespace AquaModelTool
                 {
                     var stgDef = new StageDef(streamReader);
                     stgDef.defs[1] = newGreen2;
-                    File.WriteAllBytes(openFileDialog.FileName, stgDef.GetBytes());
+                    //File.WriteAllBytes(openFileDialog.FileName, stgDef.GetBytes());
                 }
             }
         }
@@ -7319,7 +7319,7 @@ namespace AquaModelTool
                 foreach (var file in openFileDialog.FileNames)
                 {
                     var arc = new PAD(File.ReadAllBytes(file));
-                    File.WriteAllBytes(file + ".out.pad", arc.GetBytes());
+                    File.WriteAllBytes(file + ".gvm", arc.polyAnim.gvm.GetBytes());
                 }
             }
         }
@@ -8446,7 +8446,7 @@ namespace AquaModelTool
                 {
                     var arc = new AniModel(File.ReadAllBytes(file));
 
-                    foreach(var mdl in arc.models)
+                    foreach (var mdl in arc.models)
                     {
                         ProcessNJChild(mdl);
                     }
@@ -8458,11 +8458,11 @@ namespace AquaModelTool
 
         private void ProcessNJChild(AquaModelLibrary.Data.Ninja.Model.NJSObject obj)
         {
-            if(obj.mesh != null)
+            if (obj.mesh != null)
             {
                 var attach = (GinjaAttach)obj.mesh;
 
-                if(attach.vertData != null)
+                if (attach.vertData != null)
                 {
                     for (int i = 0; i < attach.vertData.posList.Count; i++)
                     {
@@ -8471,11 +8471,11 @@ namespace AquaModelTool
                         attach.vertData.posList[i] = valuePair;
                     }
                 }
-                if(attach.skinVertData != null)
+                if (attach.skinVertData != null)
                 {
-                    foreach(var element in attach.skinVertData.elements)
+                    foreach (var element in attach.skinVertData.elements)
                     {
-                        for(int i = 0; i < element.posNrms.Count; i++)
+                        for (int i = 0; i < element.posNrms.Count; i++)
                         {
                             var valuePair = element.posNrms[i];
                             valuePair.posY *= 2;
@@ -8485,14 +8485,68 @@ namespace AquaModelTool
                 }
             }
 
-            if(obj.childObject != null)
+            if (obj.childObject != null)
             {
                 ProcessNJChild(obj.childObject);
             }
 
-            if(obj.siblingObject != null)
+            if (obj.siblingObject != null)
             {
                 ProcessNJChild(obj.siblingObject);
+            }
+        }
+
+        private void readStageObjToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var openFileDialog = new OpenFileDialog()
+            {
+                Title = "Select stgobj_*.arc",
+                Filter = "stgobj_*.arc files |stgobj_*.arc",
+                FileName = "",
+                Multiselect = true,
+            };
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                foreach(var file in openFileDialog.FileNames)
+                {
+                    var stgObj = new StageObj(File.ReadAllBytes(file));
+                    foreach(var obj in stgObj.objEntries)
+                    {
+                        Debug.WriteLine($"Coll _14 {obj.int_14} type: {obj.collisionInfo.Value.collisionShapeType} _04 {obj.collisionInfo.Value.flt_04}" +
+                            $" _08 {obj.collisionInfo.Value.flt_08} _0C {obj.collisionInfo.Value.flt_0C} _10 {obj.collisionInfo.Value.flt_10} _14 {obj.collisionInfo.Value.flt_14} _18 {obj.collisionInfo.Value.flt_18}");
+                    }
+
+
+                    for(int i = 1; i < stgObj.objEntries.Count; i++)
+                    {
+                        var objEntry = stgObj.objEntries[i];
+                        objEntry.model2Id1 = (ushort)(objEntry.model2Id1 - 1);
+                    }
+                    File.WriteAllBytes(file, stgObj.GetBytes());
+                    /*
+                     * 
+                    var objEntry = stgObj.objEntries[4];
+                    stgObj.objEntries[4] = objEntry;
+                    objEntry.model2Id0 = 0x8;
+                    objEntry.model2Id1 = 0x8;
+                    objEntry.objName = "TSUBO";
+                    objEntry.collisionSoundId = 0;
+                    File.WriteAllBytes(file, stgObj.GetBytes());
+
+                    objEntry.cBreakInfoFloat = null;
+                    objEntry.model2Id0 = 0x1;
+                    objEntry.model2Id1 = 0x1;
+                    objEntry.cameraCullingDistance = 500f;
+                    objEntry.int_0C = 0;
+                    objEntry.objectFlags = 0x8;
+                    objEntry.int_14 = 1;
+                    objEntry.usht_08 = 0x2;
+                    objEntry.usht_0A = 0xFFFF;
+                    objEntry.collisionInfo = new StageObj.CollisionInfo() { collisionShapeType = 0, flt_04 = 0, flt_08 = 0, flt_0C = 0, flt_10 = 15f, flt_14 = 0, flt_18 = 0 };
+                    objEntry.ptclInfo = new StageObj.ParticleInfo() { int_00 = 1, int_04 = 1};
+
+                    */
+                }
             }
         }
     }
