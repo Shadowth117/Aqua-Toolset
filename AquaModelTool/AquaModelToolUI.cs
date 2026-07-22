@@ -4778,32 +4778,33 @@ namespace AquaModelTool
                             modelData.aqp.ConvertToLegacyTypes();
                             modelData.aqp.CreateTrueVertWeights();
 
+                            var name = motionList.Count > 0 ? Path.Combine(outDir, $"{modelData.name}+baseModel.fbx") : Path.Combine(outDir, $"{modelData.name}.fbx");
+                            FbxExporterNative.ExportToFile(modelData.aqp, modelData.aqn, new List<AquaMotion>(), name, motionStrings, new List<Matrix4x4>(), false, (int)CoordSystem.OpenGL);
+                        }
+                        //Animation
+                        if (modelData.aqp != null && modelData.aqp.tempTris[0].faceVerts.Count > 0)
+                        {
                             var name = motionList.Count > 0 ? Path.Combine(outDir, $"{modelData.name}+animation.fbx") : Path.Combine(outDir, $"{modelData.name}.fbx");
                             FbxExporterNative.ExportToFile(modelData.aqp, modelData.aqn, motionList, name, motionStrings, new List<Matrix4x4>(), false, (int)CoordSystem.OpenGL);
                         }
-                        if (modelData.nightAqp != null)
+                        //Night model
+                        if (modelData.nightAqp != null && modelData.nightAqp.tempTris[0].faceVerts.Count > 0)
                         {
-                            //Night model
-                            if (modelData.nightAqp != null && modelData.nightAqp.tempTris[0].faceVerts.Count > 0)
-                            {
-                                modelData.nightAqp.ConvertToPSO2Model(true, false, false, true, false, false, false, false, false);
-                                modelData.nightAqp.ConvertToLegacyTypes();
-                                modelData.nightAqp.CreateTrueVertWeights();
+                            modelData.nightAqp.ConvertToPSO2Model(true, false, false, true, false, false, false, false, false);
+                            modelData.nightAqp.ConvertToLegacyTypes();
+                            modelData.nightAqp.CreateTrueVertWeights();
 
-                                FbxExporterNative.ExportToFile(modelData.nightAqp, modelData.aqn, motionList, Path.Combine(outDir, $"{modelData.name}+night.fbx"), motionStrings, new List<Matrix4x4>(), false, (int)CoordSystem.OpenGL);
-                            }
+                            FbxExporterNative.ExportToFile(modelData.nightAqp, modelData.aqn, new List<AquaMotion>(), Path.Combine(outDir, $"{modelData.name}+night.fbx"), motionStrings, new List<Matrix4x4>(), false, (int)CoordSystem.OpenGL);
                         }
-                        if (modelData.placementAqp != null)
+                        //Placement model
+                        if (modelData.placementAqp != null && modelData.placementAqp.tempTris[0].faceVerts.Count > 0)
                         {
-                            //Placement model
-                            if (modelData.placementAqp != null && modelData.placementAqp.tempTris[0].faceVerts.Count > 0)
-                            {
-                                modelData.placementAqp.ConvertToPSO2Model(true, false, false, true, false, false, false, false, false);
-                                modelData.placementAqp.ConvertToLegacyTypes();
-                                modelData.placementAqp.CreateTrueVertWeights();
+                            modelData.placementAqp.ConvertToPSO2Model(true, false, false, true, false, false, false, false, false);
+                            modelData.placementAqp.ConvertToLegacyTypes();
+                            modelData.placementAqp.CreateTrueVertWeights();
 
-                                FbxExporterNative.ExportToFile(modelData.placementAqp, modelData.placementAqn, new List<AquaMotion>(), Path.Combine(outDir, $"{modelData.name}+transform.fbx"), new List<string>(), new List<Matrix4x4>(), false, (int)CoordSystem.OpenGL);
-                            }
+                            FbxExporterNative.ExportToFile(modelData.placementAqp, modelData.placementAqn, new List<AquaMotion>(), Path.Combine(outDir, $"{modelData.name}+transform.fbx"), new List<string>(), new List<Matrix4x4>(), false, (int)CoordSystem.OpenGL);
+                            
                         }
                     }
                 }
@@ -5094,80 +5095,6 @@ namespace AquaModelTool
                 {
                     var mc2 = BillyImport.ConvertToMC2(file);
                     File.WriteAllBytes(Path.ChangeExtension(file, ".mc2"), mc2.GetBytes());
-                }
-            }
-        }
-
-        private void oldBillyMC2ConvertToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            var openFileDialog = new OpenFileDialog()
-            {
-                Title = "Select Billy Hatcher lnd, mc2 File",
-                Filter = "Billy Hatcher Map Render Model *.lnd, Collision Model *.mc2 files|*.lnd;*.mc2|Billy Hatcher Map Render Model *.lnd|*.lnd|Billy Hatcher Map Collision Model *.mc2|*.mc2",
-                FileName = "",
-                Multiselect = true
-            };
-            if (openFileDialog.ShowDialog() == DialogResult.OK)
-            {
-                foreach (var file in openFileDialog.FileNames)
-                {
-                    var outDir = file + "_out";
-                    Directory.CreateDirectory(outDir);
-                    List<ModelData> aqpList = new List<ModelData>();
-                    if (file.EndsWith(".mc2"))
-                    {
-                        ModelData modelData = new ModelData();
-
-                        modelData.aqp = MC2Convert.ConvertMC2(File.ReadAllBytes(file), out modelData.aqn);
-                        modelData.aqn = AquaNode.GenerateBasicAQN();
-                        aqpList.Add(modelData);
-                    }
-                    else
-                    {
-                        using (MemoryStream stream = new MemoryStream(File.ReadAllBytes(file)))
-                        using (var streamReader = new BufferedStreamReaderBE<MemoryStream>(stream))
-                        {
-                            var lnd = new LND(streamReader);
-                            if (lnd.gvm != null)
-                            {
-                                File.WriteAllBytes(Path.Combine(outDir, $"{Path.GetFileNameWithoutExtension(file)}.gvm"), lnd.gvm.GetBytes());
-                            }
-                            aqpList = LNDToAqua(lnd);
-                        }
-                    }
-
-                    foreach (var modelData in aqpList)
-                    {
-                        var motionList = new List<AquaMotion>();
-                        var motionStrings = new List<string>();
-                        if (modelData.aqm != null)
-                        {
-                            motionStrings.Add("LNDMotion");
-                            motionList.Add(modelData.aqm);
-                        }
-
-                        //Model
-                        if (modelData.aqp != null && modelData.aqp.tempTris[0].faceVerts.Count > 0)
-                        {
-                            modelData.aqp.ConvertToPSO2Model(true, false, false, true, false, false, false, true);
-                            modelData.aqp.ConvertToLegacyTypes();
-                            modelData.aqp.CreateTrueVertWeights();
-
-                            FbxExporterNative.ExportToFile(modelData.aqp, modelData.aqn, motionList, Path.Combine(outDir, Path.GetFileNameWithoutExtension(file) + $"_{modelData.name}.fbx"), motionStrings, new List<Matrix4x4>(), false, (int)CoordSystem.OpenGL);
-                        }
-                        if (modelData.nightAqp != null)
-                        {
-                            //Night model
-                            if (modelData.nightAqp != null && modelData.nightAqp.tempTris[0].faceVerts.Count > 0)
-                            {
-                                modelData.nightAqp.ConvertToPSO2Model(true, false, false, true, false, false, false, true);
-                                modelData.nightAqp.ConvertToLegacyTypes();
-                                modelData.nightAqp.CreateTrueVertWeights();
-
-                                FbxExporterNative.ExportToFile(modelData.nightAqp, modelData.aqn, motionList, Path.Combine(outDir, Path.GetFileNameWithoutExtension(file) + $"_{modelData.name}_night.fbx"), motionStrings, new List<Matrix4x4>(), false, (int)CoordSystem.OpenGL);
-                            }
-                        }
-                    }
                 }
             }
         }
@@ -5888,26 +5815,6 @@ namespace AquaModelTool
             }
         }
 
-        private void ps3DdsTestToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            OpenFileDialog openFileDialog = new OpenFileDialog()
-            {
-                Title = "Select PS3 dds",
-                Filter = "All Files (*.*)|*",
-                Multiselect = true
-            };
-            if (openFileDialog.ShowDialog() == DialogResult.OK)
-            {
-                Parallel.ForEach(openFileDialog.FileNames, file =>
-                {
-                    var newDds = new List<byte> { };
-                    newDds.AddRange(AquaModelLibrary.Helpers.DeSwizzler.PS3DeSwizzle(File.ReadAllBytes(file), 8, 16, DirectXTex.DirectXTexUtility.DXGIFormat.R8G8B8A8UNORM));
-
-                    File.WriteAllBytes(file + "_out.dds", newDds.ToArray());
-                });
-            }
-        }
-
         private void testReadOldCMDLToolStripMenuItem_Click(object sender, EventArgs e)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog()
@@ -6131,11 +6038,6 @@ namespace AquaModelTool
 
                 }
             }
-        }
-
-        private void xJTestToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-
         }
 
         private void convertPSOxjToolStripMenuItem_Click(object sender, EventArgs e)
@@ -7528,7 +7430,7 @@ namespace AquaModelTool
                         var outDir = file + "_out";
                         Directory.CreateDirectory(outDir);
                         var arc = new BattleModelPlayer(File.ReadAllBytes(file));
-                        var motions = NinjaMotionConvert.NJMToAqm(arc.motions);
+                        var motions = NinjaMotionConvert.NJMToAqmList(arc.motions);
                         List<string> motionNames = new List<string>() { "Bind" };
                         for (int i = 0; i < motions.Count; i++)
                         {
@@ -7692,7 +7594,7 @@ namespace AquaModelTool
                         List<string> motionNames = new List<string>() { "Bind" };
                         if (motion != null)
                         {
-                            motions.AddRange(NinjaMotionConvert.NJMToAqm(new List<NJSMotion>() { motion }));
+                            motions.AddRange(NinjaMotionConvert.NJMToAqmList(new List<NJSMotion>() { motion }));
                             motionNames.Add("motion0");
                         }
                         if (aqp != null && (aqp.tempTris.Count > 0 && aqp.tempTris[0].faceVerts.Count > 0) || (aqp.vtxlList.Count > 0 && aqp.vtxlList[0].vertPositions.Count > 0))
@@ -7990,7 +7892,7 @@ namespace AquaModelTool
                     {
                         var outPath = Path.Combine(outDir, $"model.fbx");
                         var aqp = NinjaModelConvert.NinjaToAqua(model, out var aqn, arc.texList.texNames);
-                        var motions = NinjaMotionConvert.NJMToAqm(new List<NJSMotion>() { arc.anim });
+                        var motions = NinjaMotionConvert.NJMToAqmList(new List<NJSMotion>() { arc.anim });
                         motions.Insert(0, new AquaMotion());
                         if (aqp != null && aqp.tempTris[0].faceVerts.Count > 0 || (aqp.vtxlList.Count > 0 && aqp.vtxlList[0].vertPositions.Count > 0))
                         {
@@ -8027,7 +7929,7 @@ namespace AquaModelTool
                     var outDir = file + "_out";
 
                     Directory.CreateDirectory(outDir);
-                    var motions = NinjaMotionConvert.NJMToAqm(arc.motions);
+                    var motions = NinjaMotionConvert.NJMToAqmList(arc.motions);
                     List<string> motionNames = new List<string>() { "Bind" };
                     for (int i = 0; i < motions.Count; i++)
                     {
