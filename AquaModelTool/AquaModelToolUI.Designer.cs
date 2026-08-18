@@ -269,6 +269,7 @@ namespace AquaModelTool
             setObjreadToolStripMenuItem = new ToolStripMenuItem();
             filePanel = new Panel();
             splitter1 = new Splitter();
+            mirrorPOEModelDataToolStripMenuItem = new ToolStripMenuItem();
             menuStrip1.SuspendLayout();
             SuspendLayout();
             // 
@@ -1097,7 +1098,7 @@ namespace AquaModelTool
             // 
             // otherGamesToolStripMenuItem3
             // 
-            otherGamesToolStripMenuItem3.DropDownItems.AddRange(new ToolStripItem[] { blueDragonipkExtractToolStripMenuItem, ikarugaarcExtractToolStripMenuItem, toolStripSeparator20, pathOfExile2ToolStripMenuItem, pathOfExile2BatchModelConvertToolStripMenuItem, pathOfExile2MToolStripMenuItem, pathOfExile2RiggedModelAnimationConvertToolStripMenuItem, pathOfExile1ModelSupportIsIncompleteAndMayFailOnSomeFilesToolStripMenuItem, toolStripSeparator22, toolStripMenuItem1, convertAMOAHIModelToolStripMenuItem, convertAPXTextureToolStripMenuItem, toolStripSeparator23, extractBorderBreakPS4FARCToolStripMenuItem, setMOTBONEbinPathToolStripMenuItem });
+            otherGamesToolStripMenuItem3.DropDownItems.AddRange(new ToolStripItem[] { blueDragonipkExtractToolStripMenuItem, ikarugaarcExtractToolStripMenuItem, toolStripSeparator20, pathOfExile2ToolStripMenuItem, pathOfExile2BatchModelConvertToolStripMenuItem, pathOfExile2MToolStripMenuItem, pathOfExile2RiggedModelAnimationConvertToolStripMenuItem, pathOfExile1ModelSupportIsIncompleteAndMayFailOnSomeFilesToolStripMenuItem, mirrorPOEModelDataToolStripMenuItem, toolStripSeparator22, toolStripMenuItem1, convertAMOAHIModelToolStripMenuItem, convertAPXTextureToolStripMenuItem, toolStripSeparator23, extractBorderBreakPS4FARCToolStripMenuItem, setMOTBONEbinPathToolStripMenuItem });
             otherGamesToolStripMenuItem3.Name = "otherGamesToolStripMenuItem3";
             otherGamesToolStripMenuItem3.Size = new Size(344, 22);
             otherGamesToolStripMenuItem3.Text = "Other Games";
@@ -1956,6 +1957,15 @@ namespace AquaModelTool
             splitter1.TabIndex = 2;
             splitter1.TabStop = false;
             // 
+            // mirrorPOEModelDataToolStripMenuItem
+            // 
+            mirrorPOEModelDataToolStripMenuItem.Checked = true;
+            mirrorPOEModelDataToolStripMenuItem.CheckOnClick = true;
+            mirrorPOEModelDataToolStripMenuItem.CheckState = CheckState.Checked;
+            mirrorPOEModelDataToolStripMenuItem.Name = "mirrorPOEModelDataToolStripMenuItem";
+            mirrorPOEModelDataToolStripMenuItem.Size = new Size(444, 22);
+            mirrorPOEModelDataToolStripMenuItem.Text = "Unmirror POE Model Data (Game stores models mirrored on Z axis)";
+            // 
             // AquaModelTool
             // 
             AllowDrop = true;
@@ -2218,6 +2228,7 @@ namespace AquaModelTool
         private ToolStripMenuItem aniArcTestToolStripMenuItem;
         private ToolStripMenuItem readStageObjToolStripMenuItem;
         private ToolStripMenuItem setObjreadToolStripMenuItem;
+        private ToolStripMenuItem mirrorPOEModelDataToolStripMenuItem;
     }
 }
 

@@ -55,6 +55,7 @@ using System.Diagnostics;
 using System.Globalization;
 using System.Numerics;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Text.Json;
 using Zamboni;
@@ -6167,278 +6168,6 @@ namespace AquaModelTool
             }
         }
 
-        private void geoObjStageReadToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            var openFileDialog = new OpenFileDialog()
-            {
-                Title = "Select Billy Hatcher geobj_*.arc File",
-                Filter = "Billy Hatcher geobj_*.arc files|geobj_*.arc",
-                FileName = "",
-                Multiselect = true
-            };
-            if (openFileDialog.ShowDialog() == DialogResult.OK)
-            {
-                foreach (var file in openFileDialog.FileNames)
-                {
-                    var filename = Path.GetFileName(file);
-                    if (GEObj_Stage.archiveFilenames.Contains(filename))
-                    {
-                        var arc = new GEObj_Stage(File.ReadAllBytes(file));
-
-                        var outDir = file + "_out";
-                        Directory.CreateDirectory(outDir);
-                        foreach (var pair in arc.models)
-                        {
-                            var model = pair.Value;
-                            if (model != null)
-                            {
-                                var outPath = Path.Combine(outDir, $"{pair.Key}.fbx");
-                                var aqp = NinjaModelConvert.NinjaToAqua(model, out var aqn);
-                                if (aqp != null && aqp.tempTris[0].faceVerts.Count > 0 || (aqp.vtxlList.Count > 0 && aqp.vtxlList[0].vertPositions.Count > 0))
-                                {
-                                    aqp.ConvertToPSO2Model(true, false, false, true, false, false, false, true);
-                                    aqp.ConvertToLegacyTypes();
-                                    aqp.CreateTrueVertWeights();
-
-                                    FbxExporterNative.ExportToFile(aqp, aqn, new List<AquaMotion>(), outPath, new List<string>(), new List<Matrix4x4>(), false);
-                                }
-                            }
-                        }
-                        foreach (var pair in arc.colModels)
-                        {
-                            var model = pair.Value;
-                            if (model != null)
-                            {
-                                var aqpList = model.ConvertToAquaObject();
-                                var aqn = AquaNode.GenerateBasicAQN();
-                                for (int i = 0; i < aqpList.Count; i++)
-                                {
-                                    var aqp = aqpList[i];
-                                    string outPath;
-                                    if (i == 0 && aqpList.Count == 1)
-                                    {
-                                        outPath = Path.Combine(outDir, $"{pair.Key}.fbx");
-                                    }
-                                    else
-                                    {
-                                        outPath = Path.Combine(outDir, $"{pair.Key}_{i}.fbx");
-                                    }
-
-                                    if (aqp != null && aqp.tempTris[0].faceVerts.Count > 0 || (aqp.vtxlList.Count > 0 && aqp.vtxlList[0].vertPositions.Count > 0))
-                                    {
-                                        aqp.ConvertToLegacyTypes();
-                                        aqp.CreateTrueVertWeights();
-
-                                        FbxExporterNative.ExportToFile(aqp, aqn, new List<AquaMotion>(), outPath, new List<string>(), new List<Matrix4x4>(), false);
-                                    }
-                                }
-                            }
-                        }
-                        foreach (var pair in arc.model2s)
-                        {
-                            var model = pair.Value;
-                            if (model != null)
-                            {
-                                var outPath = Path.Combine(outDir, $"{pair.Key}.fbx");
-                                var aqp = NinjaModelConvert.NinjaToAqua(model, out var aqn);
-                                if (aqp != null && aqp.tempTris[0].faceVerts.Count > 0 || (aqp.vtxlList.Count > 0 && aqp.vtxlList[0].vertPositions.Count > 0))
-                                {
-                                    aqp.ConvertToPSO2Model(true, false, false, true, false, false, false, true);
-                                    aqp.ConvertToLegacyTypes();
-                                    aqp.CreateTrueVertWeights();
-
-                                    FbxExporterNative.ExportToFile(aqp, aqn, new List<AquaMotion>(), outPath, new List<string>(), new List<Matrix4x4>(), false);
-                                }
-                            }
-                        }
-                        foreach (var pair in arc.colModel2s)
-                        {
-                            var model = pair.Value;
-                            if (model != null)
-                            {
-                                var aqpList = model.ConvertToAquaObject();
-                                var aqn = AquaNode.GenerateBasicAQN();
-                                for (int i = 0; i < aqpList.Count; i++)
-                                {
-                                    var aqp = aqpList[i];
-                                    string outPath;
-                                    if (i == 0 && aqpList.Count == 1)
-                                    {
-                                        outPath = Path.Combine(outDir, $"{pair.Key}.fbx");
-                                    }
-                                    else
-                                    {
-                                        outPath = Path.Combine(outDir, $"{pair.Key}_{i}.fbx");
-                                    }
-
-                                    if (aqp != null && aqp.tempTris[0].faceVerts.Count > 0 || (aqp.vtxlList.Count > 0 && aqp.vtxlList[0].vertPositions.Count > 0))
-                                    {
-                                        aqp.ConvertToLegacyTypes();
-                                        aqp.CreateTrueVertWeights();
-
-                                        FbxExporterNative.ExportToFile(aqp, aqn, new List<AquaMotion>(), outPath, new List<string>(), new List<Matrix4x4>(), false);
-                                    }
-                                }
-                            }
-                        }
-                        if (arc.gvm != null)
-                        {
-                            arc.gvm.Save(Path.Combine(outDir, "textures.gvm"));
-                        }
-                    }
-                    else
-                    {
-                        var arc = new GEObj_Object(File.ReadAllBytes(file));
-
-                        var outDir = file + "_out";
-                        Directory.CreateDirectory(outDir);
-                        foreach (var pair in arc.models)
-                        {
-                            var model = pair.Value;
-                            if (model != null)
-                            {
-                                var outPath = Path.Combine(outDir, $"{pair.Key}.fbx");
-                                var aqp = NinjaModelConvert.NinjaToAqua(model, out var aqn);
-                                if (aqp != null && aqp.tempTris[0].faceVerts.Count > 0 || (aqp.vtxlList.Count > 0 && aqp.vtxlList[0].vertPositions.Count > 0))
-                                {
-                                    aqp.ConvertToPSO2Model(true, false, false, true, false, false, false, true);
-                                    aqp.ConvertToLegacyTypes();
-                                    aqp.CreateTrueVertWeights();
-
-                                    FbxExporterNative.ExportToFile(aqp, aqn, new List<AquaMotion>(), outPath, new List<string>(), new List<Matrix4x4>(), false);
-                                }
-                            }
-                        }
-                        if (arc.gvm != null)
-                        {
-                            arc.gvm.Save(Path.Combine(outDir, "textures.gvm"));
-                        }
-                    }
-
-                }
-            }
-        }
-
-        private void decompPOE2ToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            var openFileDialog = new OpenFileDialog()
-            {
-                Title = "Select Compressed POE2 file",
-                FileName = "",
-                Multiselect = true
-            };
-            if (openFileDialog.ShowDialog() == DialogResult.OK)
-            {
-                bool errorDisplayed = false;
-                foreach (var file in openFileDialog.FileNames)
-                {
-                    byte[] bytes = File.ReadAllBytes(file);
-                    POE2Index index = null;
-                    string filePath = file;
-                    if (file.Contains("Bundles2"))
-                    {
-                        var bundlesPathStart = file.IndexOf("Bundles2") + 9;
-                        filePath = Path.ChangeExtension(file.Substring(bundlesPathStart).Replace("\\", "/"), "");
-                        filePath = filePath.Substring(0, filePath.Length - 1);
-                        filePath = Path.ChangeExtension(filePath, "");
-                        filePath = filePath.Substring(0, filePath.Length - 1);
-                        var indexPath = Path.Combine(file.Substring(0, bundlesPathStart), "_.index.bin");
-                        index = new POE2Index(POE2ArchiveUtility.DecompressArchive(File.ReadAllBytes(indexPath))[0].file);
-                    }
-                    else
-                    {
-                        if (errorDisplayed == false)
-                        {
-                            MessageBox.Show("File does not appear to be in original install location. The file(s) can only be extracted as a single chunk.");
-                            errorDisplayed = true;
-                        }
-                    }
-                    var files = POE2ArchiveUtility.DecompressArchive(bytes, index, filePath);
-
-                    var outPath = file + "_";
-                    Directory.CreateDirectory(outPath);
-                    foreach (var fileData in files)
-                    {
-                        File.WriteAllBytes(Path.Combine(outPath, fileData.name), fileData.file);
-                    }
-                }
-            }
-        }
-
-        private static bool DumpPOE2Blob(bool errorDisplayed, string? file, List<POE2ArchiveUtility.ArchiveFile> files)
-        {
-            File.WriteAllBytes(file + "_decomp", files[0].file);
-            return errorDisplayed;
-        }
-
-        private void comptestToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            var openFileDialog = new OpenFileDialog()
-            {
-                Title = "Select Uncompressed file",
-                FileName = "",
-                Multiselect = true
-            };
-            if (openFileDialog.ShowDialog() == DialogResult.OK)
-            {
-                foreach (var file in openFileDialog.FileNames)
-                {
-                    byte[] bytes = File.ReadAllBytes(file);
-                    bytes = Zamboni.Oodle.OodleCompress(bytes, Zamboni.Oodle.CompressorLevel.SuperFast);
-                    File.WriteAllBytes("C:\\a_c.test", bytes);
-                }
-            }
-        }
-
-        private void pOE2MDLReadToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            var openFileDialog = new OpenFileDialog()
-            {
-                Title = "Select POE2 Model file",
-                FileName = "",
-                Multiselect = true
-            };
-            if (openFileDialog.ShowDialog() == DialogResult.OK)
-            {
-                foreach (var file in openFileDialog.FileNames)
-                {
-                    var fileName = Path.GetFileNameWithoutExtension(file);
-                    var model = new POE2SMD(File.ReadAllBytes(file));
-                    var outDir = Path.GetDirectoryName(file);
-                    if (model != null)
-                    {
-                        var aqpListList = model.ConvertToAquaObject();
-                        var aqn = AquaNode.GenerateBasicAQN();
-                        for (int mdl = 0; mdl < aqpListList.Count; mdl++)
-                        {
-                            var aqpList = aqpListList[mdl];
-                            for (int i = 0; i < aqpList.Count; i++)
-                            {
-                                var aqp = aqpList[i];
-                                string outPath;
-                                if (i == 0 && aqpList.Count == 1 && aqpListList.Count == 1)
-                                {
-                                    outPath = Path.Combine(outDir, $"{fileName}.fbx");
-                                }
-                                else
-                                {
-                                    outPath = Path.Combine(outDir, $"{fileName}_{mdl}_{i}.fbx");
-                                }
-
-                                if (aqp != null && aqp.tempTris[0].faceVerts.Count > 0 || (aqp.vtxlList.Count > 0 && aqp.vtxlList[0].vertPositions.Count > 0))
-                                {
-                                    aqp.ConvertToLegacyTypes();
-                                    aqp.CreateTrueVertWeights();
-
-                                    FbxExporterNative.ExportToFile(aqp, aqn, new List<AquaMotion>(), outPath, new List<string>(), new List<Matrix4x4>(), false, 3);
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-
         private void pOE2IndexReadToolStripMenuItem_Click(object sender, EventArgs e)
         {
             var openFileDialog = new OpenFileDialog()
@@ -6456,14 +6185,7 @@ namespace AquaModelTool
             }
         }
 
-        private void pOE2ArmatureReadToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            bool exportMotions = true;
-
-            ConvertModelAndActions(exportMotions);
-        }
-
-        private static void ConvertModelAndActions(bool exportMotions)
+        private void ConvertModelAndActions(bool exportMotions)
         {
             POE2Action armature = null;
             var openFileDialog1 = new OpenFileDialog()
@@ -6515,8 +6237,8 @@ namespace AquaModelTool
                         {
                             aqn = AquaNode.GenerateBasicAQN();
                         }
-
-                        var aqpListList = model.ConvertToAquaObject(aqn);
+                        
+                        var aqpListList = model.ConvertToAquaObject(aqn, mirrorPOEModelDataToolStripMenuItem.Checked);
                         for (int mdl = 0; mdl < aqpListList.Count; mdl++)
                         {
                             var aqpList = aqpListList[mdl];
@@ -6537,7 +6259,16 @@ namespace AquaModelTool
                                 {
                                     aqp.ConvertToLegacyTypes();
                                     aqp.CreateTrueVertWeights();
-
+                                    
+                                    if(mirrorPOEModelDataToolStripMenuItem.Checked)
+                                    {
+                                        HandednessUtility.FlipHandednessAqpZ(aqp);
+                                        HandednessUtility.FlipHandednessAqnZ(aqn);
+                                        foreach (var motion in motions)
+                                        {
+                                            HandednessUtility.FlipHandednessMotionAqmZ(motion);
+                                        }
+                                    }
                                     FbxExporterNative.ExportToFile(aqp, aqn, motions, outPath, motionNames, new List<Matrix4x4>(), false, 3);
                                 }
                             }
