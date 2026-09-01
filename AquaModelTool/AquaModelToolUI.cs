@@ -652,10 +652,10 @@ namespace AquaModelTool
                 foreach (var file in openFileDialog.FileNames)
                 {
                     var boneFile = new AquaNode(File.ReadAllBytes(file));
-                    for(int i = 0; i < boneFile.nodeList.Count; i++)
+                    for (int i = 0; i < boneFile.nodeList.Count; i++)
                     {
                         var bone = boneFile.nodeList[i];
-                        if(bone.boneShort1 < 0x1C0)
+                        if (bone.boneShort1 < 0x1C0)
                         {
                             bone.boneShort1 = 0x1C0;
                         }
@@ -3851,7 +3851,7 @@ namespace AquaModelTool
                     try
                     {
 #endif
-                    BluePointConvert.ConvertCMDLCMSH(file);
+                        BluePointConvert.ConvertCMDLCMSH(file);
 #if !DEBUG
                     }
                     catch (Exception ex)
@@ -6237,7 +6237,7 @@ namespace AquaModelTool
                         {
                             aqn = AquaNode.GenerateBasicAQN();
                         }
-                        
+
                         var aqpListList = model.ConvertToAquaObject(aqn, mirrorPOEModelDataToolStripMenuItem.Checked);
                         for (int mdl = 0; mdl < aqpListList.Count; mdl++)
                         {
@@ -6259,8 +6259,8 @@ namespace AquaModelTool
                                 {
                                     aqp.ConvertToLegacyTypes();
                                     aqp.CreateTrueVertWeights();
-                                    
-                                    if(mirrorPOEModelDataToolStripMenuItem.Checked)
+
+                                    if (mirrorPOEModelDataToolStripMenuItem.Checked)
                                     {
                                         HandednessUtility.FlipHandednessAqpZ(aqp);
                                         HandednessUtility.FlipHandednessAqnZ(aqn);
@@ -7510,7 +7510,7 @@ namespace AquaModelTool
                     var arc = new ArEnemy(File.ReadAllBytes(file));
 
                     var outDir = file + "_out";
-                    if(Path.GetFileName(file) == "ar_enemy_param")
+                    if (Path.GetFileName(file) == "ar_enemy_param")
                     {
                         continue;
                     }
@@ -8266,12 +8266,94 @@ namespace AquaModelTool
                     for (int i = 0; i < ene.setObjs.Count; i++)
                     {
                         var obj = ene.setObjs[i];
-                        if(obj.objectId == 1286)
+                        if (obj.objectId == 1286)
                         {
                             var a = 0;
                         }
                     }
                 }
+            }
+        }
+
+        private void checkAllAnimationsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var openFileDialog = new CommonOpenFileDialog()
+            {
+                Title = "Pick a pso2_bin",
+                IsFolderPicker = true,
+            };
+            if(openFileDialog.ShowDialog() == CommonFileDialogResult.Ok)
+            {
+                var files = Directory.GetFiles(openFileDialog.FileName, "*", SearchOption.AllDirectories);
+                byte[] fileHead = new byte[4];
+                foreach(var file in files)
+                {
+                    var strm = new FileStream(file, FileMode.Open, FileAccess.Read);
+                    if(strm.Length <= 4)
+                    {
+                        continue;
+                    }
+                    strm.Read(fileHead, 0, 4);
+                    strm.Close();
+                    if (fileHead[0] == 0x49 && fileHead[1] == 0x43 && fileHead[2] == 0x45 && fileHead[3] == 0)
+                    {
+                        try
+                        {
+                            var ice = IceFile.LoadIceFile(new MemoryStream(File.ReadAllBytes(file)));
+                            foreach(var fileBuffer in ice.groupOneFiles)
+                            {
+                                CheckIceFile(file, fileBuffer);
+                            }
+                            foreach (var fileBuffer in ice.groupTwoFiles)
+                            {
+                                CheckIceFile(file, fileBuffer);
+                            }
+                        }
+                        catch { }
+                    }
+                }
+            }
+        }
+
+        private static void CheckIceFile(string file, byte[] fileBuffer)
+        {
+            var str = IceFile.getFileName(fileBuffer).ToLower();
+            if (str.EndsWith(".aqm") || str.EndsWith(".trm"))
+            {
+                    var aqm = new AquaMotion(IceMethods.RemoveIceEnvelope(fileBuffer));
+                    bool foundScaleDiff = false;
+                    string value = "";
+                    foreach (var set in aqm.motionKeys)
+                    {
+                        if (foundScaleDiff)
+                        {
+                            break;
+                        }
+                        foreach (var mkey in set.keyData)
+                        {
+                            if (foundScaleDiff)
+                            {
+                                break;
+                            }
+                            if (mkey.keyType == 3)
+                            {
+                                for (int i = 0; i < mkey.vector4Keys.Count; i++)
+                                {
+                                    var key = mkey.vector4Keys[i];
+                                    if (!(key[0].EpsEqual(key[1], MathExtras.basicEpsilon) && (key[1].EpsEqual(key[2], MathExtras.basicEpsilon))))
+                                    {
+                                        foundScaleDiff = true;
+                                        value = $"Scale X {key[0]} Y {key[1]} Z {key[2]} W {key[2]}";
+                                        break;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    if (foundScaleDiff)
+                    {
+                        Debug.WriteLine(Path.GetFileName(file) + " - " + str + " - " + value);
+                    }
             }
         }
     }
