@@ -39,7 +39,6 @@ using AquaModelLibrary.Data.PSU;
 using AquaModelLibrary.Data.Utility;
 using AquaModelLibrary.Data.Zero;
 using AquaModelLibrary.Helpers;
-using AquaModelLibrary.Helpers.Extensions;
 using AquaModelLibrary.Helpers.Ice;
 using AquaModelLibrary.Helpers.MathHelpers;
 using AquaModelLibrary.Helpers.PSO2;
@@ -55,7 +54,6 @@ using System.Diagnostics;
 using System.Globalization;
 using System.Numerics;
 using System.Reflection;
-using System.Runtime.CompilerServices;
 using System.Text;
 using System.Text.Json;
 using Zamboni;
@@ -5018,7 +5016,6 @@ namespace AquaModelTool
             {
                 foreach (var folder in commonOpenFileDialog.FileNames)
                 {
-                    ByteListExtension.Reset();
                     PRD prd = new PRD();
                     var files = Directory.GetFiles(folder);
                     foreach (var fileName in files)
@@ -5133,7 +5130,6 @@ namespace AquaModelTool
             {
                 foreach (var folder in commonOpenFileDialog.FileNames)
                 {
-                    ByteListExtension.Reset();
                     PRD prd = new PRD();
                     var files = Directory.GetFiles(folder);
                     foreach (var fileName in files)
@@ -5168,7 +5164,6 @@ namespace AquaModelTool
             {
                 foreach (var folder in commonOpenFileDialog.FileNames)
                 {
-                    ByteListExtension.Reset();
                     GPL gpl = new GPL();
                     var files = Directory.GetFiles(folder).ToList();
 

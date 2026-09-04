@@ -1,6 +1,5 @@
 ﻿using AquaModelLibrary.Data.PSO2.Aqua.CharacterMakingIndexData;
 using AquaModelLibrary.Helpers;
-using AquaModelLibrary.Helpers.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
