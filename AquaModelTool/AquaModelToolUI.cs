@@ -3849,7 +3849,7 @@ namespace AquaModelTool
                     try
                     {
 #endif
-                        BluePointConvert.ConvertCMDLCMSH(file);
+                    BluePointConvert.ConvertCMDLCMSH(file);
 #if !DEBUG
                     }
                     catch (Exception ex)
@@ -8277,14 +8277,14 @@ namespace AquaModelTool
                 Title = "Pick a pso2_bin",
                 IsFolderPicker = true,
             };
-            if(openFileDialog.ShowDialog() == CommonFileDialogResult.Ok)
+            if (openFileDialog.ShowDialog() == CommonFileDialogResult.Ok)
             {
                 var files = Directory.GetFiles(openFileDialog.FileName, "*", SearchOption.AllDirectories);
                 byte[] fileHead = new byte[4];
-                foreach(var file in files)
+                foreach (var file in files)
                 {
                     var strm = new FileStream(file, FileMode.Open, FileAccess.Read);
-                    if(strm.Length <= 4)
+                    if (strm.Length <= 4)
                     {
                         continue;
                     }
@@ -8295,7 +8295,7 @@ namespace AquaModelTool
                         try
                         {
                             var ice = IceFile.LoadIceFile(new MemoryStream(File.ReadAllBytes(file)));
-                            foreach(var fileBuffer in ice.groupOneFiles)
+                            foreach (var fileBuffer in ice.groupOneFiles)
                             {
                                 CheckIceFile(file, fileBuffer);
                             }
@@ -8315,40 +8315,101 @@ namespace AquaModelTool
             var str = IceFile.getFileName(fileBuffer).ToLower();
             if (str.EndsWith(".aqm") || str.EndsWith(".trm"))
             {
-                    var aqm = new AquaMotion(IceMethods.RemoveIceEnvelope(fileBuffer));
-                    bool foundScaleDiff = false;
-                    string value = "";
-                    foreach (var set in aqm.motionKeys)
+                var aqm = new AquaMotion(IceMethods.RemoveIceEnvelope(fileBuffer));
+                bool foundScaleDiff = false;
+                string value = "";
+                foreach (var set in aqm.motionKeys)
+                {
+                    if (foundScaleDiff)
+                    {
+                        break;
+                    }
+                    foreach (var mkey in set.keyData)
                     {
                         if (foundScaleDiff)
                         {
                             break;
                         }
-                        foreach (var mkey in set.keyData)
+                        if (mkey.keyType == 3)
                         {
-                            if (foundScaleDiff)
+                            for (int i = 0; i < mkey.vector4Keys.Count; i++)
                             {
-                                break;
-                            }
-                            if (mkey.keyType == 3)
-                            {
-                                for (int i = 0; i < mkey.vector4Keys.Count; i++)
+                                var key = mkey.vector4Keys[i];
+                                if (!(key[0].EpsEqual(key[1], MathExtras.basicEpsilon) && (key[1].EpsEqual(key[2], MathExtras.basicEpsilon))))
                                 {
-                                    var key = mkey.vector4Keys[i];
-                                    if (!(key[0].EpsEqual(key[1], MathExtras.basicEpsilon) && (key[1].EpsEqual(key[2], MathExtras.basicEpsilon))))
-                                    {
-                                        foundScaleDiff = true;
-                                        value = $"Scale X {key[0]} Y {key[1]} Z {key[2]} W {key[2]}";
-                                        break;
-                                    }
+                                    foundScaleDiff = true;
+                                    value = $"Scale X {key[0]} Y {key[1]} Z {key[2]} W {key[2]}";
+                                    break;
                                 }
                             }
                         }
                     }
-                    if (foundScaleDiff)
+                }
+                if (foundScaleDiff)
+                {
+                    Debug.WriteLine(Path.GetFileName(file) + " - " + str + " - " + value);
+                }
+            }
+        }
+
+        private void convertFbxToDemonsSoulsPS5CmshToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SaveMainSettings();
+            using (var ctx = new SharpAssimp.AssimpContext())
+            {
+                var formats = ctx.GetSupportedImportFormats().ToList();
+                formats.Sort();
+
+                OpenFileDialog openFileDialog;
+                openFileDialog = new OpenFileDialog()
+                {
+                    Title = "Import model file",
+                    Filter = "",
+                    Multiselect = true
+                };
+                string tempFilter = "(*.fbx)|*.fbx";
+                string tempFilter2 = "";
+                openFileDialog.Filter = tempFilter + tempFilter2;
+
+                if (openFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    foreach (var filename in openFileDialog.FileNames)
                     {
-                        Debug.WriteLine(Path.GetFileName(file) + " - " + str + " - " + value);
+                        ApplyModelImporterSettings();
+                        var aqp = AssimpModelImporter.AssimpAquaConvertFull(filename, 1, false, true, out AquaNode aqn, true, false, false, false);
+
+                        bool rigidImport = true;
+                        bool clothImport = false;
+                        var cmsh = BluePointConvert.ConvertToDeSRCMSH(aqp, aqn, rigidImport, clothImport);
+                        File.WriteAllBytes(Path.ChangeExtension(filename, ".cmsh"), cmsh.GetBytes());
+                        /*
+                        File.WriteAllBytes(Path.ChangeExtension(filename, ".cmsh").Replace("instalod0.cmsh", "instalod1.cmsh"), cmsh.GetBytes());
+                        File.WriteAllBytes(Path.ChangeExtension(filename, ".cmsh").Replace("instalod0.cmsh", "instalod2.cmsh"), cmsh.GetBytes());
+                        File.WriteAllBytes(Path.ChangeExtension(filename, ".cmsh").Replace("instalod0.cmsh", "instalod3.cmsh"), cmsh.GetBytes());
+                        File.WriteAllBytes(Path.ChangeExtension(filename, ".cmsh").Replace("instalod0.cmsh", "instalod4.cmsh"), cmsh.GetBytes());
+                        File.WriteAllBytes(Path.ChangeExtension(filename, ".cmsh").Replace("instalod0.cmsh", "instalod5.cmsh"), cmsh.GetBytes());
+                        */
+                        
                     }
+                }
+            }
+        }
+
+        private void convertDdsToDemonsSoulsPS5CtxrMustPlaceDdsInFinalCtxrDirectoryToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var openFileDialog = new OpenFileDialog()
+            {
+                Title = "Select dds file(s) *THESE MUST HAVE MIPMAPS* (Please also make sure it is in the folder your ctxr and ctxc files will be in!)",
+                Filter = "dds texture files (*.dds)|*.dds",
+                FileName = "",
+                Multiselect = true
+            };
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                foreach (var file in openFileDialog.FileNames)
+                {
+                    CTXR.ConvertDDSToCTXR_CTXC(file, file.Replace(".dds", ".ctxr"));
+                }
             }
         }
     }

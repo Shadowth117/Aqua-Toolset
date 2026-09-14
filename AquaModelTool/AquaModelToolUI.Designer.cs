@@ -92,6 +92,8 @@ namespace AquaModelTool
             convertDemonsSoulsPS5ctxrToolStripMenuItem = new ToolStripMenuItem();
             tryToDecompressShadowOfTheColossusFileToolStripMenuItem = new ToolStripMenuItem();
             noteShadowOfTheColossusPS4psarcsMUSTHaveTheirContentsPlacedInTheGamesEbootbinDirectoryToolStripMenuItem = new ToolStripMenuItem();
+            convertFbxToDemonsSoulsPS5CmshToolStripMenuItem = new ToolStripMenuItem();
+            convertDdsToDemonsSoulsPS5CtxrMustPlaceDdsInFinalCtxrDirectoryToolStripMenuItem = new ToolStripMenuItem();
             otherGamesToolStripMenuItem1 = new ToolStripMenuItem();
             cToolStripMenuItem = new ToolStripMenuItem();
             convertPSPortableunjToolStripMenuItem1 = new ToolStripMenuItem();
@@ -240,6 +242,7 @@ namespace AquaModelTool
             readPADToolStripMenuItem = new ToolStripMenuItem();
             compareFilesToolStripMenuItem = new ToolStripMenuItem();
             aniArcTestToolStripMenuItem = new ToolStripMenuItem();
+            checkAllAnimationsToolStripMenuItem = new ToolStripMenuItem();
             debug3ToolStripMenuItem = new ToolStripMenuItem();
             readPATHToolStripMenuItem = new ToolStripMenuItem();
             readPOF0ToolStripMenuItem = new ToolStripMenuItem();
@@ -270,7 +273,6 @@ namespace AquaModelTool
             setObjreadToolStripMenuItem = new ToolStripMenuItem();
             filePanel = new Panel();
             splitter1 = new Splitter();
-            checkAllAnimationsToolStripMenuItem = new ToolStripMenuItem();
             menuStrip1.SuspendLayout();
             SuspendLayout();
             // 
@@ -309,7 +311,7 @@ namespace AquaModelTool
             // importToolStripMenuItem
             // 
             importToolStripMenuItem.Name = "importToolStripMenuItem";
-            importToolStripMenuItem.Size = new Size(180, 22);
+            importToolStripMenuItem.Size = new Size(168, 22);
             importToolStripMenuItem.Text = "Import";
             importToolStripMenuItem.Click += importToolStripMenuItem_Click;
             // 
@@ -317,7 +319,7 @@ namespace AquaModelTool
             // 
             importAsRigidToolStripMenuItem.CheckOnClick = true;
             importAsRigidToolStripMenuItem.Name = "importAsRigidToolStripMenuItem";
-            importAsRigidToolStripMenuItem.Size = new Size(180, 22);
+            importAsRigidToolStripMenuItem.Size = new Size(168, 22);
             importAsRigidToolStripMenuItem.Text = "Rigid (Unskinned)";
             importAsRigidToolStripMenuItem.ToolTipText = "Required for build parts, room items, scenery items etc. Import mesh data as unskinned; meshes will be 'weighted' to a single bone per mesh.";
             // 
@@ -486,7 +488,7 @@ namespace AquaModelTool
             // 
             // otherGamesToolStripMenuItem
             // 
-            otherGamesToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { convertSoulsflverTofbxToolStripMenuItem, exportFormatCB, soulsMirroringCB, soulsCoordSystemCB, exportWithMetadataToolStripMenuItem, applyMaterialNamesToMeshToolStripMenuItem, transformMeshToolStripMenuItem, addFBXRootNodeFixesBlenderSkinningIssuesTdToolStripMenuItem, addFLVERDummyNodesToolStripMenuItem, parentDummyNodesToAttachToolStripMenuItem, includeTangentDataToolStripMenuItem, toolStripSeparator14, setSoulsGameToolStripMenuItem, extractSoulsMapObjectLayoutFrommsbToolStripMenuItem, mSBExtractionExtractUnreferencedModelsAndTexturesToolStripMenuItem, mSBExtractionSeparateExtractionByModelToolStripMenuItem, toolStripSeparator15, dumpAllFromSoulsbndToolStripMenuItem, toolStripSeparator16, mWCBNDExtractToolStripMenuItem, otogi12datExtractToolStripMenuItem, mWCBNDPackToolStripMenuItem, metalWolfChaosMMDConvertToolStripMenuItem, metalWolfChaosOTRConvertToolStripMenuItem, metalWolfChaosMDLConvertUnfinishedMostlyWorksToolStripMenuItem, toolStripSeparator12, generateMCGMCPToolStripMenuItem, convertModelToDemonsSoulsflverToolStripMenuItem, toolStripSeparator11, convertDemonsSoulsPS5CmdlToFbxToolStripMenuItem, convertDemonsSoulsPS5ctxrToolStripMenuItem, tryToDecompressShadowOfTheColossusFileToolStripMenuItem, noteShadowOfTheColossusPS4psarcsMUSTHaveTheirContentsPlacedInTheGamesEbootbinDirectoryToolStripMenuItem });
+            otherGamesToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { convertSoulsflverTofbxToolStripMenuItem, exportFormatCB, soulsMirroringCB, soulsCoordSystemCB, exportWithMetadataToolStripMenuItem, applyMaterialNamesToMeshToolStripMenuItem, transformMeshToolStripMenuItem, addFBXRootNodeFixesBlenderSkinningIssuesTdToolStripMenuItem, addFLVERDummyNodesToolStripMenuItem, parentDummyNodesToAttachToolStripMenuItem, includeTangentDataToolStripMenuItem, toolStripSeparator14, setSoulsGameToolStripMenuItem, extractSoulsMapObjectLayoutFrommsbToolStripMenuItem, mSBExtractionExtractUnreferencedModelsAndTexturesToolStripMenuItem, mSBExtractionSeparateExtractionByModelToolStripMenuItem, toolStripSeparator15, dumpAllFromSoulsbndToolStripMenuItem, toolStripSeparator16, mWCBNDExtractToolStripMenuItem, otogi12datExtractToolStripMenuItem, mWCBNDPackToolStripMenuItem, metalWolfChaosMMDConvertToolStripMenuItem, metalWolfChaosOTRConvertToolStripMenuItem, metalWolfChaosMDLConvertUnfinishedMostlyWorksToolStripMenuItem, toolStripSeparator12, generateMCGMCPToolStripMenuItem, convertModelToDemonsSoulsflverToolStripMenuItem, toolStripSeparator11, convertDemonsSoulsPS5CmdlToFbxToolStripMenuItem, convertDemonsSoulsPS5ctxrToolStripMenuItem, tryToDecompressShadowOfTheColossusFileToolStripMenuItem, noteShadowOfTheColossusPS4psarcsMUSTHaveTheirContentsPlacedInTheGamesEbootbinDirectoryToolStripMenuItem, convertFbxToDemonsSoulsPS5CmshToolStripMenuItem, convertDdsToDemonsSoulsPS5CtxrMustPlaceDdsInFinalCtxrDirectoryToolStripMenuItem });
             otherGamesToolStripMenuItem.Name = "otherGamesToolStripMenuItem";
             otherGamesToolStripMenuItem.Size = new Size(344, 22);
             otherGamesToolStripMenuItem.Text = "Souls And FromSoft/BluePoint Games";
@@ -732,6 +734,20 @@ namespace AquaModelTool
             noteShadowOfTheColossusPS4psarcsMUSTHaveTheirContentsPlacedInTheGamesEbootbinDirectoryToolStripMenuItem.Name = "noteShadowOfTheColossusPS4psarcsMUSTHaveTheirContentsPlacedInTheGamesEbootbinDirectoryToolStripMenuItem";
             noteShadowOfTheColossusPS4psarcsMUSTHaveTheirContentsPlacedInTheGamesEbootbinDirectoryToolStripMenuItem.Size = new Size(650, 22);
             noteShadowOfTheColossusPS4psarcsMUSTHaveTheirContentsPlacedInTheGamesEbootbinDirectoryToolStripMenuItem.Text = "Note: Shadow of the Colossus PS4 .psarcs MUST have their contents placed in the game's eboot.bin directory!";
+            // 
+            // convertFbxToDemonsSoulsPS5CmshToolStripMenuItem
+            // 
+            convertFbxToDemonsSoulsPS5CmshToolStripMenuItem.Name = "convertFbxToDemonsSoulsPS5CmshToolStripMenuItem";
+            convertFbxToDemonsSoulsPS5CmshToolStripMenuItem.Size = new Size(650, 22);
+            convertFbxToDemonsSoulsPS5CmshToolStripMenuItem.Text = "Convert fbx to Demon's Souls PS5 cmsh";
+            convertFbxToDemonsSoulsPS5CmshToolStripMenuItem.Click += convertFbxToDemonsSoulsPS5CmshToolStripMenuItem_Click;
+            // 
+            // convertDdsToDemonsSoulsPS5CtxrMustPlaceDdsInFinalCtxrDirectoryToolStripMenuItem
+            // 
+            convertDdsToDemonsSoulsPS5CtxrMustPlaceDdsInFinalCtxrDirectoryToolStripMenuItem.Name = "convertDdsToDemonsSoulsPS5CtxrMustPlaceDdsInFinalCtxrDirectoryToolStripMenuItem";
+            convertDdsToDemonsSoulsPS5CtxrMustPlaceDdsInFinalCtxrDirectoryToolStripMenuItem.Size = new Size(650, 22);
+            convertDdsToDemonsSoulsPS5CtxrMustPlaceDdsInFinalCtxrDirectoryToolStripMenuItem.Text = "Convert dds to Demon's Souls PS5 ctxr (Dds MUST have mipmaps and must place dds in final ctxr directory!)";
+            convertDdsToDemonsSoulsPS5CtxrMustPlaceDdsInFinalCtxrDirectoryToolStripMenuItem.Click += convertDdsToDemonsSoulsPS5CtxrMustPlaceDdsInFinalCtxrDirectoryToolStripMenuItem_Click;
             // 
             // otherGamesToolStripMenuItem1
             // 
@@ -1751,6 +1767,13 @@ namespace AquaModelTool
             aniArcTestToolStripMenuItem.Text = "ani arc test";
             aniArcTestToolStripMenuItem.Click += aniArcTestToolStripMenuItem_Click;
             // 
+            // checkAllAnimationsToolStripMenuItem
+            // 
+            checkAllAnimationsToolStripMenuItem.Name = "checkAllAnimationsToolStripMenuItem";
+            checkAllAnimationsToolStripMenuItem.Size = new Size(182, 22);
+            checkAllAnimationsToolStripMenuItem.Text = "CheckAllAnimations";
+            checkAllAnimationsToolStripMenuItem.Click += checkAllAnimationsToolStripMenuItem_Click;
+            // 
             // debug3ToolStripMenuItem
             // 
             debug3ToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { readPATHToolStripMenuItem, readPOF0ToolStripMenuItem, readStageDefToolStripMenuItem, decryptINCToolStripMenuItem, dumpBillyArcPof0ToolStripMenuItem, dumpExtremeAnimsToolStripMenuItem, protoThingToItemModelToolStripMenuItem, readCMDLToolStripMenuItem, checkToolStripMenuItem, checkAllcmshToolStripMenuItem, checkAllBillySetObjToolStripMenuItem, testReadOldCMDLToolStripMenuItem, readFlverTestToolStripMenuItem, readWriteTexTestToolStripMenuItem, pSOCryptTestToolStripMenuItem, customRoboGCSFDDumpToolStripMenuItem, customRoboPartReadToolStripMenuItem, billyLightTestToolStripMenuItem, pOE2IndexReadToolStripMenuItem, setEnemyReadToolStripMenuItem, setCameraReadToolStripMenuItem, readNOMsToolStripMenuItem, readStorySeqToolStripMenuItem, readWriteLNDTestToolStripMenuItem, dumpZlibTestToolStripMenuItem, readStageObjToolStripMenuItem, setObjreadToolStripMenuItem });
@@ -1966,13 +1989,6 @@ namespace AquaModelTool
             splitter1.Size = new Size(4, 296);
             splitter1.TabIndex = 2;
             splitter1.TabStop = false;
-            // 
-            // checkAllAnimationsToolStripMenuItem
-            // 
-            checkAllAnimationsToolStripMenuItem.Name = "checkAllAnimationsToolStripMenuItem";
-            checkAllAnimationsToolStripMenuItem.Size = new Size(182, 22);
-            checkAllAnimationsToolStripMenuItem.Text = "CheckAllAnimations";
-            checkAllAnimationsToolStripMenuItem.Click += checkAllAnimationsToolStripMenuItem_Click;
             // 
             // AquaModelTool
             // 
@@ -2238,6 +2254,8 @@ namespace AquaModelTool
         private ToolStripMenuItem setObjreadToolStripMenuItem;
         private ToolStripMenuItem mirrorPOEModelDataToolStripMenuItem;
         private ToolStripMenuItem checkAllAnimationsToolStripMenuItem;
+        private ToolStripMenuItem convertFbxToDemonsSoulsPS5CmshToolStripMenuItem;
+        private ToolStripMenuItem convertDdsToDemonsSoulsPS5CtxrMustPlaceDdsInFinalCtxrDirectoryToolStripMenuItem;
     }
 }
 

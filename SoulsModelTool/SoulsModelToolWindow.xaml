@@ -31,7 +31,8 @@
             <MenuItem Header="File">
                 <MenuItem Header="Convert From Soft model, TPF, or archive" Click="ConvertModelToFBX" />
                 <Separator />
-                <MenuItem Header="Convert FBX to Demon's Souls (PS3) flver" Click="ConvertFBXToDeSModel" />
+                <MenuItem Header="Convert FBX to Demon's Souls Remake (PS5) flver" Click="ConvertFBXToDeSRModel" />
+                <MenuItem Header="Convert DDS to Demon's Souls Remake (PS5) ctxr (MUST have mipmaps and be in final ctxr folder!)" Click="ConvertDDSToCTXR" />
                 <MenuItem Header="Generate MCG, MCP" Click="GenerateMCPMCG" />
                 <Separator />
                 <MenuItem x:Name="SetGameOption" Header="Set Game (For MSB Extraction)" Click="SetGame" />

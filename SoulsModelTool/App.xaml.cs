@@ -29,6 +29,8 @@ namespace SoulsModelTool
             toObj = 5,
             mcgMCP = 6,
             toSMD = 7,
+            toCMSH = 8,
+            toCTXR = 9,
         }
 
         private void Application_Startup(object sender, StartupEventArgs e)
@@ -83,9 +85,14 @@ namespace SoulsModelTool
                             action = SoulsModelAction.toFlverDes;
                             break;
                         case "-tocmdl":
-                        case "-tocmsh":
                             action = SoulsModelAction.toCMDL;
                             Trace.WriteLine("toCMDL not implemented.");
+                            break;
+                        case "-tocmsh":
+                            action = SoulsModelAction.toCMSH;
+                            break;
+                        case "-toctxr":
+                            action = SoulsModelAction.toCTXR;
                             break;
                         case "-mcgmcp":
                             action = SoulsModelAction.mcgMCP;

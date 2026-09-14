@@ -1,6 +1,10 @@
-﻿using AquaModelLibrary.Core.FromSoft;
+﻿using AquaModelLibrary.Core.BluePoint;
+using AquaModelLibrary.Core.FromSoft;
+using AquaModelLibrary.Core.General;
 using AquaModelLibrary.Core.ToolUX;
+using AquaModelLibrary.Data.BluePoint.CTXR;
 using AquaModelLibrary.Data.FromSoft;
+using AquaModelLibrary.Data.PSO2.Aqua;
 using AquaModelLibrary.Data.Utility;
 using Microsoft.Win32;
 using Microsoft.WindowsAPICodePack.Dialogs;
@@ -223,6 +227,66 @@ namespace SoulsModelTool
             if (openFileDialog.ShowDialog() == true && LayoutDataSet())
             {
                 ConvertFBXToDeSModelCallback(openFileDialog.FileName);
+            }
+        }
+        private void ConvertFBXToDeSRModel(object sender, RoutedEventArgs e)
+        {
+            FileHandler.ApplyModelImporterSettings(mainSetting);
+            FileHandler.SetSMTSettings(smtSetting);
+
+            using (var ctx = new SharpAssimp.AssimpContext())
+            {
+                var formats = ctx.GetSupportedImportFormats().ToList();
+                formats.Sort();
+
+                OpenFileDialog openFileDialog;
+                openFileDialog = new OpenFileDialog()
+                {
+                    Title = "Import model file",
+                    Filter = "",
+                    Multiselect = true
+                };
+                string tempFilter = "(*.fbx)|*.fbx";
+                string tempFilter2 = "";
+                openFileDialog.Filter = tempFilter + tempFilter2;
+
+                if (openFileDialog.ShowDialog() == true)
+                {
+                    foreach (var filename in openFileDialog.FileNames)
+                    {
+                        var aqp = AssimpModelImporter.AssimpAquaConvertFull(filename, 1, false, true, out AquaNode aqn, true, false, false, false);
+
+                        bool rigidImport = true;
+                        bool clothImport = false;
+                        var cmsh = BluePointConvert.ConvertToDeSRCMSH(aqp, aqn, rigidImport, clothImport);
+                        File.WriteAllBytes(Path.ChangeExtension(filename, ".cmsh"), cmsh.GetBytes());
+                        /*
+                        File.WriteAllBytes(Path.ChangeExtension(filename, ".cmsh").Replace("instalod0.cmsh", "instalod1.cmsh"), cmsh.GetBytes());
+                        File.WriteAllBytes(Path.ChangeExtension(filename, ".cmsh").Replace("instalod0.cmsh", "instalod2.cmsh"), cmsh.GetBytes());
+                        File.WriteAllBytes(Path.ChangeExtension(filename, ".cmsh").Replace("instalod0.cmsh", "instalod3.cmsh"), cmsh.GetBytes());
+                        File.WriteAllBytes(Path.ChangeExtension(filename, ".cmsh").Replace("instalod0.cmsh", "instalod4.cmsh"), cmsh.GetBytes());
+                        File.WriteAllBytes(Path.ChangeExtension(filename, ".cmsh").Replace("instalod0.cmsh", "instalod5.cmsh"), cmsh.GetBytes());
+                        */
+
+                    }
+                }
+            }
+        }
+        private void ConvertDDSToCTXR(object sender, RoutedEventArgs e)
+        {
+            var openFileDialog = new OpenFileDialog()
+            {
+                Title = "Select dds file(s) *THESE MUST HAVE MIPMAPS* (Please also make sure it is in the folder your ctxr and ctxc files will be in!)",
+                Filter = "dds texture files (*.dds)|*.dds",
+                FileName = "",
+                Multiselect = true
+            };
+            if (openFileDialog.ShowDialog() == true)
+            {
+                foreach (var file in openFileDialog.FileNames)
+                {
+                    CTXR.ConvertDDSToCTXR_CTXC(file, file.Replace(".dds", ".ctxr"));
+                }
             }
         }
 
